@@ -16,9 +16,9 @@ namespace Juzaweb\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Juzaweb\Core\Installer\Helpers\DatabaseManager;
-use Juzaweb\Core\Installer\Helpers\FinalInstallManager;
-use Juzaweb\Core\Installer\Helpers\InstalledFileManager;
+use Juzaweb\Installer\Helpers\DatabaseManager;
+use Juzaweb\Installer\Helpers\FinalInstallManager;
+use Juzaweb\Installer\Helpers\InstalledFileManager;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Juzaweb\Core\Models\User;
