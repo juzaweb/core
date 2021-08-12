@@ -25,12 +25,11 @@ class BackendServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->bootMiddlewares();
-        $this->bootPublishes();
         HookAction::loadActionForm(__DIR__ . '/../../actions');
 
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'juzaweb');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'juzaweb');
 
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'juzaweb');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'juzaweb');
     }
 
     public function register()
@@ -41,17 +40,6 @@ class BackendServiceProvider extends ServiceProvider
     protected function bootMiddlewares()
     {
         $this->app['router']->aliasMiddleware('admin', Admin::class);
-    }
-
-    protected function bootPublishes()
-    {
-        $this->publishes([
-            __DIR__ . '/../../../assets' => public_path('juzaweb'),
-        ], 'juzaweb_assets');
-
-        $this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('vendor/juzawebcms'),
-        ], 'juzaweb_lang');
     }
 
     protected function registerRouteMacros()

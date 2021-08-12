@@ -27,7 +27,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->bootMigrations();
         $this->bootPublishes();
-        $this->loadFactoriesFrom(__DIR__ . '/../../database/factories');
+        $this->loadFactoriesFrom(__DIR__ . '/../database/factories');
 
         Validator::extend('recaptcha', 'Juzaweb\Core\Validators\Recaptcha@validate');
         Schema::defaultStringLength(150);
@@ -50,7 +50,7 @@ class CoreServiceProvider extends ServiceProvider
 
     protected function bootMigrations()
     {
-        $mainPath = __DIR__ . '/../../database/migrations';
+        $mainPath = __DIR__ . '/../database/migrations';
         $this->loadMigrationsFrom($mainPath);
     }
 
@@ -61,19 +61,22 @@ class CoreServiceProvider extends ServiceProvider
         ], 'juzaweb_config');
 
         $this->publishes([
-            __DIR__ . '/../../resources/views' => resource_path('vendor/juzaweb/resources/views'),
+            __DIR__ . '/../resources/views' => resource_path('vendor/juzaweb/core/views'),
         ], 'juzaweb_views');
 
         $this->publishes([
-            __DIR__ . '/../../resources/lang' => resource_path('vendor/juzaweb/resources/lang'),
+            __DIR__ . '/../resources/lang' => resource_path('vendor/juzaweb/core/lang'),
         ], 'juzaweb_lang');
+
+        $this->publishes([
+            __DIR__ . '/../resources/assets' => public_path('juzaweb/core'),
+        ], 'juzaweb_assets');
     }
 
     protected function registerProviders()
     {
         $this->app->register(BackendServiceProvider::class);
         $this->app->register(DbConfigServiceProvider::class);
-        $this->app->register(RouteServiceProvider::class);
         $this->app->register(HookActionServiceProvider::class);
         $this->app->register(PerformanceServiceProvider::class);
         $this->app->register(FilemanagerServiceProvider::class);
