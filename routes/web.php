@@ -9,20 +9,7 @@
  * Github: https://github.com/juzawebcms/juzawebcms
 */
 
-$adminPrefix = config('juzaweb.admin_prefix', 'admin-cp');
-
-Route::group([
-    'prefix' => $adminPrefix,
-    'middleware' => ['admin']
-], function () {
-    require __DIR__ . '/components/dashboard.route.php';
-    require __DIR__ . '/components/setting.route.php';
-    require __DIR__ . '/components/user.route.php';
-    require __DIR__ . '/components/module.route.php';
-    require __DIR__ . '/components/filemanager.route.php';
-    require __DIR__ . '/components/media.route.php';
-    require __DIR__ . '/components/email.route.php';
-});
+$adminPrefix = config('juzaweb.admin_prefix');
 
 Route::group([
     'prefix' => $adminPrefix,
