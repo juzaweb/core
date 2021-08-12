@@ -14,8 +14,6 @@
 
 namespace Juzaweb\Core\Helpers;
 
-use Juzaweb\Core\Minify\MinifyHtml;
-
 class Blade extends MinifyHtml
 {
     /** @var string */

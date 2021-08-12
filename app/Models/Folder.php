@@ -27,6 +27,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\Juzaweb\Core\Models\Folder whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Juzaweb\Core\Models\Folder whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|Folder[] $children
+ * @property-read int|null $children_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Juzaweb\Core\Models\File[] $files
+ * @property-read int|null $files_count
+ * @property-read Folder|null $parent
  */
 class Folder extends Model
 {
