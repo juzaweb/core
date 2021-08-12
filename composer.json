@@ -23,10 +23,10 @@
     "autoload": {
         "psr-4": {
           "Juzaweb\\Core\\Tests\\": "tests/",
-          "Juzaweb\\Core\\": "app/"
+          "Juzaweb\\Core\\": "src/"
         },
         "files": [
-            "app/Helpers/helpers.php"
+            "src/Helpers/helpers.php"
         ]
     },
     "extra": {

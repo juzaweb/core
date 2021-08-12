@@ -26,5 +26,15 @@ class Core
             ->group(__DIR__ . '/routes/admin.php');
     }
 
+    public static function webRoutes()
+    {
+        Route::namespace(self::$namespace)
+            ->group(__DIR__ . '/routes/web.php');
+    }
 
+    public static function apiRoutes()
+    {
+        Route::namespace(self::$namespace)
+            ->group(__DIR__ . '/routes/api.php');
+    }
 }
