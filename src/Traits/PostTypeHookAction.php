@@ -67,12 +67,6 @@ trait PostTypeHookAction
                     'position' => $iargs->get('menu_position')
                 ]
             );
-
-            $this->registerPermalink($taxonomy, [
-                'label' => $iargs->get('label'),
-                'base' => $iargs->get('singular'),
-                'callback' => 'Juzaweb\Core\\Theme\\Http\\Controllers\\TaxonomyController'
-            ]);
         }
     }
 
