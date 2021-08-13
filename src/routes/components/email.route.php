@@ -20,7 +20,7 @@ Route::group(['prefix' => 'setting/email'], function () {
     Route::post('send-test-mail', 'Backend\Email\EmailController@sendTestMail')->name('admin.email.test-email');
 });
 
-Route::juzawebResource('email-template', 'Backend\Email\EmailTemplateController');
+Route::jwResource('email-template', 'Backend\Email\EmailTemplateController');
 
 Route::group(['prefix' => 'logs/email'], function () {
     Route::get('/', 'Backend\Email\EmailLogsController@index')->name('admin.logs.email');
