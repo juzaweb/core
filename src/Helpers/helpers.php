@@ -12,8 +12,6 @@
  * Time: 10:05 PM
  */
 
-//require (__DIR__ . '/../../Updater/helpers.php');
-
 if (!defined('MYMO_BASE_PATH')) {
     define('MYMO_BASE_PATH', __DIR__ . '/../..');
 }
@@ -21,7 +19,7 @@ if (!defined('MYMO_BASE_PATH')) {
 use Illuminate\Support\Facades\Auth;
 use Juzaweb\Core\Helpers\Breadcrumb;
 use Juzaweb\Core\Models\Config;
-use Juzaweb\Core\Models\Menu;
+use Juzaweb\Theme\Models\Menu;
 use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Models\ThemeConfig;
 use Illuminate\Support\Str;
@@ -58,6 +56,30 @@ function get_client_ip()
 function get_config($key, $default = null)
 {
     return Config::getConfig($key, $default);
+}
+
+/**
+ * Get DB configs
+ *
+ * @param array $keys
+ * @param mixed $default
+ * @return string|array
+ * */
+function get_configs($keys, $default = null)
+{
+    return Config::whereIn('code', $keys)
+        ->get()
+        ->mapWithKeys(function ($item) use ($default) {
+            $value = $item->value;
+            if (is_json($value)) {
+                $value = json_decode($value, true);
+            }
+
+            return [
+                $item->code => $value ?? $default
+            ];
+        })
+        ->toArray();
 }
 
 function set_config($key, $value)

@@ -96,6 +96,7 @@ class Config extends Model
             if (is_json($config->value)) {
                 return json_decode($config->value, true);
             }
+
             return $config->value ?? $default;
         }
     
