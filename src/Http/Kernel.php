@@ -42,6 +42,10 @@ class Kernel extends HttpKernel
             'bindings',
         ],
 
+        'assets' => [
+            'bindings',
+        ],
+
         'admin' => [
             \Juzaweb\Core\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
