@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 use Juzaweb\Core\Models\PasswordReset;
 use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Traits\ResponseMessage;
-use Juzaweb\Core\Email\EmailService;
 use Illuminate\Http\Request;
+use Juzaweb\Email\EmailService;
 
 class ForgotPasswordController extends Controller
 {
@@ -33,7 +33,9 @@ class ForgotPasswordController extends Controller
         ]);
     
         $email = $request->post('email');
-        $user = User::whereEmail($email)->first();
+        $user = User::whereEmail($email)
+            ->where('status', '=', 'active')
+            ->first();
     
         try {
             $resetToken = Str::random(32);

@@ -1,6 +1,6 @@
 <?php
 /**
- * MYMO CMS - The Best Laravel CMS
+ * JUZAWEB CMS - The Best CMS for Laravel Project
  *
  * @package    juzawebcms/juzawebcms
  * @author     The Anh Dang <dangtheanh16@gmail.com>
