@@ -280,5 +280,6 @@ return [
     'add_folder' => 'Add Folder',
     'media' => 'Media',
     'upload' => 'Upload',
+    'social' => 'Social',
 ];
 

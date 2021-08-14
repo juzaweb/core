@@ -175,7 +175,7 @@ class MediaController extends BackendController
                 'time' => (string) $row->created_at,
                 'type' => $row->type,
                 'icon' => 'fa-folder-o',
-                'thumb' => asset('juzaweb/filemanager/images/folder.png'),
+                'thumb' => asset('juzaweb/core/filemanager/images/folder.png'),
                 'is_file' => false
             ];
         }

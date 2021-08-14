@@ -73,7 +73,7 @@
         <div class="juzaweb__layout__footer">
             <div class="juzaweb__footer">
                 <div class="juzaweb__footer__inner">
-                    <a href="https://cms.juzaweb.com" target="_blank" rel="noopener noreferrer" class="juzaweb__footer__logo">
+                    <a href="https://juzaweb.com/cms" target="_blank" rel="noopener noreferrer" class="juzaweb__footer__logo">
                         Juzaweb CMS - The Best for Laravel Project
                         <span></span>
                     </a>
