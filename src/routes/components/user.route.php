@@ -5,7 +5,7 @@
  * @link       https://github.com/juzawebcms/juzawebcms
  * @license    MIT
  *
- * Created by The Anh.
+ * Created by JUZAWEB.
  * Date: 5/25/2021
  * Time: 9:02 PM
  */

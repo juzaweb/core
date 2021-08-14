@@ -2,12 +2,12 @@
 /**
  * MYMO CMS - The Best Laravel CMS
  *
- * @package    mymocms/mymocms
+ * @package    juzaweb/laravel-cms
  * @author     The Anh Dang <dangtheanh16@gmail.com>
- * @link       https://github.com/mymocms/mymocms
+ * @link       https://juzaweb.com/cms
  * @license    MIT
  *
- * Created by The Anh.
+ * Created by JUZAWEB.
  * Date: 8/12/2021
  * Time: 3:07 PM
  */

@@ -2,11 +2,11 @@
 /**
  * MYMO CMS - TV Series & Movie Portal CMS Unlimited
  *
- * @package mymocms/mymocms
+ * @package juzaweb/laravel-cms
  * @author The Anh Dang
  *
  * Developed based on Laravel Framework
- * Github: https://github.com/mymocms/mymocms
+ * Github: https://juzaweb.com/cms
  */
 
 namespace Juzaweb\Core\Http\Controllers;
