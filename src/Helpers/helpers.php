@@ -136,7 +136,7 @@ function image_url($path) {
         }
     }
     
-    return asset('juzaweb/styles/images/thumb-default.png');
+    return asset('juzaweb/core/styles/images/thumb-default.png');
 }
 
 function logo_url($path) {
@@ -313,7 +313,7 @@ function user_avatar($user = null) {
         return $user->getAvatar();
     }
 
-    return asset('juzaweb/styles/images/thumb-default.png');
+    return asset('juzaweb/core/styles/images/thumb-default.png');
 }
 
 function breadcrumb($name, $add_items = [])
@@ -370,7 +370,7 @@ function upload_url($path, $default = null)
         return $default;
     }
 
-    return asset('juzaweb/styles/images/thumb-default.png');
+    return asset('juzaweb/core/styles/images/thumb-default.png');
 }
 
 function random_string(int $length = 16)

@@ -9,13 +9,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css?family=Mukta:400,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('juzaweb/styles/css/vendor.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('juzaweb/styles/css/backend.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('juzaweb/core/styles/css/vendor.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('juzaweb/core/styles/css/backend.css') }}">
 
     @include('juzaweb::components.juzaweb_langs')
 
-    <script src="{{ asset('juzaweb/styles/js/vendor.js') }}"></script>
-    <script src="{{ asset('juzaweb/styles/js/backend.js') }}"></script>
+    <script src="{{ asset('juzaweb/core/styles/js/vendor.js') }}"></script>
+    <script src="{{ asset('juzaweb/core/styles/js/backend.js') }}"></script>
 </head>
     <body class="juzaweb__layout--cardsShadow juzaweb__menuLeft--dark">
         <div class="juzaweb__layout juzaweb__layout--hasSider">

@@ -61,15 +61,15 @@ class CoreServiceProvider extends ServiceProvider
         ], 'juzaweb_config');
 
         $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('vendor/juzaweb/core/views'),
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/juzaweb/core'),
         ], 'juzaweb_views');
 
         $this->publishes([
-            __DIR__ . '/../resources/lang' => resource_path('vendor/juzaweb/core/lang'),
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/juzaweb/core'),
         ], 'juzaweb_lang');
 
         $this->publishes([
-            __DIR__ . '/../resources/assets' => public_path('juzaweb/core'),
+            __DIR__ . '/../../assets' => public_path('juzaweb/core'),
         ], 'juzaweb_assets');
     }
 
