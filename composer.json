@@ -12,7 +12,6 @@
         "pion/laravel-chunk-upload": "^1.4",
         "sokil/php-vast": "^2.0",
         "spatie/image-optimizer": "^1.4",
-        "tadcms/hooks": "^1.0",
         "tymon/jwt-auth": "^1.0",
         "darkaonline/l5-swagger": "^6.0"
     },

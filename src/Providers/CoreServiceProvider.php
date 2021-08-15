@@ -80,6 +80,8 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(HookActionServiceProvider::class);
         $this->app->register(PerformanceServiceProvider::class);
         $this->app->register(FilemanagerServiceProvider::class);
+        $this->app->register(HooksServiceProvider::class);
+        $this->app->register(HookBladeServiceProvider::class);
         $this->app->register(PostTypeServiceProvider::class);
     }
 
