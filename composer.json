@@ -3,7 +3,7 @@
     "description": "Juzaweb CMS",
     "keywords": [],
     "license": "MIT",
-    "homepage": "https://juzaweb.com",
+    "homepage": "https://juzaweb.com/cms",
     "require": {
         "php": "^7.2.5|^8.0",
         "guzzlehttp/guzzle": "^6.5",
