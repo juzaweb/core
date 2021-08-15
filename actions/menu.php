@@ -81,15 +81,6 @@ HookAction::addAdminMenu(
     ]
 );
 
-/*HookAction::addAdminMenu(
-    trans('juzaweb::app.translations'),
-    'setting.language',
-    [
-        'icon' => 'fa fa-language',
-        'position' => 5,
-        'parent' => 'setting',
-    ]
-);*/
 
 
 
