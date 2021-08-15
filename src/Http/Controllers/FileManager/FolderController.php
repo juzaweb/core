@@ -3,14 +3,14 @@
 namespace Juzaweb\Core\Http\Controllers\FileManager;
 
 use Illuminate\Support\Facades\DB;
-use Juzaweb\Core\Models\Folder;
+use Juzaweb\Core\Models\MediaFolder;
 
 class FolderController extends FileManagerController
 {
     public function getFolders()
     {
         $childrens = [];
-        $folders = Folder::whereNull('folder_id')
+        $folders = MediaFolder::whereNull('folder_id')
             ->where('type', '=', $this->getType())
             ->get(['id', 'name']);
         
@@ -45,7 +45,7 @@ class FolderController extends FileManagerController
             return $this->error('folder-name');
         }
 
-        if (Folder::folderExists($folder_name, $parent_id)) {
+        if (MediaFolder::folderExists($folder_name, $parent_id)) {
             return $this->error('folder-exist');
         }
 

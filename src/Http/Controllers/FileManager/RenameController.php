@@ -2,8 +2,8 @@
 
 namespace Juzaweb\Core\Http\Controllers\FileManager;
 
-use Juzaweb\Core\Models\File;
-use Juzaweb\Core\Models\Folder;
+use Juzaweb\Core\Models\MediaFile;
+use Juzaweb\Core\Models\MediaFolder;
 
 class RenameController extends FileManagerController
 {
@@ -23,14 +23,14 @@ class RenameController extends FileManagerController
         }
 
         if ($is_directory) {
-            Folder::where('id', '=', $file)
+            MediaFolder::where('id', '=', $file)
                 ->update([
                     'name' => $new_name
                 ]);
         } else {
             $file_path = explode('uploads/', $file)[1];
             
-            File::where('path', '=', $file_path)
+            MediaFile::where('path', '=', $file_path)
                 ->update([
                     'name' => $new_name
                 ]);

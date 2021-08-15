@@ -3,8 +3,8 @@
 namespace Juzaweb\Core\Http\Controllers\FileManager;
 
 use Illuminate\Http\Request;
-use Juzaweb\Core\Models\File;
-use Juzaweb\Core\Models\Folder;
+use Juzaweb\Core\Models\MediaFile;
+use Juzaweb\Core\Models\MediaFolder;
 
 class DeleteController extends FileManagerController
 {
@@ -21,10 +21,10 @@ class DeleteController extends FileManagerController
     
             $is_directory = $this->isDirectory($file);
             if ($is_directory) {
-                Folder::find($file)->deleteFolder();
+                MediaFolder::find($file)->deleteFolder();
             } else {
                 $file_path = $this->getPath($file);
-                File::where('path', '=', $file_path)
+                MediaFile::where('path', '=', $file_path)
                     ->first()
                     ->delete();
             }

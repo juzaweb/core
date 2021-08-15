@@ -3,8 +3,8 @@
 namespace Juzaweb\Core\Http\Controllers\FileManager;
 
 use Illuminate\Support\Facades\Storage;
-use Juzaweb\Core\Models\File;
-use Juzaweb\Core\Models\Folder;
+use Juzaweb\Core\Models\MediaFile;
+use Juzaweb\Core\Models\MediaFolder;
 
 class ItemsController extends FileManagerController
 {
@@ -16,11 +16,11 @@ class ItemsController extends FileManagerController
         
         $working_dir = request()->get('working_dir');
         
-        $folders = Folder::where('folder_id', '=', $working_dir)
+        $folders = MediaFolder::where('folder_id', '=', $working_dir)
             ->where('type', '=', $file_type)
             ->orderBy('name', 'ASC')
             ->get(['id', 'name']);
-        $files = File::where('folder_id', '=', $working_dir)
+        $files = MediaFile::where('folder_id', '=', $working_dir)
             ->where('type', '=', $file_type)
             ->orderBy('id', 'DESC')
             ->paginate($perPage);

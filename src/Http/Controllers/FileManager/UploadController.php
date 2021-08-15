@@ -5,7 +5,7 @@ namespace Juzaweb\Core\Http\Controllers\FileManager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Juzaweb\Core\Models\File;
+use Juzaweb\Core\Models\MediaFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -67,7 +67,7 @@ class UploadController extends FileManagerController
         if ($new_path) {
             DB::beginTransaction();
             try {
-                $model = new File();
+                $model = new MediaFile();
                 $model->name = $file->getClientOriginalName();
                 $model->path = $new_path;
                 $model->type = $this->getType();
@@ -90,7 +90,7 @@ class UploadController extends FileManagerController
     
     protected function createFilename(UploadedFile $file)
     {
-        $filename = $file->getClientOriginalName();
+        $filename = substr($file->getClientOriginalName(), 0, 110);
         $extension = $file->getClientOriginalExtension();
         $new_filename = Str::slug(basename($filename, "." . $extension)) .'-'. time() .'-'. Str::random(10) .'.' . $extension;
         return $new_filename;

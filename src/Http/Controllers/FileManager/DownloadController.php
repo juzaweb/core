@@ -3,14 +3,14 @@
 namespace Juzaweb\Core\Http\Controllers\FileManager;
 
 use Illuminate\Support\Facades\Storage;
-use Juzaweb\Core\Models\File;
+use Juzaweb\Core\Models\MediaFile;
 
 class DownloadController extends FileManagerController
 {
     public function getDownload()
     {
         $file = $this->getPath(request()->get('file'));
-        $data = File::where('path', '=', $file)->first(['name']);
+        $data = MediaFile::where('path', '=', $file)->first(['name']);
         
         $path = Storage::disk(config('juzaweb.filemanager.disk'))->path($file);
         if ($data) {

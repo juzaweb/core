@@ -2,7 +2,7 @@
 
 namespace Juzaweb\Core\Traits;
 
-use Juzaweb\Core\Models\File;
+use Juzaweb\Core\Models\MediaFile;
 use Illuminate\Support\Str;
 
 trait UseThumbnail

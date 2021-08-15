@@ -17,8 +17,8 @@ namespace Juzaweb\Core\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Juzaweb\Core\Http\Controllers\BackendController;
-use Juzaweb\Core\Models\File;
-use Juzaweb\Core\Models\Folder;
+use Juzaweb\Core\Models\MediaFile;
+use Juzaweb\Core\Models\MediaFolder;
 
 class MediaController extends BackendController
 {
@@ -31,7 +31,7 @@ class MediaController extends BackendController
                 'url' => route('admin.media'),
             ]);
 
-            $folder = Folder::find($folderId);
+            $folder = MediaFolder::find($folderId);
             $folder->load('parent');
             $this->addBreadcrumbFolder($folder);
             $title = $folder->name;
@@ -64,7 +64,7 @@ class MediaController extends BackendController
         $name = $request->post('name');
         $parentId = $request->post('folder_id');
 
-        if (Folder::folderExists($name, $parentId)) {
+        if (MediaFolder::folderExists($name, $parentId)) {
             return $this->error([
                 'message' => trans('juzaweb::filemanager.errors.folder-exists')
             ]);
@@ -72,7 +72,7 @@ class MediaController extends BackendController
 
         try {
             DB::beginTransaction();
-            Folder::create($request->all());
+            MediaFolder::create($request->all());
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -116,7 +116,7 @@ class MediaController extends BackendController
     {
         $result = [];
         $fileIcon = $this->getFileIcon();
-        $query = File::whereFolderId($folderId);
+        $query = MediaFile::whereFolderId($folderId);
 
         if ($sQuery->get('type')) {
             $query->where('type', '=', $sQuery->get('type'));
@@ -157,7 +157,7 @@ class MediaController extends BackendController
     protected function getDirectories($sQuery, $folderId)
     {
         $result = [];
-        $query = Folder::whereFolderId($folderId);
+        $query = MediaFolder::whereFolderId($folderId);
 
         if ($sQuery->get('type')) {
             $query->where('type', '=', $sQuery->get('type'));
