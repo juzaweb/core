@@ -33,7 +33,7 @@
                 </div>
                 <div class="mt-auto pb-5 pt-5">
                     <div class="text-center">
-                        Copyright © {{ date('Y') }} {{ get_config('sitename') }} - Provided by TAD CMS
+                        Copyright © {{ date('Y') }} {{ get_config('sitename') }} - Provided by JUZAWEB CMS
                     </div>
                 </div>
             </div>

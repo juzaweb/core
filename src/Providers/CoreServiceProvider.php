@@ -59,18 +59,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/juzaweb.php' => base_path('config/juzaweb.php'),
         ], 'juzaweb_config');
-
-        $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/juzaweb/core'),
-        ], 'juzaweb_views');
-
-        $this->publishes([
-            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/juzaweb/core'),
-        ], 'juzaweb_lang');
-
-        $this->publishes([
-            __DIR__ . '/../../assets' => public_path('juzaweb/core'),
-        ], 'juzaweb_assets');
     }
 
     protected function registerProviders()

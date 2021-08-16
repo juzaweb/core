@@ -33,7 +33,7 @@ class ItemsController extends FileManagerController
                 'is_file' => false,
                 'is_image' => false,
                 'name' => $folder->name,
-                'thumb_url' => asset('juzaweb/core/filemanager/images/folder.png'),
+                'thumb_url' => asset('vendor/juzaweb/filemanager/images/folder.png'),
                 'time' => false,
                 'url' => $folder->id,
             ];

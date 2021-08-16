@@ -1,5 +1,9 @@
 @extends('juzaweb::layouts.auth')
 
+@section('header')
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+@endsection
+
 @section('content')
     <div class="juzaweb__layout__content">
         <div class="juzaweb__utils__content">
@@ -21,7 +25,7 @@
                             <strong>@lang('juzaweb::message.login_form.header')</strong>
                         </div>
 
-                        <form action="{{ route('auth.login') }}" method="post" class="mb-4 form-ajax">
+                        <form action="{{ route('admin.login') }}" method="post" class="mb-4 form-ajax">
 
                             <div class="form-group mb-4">
                                 <input type="email" name="email" class="form-control" placeholder="@lang('juzaweb::app.email_address')" />
@@ -36,7 +40,7 @@
                             <input type="checkbox" name="remember" value="1" checked> @lang('juzaweb::app.remember_me')
                         </form>
 
-                        <a href="{{ route('auth.forgot_password') }}" class="kit__utils__link font-size-16">
+                        <a href="{{ route('admin.forgot_password') }}" class="kit__utils__link font-size-16">
                             @lang('juzaweb::app.forgot_password')
                         </a>
                     </div>
@@ -53,7 +57,7 @@
 
                 <div class="mt-auto pb-5 pt-5">
                     <div class="text-center">
-                        Copyright © {{ date('Y') }} {{ get_config('sitename') }} - Provided by MYMO CMS
+                        Copyright © {{ date('Y') }} {{ get_config('sitename') }} - Provided by JUZAWEB CMS
                     </div>
                 </div>
             </div>

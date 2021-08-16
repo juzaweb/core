@@ -1,6 +1,10 @@
 @extends('juzaweb::layouts.auth')
 
 @section('content')
+    @if(get_config('google_recaptcha'))
+        <script src="https://www.google.com/recaptcha/api.js?render={{ get_config('google_recaptcha_key') }}"></script>
+    @endif
+
     <div class="juzaweb__layout__content">
         <div class="juzaweb__utils__content">
             <div class="juzaweb__auth__authContainer">
@@ -39,7 +43,7 @@
                 </div>
                 <div class="mt-auto pb-5 pt-5">
                     <div class="text-center">
-                        Copyright © {{ date('Y') }} {{ get_config('sitename') }} - Provided by TAD CMS
+                        Copyright © {{ date('Y') }} {{ get_config('sitename') }} - Provided by JUZAWEB CMS
                     </div>
                 </div>
             </div>

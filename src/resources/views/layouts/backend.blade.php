@@ -8,17 +8,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ $title ?? '' }}</title>
-    <link rel="icon" type="image/png" href="{{ asset('juzaweb/core/styles/images/icon.png') }}" />
+    <link rel="icon" type="image/png" href="{{ asset('vendor/juzaweb/styles/images/icon.png') }}" />
     <link href="https://fonts.googleapis.com/css?family=Mukta:400,700,800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('juzaweb/core/styles/css/vendor.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('juzaweb/core/styles/css/backend.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/juzaweb/styles/css/vendor.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/juzaweb/styles/css/backend.css') }}">
 
     @include('juzaweb::components.juzaweb_langs')
 
-    <script src="{{ asset('juzaweb/core/styles/js/vendor.js') }}"></script>
-    <script src="{{ asset('juzaweb/core/styles/js/backend.js') }}"></script>
-    <script src="{{ asset('juzaweb/core/styles/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('vendor/juzaweb/styles/js/vendor.js') }}"></script>
+    <script src="{{ asset('vendor/juzaweb/styles/js/backend.js') }}"></script>
+    <script src="{{ asset('vendor/juzaweb/styles/ckeditor/ckeditor.js') }}"></script>
 
     @do_action('juzaweb_header')
     @yield('header')
@@ -35,7 +35,7 @@
                 <div class="juzaweb__menuLeft__logo">
                     <div class="juzaweb__menuLeft__logo__name">
                         <a href="/{{ config('juzaweb.admin_prefix') }}">
-                            <img src="{{ asset('juzaweb/core/styles/images/logo.png') }}" alt="">
+                            <img src="{{ asset('vendor/juzaweb/styles/images/logo.png') }}" alt="">
                         </a>
                     </div>
                 </div>

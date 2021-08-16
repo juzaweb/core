@@ -27,14 +27,14 @@
                     </div>
                     <div class="text-center pt-2 mb-auto">
                         <span class="mr-2">Already have an account?</span>
-                        <a href="{{ route('auth.login') }}" class="kit__utils__link font-size-16">
+                        <a href="{{ route('admin.login') }}" class="kit__utils__link font-size-16">
                             Sign in
                         </a>
                     </div>
                 </div>
                 <div class="mt-auto pb-5 pt-5">
                     <div class="text-center">
-                        Copyright © {{ date('Y') }} {{ get_config('sitename') }} - Provided by TAD CMS
+                        Copyright © {{ date('Y') }} {{ get_config('sitename') }} - Provided by JUZAWEB CMS
                     </div>
                 </div>
             </div>
