@@ -46,6 +46,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->registerProviders();
         $this->registerSingleton();
         $this->mergeConfigFrom(__DIR__ . '/../../config/juzaweb.php', 'juzaweb');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/locales.php', 'locales');
     }
 
     protected function bootMigrations()
@@ -58,6 +59,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../../config/juzaweb.php' => base_path('config/juzaweb.php'),
+            __DIR__ . '/../../config/locales.php' => base_path('config/locales.php'),
         ], 'juzaweb_config');
     }
 

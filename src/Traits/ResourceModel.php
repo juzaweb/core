@@ -6,14 +6,11 @@
  * @author     The Anh Dang <dangtheanh16@gmail.com>
  * @link       https://github.com/juzawebcms/juzawebcms
  * @license    MIT
- *
- * Created by JUZAWEB.
- * Date: 6/9/2021
- * Time: 10:37 PM
  */
 
 namespace Juzaweb\Core\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 
 /**
@@ -34,7 +31,7 @@ trait ResourceModel
         }
 
         if (Arr::has($params, 'keyword')) {
-            $builder->where(function ($q) use ($params) {
+            $builder->where(function (Builder $q) use ($params) {
                 $keyword = trim($params['keyword']);
                 foreach ($this->searchAttributes as $attribute) {
                     $q->orWhere($attribute, 'like', '%'. $keyword .'%');

@@ -12,10 +12,6 @@
  * Time: 10:05 PM
  */
 
-if (!defined('MYMO_BASE_PATH')) {
-    define('MYMO_BASE_PATH', __DIR__ . '/../..');
-}
-
 use Illuminate\Support\Facades\Auth;
 use Juzaweb\Core\Helpers\Breadcrumb;
 use Juzaweb\Core\Models\Config;
@@ -24,12 +20,6 @@ use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Models\ThemeConfig;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Facades\Events as Hook;
-
-function json_message($message, $status = 'success') {
-    header('Content-Type: application/json');
-    echo json_encode(['status' => $status, 'message' => $message]);
-    exit();
-}
 
 /**
  * Get client ip
@@ -106,15 +96,6 @@ function sub_words($string, int $words = 20) {
     return Str::words($string, $words);
 }
 
-function image_path($url) {
-    $img = explode('uploads/', $url);
-    if (isset($img[1])) {
-        return $img[1];
-    }
-    
-    return $img[0];
-}
-
 function is_url($url) {
     if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
         return false;
@@ -138,14 +119,6 @@ function image_url($path) {
     }
     
     return asset('vendor/juzaweb/styles/images/thumb-default.png');
-}
-
-function logo_url($path) {
-    if (empty($path)) {
-        return asset('images/logo.png');
-    }
-    
-    return image_url($path);
 }
 
 function copyfile_chunked($infile, $outfile) {
@@ -222,22 +195,6 @@ function copyfile_chunked($infile, $outfile) {
     fclose($i_handle);
     fclose($o_handle);
     return $cnt;
-}
-
-function full_text_wildcards($term) {
-    $reservedSymbols = ['-', '+', '<', '>', '@', '(', ')', '~'];
-    $term = str_replace($reservedSymbols, '', $term);
-    $words = explode(' ', $term);
-    
-    foreach ($words as $key => $word) {
-        if (strlen($word) >= 1) {
-            $words[$key] = '+' . $word  . '*';
-        }
-    }
-    
-    $searchTerm = implode(' ', $words);
-    
-    return $searchTerm;
 }
 
 function theme_config($code) {
@@ -386,6 +343,7 @@ function is_json($string) {
 
 /**
  * JUZAWEB CMS: Do action hook
+ *
  * @param string $tag
  * @param mixed ...$args Additional parameters to pass to the callback functions.
  * @return void
@@ -435,3 +393,5 @@ function apply_filters($tag, $value, ...$args) {
 function add_filters($tag, $callback, $priority = 20, $arguments = 1) {
     return Hook::addFilter($tag, $callback, $priority, $arguments);
 }
+
+

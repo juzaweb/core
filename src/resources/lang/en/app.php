@@ -281,5 +281,8 @@ return [
     'media' => 'Media',
     'upload' => 'Upload',
     'social' => 'Social',
+    'origin' => 'Origin',
+    'value' => 'Value',
+    'your_value' => 'Your Value',
 ];
 
