@@ -5,16 +5,16 @@
         <div class="col-md-12">
             <div class="alert alert-success">
                 <p>You are using Juzaweb CMS Version: {{ \Juzaweb\Core\Version::getVersion() }}</p>
-                <p>View CMS change logs: <a href="https://github.com/juzawebcms/juzawebcms/blob/master/CHANGELOG.md" target="_blank">click here</a></p>
+                <p>View CMS change logs: <a href="https://github.com/juzaweb/laravel-cms/blob/master/CHANGELOG.md" target="_blank">click here</a></p>
             </div>
 
             <div class="alert alert-warning">Important: Before updating, please back up your database and files.</div>
-            <form method="post" action="">
+            <form method="post" action="" data-success="update_success">
                 @csrf
 
                 <button type="submit" class="btn btn-primary">
                     <i class="fa fa-cloud-upload"></i>
-                    Update now
+                    Check for update
                 </button>
             </form>
 
@@ -36,4 +36,10 @@
             @endif--}}
         </div>
     </div>
+
+    <script type="text/javascript">
+        function update_success() {
+            window.location = "";
+        }
+    </script>
 @endsection

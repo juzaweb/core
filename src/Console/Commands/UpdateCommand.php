@@ -12,6 +12,7 @@ namespace Juzaweb\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Artisan;
 
 class UpdateCommand extends Command
 {
@@ -19,8 +20,10 @@ class UpdateCommand extends Command
 
     public function handle()
     {
-        $cmd = 'cd ' . base_path() . ' && php composer.phar update juzaweb/*';
-        $process = new Process($cmd);
+        $cmd = 'php "'. base_path('composer.phar') .'" update juzaweb/*';
+        exec($cmd, $output);
+
+        /*$process = new Process($cmd);
         $process->start();
 
         foreach ($process as $type => $data) {
@@ -29,6 +32,8 @@ class UpdateCommand extends Command
             } else {
                 echo "\n".$data;
             }
-        }
+        }*/
+
+        Artisan::call('migrate', ['--force'=> true]);
     }
 }

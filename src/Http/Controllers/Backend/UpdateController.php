@@ -15,7 +15,6 @@
 namespace Juzaweb\Core\Http\Controllers\Backend;
 
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Juzaweb\Core\Http\Controllers\BackendController;
 use Symfony\Component\Process\Process;
 
@@ -30,23 +29,21 @@ class UpdateController extends BackendController
 
     public function update()
     {
-        Artisan::call('down');
-        DB::beginTransaction();
+        //Artisan::call('down');
+        //DB::beginTransaction();
         try {
-            $cmd = 'cd ' . base_path() . ' && php composer.phar update juzaweb/*';
-            $process = new Process($cmd);
-            $process->start();
 
-            Artisan::call('migrate', ['--force'=> true]);
-            DB::commit();
+            Artisan::call('juzaweb:update');
+
+            //DB::commit();
         } catch (\Throwable $e) {
-            DB::rollBack();
+            //DB::rollBack();
             return $this->error([
                 'message' => $e->getMessage(),
             ]);
         }
 
-        Artisan::call('up');
+        //Artisan::call('up');
 
         return $this->success([
             'message' => trans('juzaweb::app.updated_successfully'),
