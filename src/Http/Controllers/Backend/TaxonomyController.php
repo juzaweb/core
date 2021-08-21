@@ -178,6 +178,6 @@ class TaxonomyController extends BackendController
     protected function getSetting($taxonomy)
     {
         $taxonomies = apply_filters('juzaweb.taxonomies', []);
-        return $taxonomies[$this->getPostType()][$taxonomy] ?? [];
+        return $taxonomies[$this->getPostType()][$taxonomy] ?? collect([]);
     }
 }

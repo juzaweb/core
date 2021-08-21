@@ -11,6 +11,8 @@
 
 $adminPrefix = config('juzaweb.admin_prefix');
 
+require __DIR__  . '/components/installer.route.php';
+
 Route::group([
     'prefix' => $adminPrefix,
     'middleware' => 'guest'

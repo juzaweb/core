@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <div class="w-100" id="banner-banner">
-                        <img src="{{ image_url(get_config('banner')) }}" alt="">
+                        <img src="{{ upload_url(get_config('banner')) }}" alt="">
                     </div>
                     <em class="description">@lang('juzaweb::app.banner_display_when_sharing_on_social_networks')</em>
                     <input type="hidden" name="banner" id="banner" class="form-control" value="{{ get_config('banner') }}" autocomplete="off" >
@@ -75,7 +75,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <div class="w-100" id="banner-tv_series">
-                        <img src="{{ image_url(get_config('tv_series_banner')) }}" alt="">
+                        <img src="{{ upload_url(get_config('tv_series_banner')) }}" alt="">
                     </div>
                     <em class="description">@lang('juzaweb::app.banner_display_when_sharing_on_social_networks')</em>
                     <input type="hidden" name="tv_series_banner" id="tv_series_banner" class="form-control" value="{{ get_config('tv_series_banner') }}" autocomplete="off" >

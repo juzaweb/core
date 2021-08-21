@@ -17,39 +17,26 @@ namespace Juzaweb\Core\Http\Controllers\Backend;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Juzaweb\Core\Http\Controllers\BackendController;
-use Juzaweb\Core\Updater\UpdaterManager;
+use Symfony\Component\Process\Process;
 
 class UpdateController extends BackendController
 {
-    protected $updater;
-
-    public function __construct(UpdaterManager $updater)
-    {
-        $this->updater = $updater;
-    }
-
     public function index()
     {
         return view('juzaweb::backend.update', [
             'title' => trans('juzaweb::app.updates'),
-            'updater' => $this->updater
         ]);
     }
 
     public function update()
     {
-        if (!$this->updater->source()->isNewVersionAvailable()) {
-            return $this->error([
-                'message' => trans('juzaweb::app.no_new_version_available'),
-            ]);
-        }
-
         Artisan::call('down');
         DB::beginTransaction();
         try {
-            $versionAvailable = $this->updater->source()->getVersionAvailable();
-            $release = $this->updater->source()->fetch($versionAvailable);
-            $this->updater->source()->update($release);
+            $cmd = 'cd ' . base_path() . ' && php composer.phar update juzaweb/*';
+            $process = new Process($cmd);
+            $process->start();
+
             Artisan::call('migrate', ['--force'=> true]);
             DB::commit();
         } catch (\Throwable $e) {
@@ -58,6 +45,7 @@ class UpdateController extends BackendController
                 'message' => $e->getMessage(),
             ]);
         }
+
         Artisan::call('up');
 
         return $this->success([

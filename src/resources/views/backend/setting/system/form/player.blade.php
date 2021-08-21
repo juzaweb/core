@@ -14,7 +14,7 @@
     <div class="form-group">
         <label class="col-form-label" for="logo">@lang('juzaweb::app.player_watermark_logo') <span class="float-right"><a href="javascript:void(0)" data-input="player_watermark_logo" data-preview="preview-watermark_logo" class="lfm"><i class="fa fa-edit"></i> @lang('juzaweb::app.change_image')</a></span></label>
         <div id="preview-watermark_logo" class="preview-image">
-            <img src="{{ image_url(get_config('player_watermark_logo')) }}" alt="" class="w-100">
+            <img src="{{ upload_url(get_config('player_watermark_logo')) }}" alt="" class="w-100">
         </div>
         <input id="player_watermark_logo" class="form-control" type="hidden" name="player_watermark_logo" value="{{ get_config('player_watermark_logo') }}">
     </div>

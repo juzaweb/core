@@ -47,7 +47,7 @@
             <div class="form-group">
                 <label class="col-form-label" for="logo">@lang('juzaweb::app.logo') <span class="float-right"><a href="javascript:void(0)" data-input="logo" data-preview="preview-logo" class="file-manager"><i class="fa fa-edit"></i> @lang('juzaweb::app.change_image')</a></span></label>
                 <div id="preview-logo">
-                    <img src="{{ image_url(get_config('logo')) }}" alt="" class="w-25">
+                    <img src="{{ upload_url(get_config('logo')) }}" alt="" class="w-25">
                 </div>
                 <input id="logo" class="form-control" type="hidden" name="logo" value="{{ get_config('logo') }}">
             </div>
@@ -55,7 +55,7 @@
             <div class="form-group">
                 <label class="col-form-label" for="icon">@lang('juzaweb::app.icon') <span class="float-right"><a href="javascript:void(0)" data-input="icon" data-preview="preview-icon" class="file-manager"><i class="fa fa-edit"></i> @lang('juzaweb::app.change_image')</a></span></label>
                 <div id="preview-icon">
-                    <img src="{{ image_url(get_config('icon')) }}" alt="" class="w-25">
+                    <img src="{{ upload_url(get_config('icon')) }}" alt="" class="w-25">
                 </div>
                 <input id="icon" class="form-control" type="hidden" name="icon" value="{{ get_config('icon') }}">
             </div>
@@ -63,7 +63,7 @@
             <div class="form-group">
                 <label class="col-form-label" for="banner">@lang('juzaweb::app.banner') <span class="float-right"><a href="javascript:void(0)" data-input="banner" data-preview="preview-banner" class="file-manager"><i class="fa fa-edit"></i> @lang('juzaweb::app.change_image')</a></span></label>
                 <div id="preview-banner">
-                    <img src="{{ image_url(get_config('banner')) }}" alt="" class="w-25">
+                    <img src="{{ upload_url(get_config('banner')) }}" alt="" class="w-25">
                 </div>
                 <input id="banner" class="form-control" type="hidden" name="banner" value="{{ get_config('banner') }}">
             </div>

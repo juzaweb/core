@@ -10,13 +10,13 @@ trait UseThumbnail
     public function getThumbnail($thumb = true) {
         if ($this->resize) {
             if ($thumb) {
-                return image_url($this->thumbnail);
+                return upload_url($this->thumbnail);
             }
             
-            return image_url(str_replace('thumbs/', '', $this->thumbnail));
+            return upload_url(str_replace('thumbs/', '', $this->thumbnail));
         }
         
-        return image_url($this->thumbnail);
+        return upload_url($this->thumbnail);
     }
 
     protected function resizeThumbnail($thumbnail) {

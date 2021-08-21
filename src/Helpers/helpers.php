@@ -104,23 +104,6 @@ function is_url($url) {
     return true;
 }
 
-function image_url($path) {
-    if (is_url($path)) {
-        return $path;
-    }
-    
-    if ($path) {
-        $storage = Storage::disk('public');
-        $file_url = $storage->url($path);
-        
-        if (file_exists($storage->path($path))) {
-            return $file_url;
-        }
-    }
-    
-    return asset('vendor/juzaweb/styles/images/thumb-default.png');
-}
-
 function copyfile_chunked($infile, $outfile) {
     $chunksize = 10 * (1024 * 1024); // 10 Megs
     

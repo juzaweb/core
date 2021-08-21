@@ -2,11 +2,13 @@
 
 namespace Juzaweb\Core\Helpers;
 
-
 class PermissionsChecker
 {
+    /**
+     * @var array
+     */
     protected $results = [];
-    
+
     /**
      * Set the result array permissions and errors.
      *
@@ -18,7 +20,7 @@ class PermissionsChecker
         
         $this->results['errors'] = null;
     }
-    
+
     /**
      * Check for the folders permissions.
      *
@@ -34,10 +36,10 @@ class PermissionsChecker
                 $this->addFile($folder, $permission, true);
             }
         }
-        
+
         return $this->results;
     }
-    
+
     /**
      * Get a folder permission.
      *
@@ -48,7 +50,7 @@ class PermissionsChecker
     {
         return substr(sprintf('%o', fileperms(base_path($folder))), -4);
     }
-    
+
     /**
      * Add the file to the list of results.
      *
@@ -64,7 +66,7 @@ class PermissionsChecker
             'isSet' => $isSet,
         ]);
     }
-    
+
     /**
      * Add the file and set the errors.
      *
@@ -75,7 +77,7 @@ class PermissionsChecker
     private function addFileAndSetErrors($folder, $permission, $isSet)
     {
         $this->addFile($folder, $permission, $isSet);
-        
+
         $this->results['errors'] = true;
     }
 }

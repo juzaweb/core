@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <div class="w-100" id="banner-movies">
-                        <img src="{{ image_url(get_config('movies_banner')) }}" alt="">
+                        <img src="{{ upload_url(get_config('movies_banner')) }}" alt="">
                     </div>
                     <em class="description">@lang('juzaweb::app.banner_display_when_sharing_on_social_networks')</em>
                     <input type="hidden" name="movies_banner" id="movies_banner" class="form-control" value="{{ get_config('movies_banner') }}" autocomplete="off" >
@@ -98,7 +98,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <div class="w-100" id="banner-blog">
-                        <img src="{{ image_url(get_config('blog_banner')) }}" alt="">
+                        <img src="{{ upload_url(get_config('blog_banner')) }}" alt="">
                     </div>
                     <em class="description">@lang('juzaweb::app.banner_display_when_sharing_on_social_networks')</em>
                     <input type="hidden" name="blog_banner" id="blog_banner" class="form-control" value="{{ get_config('blog_banner') }}" autocomplete="off" >
@@ -143,7 +143,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <div class="w-100" id="banner-latest_movies">
-                        <img src="{{ image_url(get_config('latest_movies_banner')) }}" alt="">
+                        <img src="{{ upload_url(get_config('latest_movies_banner')) }}" alt="">
                     </div>
                     <em class="description">@lang('juzaweb::app.banner_display_when_sharing_on_social_networks')</em>
                     <input type="hidden" name="latest_movies_banner" id="latest_movies_banner" class="form-control" value="{{ get_config('latest_movies_banner') }}" autocomplete="off" >

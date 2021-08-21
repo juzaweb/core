@@ -32,6 +32,9 @@
       "laravel": {
         "providers": [
           "Juzaweb\\Core\\Providers\\CoreServiceProvider"
+        ],
+        "dont-discover": [
+          "darkaonline/l5-swagger"
         ]
       }
     }

@@ -107,7 +107,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getAvatar() {
         if ($this->avatar) {
-            return image_url($this->avatar);
+            return upload_url($this->avatar);
         }
 
         return asset('vendor/juzaweb/styles/images/thumb-default.png');

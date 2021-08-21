@@ -17,6 +17,7 @@ namespace Juzaweb\Core\Providers;
 use Barryvdh\Debugbar\ServiceProvider as DebugbarServiceProvider;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Juzaweb\Core\Console\Commands\UpdateCommand;
 use Juzaweb\Core\Helpers\HookAction;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
@@ -47,6 +48,10 @@ class CoreServiceProvider extends ServiceProvider
         $this->registerSingleton();
         $this->mergeConfigFrom(__DIR__ . '/../../config/juzaweb.php', 'juzaweb');
         $this->mergeConfigFrom(__DIR__ . '/../../config/locales.php', 'locales');
+
+        $this->commands([
+            UpdateCommand::class,
+        ]);
     }
 
     protected function bootMigrations()
@@ -73,6 +78,8 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(HooksServiceProvider::class);
         $this->app->register(HookBladeServiceProvider::class);
         $this->app->register(PostTypeServiceProvider::class);
+        $this->app->register(InstallerServiceProvider::class);
+        //$this->app->register(SwaggerServiceProvider::class);
     }
 
     protected function registerSingleton()
