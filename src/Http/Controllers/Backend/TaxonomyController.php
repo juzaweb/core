@@ -2,31 +2,19 @@
 
 namespace Juzaweb\Core\Http\Controllers\Backend;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Http\Controllers\BackendController;
-use Juzaweb\Core\Repositories\TaxonomyRepository;
-use Juzaweb\Core\Services\TaxonomyService;
+use Juzaweb\Core\Models\Taxonomy;
 
 class TaxonomyController extends BackendController
 {
-    protected $taxonomyRepository;
-    protected $taxonomyService;
-
-    public function __construct(
-        TaxonomyRepository $taxonomyRepository,
-        TaxonomyService $taxonomyService
-    )
-    {
-        $this->taxonomyRepository = $taxonomyRepository;
-        $this->taxonomyService = $taxonomyService;
-    }
-
     public function index($taxonomy)
     {
         $setting = $this->getSetting($taxonomy);
-        $model = $this->taxonomyRepository->makeModel();
+        $model = new Taxonomy();
 
         return view('juzaweb::backend.taxonomy.index', [
             'title' => $setting->get('label'),
@@ -39,7 +27,7 @@ class TaxonomyController extends BackendController
     public function create($taxonomy)
     {
         $setting = $this->getSetting($taxonomy);
-        $model = $this->taxonomyRepository->makeModel();
+        $model = new Taxonomy();
         $this->addBreadcrumb([
             'title' => $setting->get('label'),
             'url' => route('admin.' . $setting->get('type') . '.taxonomy.index', [$taxonomy])
@@ -56,7 +44,7 @@ class TaxonomyController extends BackendController
     public function edit($taxonomy, $id)
     {
         $setting = $this->getSetting($taxonomy);
-        $model = $this->taxonomyRepository->find($id);
+        $model = Taxonomy::find($id);
         $model->load('parent');
 
         $this->addBreadcrumb([
@@ -81,14 +69,14 @@ class TaxonomyController extends BackendController
         $offset = $request->get('offset', 0);
         $limit = $request->get('limit', 20);
 
-        $query = $this->taxonomyRepository->makeQuery();
+        $query = Taxonomy::query();
         $query->where('taxonomy', '=', $setting->get('taxonomy'));
         $query->where('post_type', '=', $setting->get('post_type'));
 
         if ($search) {
-            $query->where(function ($subquery) use ($search) {
-                $subquery->where('name', 'like', '%'. $search .'%');
-                $subquery->where('description', 'like', '%'. $search .'%');
+            $query->where(function (Builder $q) use ($search) {
+                $q->where('name', 'like', '%'. $search .'%');
+                $q->orWhere('description', 'like', '%'. $search .'%');
             });
         }
 
@@ -112,7 +100,7 @@ class TaxonomyController extends BackendController
 
     public function store(Request $request, $taxonomy)
     {
-        $model = $this->taxonomyService->create(array_merge($request->all(), [
+        $model = Taxonomy::create(array_merge($request->all(), [
             'post_type' => $this->getPostType(),
             'taxonomy' => $taxonomy
         ]));
@@ -128,10 +116,12 @@ class TaxonomyController extends BackendController
 
     public function update(Request $request, $taxonomy, $id)
     {
-        $this->taxonomyService->update(array_merge($request->all(), [
+        $tax = Taxonomy::findOrFail($id);
+
+        $tax->update(array_merge($request->all(), [
             'post_type' => $this->getPostType(),
             'taxonomy' => $taxonomy
-        ]), $id);
+        ]));
 
         return $this->success([
             'message' => trans('juzaweb::app.successfully')
@@ -152,7 +142,7 @@ class TaxonomyController extends BackendController
 
         switch ($action) {
             case 'delete':
-                $this->taxonomyService->delete($ids);
+                Taxonomy::destroy($ids);
                 break;
         }
 
@@ -163,7 +153,7 @@ class TaxonomyController extends BackendController
 
     public function getTagComponent(Request $request, $taxonomy)
     {
-        $item = $this->taxonomyRepository->findOrFail($request->input('id'));
+        $item = Taxonomy::findOrFail($request->input('id'));
         return $this->response([
             'html' => view('juzaweb::components.tag-item', [
                 'item' => $item,

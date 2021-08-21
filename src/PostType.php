@@ -52,7 +52,7 @@ class PostType
      * Sync taxonomies post type
      *
      * @param string $postType
-     * @param \Juzaweb\Core\Models\Post $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @param array $attributes
      * @return void
      *
