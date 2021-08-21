@@ -52,7 +52,7 @@ class BackendServiceProvider extends ServiceProvider
         ], 'juzaweb_lang');
 
         $this->publishes([
-            __DIR__ . '/../../assets' => public_path('vendor/juzaweb'),
+            __DIR__ . '/../resources/assets' => public_path('vendor/juzaweb'),
         ], 'juzaweb_assets');
     }
 

@@ -51,6 +51,8 @@ return [
     'users' => 'Users',
     'comments' => 'Comments',
     'language' => 'Language',
+    'add_language_successfull' => 'Add Language successfull',
+    'language_already_exist' => 'Language already exist',
     'post_categories' => 'Post categories',
     'theme' => 'Theme',
     'themes' => 'Themes',

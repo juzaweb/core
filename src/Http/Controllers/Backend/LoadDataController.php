@@ -4,14 +4,16 @@ namespace Juzaweb\Core\Http\Controllers\Backend;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Modules\Movie\Models\BlockIp\CountryName;
 use Juzaweb\Core\Http\Controllers\BackendController;
 use Juzaweb\Core\Models\Menu;
 use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Models\Taxonomy;
+use Juzaweb\Core\Traits\ArrayPagination;
 
 class LoadDataController extends BackendController
 {
+    use ArrayPagination;
+
     public function loadData($func, Request $request) {
         if (method_exists($this, $func)) {
             return $this->{$func}($request);
@@ -115,34 +117,34 @@ class LoadDataController extends BackendController
         return response()->json($data);
     }
 
-    protected function loadCountryName(Request $request) {
-        $search = $request->get('search');
-        $explodes = $request->get('explodes');
-    
-        $query = CountryName::query();
-        $query->select([
-            'code AS id',
-            'name AS text'
-        ]);
-    
+    protected function loadLocales(Request $request)
+    {
+        $search = strtolower($request->get('search', ''));
+
+        $results = collect(config('locales'));
+
         if ($search) {
-            $query->where(function (Builder $builder) use ($search) {
-                $builder->where('code', 'like', '%'. $search .'%');
-                $builder->where('name', 'like', '%'. $search .'%');
+            $results = $results->filter(function ($item) use ($search) {
+                return strpos(strtolower($item['code']), $search) !== false ||
+                    strpos(strtolower($item['name']), $search) !== false;
             });
         }
-    
-        if ($explodes) {
-            $query->whereNotIn('code', $explodes);
-        }
-    
-        $paginate = $query->paginate(10);
-        $data['results'] = $query->get();
-        
+
+        $results = $results->map(function ($item) {
+            return [
+                'id' => $item['code'],
+                'text' => $item['name']
+            ];
+        })->values()->toArray();
+
+        $paginate = $this->arrayPaginate($results, 10);
+
+        $data['results'] = $paginate->values();
+
         if ($paginate->nextPageUrl()) {
             $data['pagination'] = ['more' => true];
         }
-    
+
         return response()->json($data);
     }
 }
