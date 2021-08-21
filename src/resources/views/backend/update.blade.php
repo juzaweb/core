@@ -9,7 +9,7 @@
             </div>
 
             <div class="alert alert-warning">Important: Before updating, please back up your database and files.</div>
-            <form method="post" action="" data-success="update_success">
+            <form method="post" action="" class="form-ajax" data-success="update_success">
                 @csrf
 
                 <button type="submit" class="btn btn-primary">
@@ -39,7 +39,8 @@
 
     <script type="text/javascript">
         function update_success() {
-            window.location = "";
+            window.location = "{{ route('admin.update.process') }}";
+            return false;
         }
     </script>
 @endsection

@@ -11,6 +11,8 @@
 namespace Juzaweb\Core\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Juzaweb\Core\Models\UpdateProcess;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Artisan;
 
@@ -20,20 +22,46 @@ class UpdateCommand extends Command
 
     public function handle()
     {
-        $cmd = 'php "'. base_path('composer.phar') .'" update juzaweb/*';
-        exec($cmd, $output);
+        $processes = UpdateProcess::where('status', '=', 'pending')
+            ->get();
 
-        /*$process = new Process($cmd);
-        $process->start();
+        foreach ($processes as $process) {
+            $process->update([
+                'status' => 'processing'
+            ]);
 
-        foreach ($process as $type => $data) {
-            if ($process::OUT === $type) {
-                echo "\n".$data;
-            } else {
-                echo "\n".$data;
+            try {
+                switch ($process->type) {
+                    case 'core':
+                        $this->updateCore();
+                }
+
+                $process->delete();
+
+            } catch (\Throwable $e) {
+                Log::error($e);
+
+                $process->update([
+                    'status' => 'error',
+                    'error' => $e->getMessage(),
+                ]);
             }
-        }*/
+        }
+    }
 
-        Artisan::call('migrate', ['--force'=> true]);
+    protected function updateCore()
+    {
+        $process = Process::fromShellCommandline(sprintf(
+            'cd %s && php composer.phar update juzaweb/*',
+            base_path()
+        ));
+
+        $process->setTimeout(3600);
+
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+
+        Artisan::call('migrate');
     }
 }

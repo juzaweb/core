@@ -21,6 +21,7 @@ use Juzaweb\Core\Console\Commands\UpdateCommand;
 use Juzaweb\Core\Helpers\HookAction;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Console\Scheduling\Schedule;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,11 @@ class CoreServiceProvider extends ServiceProvider
 
         Validator::extend('recaptcha', 'Juzaweb\Core\Validators\Recaptcha@validate');
         Schema::defaultStringLength(150);
+
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('juzaweb:update')->everyMinute();
+        });
     }
 
     public function register()

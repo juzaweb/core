@@ -16,6 +16,7 @@ namespace Juzaweb\Core\Http\Controllers\Backend;
 
 use Illuminate\Support\Facades\Artisan;
 use Juzaweb\Core\Http\Controllers\BackendController;
+use Juzaweb\Core\Models\UpdateProcess;
 use Symfony\Component\Process\Process;
 
 class UpdateController extends BackendController
@@ -27,13 +28,49 @@ class UpdateController extends BackendController
         ]);
     }
 
+    public function process()
+    {
+        $processes = UpdateProcess::where('status', '=', 'pending')
+            ->get();
+
+        if ($processes->isEmpty()) {
+            return redirect()->route('admin.update');
+        }
+
+        return view('juzaweb::backend.update_process', [
+            'title' => trans('juzaweb::app.updates'),
+            'processes' => $processes
+        ]);
+    }
+
+    public function getProcess($id)
+    {
+        $process = UpdateProcess::find($id);
+
+        if (empty($process)) {
+            return $this->success([
+                'message' => 'Update success',
+                'result' => 'ok',
+            ]);
+        }
+
+        return $this->success([
+            'message' => 'Update success',
+            'result' => $process->status,
+        ]);
+    }
+
     public function update()
     {
         //Artisan::call('down');
         //DB::beginTransaction();
+
         try {
 
-            Artisan::call('juzaweb:update');
+            UpdateProcess::create([
+                'name' => 'Core',
+                'type' => 'core',
+            ]);
 
             //DB::commit();
         } catch (\Throwable $e) {
