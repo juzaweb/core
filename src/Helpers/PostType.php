@@ -12,9 +12,10 @@
  * Time: 9:48 PM
  */
 
-namespace Juzaweb\Core\Support;
+namespace Juzaweb\Core\Helpers;
 
 use Illuminate\Support\Arr;
+use Juzaweb\Core\Facades\HookAction;
 
 class PostType
 {
@@ -24,18 +25,20 @@ class PostType
      * @param string|null $postType
      * @return \Illuminate\Support\Collection
      * */
-    public static function getPostTypes($postType = null)
+    public function getPostTypes($postType = null)
     {
         if ($postType) {
-            return Arr::get(apply_filters('juzaweb.post_types', []), $postType);
+            return Arr::get(
+                HookAction::applyFilters('juzaweb.post_types', []), $postType
+            );
         }
 
-        return apply_filters('juzaweb.post_types', []);
+        return HookAction::applyFilters('juzaweb.post_types', []);
     }
 
-    public static function getTaxonomies($postType = null)
+    public function getTaxonomies($postType = null)
     {
-        $taxonomies = collect(apply_filters('juzaweb.taxonomies', []));
+        $taxonomies = collect(HookAction::applyFilters('juzaweb.taxonomies', []));
         if (empty($taxonomies)) {
             return $taxonomies;
         }
@@ -58,9 +61,9 @@ class PostType
      *
      * @throws \Exception
      */
-    public static function syncTaxonomies($postType, $model, array $attributes)
+    public function syncTaxonomies($postType, $model, array $attributes)
     {
-        $taxonomies = PostType::getTaxonomies($postType);
+        $taxonomies = $this->getTaxonomies($postType);
         foreach ($taxonomies as $taxonomy) {
             if (method_exists($model, 'taxonomies')) {
                 $data = Arr::get($attributes, $taxonomy->get('taxonomy'), []);

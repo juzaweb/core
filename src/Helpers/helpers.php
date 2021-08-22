@@ -19,7 +19,7 @@ use Juzaweb\Theme\Models\Menu;
 use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Models\ThemeConfig;
 use Illuminate\Support\Str;
-use Juzaweb\Core\Facades\Events as Hook;
+use Juzaweb\Core\Facades\Hook;
 
 /**
  * Get client ip
@@ -206,15 +206,6 @@ function theme_setting($code) {
     return false;
 }
 
-function slider_setting($slider_id) {
-    $slider = Sliders::find($slider_id);
-    if ($slider) {
-        return json_decode($slider->content);
-    }
-    
-    return false;
-}
-
 function menu_setting($menu_id) {
     try {
         $menu = Menu::find($menu_id);
@@ -229,7 +220,12 @@ function menu_setting($menu_id) {
 }
 
 function count_unread_notifications() {
-    return Auth::user()->unreadNotifications()->count(['id']);
+    $user = Auth::user();
+    if (method_exists($user, 'unreadNotifications')) {
+        return $user->unreadNotifications()->count(['id']);
+    }
+
+    return 0;
 }
 
 function core_path($path = null) {
@@ -337,6 +333,7 @@ function do_action($tag, ...$args) {
 
 /**
  * JUZAWEB CMS: Add action to hook
+ *
  * @param string $tag The name of the filter to hook the $function_to_add callback to.
  * @param callable $callback The callback to be run when the filter is applied.
  * @param int $priority Optional. Used to specify the order in which the functions
@@ -353,6 +350,7 @@ function add_action($tag, $callback, $priority = 20, $arguments = 1) {
 
 /**
  * JUZAWEB CMS: Apply filters to value
+ *
  * @param string $tag The name of the filter hook.
  * @param mixed  $value The value to filter.
  * @param mixed  ...$args Additional parameters to pass to the callback functions.
@@ -371,10 +369,10 @@ function apply_filters($tag, $value, ...$args) {
  *                                  and functions with the same priority are executed
  *                                  in the order in which they were added to the action. Default 20.
  * @param int $arguments   Optional. The number of arguments the function accepts. Default 1.
- * @return bool
+ * @return void
  */
 function add_filters($tag, $callback, $priority = 20, $arguments = 1) {
-    return Hook::addFilter($tag, $callback, $priority, $arguments);
+    Hook::addFilter($tag, $callback, $priority, $arguments);
 }
 
 

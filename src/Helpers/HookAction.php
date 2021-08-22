@@ -14,7 +14,7 @@ namespace Juzaweb\Core\Helpers;
 
 use Juzaweb\Core\Traits\MenuHookAction;
 use Juzaweb\Core\Traits\PostTypeHookAction;
-use Tadcms\Hooks\Facades\Events as Hook;
+use Juzaweb\Core\Facades\Hook;
 
 class HookAction
 {
@@ -71,7 +71,12 @@ class HookAction
 
     public function addFilter($tag, $callback, $priority = 20, $arguments = 1)
     {
-        return Hook::addFilter($tag, $callback, $priority, $arguments);
+        Hook::addFilter($tag, $callback, $priority, $arguments);
+    }
+
+    public function applyFilters($tag, $value, ...$args)
+    {
+        return Hook::filter($tag, $value, ...$args);
     }
 
     /**

@@ -9,22 +9,16 @@
             </div>
 
             <div class="alert alert-warning">Important: Before updating, please back up your database and files.</div>
-            <form method="post" action="" class="form-ajax" data-success="update_success">
-                @csrf
 
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-cloud-upload"></i>
-                    Check for update
-                </button>
-            </form>
-
-            {{--@if($updater->source()->isNewVersionAvailable())
+            @if($updater->checkUpdate())
                 @php
-                    $versionAvailable = $updater->source()->getVersionAvailable();
+                    $versionAvailable = $updater->getVersionAvailable();
                 @endphp
 
                 <div class="alert alert-success">Version {{ $versionAvailable }} ready to update.</div>
-                <form method="post" action="">
+                <form method="post" action="" class="form-ajax" data-success="update_success">
+                    @csrf
+
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-cloud-upload"></i>
                         Update now
@@ -33,7 +27,7 @@
 
             @else
                 <div class="alert alert-secondary">{{ trans('juzaweb::app.no_new_version_available') }}</div>
-            @endif--}}
+            @endif
         </div>
     </div>
 

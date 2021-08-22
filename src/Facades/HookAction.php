@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static registerPermalink(string $key, array $args = [])
  * @method static enqueueStyle(string $handle, string $src, $deps = [], $ver = '1.0', $media = 'all')
  * @method static addSettingForm($key, $args = [])
+ * @method static mixed applyFilters($tag, $value, ...$args)
+ * @method static void addFilter($tag, $callback, $priority = 20, $arguments = 1)
+ * @method static void addAction($tag, $callback, $priority = 20, $arguments = 1)
  * @see \Juzaweb\Core\Helpers\HookAction
  **/
 class HookAction extends Facade

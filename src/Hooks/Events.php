@@ -151,7 +151,7 @@ class Events
      * @param mixed  $parameter1 A parameter
      * @param mixed  $parameter2 Another parameter
      *
-     * @return void
+     * @return mixed
      */
     public function filter()
     {

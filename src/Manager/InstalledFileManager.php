@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Helpers;
+namespace Juzaweb\Core\Manager;
 
 class InstalledFileManager
 {

@@ -15,7 +15,7 @@
 namespace Juzaweb\Core\Datatables;
 
 use Illuminate\Http\Request;
-use Juzaweb\Core\Models\Post;
+use Juzaweb\Blog\Models\Post;
 
 class PostDatatable
 {

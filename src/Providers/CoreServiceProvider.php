@@ -22,6 +22,7 @@ use Juzaweb\Core\Helpers\HookAction;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Console\Scheduling\Schedule;
+use Juzaweb\Core\Helpers\PostType;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -92,6 +93,10 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->app->singleton('juzaweb.hook', function () {
             return new HookAction();
+        });
+
+        $this->app->singleton('juzaweb.post_type', function () {
+            return new PostType();
         });
     }
 }
