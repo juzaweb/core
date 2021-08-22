@@ -13,7 +13,7 @@ namespace Juzaweb\Core\Support;
 class JuzawebApi
 {
     protected $curl;
-    protected $apiUrl = 'http://localhost:8008/api';
+    protected $apiUrl = 'https://juzaweb.com/api';
     protected $accessToken;
     protected $expiresAt;
 

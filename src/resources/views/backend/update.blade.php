@@ -33,7 +33,7 @@
 
     <script type="text/javascript">
         function update_success() {
-            window.location = "{{ route('admin.update.process') }}";
+            window.location = "";
             return false;
         }
     </script>
