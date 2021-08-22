@@ -12,7 +12,7 @@
  * Time: 9:48 PM
  */
 
-namespace Juzaweb\Core;
+namespace Juzaweb\Core\Support;
 
 use Illuminate\Support\Arr;
 
@@ -62,22 +62,20 @@ class PostType
     {
         $taxonomies = PostType::getTaxonomies($postType);
         foreach ($taxonomies as $taxonomy) {
-            if (!Arr::has($attributes, $taxonomy->get('taxonomy'))) {
-                continue;
+            if (method_exists($model, 'taxonomies')) {
+                $data = Arr::get($attributes, $taxonomy->get('taxonomy'), []);
+                $detachIds = $model->taxonomies()
+                    ->where('taxonomy', '=', $taxonomy->get('taxonomy'))
+                    ->whereNotIn('id', $data)
+                    ->pluck('id')
+                    ->toArray();
+
+                $model->taxonomies()->detach($detachIds);
+                $model->taxonomies()
+                    ->syncWithoutDetaching(combine_pivot($data, [
+                        'term_type' => $postType
+                    ]), ['term_type' => $postType]);
             }
-
-            $data = Arr::get($attributes, $taxonomy->get('taxonomy'), []);
-            $detachIds = $model->taxonomies()
-                ->where('taxonomy', '=', $taxonomy->get('taxonomy'))
-                ->whereNotIn('id', $data)
-                ->pluck('id')
-                ->toArray();
-
-            $model->taxonomies()->detach($detachIds);
-            $model->taxonomies()
-                ->syncWithoutDetaching(combine_pivot($data, [
-                    'term_type' => $postType
-                ]), ['term_type' => $postType]);
         }
     }
 }

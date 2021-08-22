@@ -18,7 +18,7 @@ use Illuminate\Support\Arr;
 trait PostTypeHookAction
 {
     /**
-     * TAD CMS: Creates or modifies a taxonomy object.
+     * JUZAWEB CMS: Creates or modifies a taxonomy object.
      * @param string $taxonomy (Required) Taxonomy key, must not exceed 32 characters.
      * @param array|string $objectType
      * @param array $args (Optional) Array of arguments for registering a post type.
@@ -71,7 +71,7 @@ trait PostTypeHookAction
     }
 
     /**
-     * TAD CMS: Registers a post type.
+     * JUZAWEB CMS: Registers a post type.
      * @param string $key (Required) Post type key. Must not exceed 20 characters
      * @param array $args Array of arguments for registering a post type.
      *
@@ -144,5 +144,10 @@ trait PostTypeHookAction
                 'supports' => []
             ]);
         }
+
+        $this->registerPermalink($key, [
+            'label' => $args->get('label'),
+            'base' => $args->get('singular'),
+        ]);
     }
 }
