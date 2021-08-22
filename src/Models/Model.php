@@ -10,13 +10,12 @@
 
 namespace Juzaweb\Core\Models;
 
-class UpdateProcess extends Model
+use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Juzaweb\Core\Traits\HasTablePrefix;
+
+class Model extends EloquentModel
 {
-    protected $table = 'update_processes';
-    protected $fillable = [
-        'name',
-        'type',
-        'status',
-        'error'
-    ];
+    use HasTablePrefix;
+
+
 }

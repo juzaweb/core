@@ -29,7 +29,7 @@ class HashedCallable
     /**
      * Generate a unique signature for the callback.
      *
-     * @return string|void
+     * @return string
      */
     protected function generateSignature()
     {
@@ -42,7 +42,7 @@ class HashedCallable
 
     /**
      * Call the callback when the class is invoked
-     * @return mixed|void
+     * @return mixed
      */
     public function __invoke()
     {

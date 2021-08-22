@@ -3,7 +3,6 @@
 namespace Juzaweb\Core\Models;
 
 use Juzaweb\Core\Traits\UseSlug;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Juzaweb\Core\Models\Tags

@@ -2,9 +2,6 @@
 
 namespace Juzaweb\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-
 /**
  * Juzaweb\Core\Models\Languages
  *

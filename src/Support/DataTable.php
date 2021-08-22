@@ -12,7 +12,7 @@
  * Time: 9:55 PM
  */
 
-namespace Juzaweb\Core\Supports;
+namespace Juzaweb\Core\Support;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;

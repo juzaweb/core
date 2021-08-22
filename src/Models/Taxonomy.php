@@ -2,7 +2,6 @@
 
 namespace Juzaweb\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Juzaweb\Core\Traits\UseSlug;
 use Juzaweb\Core\Traits\UseThumbnail;
 

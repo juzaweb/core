@@ -2,7 +2,6 @@
 
 namespace Juzaweb\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class MediaFile extends Model

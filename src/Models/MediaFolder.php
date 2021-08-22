@@ -2,8 +2,6 @@
 
 namespace Juzaweb\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class MediaFolder extends Model
 {
     protected $table = 'media_folders';

@@ -62,6 +62,6 @@ class UpdateCommand extends Command
             echo $buffer;
         });
 
-        Artisan::call('migrate');
+        $this->call('migrate');
     }
 }

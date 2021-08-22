@@ -2,8 +2,6 @@
 
 namespace Juzaweb\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Juzaweb\Core\Models\Config
  *
@@ -27,6 +25,7 @@ class Config extends Model
     public $timestamps = false;
 
     protected $table = 'configs';
+
     protected $fillable = [
         'code',
         'value'

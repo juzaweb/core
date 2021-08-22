@@ -17,7 +17,7 @@ namespace Juzaweb\Core\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use Juzaweb\Core\Http\Controllers\BackendController;
 use Illuminate\Support\Facades\Crypt;
-use Juzaweb\Core\Supports\DataTable;
+use Juzaweb\Core\Support\DataTable;
 
 class DatatableController extends BackendController
 {
