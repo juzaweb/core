@@ -1,12 +1,12 @@
-@extends('installer::layouts.master')
+@extends('juzaweb::installer.layouts.master')
 
 @section('template_title')
-    {{ trans('installer::message.requirements.template_title') }}
+    {{ trans('juzaweb::installer.requirements.template_title') }}
 @endsection
 
 @section('title')
     <i class="fa fa-list-ul fa-fw" aria-hidden="true"></i>
-    {{ trans('installer::message.requirements.title') }}
+    {{ trans('juzaweb::installer.requirements.title') }}
 @endsection
 
 @section('container')
@@ -41,7 +41,7 @@
     @if ( ! isset($requirements['errors']) && $phpSupportInfo['supported'] )
         <div class="buttons">
             <a class="button" href="{{ route('installer.permissions') }}">
-                {{ trans('installer::message.requirements.next') }}
+                {{ trans('juzaweb::installer.requirements.next') }}
                 <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>
             </a>
         </div>

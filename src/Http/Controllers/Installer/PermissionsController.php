@@ -31,6 +31,6 @@ class PermissionsController extends Controller
             config('installer.permissions')
         );
 
-        return view('installer::permissions', compact('permissions'));
+        return view('juzaweb::installer.permissions', compact('permissions'));
     }
 }

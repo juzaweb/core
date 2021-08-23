@@ -15,7 +15,7 @@
 namespace Juzaweb\Core\Helpers;
 
 
-class Intaller
+class Installer
 {
     /**
      * If application is already installed.

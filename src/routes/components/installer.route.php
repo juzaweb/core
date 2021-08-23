@@ -14,7 +14,6 @@
 
 Route::group([
     'prefix' => 'install',
-    'namespace' => 'Juzaweb\Core\Http\Controllers',
     'middleware' => ['web', 'install']
 ], function () {
     Route::get('/', 'Installer\WelcomeController@welcome')->name('installer.welcome');

@@ -2,8 +2,8 @@
 
 namespace Juzaweb\Core\Http\Controllers\Installer;
 
-use Illuminate\Routing\Controller;
-use Juzaweb\Core\Helpers\DatabaseManager;
+use Juzaweb\Core\Http\Controllers\Controller;
+use Juzaweb\Core\Manager\DatabaseManager;
 
 class DatabaseController extends Controller
 {

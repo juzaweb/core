@@ -27,7 +27,7 @@ class FinalController extends Controller
 
         event(new InstallerFinished());
 
-        return view('installer::finished', compact(
+        return view('juzaweb::installer.finished', compact(
             'finalMessages',
             'finalStatusMessage'
         ));

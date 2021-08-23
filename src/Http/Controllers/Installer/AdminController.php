@@ -25,7 +25,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('installer::admin');
+        return view('juzaweb::installer.admin');
     }
 
     public function save(Request $request)
@@ -63,6 +63,6 @@ class AdminController extends Controller
         }
 
         return redirect()->route('installer.final')
-            ->with(['message' => trans('installer::message.final.finished')]);
+            ->with(['message' => trans('juzaweb::installer.message.final.finished')]);
     }
 }

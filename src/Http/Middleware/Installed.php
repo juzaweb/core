@@ -15,16 +15,14 @@
 namespace Juzaweb\Core\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
-use Juzaweb\Core\Helpers\Intaller;
+use Juzaweb\Core\Helpers\Installer;
 
 class Installed
 {
     public function handle($request, Closure $next)
     {
-        if (!Intaller::alreadyInstalled()) {
+        if (!Installer::alreadyInstalled()) {
             if (strpos(Route::currentRouteName(), 'installer.') === false) {
                 return redirect()->route('installer.welcome');
             }

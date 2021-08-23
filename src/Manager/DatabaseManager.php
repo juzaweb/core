@@ -54,7 +54,7 @@ class DatabaseManager
             return $this->response($e->getMessage(), 'error', $outputLog);
         }
 
-        return $this->response(trans('installer::message.final.database_finished'), 'success', $outputLog);
+        return $this->response(trans('juzaweb::installer.message.final.database_finished'), 'success', $outputLog);
     }
 
     /**
@@ -71,7 +71,7 @@ class DatabaseManager
             return $this->response($e->getMessage(), 'error', $outputLog);
         }
 
-        return $this->response(trans('installer::message.final.finished'), 'success', $outputLog);
+        return $this->response(trans('juzaweb::installer.message.final.finished'), 'success', $outputLog);
     }
 
     /**

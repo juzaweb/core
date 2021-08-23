@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Juzaweb\Core\Helpers\Installer;
 
 class DbConfigServiceProvider extends ServiceProvider
 {

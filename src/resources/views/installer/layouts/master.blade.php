@@ -27,15 +27,15 @@
 
                 <ul class="step">
                     <li class="step__divider"></li>
-                    <li class="step__item {{ isActive('installer.final') }}">
+                    <li class="step__item {{ is_active_route('installer.final') }}">
                         <i class="step__icon fa fa-server" aria-hidden="true"></i>
                     </li>
                     <li class="step__divider"></li>
-                    <li class="step__item {{ isActive('installer.admin') }}">
+                    <li class="step__item {{ is_active_route('installer.admin') }}">
                         <i class="step__icon fa fa-user" aria-hidden="true"></i>
                     </li>
                     <li class="step__divider"></li>
-                    <li class="step__item {{ isActive('installer.environment') }}">
+                    <li class="step__item {{ is_active_route('installer.environment') }}">
                         @if(Request::is('install/environment') )
                             <a href="{{ route('installer.environment') }}">
                                 <i class="step__icon fa fa-cog" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
                         @endif
                     </li>
                     <li class="step__divider"></li>
-                    <li class="step__item {{ isActive('installer.permissions') }}">
+                    <li class="step__item {{ is_active_route('installer.permissions') }}">
                         @if(Request::is('install/permissions') || Request::is('install/environment') || Request::is('install/environment/wizard') || Request::is('install/environment/classic') )
                             <a href="{{ route('installer.permissions') }}">
                                 <i class="step__icon fa fa-key" aria-hidden="true"></i>
@@ -55,7 +55,7 @@
                         @endif
                     </li>
                     <li class="step__divider"></li>
-                    <li class="step__item {{ isActive('installer::requirements') }}">
+                    <li class="step__item {{ is_active_route('juzaweb::installer.requirements') }}">
                         @if(Request::is('install') || Request::is('install/requirements') || Request::is('install/permissions') || Request::is('install/environment') || Request::is('install/environment/wizard') || Request::is('install/environment/classic') )
                             <a href="{{ route('installer.requirements') }}">
                                 <i class="step__icon fa fa-list" aria-hidden="true"></i>
@@ -65,7 +65,7 @@
                         @endif
                     </li>
                     <li class="step__divider"></li>
-                    <li class="step__item {{ isActive('installer::welcome') }}">
+                    <li class="step__item {{ is_active_route('juzaweb::installer.welcome') }}">
                         @if(Request::is('install') || Request::is('install/requirements') || Request::is('install/permissions') || Request::is('install/environment') || Request::is('install/environment/wizard') || Request::is('install/environment/classic') )
                             <a href="{{ route('installer.welcome') }}">
                                 <i class="step__icon fa fa-home" aria-hidden="true"></i>

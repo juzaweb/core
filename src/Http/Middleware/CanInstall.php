@@ -3,7 +3,7 @@
 namespace Juzaweb\Core\Http\Middleware;
 
 use Closure;
-use Juzaweb\Core\Helpers\Intaller;
+use Juzaweb\Core\Helpers\Installer;
 
 class CanInstall
 {
@@ -16,7 +16,7 @@ class CanInstall
      */
     public function handle($request, Closure $next)
     {
-        if (Intaller::alreadyInstalled()) {
+        if (Installer::alreadyInstalled()) {
             return redirect()->home();
         }
 

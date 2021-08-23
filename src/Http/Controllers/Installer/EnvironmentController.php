@@ -24,7 +24,7 @@ class EnvironmentController extends Controller
     {
         $envConfig = $this->environmentManager->getEnvContent();
 
-        return view('installer::environment', compact('envConfig'));
+        return view('juzaweb::installer.environment', compact('envConfig'));
     }
 
     public function save(Request $request, Redirector $redirect)
@@ -49,7 +49,7 @@ class EnvironmentController extends Controller
             return $redirect->route('installer.environment')
                 ->withInput()
                 ->withErrors([
-                'database_connection' => trans('installer::message.environment.wizard.form.db_connection_failed'),
+                'database_connection' => trans('juzaweb::installer.message.environment.wizard.form.db_connection_failed'),
             ]);
         }
 

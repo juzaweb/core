@@ -1,12 +1,12 @@
-@extends('installer::layouts.master')
+@extends('juzaweb::installer.layouts.master')
 
 @section('template_title')
-    {{ trans('installer::message.permissions.template_title') }}
+    {{ trans('juzaweb::installer.permissions.template_title') }}
 @endsection
 
 @section('title')
     <i class="fa fa-key fa-fw" aria-hidden="true"></i>
-    {{ trans('installer::message.permissions.title') }}
+    {{ trans('juzaweb::installer.permissions.title') }}
 @endsection
 
 @section('container')
@@ -26,7 +26,7 @@
     @if ( ! isset($permissions['errors']))
         <div class="buttons">
             <a href="{{ route('installer.environmentWizard') }}" class="button">
-                {{ trans('installer::message.permissions.next') }}
+                {{ trans('juzaweb::installer.permissions.next') }}
                 <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>
             </a>
         </div>

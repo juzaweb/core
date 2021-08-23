@@ -20,6 +20,7 @@ use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Models\ThemeConfig;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Facades\Hook;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Get client ip
@@ -375,4 +376,28 @@ function add_filters($tag, $callback, $priority = 20, $arguments = 1) {
     Hook::addFilter($tag, $callback, $priority, $arguments);
 }
 
+if (! function_exists('is_active_route')) {
+    /**
+     * Set the active class to the current opened menu.
+     *
+     * @param  string|array $route
+     * @param  string       $className
+     * @return string
+     */
+    function is_active_route($route, $className = 'active')
+    {
+        if (is_array($route)) {
+            return in_array(Route::currentRouteName(), $route) ? $className : '';
+        }
 
+        if (Route::currentRouteName() == $route) {
+            return $className;
+        }
+
+        if (strpos(URL::current(), $route)) {
+            return $className;
+        }
+
+        return false;
+    }
+}
