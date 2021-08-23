@@ -12,9 +12,7 @@ namespace Juzaweb\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Juzaweb\Core\Models\UpdateProcess;
-use Symfony\Component\Process\Process;
-use Illuminate\Support\Facades\Artisan;
+use Juzaweb\Core\Manager\UpdateManager;
 
 class UpdateCommand extends Command
 {
@@ -22,46 +20,13 @@ class UpdateCommand extends Command
 
     public function handle()
     {
-        $processes = UpdateProcess::where('status', '=', 'pending')
-            ->get();
+        try {
 
-        foreach ($processes as $process) {
-            $process->update([
-                'status' => 'processing'
-            ]);
+            app(UpdateManager::class)
+                ->update('core');
 
-            try {
-                switch ($process->type) {
-                    case 'core':
-                        $this->updateCore();
-                }
-
-                $process->delete();
-
-            } catch (\Throwable $e) {
-                Log::error($e);
-
-                $process->update([
-                    'status' => 'error',
-                    'error' => $e->getMessage(),
-                ]);
-            }
+        } catch (\Throwable $e) {
+            Log::error($e);
         }
-    }
-
-    protected function updateCore()
-    {
-        $process = Process::fromShellCommandline(sprintf(
-            'cd %s && php composer.phar update juzaweb/*',
-            base_path()
-        ));
-
-        $process->setTimeout(3600);
-
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
-
-        $this->call('migrate');
     }
 }

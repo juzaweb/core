@@ -14,6 +14,7 @@ use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Support\Curl;
 use Juzaweb\Core\Support\JuzawebApi;
@@ -102,6 +103,8 @@ class UpdateManager
             File::moveDirectory($tmp->path($tmpFolder . '/unzip'), $localFolder);
             File::deleteDirectory($tmpFolder, true);
         }
+
+        Artisan::call('migrate');
 
         return true;
     }
