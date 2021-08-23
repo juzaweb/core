@@ -89,7 +89,7 @@ class Config extends Model
         ];
     }
     
-    public static function getConfig(string $key, $default = null) {
+    public static function getConfig($key, $default = null) {
         $config = Config::where('code', '=', $key)->first(['value']);
         if ($config) {
             if (is_json($config->value)) {
@@ -102,7 +102,7 @@ class Config extends Model
         return $default;
     }
     
-    public static function setConfig(string $key, $value = null) {
+    public static function setConfig($key, $value = null) {
         $setting = null;
         if (is_string($value)) {
             $setting = $value;;

@@ -12,8 +12,9 @@
  * Time: 9:56 PM
  */
 
-namespace Juzaweb\Core\Datatables;
+namespace Juzaweb\Core\Http\Datatable;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Juzaweb\Blog\Models\Post;
 
@@ -26,9 +27,9 @@ class PostDatatable
         $query = Post::query();
 
         if ($search) {
-            $query->where(function ($subquery) use ($search) {
-                $subquery->orWhere('name', 'like', '%'. $search .'%');
-                $subquery->orWhere('description', 'like', '%'. $search .'%');
+            $query->where(function (Builder $q) use ($search) {
+                $q->orWhere('name', 'like', '%'. $search .'%');
+                $q->orWhere('description', 'like', '%'. $search .'%');
             });
         }
 

@@ -2,6 +2,8 @@
 
 namespace Juzaweb\Core\Manager;
 
+use Juzaweb\Core\Helpers\Installer;
+
 class InstalledFileManager
 {
     /**

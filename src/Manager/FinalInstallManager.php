@@ -36,6 +36,7 @@ class FinalInstallManager
             if (config('installer.final.key')) {
                 Artisan::call('key:generate', ['--force'=> true], $outputLog);
             }
+
         } catch (Throwable $e) {
             return static::response($e->getMessage(), $outputLog);
         }

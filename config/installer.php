@@ -45,9 +45,11 @@ return [
     'permissions' => [
         'storage/' => '775',
         'bootstrap/cache/' => '775',
-        'juzawebcore/' => '775',
         'resources/' => '775',
         'public/' => '775',
+        'plugins/' => '775',
+        'themes/' => '775',
+        'vendor/' => '775'
     ],
 
     /*

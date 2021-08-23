@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Juzaweb\Core\Events\EnvironmentSaved;
-use Juzaweb\Core\Helpers\EnvironmentManager;
+use Juzaweb\Core\Manager\EnvironmentManager;
 use Illuminate\Support\Facades\Validator;
 
 class EnvironmentController extends Controller

@@ -27,10 +27,18 @@ class PermissionsController extends Controller
      */
     public function permissions()
     {
-        $permissions = $this->permissions->check(
-            config('installer.permissions')
-        );
+        $permissions = $this->permissions->check([
+            'storage/' => '775',
+            'bootstrap/cache/' => '775',
+            'resources/' => '775',
+            'public/' => '775',
+            'plugins/' => '775',
+            'themes/' => '775',
+            'vendor/' => '775'
+        ]);
 
-        return view('juzaweb::installer.permissions', compact('permissions'));
+        return view('juzaweb::installer.permissions',
+            compact('permissions')
+        );
     }
 }

@@ -4,8 +4,8 @@ namespace Juzaweb\Core\Http\Controllers\Installer;
 
 use Illuminate\Routing\Controller;
 use Juzaweb\Core\Events\InstallerFinished;
-use Juzaweb\Core\Helpers\FinalInstallManager;
-use Juzaweb\Core\Helpers\InstalledFileManager;
+use Juzaweb\Core\Manager\FinalInstallManager;
+use Juzaweb\Core\Manager\InstalledFileManager;
 
 class FinalController extends Controller
 {

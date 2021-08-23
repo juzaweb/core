@@ -23,9 +23,9 @@
         @endforeach
     </ul>
 
-    @if ( ! isset($permissions['errors']))
+    @if (!isset($permissions['errors']))
         <div class="buttons">
-            <a href="{{ route('installer.environmentWizard') }}" class="button">
+            <a href="{{ route('installer.environment') }}" class="button">
                 {{ trans('juzaweb::installer.permissions.next') }}
                 <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>
             </a>
