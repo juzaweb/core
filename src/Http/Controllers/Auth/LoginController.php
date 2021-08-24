@@ -55,7 +55,12 @@ class LoginController extends Controller
             'email' => $email,
             'password' => $password
         ], $remember)) {
-            do_action('auth.login.success', Auth::user());
+            /**
+             * @var User $user
+             */
+            $user = Auth::user();
+
+            do_action('auth.login.success', $user);
 
             return $this->success([
                 'message' => trans('juzaweb::app.login_successfully'),
@@ -65,7 +70,9 @@ class LoginController extends Controller
     
         do_action('auth.login.failed');
         
-        return $this->error(trans('juzaweb::message.login_form.login_failed'));
+        return $this->error([
+            'message' => trans('juzaweb::message.login_form.login_failed')
+        ]);
     }
     
     public function logout()

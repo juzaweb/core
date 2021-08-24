@@ -2,6 +2,8 @@
 
 namespace Juzaweb\Core\Models;
 
+use Illuminate\Support\Facades\Cache;
+
 /**
  * Juzaweb\Core\Models\Config
  *
@@ -23,9 +25,7 @@ namespace Juzaweb\Core\Models;
 class Config extends Model
 {
     public $timestamps = false;
-
     protected $table = 'configs';
-
     protected $fillable = [
         'code',
         'value'
@@ -90,16 +90,22 @@ class Config extends Model
     }
     
     public static function getConfig($key, $default = null) {
-        $config = Config::where('code', '=', $key)->first(['value']);
-        if ($config) {
+
+        $value = Cache::rememberForever('jw_config.' . $key, function () use ($key, $default) {
+            $config = Config::where('code', '=', $key)->first(['value']);
+
+            if (empty($config)) {
+                return $default;
+            }
+
             if (is_json($config->value)) {
                 return json_decode($config->value, true);
             }
 
-            return $config->value ?? $default;
-        }
-    
-        return $default;
+            return $config->value;
+        });
+
+        return $value;
     }
     
     public static function setConfig($key, $value = null) {
@@ -116,6 +122,10 @@ class Config extends Model
         $config = Config::firstOrNew(['code' => $key]);
         $config->code = $key;
         $config->value = $setting;
-        return $config->save();
+        $config->save();
+
+        Cache::forever('jw_config.' . $key, $setting);
+
+        return $config;
     }
 }

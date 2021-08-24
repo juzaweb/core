@@ -67,6 +67,11 @@
             <h4 class="font-weight-bold ml-3">{{ $title }}</h4>
 
             <div class="juzaweb__utils__content">
+
+                @if(session()->has('message'))
+                    <div class="alert alert-{{ session()->get('status') == 'success' ? 'success' : 'danger' }}">{{ session()->get('message') }}</div>
+                @endif
+
                 @yield('content')
             </div>
         </div>

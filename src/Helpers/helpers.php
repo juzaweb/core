@@ -22,163 +22,126 @@ use Illuminate\Support\Str;
 use Juzaweb\Core\Facades\Hook;
 use Illuminate\Support\Facades\Route;
 
-/**
- * Get client ip
- *
- * @return string
- * */
-function get_client_ip()
-{
-    // Check Cloudflare support
-    if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
-        return $_SERVER["HTTP_CF_CONNECTING_IP"];
-    }
+define('JW_DATE', 1);
+define('JW_DATE_TIME', 2);
 
-    // Get ip from server
-    return request()->ip();
-}
-
-/**
- * Get DB config
- *
- * @param string $key
- * @param mixed $default
- * @return string|array
- * */
-function get_config($key, $default = null)
-{
-    return Config::getConfig($key, $default);
-}
-
-/**
- * Get DB configs
- *
- * @param array $keys
- * @param mixed $default
- * @return string|array
- * */
-function get_configs($keys, $default = null)
-{
-    return Config::whereIn('code', $keys)
-        ->get()
-        ->mapWithKeys(function ($item) use ($default) {
-            $value = $item->value;
-            if (is_json($value)) {
-                $value = json_decode($value, true);
-            }
-
-            return [
-                $item->code => $value ?? $default
-            ];
-        })
-        ->toArray();
-}
-
-function set_config($key, $value)
-{
-    return Config::setConfig($key, $value);
-}
-
-function generate_token($string) {
-    $month = date('Y-m');
-    $ip = get_client_ip();
-    $key = 'ADAsd$#5vSD342354BCVByt&%^23vx';
-    return md5($key . $month . $key) . md5($key . $ip . $string);
-}
-
-function check_token($token, $string) {
-    if (generate_token($string) == $token) {
-        return true;
-    }
-    return false;
-}
-
-function sub_words($string, int $words = 20) {
-    return Str::words($string, $words);
-}
-
-function is_url($url) {
-    if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
-        return false;
-    }
-
-    return true;
-}
-
-function copyfile_chunked($infile, $outfile) {
-    $chunksize = 10 * (1024 * 1024); // 10 Megs
-    
+if (!function_exists('get_client_ip')) {
     /**
-     * parse_url breaks a part a URL into it's parts, i.e. host, path,
-     * query string, etc.
-     */
-    $parts = parse_url($infile);
-    $i_handle = fsockopen($parts['host'], 80, $errstr, $errcode, 5);
-    $o_handle = fopen($outfile, 'wb');
-    
-    if ($i_handle == false || $o_handle == false) {
-        return false;
-    }
-    
-    if (!empty($parts['query'])) {
-        $parts['path'] .= '?' . $parts['query'];
-    }
-    
-    /**
-     * Send the request to the server for the file
-     */
-    $request = "GET {$parts['path']} HTTP/1.1\r\n";
-    $request .= "Host: {$parts['host']}\r\n";
-    $request .= "User-Agent: Mozilla/5.0\r\n";
-    $request .= "Keep-Alive: 115\r\n";
-    $request .= "Connection: keep-alive\r\n\r\n";
-    fwrite($i_handle, $request);
-    
-    /**
-     * Now read the headers from the remote server. We'll need
-     * to get the content length.
-     */
-    $headers = array();
-    while(!feof($i_handle)) {
-        $line = fgets($i_handle);
-        if ($line == "\r\n") break;
-        $headers[] = $line;
-    }
-    
-    /**
-     * Look for the Content-Length header, and get the size
-     * of the remote file.
-     */
-    $length = 0;
-    foreach($headers as $header) {
-        if (stripos($header, 'Content-Length:') === 0) {
-            $length = (int)str_replace('Content-Length: ', '', $header);
-            break;
+     * Get client ip
+     *
+     * @return string
+     * */
+    function get_client_ip()
+    {
+        // Check Cloudflare support
+        if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+            return $_SERVER["HTTP_CF_CONNECTING_IP"];
         }
+
+        // Get ip from server
+        return request()->ip();
     }
-    
+}
+
+if (!function_exists('get_config')) {
     /**
-     * Start reading in the remote file, and writing it to the
-     * local file one chunk at a time.
+     * Get DB config
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return string|array
+     * */
+    function get_config($key, $default = null)
+    {
+        return Config::getConfig($key, $default);
+    }
+}
+
+if (!function_exists('get_configs')) {
+    /**
+     * Get multi DB configs
+     *
+     * @param array $keys
+     * @param mixed $default
+     * @return array
      */
-    $cnt = 0;
-    while(!feof($i_handle)) {
-        $buf = fread($i_handle, $chunksize);
-        $bytes = fwrite($o_handle, $buf);
-        if ($bytes == false) {
+    function get_configs($keys, $default = null)
+    {
+        $data = [];
+        foreach ($keys as $key) {
+            $data[$key] = get_config($key, $default);
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('set_config')) {
+    /**
+     * Set DB config
+     *
+     * @param string $key
+     * @param string|array $value
+     * @return \Juzaweb\Core\Models\Config
+     */
+    function set_config($key, $value)
+    {
+        return Config::setConfig($key, $value);
+    }
+}
+
+if (!function_exists('generate_token')) {
+    /**
+     * Generate static by token
+     *
+     * @param string $string
+     * @return string
+     */
+    function generate_token($string) {
+        $month = date('Y-m');
+        $ip = get_client_ip();
+        $key = 'ADAsd$#&%^23vx' . config('app.key');
+        return md5($key . $month . $key) . md5($key . $ip . $string);
+    }
+}
+
+if (!function_exists('check_token')) {
+    /**
+     * Check static token
+     *
+     * @param string $token
+     * @param string $string
+     * @return bool
+     */
+    function check_token($token, $string) {
+        if (generate_token($string) == $token) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists('sub_words')) {
+    function sub_words($string, int $words = 20) {
+        return Str::words($string, $words);
+    }
+}
+
+if (!function_exists('is_url')) {
+    /**
+     * Return true if string is a url
+     *
+     * @param string $url
+     * @return bool
+     */
+    function is_url($url) {
+        if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
             return false;
         }
-        $cnt += $bytes;
-        
-        /**
-         * We're done reading when we've reached the conent length
-         */
-        if ($cnt >= $length) break;
+
+        return true;
     }
-    
-    fclose($i_handle);
-    fclose($o_handle);
-    return $cnt;
 }
 
 function theme_config($code) {
@@ -247,24 +210,29 @@ function user_avatar($user = null) {
     }
 
     if (Auth::check()) {
-        $user = User::find(Auth::user()->id);
+        /**
+         * @var User $user
+         */
+        $user = Auth::user();
         return $user->getAvatar();
     }
 
     return asset('vendor/juzaweb/styles/images/thumb-default.png');
 }
 
-function breadcrumb($name, $add_items = [])
-{
-    $items = apply_filters($name . '_breadcrumb', []);
+if (!function_exists('breadcrumb')) {
+    function breadcrumb($name, $addItems = [])
+    {
+        $items = apply_filters($name . '_breadcrumb', []);
 
-    if ($add_items) {
-        foreach ($add_items as $add_item) {
-            $items[] = $add_item;
+        if ($addItems) {
+            foreach ($addItems as $addItem) {
+                $items[] = $addItem;
+            }
         }
-    }
 
-    return Breadcrumb::render($name, $items);
+        return Breadcrumb::render($name, $items);
+    }
 }
 
 function combine_pivot($entities, $pivots = [])
@@ -284,96 +252,125 @@ function combine_pivot($entities, $pivots = [])
     return array_combine($entities, $filler);
 }
 
-function path_url(string $url)
-{
-    if (!is_url($url)) {
-        return $url;
+if (!function_exists('path_url')) {
+    function path_url(string $url)
+    {
+        if (!is_url($url)) {
+            return $url;
+        }
+
+        return parse_url($url)['path'];
     }
-
-    return parse_url($url)['path'];
 }
 
-function upload_url($path, $default = null)
-{
-    if (is_url($path)) {
-        return $path;
+if (!function_exists('upload_url')) {
+    /**
+     * Get file upload url in public storage
+     *
+     * @param string $path
+     * @param string $default Default path if file not exists
+     * @return string
+     */
+    function upload_url($path, $default = null)
+    {
+        if (is_url($path)) {
+            return $path;
+        }
+
+        $storage = Storage::disk('public');
+        if ($storage->exists($path)) {
+            return $storage->url($path);
+        }
+
+        if ($default) {
+            return $default;
+        }
+
+        return asset('vendor/juzaweb/styles/images/thumb-default.png');
     }
+}
 
-    $storage = Storage::disk('public');
-    if ($storage->exists($path)) {
-        return $storage->url($path);
+if (!function_exists('random_string')) {
+    function random_string(int $length = 16)
+    {
+        return Str::random($length);
     }
+}
 
-    if ($default) {
-        return $default;
+if (!function_exists('is_json')) {
+    /**
+     * Rerutn true if string is a json
+     *
+     * @param string $string
+     * @return bool
+     */
+    function is_json($string) {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
     }
-
-    return asset('vendor/juzaweb/styles/images/thumb-default.png');
 }
 
-function random_string(int $length = 16)
-{
-    return Str::random($length);
+if (!function_exists('do_action')) {
+    /**
+     * JUZAWEB CMS: Do action hook
+     *
+     * @param string $tag
+     * @param mixed ...$args Additional parameters to pass to the callback functions.
+     * @return void
+     * */
+    function do_action($tag, ...$args) {
+        Hook::action($tag, ...$args);
+    }
 }
 
-function is_json($string) {
-    json_decode($string);
-    return json_last_error() === JSON_ERROR_NONE;
+if (!function_exists('add_action')) {
+    /**
+     * JUZAWEB CMS: Add action to hook
+     *
+     * @param string $tag The name of the filter to hook the $function_to_add callback to.
+     * @param callable $callback The callback to be run when the filter is applied.
+     * @param int $priority Optional. Used to specify the order in which the functions
+     *                                  associated with a particular action are executed.
+     *                                  Lower numbers correspond with earlier execution,
+     *                                  and functions with the same priority are executed
+     *                                  in the order in which they were added to the action. Default 20.
+     * @param int $arguments Optional. The number of arguments the function accepts. Default 1.
+     * @return void
+     */
+    function add_action($tag, $callback, $priority = 20, $arguments = 1) {
+        Hook::addAction($tag, $callback, $priority, $arguments);
+    }
 }
 
-/**
- * JUZAWEB CMS: Do action hook
- *
- * @param string $tag
- * @param mixed ...$args Additional parameters to pass to the callback functions.
- * @return void
- * */
-function do_action($tag, ...$args) {
-    Hook::action($tag, ...$args);
+if (!function_exists('apply_filters')) {
+    /**
+     * JUZAWEB CMS: Apply filters to value
+     *
+     * @param string $tag The name of the filter hook.
+     * @param mixed  $value The value to filter.
+     * @param mixed  ...$args Additional parameters to pass to the callback functions.
+     * @return mixed The filtered value after all hooked functions are applied to it.
+     */
+    function apply_filters($tag, $value, ...$args) {
+        return Hook::filter($tag, $value, ...$args);
+    }
 }
 
-/**
- * JUZAWEB CMS: Add action to hook
- *
- * @param string $tag The name of the filter to hook the $function_to_add callback to.
- * @param callable $callback The callback to be run when the filter is applied.
- * @param int $priority Optional. Used to specify the order in which the functions
- *                                  associated with a particular action are executed.
- *                                  Lower numbers correspond with earlier execution,
- *                                  and functions with the same priority are executed
- *                                  in the order in which they were added to the action. Default 20.
- * @param int $arguments Optional. The number of arguments the function accepts. Default 1.
- * @return void
- */
-function add_action($tag, $callback, $priority = 20, $arguments = 1) {
-    Hook::addAction($tag, $callback, $priority, $arguments);
-}
-
-/**
- * JUZAWEB CMS: Apply filters to value
- *
- * @param string $tag The name of the filter hook.
- * @param mixed  $value The value to filter.
- * @param mixed  ...$args Additional parameters to pass to the callback functions.
- * @return mixed The filtered value after all hooked functions are applied to it.
- */
-function apply_filters($tag, $value, ...$args) {
-    return Hook::filter($tag, $value, ...$args);
-}
-
-/**
- * @param string $tag The name of the filter to hook the $function_to_add callback to.
- * @param callable $callback The callback to be run when the filter is applied.
- * @param int $priority Optional. Used to specify the order in which the functions
- *                                  associated with a particular action are executed.
- *                                  Lower numbers correspond with earlier execution,
- *                                  and functions with the same priority are executed
- *                                  in the order in which they were added to the action. Default 20.
- * @param int $arguments   Optional. The number of arguments the function accepts. Default 1.
- * @return void
- */
-function add_filters($tag, $callback, $priority = 20, $arguments = 1) {
-    Hook::addFilter($tag, $callback, $priority, $arguments);
+if (!function_exists('add_filters')) {
+    /**
+     * @param string $tag The name of the filter to hook the $function_to_add callback to.
+     * @param callable $callback The callback to be run when the filter is applied.
+     * @param int $priority Optional. Used to specify the order in which the functions
+     *                                  associated with a particular action are executed.
+     *                                  Lower numbers correspond with earlier execution,
+     *                                  and functions with the same priority are executed
+     *                                  in the order in which they were added to the action. Default 20.
+     * @param int $arguments   Optional. The number of arguments the function accepts. Default 1.
+     * @return void
+     */
+    function add_filters($tag, $callback, $priority = 20, $arguments = 1) {
+        Hook::addFilter($tag, $callback, $priority, $arguments);
+    }
 }
 
 if (! function_exists('is_active_route')) {
@@ -399,5 +396,39 @@ if (! function_exists('is_active_route')) {
         }
 
         return false;
+    }
+}
+
+if (!function_exists('date_format')) {
+    /**
+     * Format date to global format cms
+     *
+     * @param string $date
+     * @param int $format // JW_DATE || JW_DATE_TIME
+     * @return string
+     */
+    function date_format($date, $format = JW_DATE_TIME)
+    {
+        $dateFormat = get_config('date_format', 'F j, Y');
+        switch ($format) {
+            case JW_DATE:
+                return date($dateFormat, $date);
+        }
+
+        $timeFormat = get_config('time_format', 'g:i a');
+
+        return date($dateFormat . ' ' . $timeFormat, $date);
+    }
+}
+
+if (!function_exists('jw_current_user')) {
+    /**
+     * Get current login user
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable|User|null
+     */
+    function jw_current_user()
+    {
+        return Auth::user();
     }
 }

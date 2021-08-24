@@ -84,20 +84,23 @@
         </div>
     </div>--}}
 
+    @php
+        $user = jw_current_user();
+    @endphp
     <div class="dropdown">
         <a href="" class="dropdown-toggle text-nowrap" data-toggle="dropdown" aria-expanded="false" data-offset="5,15">
-            <img class="dropdown-toggle-avatar" src="{{ user_avatar() }}" alt="User avatar" width="30" height="30"/>
+            <img class="dropdown-toggle-avatar" src="{{ $user->getAvatar() }}" alt="User avatar" width="30" height="30"/>
         </a>
 
         <div class="dropdown-menu dropdown-menu-right" role="menu">
-            <a class="dropdown-item" href="{{ route('admin.users.edit', [Auth::id()]) }}">
+            <a class="dropdown-item" href="{{ route('admin.users.edit', [$user->id]) }}">
                 <i class="dropdown-icon fe fe-user"></i>
-                @lang('juzaweb::app.profile')
+                {{ trans('juzaweb::app.profile') }}
             </a>
 
             <div class="dropdown-divider"></div>
             <a href="{{ route('auth.logout') }}" class="dropdown-item" data-turbolinks="false">
-                <i class="dropdown-icon fe fe-log-out"></i> @lang('juzaweb::app.logout')
+                <i class="dropdown-icon fe fe-log-out"></i> {{ trans('juzaweb::app.logout') }}
             </a>
         </div>
     </div>

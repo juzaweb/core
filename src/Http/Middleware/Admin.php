@@ -10,7 +10,7 @@ class Admin
     public function handle($request, Closure $next)
     {
         if (!Auth::check()) {
-            return redirect()->route('auth.login');
+            return redirect()->route('admin.login');
         }
         
         if (!Auth::user()->is_admin) {
