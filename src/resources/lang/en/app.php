@@ -292,5 +292,9 @@ return [
     'add_menu_items' => 'Add menu items',
     'menu_structure' => 'Menu structure',
     'delete_menu' => 'Delete menu',
+    'create_new_menu' => 'Create new menu',
+    'select_menu_to_edit' => 'Select menu to edit',
+    'link_text' => 'Link text',
+    'latest' => 'Latest',
 ];
 

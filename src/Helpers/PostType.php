@@ -33,7 +33,7 @@ class PostType
             );
         }
 
-        return HookAction::applyFilters('juzaweb.post_types', []);
+        return collect(HookAction::applyFilters('juzaweb.post_types', []));
     }
 
     public function getTaxonomies($postType = null)

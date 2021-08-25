@@ -28,8 +28,8 @@ trait PostTypeHookAction
         foreach ($objectTypes as $objectType) {
             $type = Str::singular($objectType);
             $opts = [
-                'label' => '',
                 'label_type' => ucfirst($type) .' '. $args['label'],
+                'priority' => 20,
                 'description' => '',
                 'hierarchical' => false,
                 'parent' => $objectType,
@@ -44,27 +44,35 @@ trait PostTypeHookAction
                 ],
             ];
 
-            $iargs = $args;
-            $iargs['type'] = $type;
-            $iargs['post_type'] = $objectType;
-            $iargs['taxonomy'] = $taxonomy;
-            $iargs['singular'] = Str::singular($taxonomy);
-            $iargs = new Collection(array_merge($opts, $iargs));
+            $args['type'] = $type;
+            $args['post_type'] = $objectType;
+            $args['taxonomy'] = $taxonomy;
+            $args['singular'] = Str::singular($taxonomy);
+            $args = new Collection(array_merge($opts, $args));
 
-            add_filters('juzaweb.taxonomies', function ($items) use ($taxonomy, $objectType, $iargs) {
-                $items[$objectType][$taxonomy] = $iargs;
+            add_filters('juzaweb.taxonomies', function ($items) use ($taxonomy, $objectType, $args) {
+                $items[$objectType][$taxonomy] = $args;
                 return $items;
-            });
+            }, $args->get('priority'));
 
-            $this->addAdminMenu(
-                $iargs->get('label'),
-                $iargs->get('menu_slug'),
-                [
-                    'icon' => $iargs->get('menu_icon', 'fa fa-list'),
-                    'parent' => $iargs->get('parent'),
-                    'position' => $iargs->get('menu_position')
-                ]
-            );
+            if ($args->get('show_in_menu')) {
+                $this->addAdminMenu(
+                    $args->get('label'),
+                    $args->get('menu_slug'),
+                    [
+                        'icon' => $args->get('menu_icon', 'fa fa-list'),
+                        'parent' => $args->get('parent'),
+                        'position' => $args->get('menu_position')
+                    ]
+                );
+            }
+
+            if ($args->get('rewrite')) {
+                $this->registerPermalink($args->get('menu_slug'), [
+                    'label' => $args->get('label'),
+                    'base' => $type . '-' . $taxonomy,
+                ]);
+            }
         }
     }
 
@@ -81,9 +89,13 @@ trait PostTypeHookAction
             throw new \Exception('Post type model is required. E.x: \\Juzaweb\Core\\Models\\Post.');
         }
 
+        if (empty($args['label'])) {
+            throw new \Exception('Post type label is required.');
+        }
+
         $args = array_merge([
-            'label' => '',
             'description' => '',
+            'priority' => 20,
             'show_in_menu' => true,
             'rewrite' => true,
             'menu_position' => 20,
@@ -98,7 +110,7 @@ trait PostTypeHookAction
         add_filters('juzaweb.post_types', function ($items) use ($args) {
             $items[$args->get('key')] = $args;
             return $items;
-        });
+        }, $args->get('priority'));
 
         if ($args->get('show_in_menu')) {
             $this->registerMenuPostType($key, $args);
@@ -108,6 +120,7 @@ trait PostTypeHookAction
         if (in_array('category', $supports)) {
             $this->registerTaxonomy('categories', $key, [
                 'label' => trans('juzaweb::app.categories'),
+                'priority' => $args->get('priority'),
                 'menu_position' => 4,
                 'show_in_menu' => $args->get('show_in_menu'),
                 'rewrite' => $args->get('rewrite'),
@@ -117,6 +130,7 @@ trait PostTypeHookAction
         if (in_array('tag', $args['supports'])) {
             $this->registerTaxonomy('tags', $key, [
                 'label' => trans('juzaweb::app.tags'),
+                'priority' => $args->get('priority'),
                 'menu_position' => 15,
                 'show_in_menu' => $args->get('show_in_menu'),
                 'rewrite' => $args->get('rewrite'),
@@ -124,10 +138,13 @@ trait PostTypeHookAction
             ]);
         }
 
-        $this->registerPermalink($key, [
-            'label' => $args->get('label'),
-            'base' => $args->get('singular'),
-        ]);
+        if ($args->get('rewrite')) {
+            $this->registerPermalink($key, [
+                'label' => $args->get('label'),
+                'base' => $args->get('singular'),
+                'priority' => $args->get('priority'),
+            ]);
+        }
     }
 
     /**

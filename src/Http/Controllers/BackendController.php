@@ -14,8 +14,6 @@
 
 namespace Juzaweb\Core\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Juzaweb\Core\Facades\PostType;
 use Juzaweb\Core\Traits\ResponseMessage;
 

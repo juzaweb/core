@@ -12,6 +12,7 @@
 
 namespace Juzaweb\Core\Helpers;
 
+use Illuminate\Support\Collection;
 use Juzaweb\Core\Traits\MenuHookAction;
 use Juzaweb\Core\Traits\PostTypeHookAction;
 use Juzaweb\Core\Facades\Hook;
@@ -50,18 +51,19 @@ class HookAction
             throw new \Exception('Permalink args default_base is required');
         }
 
-        add_filters('juzaweb.permalinks', function ($items) use ($key, $args) {
-            array_merge([
-                'label' => '',
-                'base' => '',
-                'callback' => '',
-                'position' => 20,
-            ], $args);
+        $args = new Collection(array_merge([
+            'label' => '',
+            'base' => '',
+            'callback' => '',
+            'priority' => 20,
+            'position' => 20,
+        ], $args));
 
+        add_filters('juzaweb.permalinks', function ($items) use ($key, $args) {
             $args['key'] = $key;
-            $items[$key] = collect($args);
+            $items[$key] = $args;
             return $items;
-        });
+        }, $args->get('priority'));
     }
 
     public function addAction($tag, $callback, $priority = 20, $arguments = 1)
