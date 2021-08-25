@@ -1,19 +1,15 @@
 <?php
 /**
- * @package    tadcms\tadcms
+ * @package    juzaweb/laravel-cms
  * @author     The Anh Dang <dangtheanh16@gmail.com>
- * @link       https://github.com/tadcms/tadcms
+ * @link       https://juzaweb.com/cms
  * @license    MIT
- *
- * Created by JUZAWEB.
- * Date: 5/3/2021
- * Time: 11:05 AM
  */
 
 namespace Juzaweb\Core\Traits;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
 
 trait PostTypeHookAction
 {
@@ -40,6 +36,8 @@ trait PostTypeHookAction
                 'menu_slug' => $type . '.' . $taxonomy,
                 'menu_position' => 20,
                 'menu_icon' => 'fa fa-list',
+                'show_in_menu' => true,
+                'rewrite' => true,
                 'supports' => [
                     'thumbnail',
                     'hierarchical'
@@ -51,7 +49,7 @@ trait PostTypeHookAction
             $iargs['post_type'] = $objectType;
             $iargs['taxonomy'] = $taxonomy;
             $iargs['singular'] = Str::singular($taxonomy);
-            $iargs = collect(array_merge($opts, $iargs));
+            $iargs = new Collection(array_merge($opts, $iargs));
 
             add_filters('juzaweb.taxonomies', function ($items) use ($taxonomy, $objectType, $iargs) {
                 $items[$objectType][$taxonomy] = $iargs;
@@ -80,12 +78,14 @@ trait PostTypeHookAction
     public function registerPostType($key, $args = [])
     {
         if (empty($args['model'])) {
-            throw new \Exception('Post type model is required. E.x: \\Juzaweb\Core\\PostType\\Models\\Post.');
+            throw new \Exception('Post type model is required. E.x: \\Juzaweb\Core\\Models\\Post.');
         }
 
         $args = array_merge([
             'label' => '',
             'description' => '',
+            'show_in_menu' => true,
+            'rewrite' => true,
             'menu_position' => 20,
             'menu_icon' => 'fa fa-list-alt',
             'supports' => [],
@@ -93,13 +93,49 @@ trait PostTypeHookAction
 
         $args['key'] = $key;
         $args['singular'] = Str::singular($key);
-        $args = collect($args);
+        $args = new Collection($args);
 
         add_filters('juzaweb.post_types', function ($items) use ($args) {
             $items[$args->get('key')] = $args;
             return $items;
         });
 
+        if ($args->get('show_in_menu')) {
+            $this->registerMenuPostType($key, $args);
+        }
+
+        $supports = $args->get('supports', []);
+        if (in_array('category', $supports)) {
+            $this->registerTaxonomy('categories', $key, [
+                'label' => trans('juzaweb::app.categories'),
+                'menu_position' => 4,
+                'show_in_menu' => $args->get('show_in_menu'),
+                'rewrite' => $args->get('rewrite'),
+            ]);
+        }
+
+        if (in_array('tag', $args['supports'])) {
+            $this->registerTaxonomy('tags', $key, [
+                'label' => trans('juzaweb::app.tags'),
+                'menu_position' => 15,
+                'show_in_menu' => $args->get('show_in_menu'),
+                'rewrite' => $args->get('rewrite'),
+                'supports' => []
+            ]);
+        }
+
+        $this->registerPermalink($key, [
+            'label' => $args->get('label'),
+            'base' => $args->get('singular'),
+        ]);
+    }
+
+    /**
+     * @param string $key
+     * @param Collection $args
+     */
+    protected function registerMenuPostType($key, $args)
+    {
         $this->addAdminMenu(
             $args->get('label'),
             $key,
@@ -128,26 +164,5 @@ trait PostTypeHookAction
                 'parent' => $key,
             ]
         );
-
-        $supports = $args->get('supports', []);
-        if (in_array('category', $supports)) {
-            $this->registerTaxonomy('categories', $key, [
-                'label' => trans('juzaweb::app.categories'),
-                'menu_position' => 4,
-            ]);
-        }
-
-        if (in_array('tag', $args['supports'])) {
-            $this->registerTaxonomy('tags', $key, [
-                'label' => trans('juzaweb::app.tags'),
-                'menu_position' => 15,
-                'supports' => []
-            ]);
-        }
-
-        $this->registerPermalink($key, [
-            'label' => $args->get('label'),
-            'base' => $args->get('singular'),
-        ]);
     }
 }

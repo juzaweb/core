@@ -93,4 +93,19 @@ class HookAction
             return $items;
         });
     }
+
+    public function addMetaBox($key, $title, $args = [])
+    {
+        add_filters('juzaweb.menu_boxs', function ($items) use ($key, $title, $args) {
+            array_merge([
+                'title' => $title,
+                'callback' => '',
+                'position' => 20,
+            ], $args);
+
+            $args['key'] = $key;
+            $items[$key] = collect($args);
+            return $items;
+        });
+    }
 }

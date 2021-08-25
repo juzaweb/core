@@ -289,5 +289,8 @@ return [
     'language_code' => 'Code',
     'actions' => 'Actions',
     'type' => 'Type',
+    'add_menu_items' => 'Add menu items',
+    'menu_structure' => 'Menu structure',
+    'delete_menu' => 'Delete menu',
 ];
 

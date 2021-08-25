@@ -13,7 +13,11 @@ namespace Juzaweb\Core\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Juzaweb\Core\Helpers\HookAction
+ * @method static \Illuminate\Support\Collection getPostTypes($postType = null)
+ * @method static \Illuminate\Support\Collection getTaxonomies($postType = null)
+ * @method static void syncTaxonomies($postType, $model, array $attributes)
+ *
+ * @see \Juzaweb\Core\Helpers\PostType
  */
 class PostType extends Facade
 {
