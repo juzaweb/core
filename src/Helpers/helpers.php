@@ -17,7 +17,7 @@ use Juzaweb\Core\Helpers\Breadcrumb;
 use Juzaweb\Core\Models\Config;
 use Juzaweb\Theme\Models\Menu;
 use Juzaweb\Core\Models\User;
-use Juzaweb\Core\Models\ThemeConfig;
+use Juzaweb\Theme\Models\ThemeConfig;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Facades\Hook;
 use Illuminate\Support\Facades\Route;
