@@ -296,5 +296,6 @@ return [
     'select_menu_to_edit' => 'Select menu to edit',
     'link_text' => 'Link text',
     'latest' => 'Latest',
+    'header' => 'Header',
 ];
 
