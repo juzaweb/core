@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 class Model extends EloquentModel
 {
     protected $prefix;
+    protected $tableWithPrefix;
 
     /**
      * Get the prefix associated with the model.
@@ -35,7 +36,7 @@ class Model extends EloquentModel
      */
     public function getTable()
     {
-        if (isset($this->tableWithPrefix)) {
+        if (!empty($this->tableWithPrefix)) {
             return $this->tableWithPrefix;
         }
 
