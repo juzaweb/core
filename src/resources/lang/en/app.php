@@ -297,5 +297,6 @@ return [
     'link_text' => 'Link text',
     'latest' => 'Latest',
     'header' => 'Header',
+    'theme_editor' => 'Theme Editor',
 ];
 
