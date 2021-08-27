@@ -8,6 +8,8 @@
  * @license    MIT
  */
 
+namespace Juzaweb\Core;
+
 /**
  * @OA\Info(
  *      version="1.0.0",
@@ -18,3 +20,8 @@
  *      )
  * )
  */
+
+class Anotations
+{
+
+}
