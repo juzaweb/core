@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.2.5|^8.0",
         "guzzlehttp/guzzle": "^6.5",
+        "intervention/image": "^2.5",
         "laravelium/sitemap": "6.*",
         "pion/laravel-chunk-upload": "^1.4",
         "sokil/php-vast": "^2.0",

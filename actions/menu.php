@@ -23,7 +23,7 @@ HookAction::addAdminMenu(
     ]
 );
 
-HookAction::addAdminMenu(
+/*HookAction::addAdminMenu(
     'juzaweb::app.dashboard',
     'dashboard',
     [
@@ -41,7 +41,7 @@ HookAction::addAdminMenu(
         'position' => 2,
         'parent' => 'dashboard',
     ]
-);
+);*/
 
 /*HookAction::addAdminMenu(
     trans('juzaweb::app.media'),
