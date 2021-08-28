@@ -16,7 +16,9 @@ namespace Juzaweb\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Juzaweb\Blog\Models\Comment;
 use Juzaweb\Core\Facades\PostType;
+use Juzaweb\Core\Models\Taxonomy;
 
 /**
  * @method \Illuminate\Database\Eloquent\Builder wherePublish()
@@ -29,14 +31,14 @@ trait PostTypeModel
 
     public function taxonomies()
     {
-        return $this->belongsToMany('Juzaweb\Core\Models\Taxonomy', 'term_taxonomies', 'term_id', 'taxonomy_id')
+        return $this->belongsToMany(Taxonomy::class, 'term_taxonomies', 'term_id', 'taxonomy_id')
             ->withPivot(['term_type'])
-            ->wherePivot('term_type', '=', $this->getPostType());
+            ->wherePivot('term_type', '=', $this->getPostType('key'));
     }
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'object_id', 'id')->where('object_type', '=', $this->getPostType());
+        return $this->hasMany(Comment::class, 'object_id', 'id')->where('object_type', '=', $this->getPostType('key'));
     }
 
     public function syncTaxonomies(array $attributes)
@@ -58,7 +60,7 @@ trait PostTypeModel
             return;
         }
 
-        $postType = $postType ?? $this->getPostType();
+        $postType = $postType ?? $this->getPostType('key');
         $data = Arr::get($attributes, $taxonomy, []);
         $detachIds = $this->taxonomies()
             ->where('taxonomy', '=', $taxonomy)
@@ -82,18 +84,17 @@ trait PostTypeModel
         ];
     }
 
-    public function getPostType()
+    public function getPostType($key = null)
     {
-        if (empty($this->postType)) {
-            /*$postType = collect(PostType::getPostTypes())
-                ->where('model', static::class)
-                ->first();
+        $postType = PostType::getPostTypes()
+            ->where('model', static::class)
+            ->first();
 
-            return $postType->get('key');*/
-            return $this->getTable();
+        if (empty($key)) {
+            return $postType;
         }
 
-        return $this->postType;
+        return $postType->get($key);
     }
 
     /**
@@ -133,5 +134,35 @@ trait PostTypeModel
             $q->whereIn($q->getModel()->getTable() . '.id', $taxonomies);
         });
         return $builder;
+    }
+
+    public function getPermalink($key = null)
+    {
+        $permalink = apply_filters('juzaweb.permalinks', []);
+        $permalink = Arr::get($permalink, $this->getPostType('key'));
+
+        if (empty($permalink)) {
+            return false;
+        }
+
+        if (empty($key)) {
+            return $permalink;
+        }
+
+        return $permalink->get($key);
+    }
+
+    public function getLink()
+    {
+        if ($this->getTable() == 'pages') {
+            return url()->to($this->slug . '/');
+        }
+
+        $permalink = $this->getPermalink('base');
+        if (empty($permalink)) {
+            return false;
+        }
+
+        return url()->to($permalink . '/' . $this->slug . '/');
     }
 }

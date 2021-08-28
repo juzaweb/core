@@ -37,11 +37,11 @@ class HookAction
     /**
      * Registers menu item in menu builder.
      *
-     * @param string $key
+     * @param string $postType
      * @param array $args
      * @throws \Exception
      * */
-    public function registerPermalink($key, $args = [])
+    public function registerPermalink($postType, $args = [])
     {
         if (empty($args['label'])) {
             throw new \Exception('Permalink args label is required');
@@ -59,9 +59,9 @@ class HookAction
             'position' => 20,
         ], $args));
 
-        add_filters('juzaweb.permalinks', function ($items) use ($key, $args) {
-            $args['key'] = $key;
-            $items[$key] = $args;
+        add_filters('juzaweb.permalinks', function ($items) use ($postType, $args) {
+            $args['key'] = $postType;
+            $items[$postType] = collect($args);
             return $items;
         }, $args->get('priority'));
     }

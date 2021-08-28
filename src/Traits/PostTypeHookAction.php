@@ -153,6 +153,8 @@ trait PostTypeHookAction
      */
     protected function registerMenuPostType($key, $args)
     {
+        $supports = $args->get('supports', []);
+
         $this->addAdminMenu(
             $args->get('label'),
             $key,
@@ -181,5 +183,17 @@ trait PostTypeHookAction
                 'parent' => $key,
             ]
         );
+
+        if (in_array('comment', $supports)) {
+            $this->addAdminMenu(
+                trans('juzaweb::app.comments'),
+                'comments',
+                [
+                    'icon' => 'fa fa-comments',
+                    'position' => 10,
+                    'parent' => $key,
+                ]
+            );
+        }
     }
 }
