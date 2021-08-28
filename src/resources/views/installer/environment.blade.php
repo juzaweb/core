@@ -23,6 +23,12 @@
                 <option value="pgsql">{{ trans('juzaweb::installer.environment.wizard.form.db_connection_label_pgsql') }}</option>
                 <option value="sqlsrv">{{ trans('juzaweb::installer.environment.wizard.form.db_connection_label_sqlsrv') }}</option>
             </select>
+            @if ($errors->has('database_connection'))
+                <span class="error-block">
+                    <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                    {{ $errors->first('database_connection') }}
+                </span>
+            @endif
         </div>
 
         <div class="form-group {{ $errors->has('database_hostname') ? ' has-error ' : '' }}">
@@ -55,7 +61,7 @@
             <label for="database_name">
                 {{ trans('juzaweb::installer.environment.wizard.form.db_name_label') }}
             </label>
-            <input type="text" name="database_name" id="database_name" value="" placeholder="{{ trans('juzaweb::installer.environment.wizard.form.db_name_placeholder') }}" autocomplete="off" />
+            <input type="text" name="database_name" id="database_name" value="{{ old('database_name') }}" placeholder="{{ trans('juzaweb::installer.environment.wizard.form.db_name_placeholder') }}" autocomplete="off" />
             @if ($errors->has('database_name'))
                 <span class="error-block">
                     <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
@@ -68,7 +74,7 @@
             <label for="database_username">
                 {{ trans('juzaweb::installer.environment.wizard.form.db_username_label') }}
             </label>
-            <input type="text" name="database_username" id="database_username" value="" placeholder="{{ trans('juzaweb::installer.environment.wizard.form.db_username_placeholder') }}" autocomplete="off" />
+            <input type="text" name="database_username" id="database_username" value="{{ old('database_username') }}" placeholder="{{ trans('juzaweb::installer.environment.wizard.form.db_username_placeholder') }}" autocomplete="off" />
             @if ($errors->has('database_username'))
                 <span class="error-block">
                     <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
