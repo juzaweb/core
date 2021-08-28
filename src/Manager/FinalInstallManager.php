@@ -19,6 +19,7 @@ class FinalInstallManager
         $outputLog = new BufferedOutput;
 
         $this->generateKey($outputLog);
+        $this->publishStorage($outputLog);
         $this->publishVendorAssets($outputLog);
 
         return $outputLog->fetch();
@@ -36,6 +37,18 @@ class FinalInstallManager
             if (config('installer.final.key')) {
                 Artisan::call('key:generate', ['--force'=> true], $outputLog);
             }
+
+        } catch (Throwable $e) {
+            return static::response($e->getMessage(), $outputLog);
+        }
+
+        return $outputLog;
+    }
+
+    private static function publishStorage(BufferedOutput $outputLog)
+    {
+        try {
+            Artisan::call('storage:link', [], $outputLog);
 
         } catch (Throwable $e) {
             return static::response($e->getMessage(), $outputLog);

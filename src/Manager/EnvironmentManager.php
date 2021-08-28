@@ -73,12 +73,12 @@ class EnvironmentManager
      */
     public function saveFileClassic(Request $input)
     {
-        $message = trans('juzaweb::installer.message.environment.success');
+        $message = trans('juzaweb::installer.environment.success');
 
         try {
             file_put_contents($this->envPath, $input->get('envConfig'));
         } catch (Exception $e) {
-            $message = trans('juzaweb::installer.message.environment.errors');
+            $message = trans('juzaweb::installer.environment.errors');
         }
 
         return $message;
@@ -92,7 +92,7 @@ class EnvironmentManager
      */
     public function saveFileWizard(Request $request)
     {
-        $results = trans('juzaweb::installer.message.environment.success');
+        $results = trans('juzaweb::installer.environment.success');
         $url = url('/');
 
         $envFileData =
@@ -133,7 +133,7 @@ class EnvironmentManager
         try {
             file_put_contents($this->envPath, $envFileData);
         } catch (Exception $e) {
-            $results = trans('juzaweb::installer.message.environment.errors');
+            $results = trans('juzaweb::installer.environment.errors');
         }
 
         return $results;

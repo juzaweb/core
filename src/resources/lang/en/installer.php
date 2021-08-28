@@ -85,6 +85,8 @@ return [
                 'db_username_placeholder' => 'Database User Name',
                 'db_password_label' => 'Database Password',
                 'db_password_placeholder' => 'Database Password',
+                'db_prefix_label' => 'Database Prefix',
+                'db_prefix_placeholder' => 'Database Prefix',
                 'name' => 'Name',
                 'email' => 'Email',
                 'password' => 'Password',
@@ -171,7 +173,7 @@ return [
         'final' => [
             'title' => 'Finished',
             'finished' => 'Application\'s database has been successfully updated.',
-            'exit' => 'Click here to exit',
+            'exit' => 'Click here to login admin',
         ],
 
         'log' => [

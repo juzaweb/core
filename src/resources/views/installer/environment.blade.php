@@ -96,6 +96,19 @@
             @endif
         </div>
 
+        <div class="form-group {{ $errors->has('database_prefix') ? ' has-error ' : '' }}">
+            <label for="database_prefix">
+                {{ trans('juzaweb::installer.environment.wizard.form.db_prefix_label') }}
+            </label>
+            <input type="text" name="database_prefix" id="database_prefix" value="{{ old('database_prefix', 'jw_') }}" placeholder="{{ trans('juzaweb::installer.environment.wizard.form.db_prefix_placeholder') }}" autocomplete="off" />
+            @if ($errors->has('database_prefix'))
+                <span class="error-block">
+                    <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                    {{ $errors->first('database_prefix') }}
+                </span>
+            @endif
+        </div>
+
         <div class="buttons">
             <button class="button btn-submit">
                 {{ trans('juzaweb::installer.environment.wizard.form.buttons.setup_application') }}

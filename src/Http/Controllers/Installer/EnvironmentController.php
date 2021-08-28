@@ -35,6 +35,7 @@ class EnvironmentController extends Controller
             'database_name'         => 'required|string|max:150',
             'database_username'     => 'required|string|max:150',
             'database_password'     => 'nullable|string|max:150',
+            'database_prefix'     => 'nullable|string|max:10',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -49,7 +50,7 @@ class EnvironmentController extends Controller
             return $redirect->route('installer.environment')
                 ->withInput()
                 ->withErrors([
-                'database_connection' => trans('juzaweb::installer.message.environment.wizard.form.db_connection_failed'),
+                'database_connection' => trans('juzaweb::installer.environment.wizard.form.db_connection_failed'),
             ]);
         }
 
