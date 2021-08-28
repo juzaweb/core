@@ -14,13 +14,9 @@
 
 namespace Juzaweb\Core\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
-use Juzaweb\Core\Traits\ResourceModel;
-use Juzaweb\Core\Traits\UseChangeBy;
-use Juzaweb\Core\Traits\UseSlug;
-use Juzaweb\Core\Traits\UseThumbnail;
-use Juzaweb\Core\Models\Comment;
-use Juzaweb\Core;
+use Juzaweb\Core\Facades\PostType;
 
 /**
  * @method \Illuminate\Database\Eloquent\Builder wherePublish()
@@ -119,7 +115,7 @@ trait PostTypeModel
      **/
     public function scopeWhereTaxonomy($builder, $taxonomy)
     {
-        $builder->whereHas('genres', function ($q) use ($taxonomy) {
+        $builder->whereHas('taxonomies', function (Builder $q) use ($taxonomy) {
             $q->where($q->getModel()->getTable() . '.id', $taxonomy);
         });
         return $builder;
@@ -133,7 +129,7 @@ trait PostTypeModel
      **/
     public function scopeWhereTaxonomyIn($builder, $taxonomies)
     {
-        $builder->whereHas('genres', function ($q) use ($taxonomies) {
+        $builder->whereHas('taxonomies', function (Builder $q) use ($taxonomies) {
             $q->whereIn($q->getModel()->getTable() . '.id', $taxonomies);
         });
         return $builder;

@@ -37,7 +37,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
-            $schedule->command('juzaweb:update')->everyMinute();
+            //$schedule->command('juzaweb:update')->everyMinute();
         });
     }
 
