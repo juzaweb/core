@@ -105,6 +105,8 @@ trait PostTypeHookAction
 
         $args['key'] = $key;
         $args['singular'] = Str::singular($key);
+        $args['model'] = str_replace('\\', '/', $args['model']);
+
         $args = new Collection($args);
 
         add_filters('juzaweb.post_types', function ($items) use ($args) {

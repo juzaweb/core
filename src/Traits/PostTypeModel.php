@@ -21,36 +21,35 @@ use Juzaweb\Core\Facades\PostType;
 use Juzaweb\Core\Models\Taxonomy;
 
 /**
- * @method \Illuminate\Database\Eloquent\Builder wherePublish()
- * @method \Illuminate\Database\Eloquent\Builder whereTaxonomy($taxonomy)
- * @method \Illuminate\Database\Eloquent\Builder whereTaxonomyIn($taxonomies)
- * */
+ * @method Builder wherePublish()
+ * @method Builder whereTaxonomy($taxonomy)
+ * @method Builder whereTaxonomyIn($taxonomies)
+ */
 trait PostTypeModel
 {
-    use ResourceModel, UseSlug, UseThumbnail, UseChangeBy;
+    use ResourceModel, UseSlug, UseThumbnail;
 
     public function taxonomies()
     {
         return $this->belongsToMany(Taxonomy::class, 'term_taxonomies', 'term_id', 'taxonomy_id')
             ->withPivot(['term_type'])
-            ->wherePivot('term_type', '=', $this->getPostType('key'));
+            ->wherePivot('term_type', '=', $this->postType);
     }
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'object_id', 'id')->where('object_type', '=', $this->getPostType('key'));
+        return $this->hasMany(Comment::class, 'object_id', 'id')->where('object_type', '=', $this->postType);
     }
 
     public function syncTaxonomies(array $attributes)
     {
-        $postType = $this->getPostType();
-        $taxonomies = PostType::getTaxonomies($postType);
+        $taxonomies = PostType::getTaxonomies($this->postType);
         foreach ($taxonomies as $taxonomy) {
             if (!Arr::has($attributes, $taxonomy->get('taxonomy'))) {
                 continue;
             }
 
-            $this->syncTaxonomy($taxonomy->get('taxonomy'), $attributes, $postType);
+            $this->syncTaxonomy($taxonomy->get('taxonomy'), $attributes, $this->postType);
         }
     }
 
@@ -60,7 +59,7 @@ trait PostTypeModel
             return;
         }
 
-        $postType = $postType ?? $this->getPostType('key');
+        $postType = $postType ?? $this->postType;
         $data = Arr::get($attributes, $taxonomy, []);
         $detachIds = $this->taxonomies()
             ->where('taxonomy', '=', $taxonomy)
@@ -87,7 +86,7 @@ trait PostTypeModel
     public function getPostType($key = null)
     {
         $postType = PostType::getPostTypes()
-            ->where('model', static::class)
+            ->where('key', '=', $this->postType)
             ->first();
 
         if (empty($key)) {
@@ -139,7 +138,7 @@ trait PostTypeModel
     public function getPermalink($key = null)
     {
         $permalink = apply_filters('juzaweb.permalinks', []);
-        $permalink = Arr::get($permalink, $this->getPostType('key'));
+        $permalink = Arr::get($permalink, $this->postType);
 
         if (empty($permalink)) {
             return false;
@@ -150,6 +149,20 @@ trait PostTypeModel
         }
 
         return $permalink->get($key);
+    }
+
+    public function getTitle()
+    {
+        $type = $this->postType;
+
+        return apply_filters($type . '.title', $this->{$this->getFieldName()});
+    }
+
+    public function getContent()
+    {
+        $type = $this->postType;
+
+        return apply_filters($type . '.get_content', $this->content);
     }
 
     public function getLink()
