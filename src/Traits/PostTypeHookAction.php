@@ -189,10 +189,10 @@ trait PostTypeHookAction
         if (in_array('comment', $supports)) {
             $this->addAdminMenu(
                 trans('juzaweb::app.comments'),
-                'comments',
+                $args->get('singular') . '.comments',
                 [
                     'icon' => 'fa fa-comments',
-                    'position' => 10,
+                    'position' => 20,
                     'parent' => $key,
                 ]
             );

@@ -21,9 +21,7 @@ trait ResourceController
 {
     public function index()
     {
-        return view($this->viewPrefix . '.index', [
-            'title' => $this->getTitle()
-        ]);
+        return view($this->viewPrefix . '.index', $this->getDataForIndex());
     }
 
     public function create()
@@ -36,7 +34,7 @@ trait ResourceController
         $model = $this->makeModel();
         return view($this->viewPrefix . '.form', array_merge([
             'title' => trans('juzaweb::app.add_new')
-        ], $this->getDataDataForForm($model)));
+        ], $this->getDataForForm($model)));
     }
 
     public function edit($id)
@@ -49,7 +47,7 @@ trait ResourceController
         $model = $this->makeModel()->findOrFail($id);
         return view($this->viewPrefix . '.form', array_merge([
             'title' => $model->{$model->getFieldName()}
-        ], $this->getDataDataForForm($model)));
+        ], $this->getDataForForm($model)));
     }
 
     public function store(Request $request)
@@ -188,10 +186,17 @@ trait ResourceController
      * @param  \Illuminate\Database\Eloquent\Model $model
      * @return array
      * */
-    protected function getDataDataForForm($model)
+    protected function getDataForForm($model)
     {
         return [
             'model' => $model
+        ];
+    }
+
+    protected function getDataForIndex()
+    {
+        return [
+            'title' => $this->getTitle()
         ];
     }
 
