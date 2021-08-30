@@ -16,9 +16,10 @@ namespace Juzaweb\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
-use Juzaweb\Blog\Models\Comment;
+use Juzaweb\Core\Models\Comment;
 use Juzaweb\Core\Facades\PostType;
 use Juzaweb\Core\Models\Taxonomy;
+use Illuminate\Support\Str;
 
 /**
  * @method Builder wherePublish()
@@ -29,27 +30,37 @@ trait PostTypeModel
 {
     use ResourceModel, UseSlug, UseThumbnail;
 
+    public static function getStatuses()
+    {
+        return apply_filters(app(static::class)->getPostType('key') . '.statuses', [
+            'draft' => trans('juzaweb::app.draft'),
+            'publish' => trans('juzaweb::app.publish'),
+            'private' => trans('juzaweb::app.private')
+        ]);
+    }
+
     public function taxonomies()
     {
         return $this->belongsToMany(Taxonomy::class, 'term_taxonomies', 'term_id', 'taxonomy_id')
             ->withPivot(['term_type'])
-            ->wherePivot('term_type', '=', $this->postType);
+            ->wherePivot('term_type', '=', $this->getPostType('key'));
     }
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'object_id', 'id')->where('object_type', '=', $this->postType);
+        return $this->hasMany(Comment::class, 'object_id', 'id')->where('object_type', '=', $this->getPostType('key'));
     }
 
     public function syncTaxonomies(array $attributes)
     {
-        $taxonomies = PostType::getTaxonomies($this->postType);
+        $postType = $this->getPostType('key');
+        $taxonomies = PostType::getTaxonomies($postType);
         foreach ($taxonomies as $taxonomy) {
             if (!Arr::has($attributes, $taxonomy->get('taxonomy'))) {
                 continue;
             }
 
-            $this->syncTaxonomy($taxonomy->get('taxonomy'), $attributes, $this->postType);
+            $this->syncTaxonomy($taxonomy->get('taxonomy'), $attributes, $postType);
         }
     }
 
@@ -59,7 +70,7 @@ trait PostTypeModel
             return;
         }
 
-        $postType = $postType ?? $this->postType;
+        $postType = $postType ?? $this->getPostType('key');
         $data = Arr::get($attributes, $taxonomy, []);
         $detachIds = $this->taxonomies()
             ->where('taxonomy', '=', $taxonomy)
@@ -74,19 +85,10 @@ trait PostTypeModel
             ]), ['term_type' => $postType]);
     }
 
-    public function getStatuses()
-    {
-        return [
-            'draft' => trans('juzaweb::app.draft'),
-            'publish' => trans('juzaweb::app.publish'),
-            'private' => trans('juzaweb::app.private')
-        ];
-    }
-
     public function getPostType($key = null)
     {
         $postType = PostType::getPostTypes()
-            ->where('key', '=', $this->postType)
+            ->where('model_key', '=', str_replace('\\', '_', static::class))
             ->first();
 
         if (empty($key)) {
@@ -138,7 +140,7 @@ trait PostTypeModel
     public function getPermalink($key = null)
     {
         $permalink = apply_filters('juzaweb.permalinks', []);
-        $permalink = Arr::get($permalink, $this->postType);
+        $permalink = Arr::get($permalink, $this->getPostType('key'));
 
         if (empty($permalink)) {
             return false;
@@ -151,16 +153,23 @@ trait PostTypeModel
         return $permalink->get($key);
     }
 
-    public function getTitle()
+    public function getTitle($words = null)
     {
-        $type = $this->postType;
+        if ($words > 0) {
+            return apply_filters($this->getPostType('key') . '.get_title', Str::words($this->{$this->getFieldName()}, $words), $words);
+        }
 
-        return apply_filters($type . '.title', $this->{$this->getFieldName()});
+        return apply_filters($this->getPostType('key') . '.get_title', $this->{$this->getFieldName()}, $words);
+    }
+
+    public function getDescription($words = 24)
+    {
+        return apply_filters($this->getPostType('key') . '.get_description', Str::words($this->description, $words), $words);
     }
 
     public function getContent()
     {
-        $type = $this->postType;
+        $type = $this->getPostType('key');
 
         return apply_filters($type . '.get_content', $this->content);
     }
@@ -168,7 +177,7 @@ trait PostTypeModel
     public function getLink()
     {
         if ($this->getTable() == 'pages') {
-            return url()->to($this->slug . '/');
+            return url()->to($this->slug) . '/';
         }
 
         $permalink = $this->getPermalink('base');
@@ -176,6 +185,6 @@ trait PostTypeModel
             return false;
         }
 
-        return url()->to($permalink . '/' . $this->slug . '/');
+        return url()->to($permalink . '/' . $this->slug) . '/';
     }
 }

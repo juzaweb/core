@@ -15,10 +15,8 @@
 namespace Juzaweb\Core\Traits;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Juzaweb\Core\Traits\ResourceController;
-use Juzaweb\Core;
 use Illuminate\Support\Facades\Validator;
+use Juzaweb\Core\Facades\PostType;
 
 trait PostTypeController
 {
@@ -61,7 +59,7 @@ trait PostTypeController
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return string
      * */
     abstract protected function getModel();
 
@@ -122,7 +120,7 @@ trait PostTypeController
 
     protected function getSetting()
     {
-        $setting = PostType::getPostTypes($this->makeModel()->getPostType());
+        $setting = PostType::getPostTypes($this->makeModel()->getPostType('key'));
         if (empty($setting)) {
             throw new \Exception('Post type ' . $this->makeModel()->getPostType() . ' does not exists.');
         }
@@ -139,7 +137,7 @@ trait PostTypeController
     protected function getDataDataForForm($model)
     {
         return [
-            'postType' => $model->getPostType(),
+            'postType' => $model->getPostType('key'),
             'model' => $model
         ];
     }

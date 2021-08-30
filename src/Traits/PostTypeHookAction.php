@@ -105,7 +105,7 @@ trait PostTypeHookAction
 
         $args['key'] = $key;
         $args['singular'] = Str::singular($key);
-        $args['model'] = str_replace('\\', '/', $args['model']);
+        $args['model_key'] = str_replace('\\', '_', $args['model']);
 
         $args = new Collection($args);
 
