@@ -1,7 +1,7 @@
 @extends('juzaweb::layouts.backend')
 
 @section('content')
-    <ul class="nav nav-tabs nav-tabs-line">
+    <ul class="nav nav-tabs">
         @foreach($forms as $key => $form)
             <li class="nav-item">
                 <a class="nav-link @if($key == $component) active @endif" href="{{ route('admin.setting.form', [$key]) }}">{{ $form['name'] ?? '' }}</a>

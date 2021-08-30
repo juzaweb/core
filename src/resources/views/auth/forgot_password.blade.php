@@ -7,7 +7,7 @@
                 <div class="juzaweb__auth__containerInner">
                     <div class="card juzaweb__auth__boxContainer">
                         <div class="text-dark font-size-24 mb-4">
-                            <strong>Create your account</strong>
+                            <strong>{{ trans('juzaweb::app.forgot_password') }}</strong>
                         </div>
                         <div class="mb-4">
                             <p>
@@ -28,7 +28,7 @@
                     <div class="text-center pt-2 mb-auto">
                         <span class="mr-2">Already have an account?</span>
                         <a href="{{ route('admin.login') }}" class="kit__utils__link font-size-16">
-                            Sign in
+                            {{ trans('juzaweb::app.login') }}
                         </a>
                     </div>
                 </div>

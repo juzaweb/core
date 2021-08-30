@@ -298,5 +298,7 @@ return [
     'latest' => 'Latest',
     'header' => 'Header',
     'theme_editor' => 'Theme Editor',
+    'site_title' => 'Site title',
+    'site_description' => 'Site description',
 ];
 

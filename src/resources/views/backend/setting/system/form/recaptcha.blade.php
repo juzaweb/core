@@ -1,6 +1,24 @@
 <form method="post" action="{{ route('admin.setting.save') }}" class="form-ajax">
     <input type="hidden" name="form" value="recaptcha">
+
+    <div class="row mt-3">
+        <div class="col-md-6"></div>
+
+        <div class="col-md-6">
+            <div class="btn-group float-right">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-save"></i> @lang('juzaweb::app.save')
+                </button>
+
+                <button type="reset" class="btn btn-default">
+                    <i class="fa fa-refresh"></i> @lang('juzaweb::app.reset')
+                </button>
+            </div>
+        </div>
+    </div>
+
     <h5>@lang('juzaweb::app.google_recaptcha')</h5>
+
     @php
     $google_recaptcha = get_config('google_recaptcha');
     @endphp

@@ -7,7 +7,7 @@
                 <div class="juzaweb__auth__containerInner">
                     <div class="card juzaweb__auth__boxContainer">
                         <div class="text-dark font-size-24 mb-4">
-                            <strong>Create your account</strong>
+                            <strong>{{ trans('juzaweb::app.reset_password') }}</strong>
                         </div>
                         <div class="mb-4">
                             <p>

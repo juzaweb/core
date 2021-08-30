@@ -3,7 +3,6 @@
     @php
         $registration = get_config('user_registration');
         $verification = get_config('user_verification');
-        //$only_member_view = get_config('only_member_view');
     @endphp
 
     <div class="row mt-3">
@@ -24,23 +23,15 @@
 
     <div class="row">
         <div class="col-md-8">
-            <h5>@lang('juzaweb::app.general')</h5>
+            <h5>{{ trans('juzaweb::app.general') }}</h5>
 
             <div class="form-group">
-                <label class="col-form-label" for="title">@lang('juzaweb::app.home_title')</label>
-
-                <input type="text" name="title" class="form-control" id="title" value="{{ get_config('title') }}" autocomplete="off" required>
+                <label class="col-form-label" for="title">@lang('juzaweb::app.site_title')</label>
+                <input type="text" name="title" class="form-control" id="title" value="{{ get_config('title') }}" autocomplete="off">
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="keywords">@lang('juzaweb::app.keywords')</label>
-
-                <input type="text" name="keywords" id="keywords" class="form-control" value="{{ get_config('keywords') }}" autocomplete="off">
-                <em class="description">@lang('juzaweb::app.use_comma_to_separate_keyword')</em>
-            </div>
-
-            <div class="form-group">
-                <label class="col-form-label" for="description">@lang('juzaweb::app.home_description')</label>
+                <label class="col-form-label" for="description">@lang('juzaweb::app.site_description')</label>
                 <textarea class="form-control" name="description" id="description" rows="5">{{ get_config('description') }}</textarea>
             </div>
 
@@ -70,21 +61,19 @@
         </div>
 
         <div class="col-md-4">
-            <h5>@lang('juzaweb::app.social')</h5>
+            <h5>{{ trans('juzaweb::app.social') }}</h5>
 
             <div class="form-group">
                 <label class="col-form-label" for="fb_app_id">@lang('juzaweb::app.fb_app_id')</label>
-
                 <input type="text" name="fb_app_id" class="form-control" id="fb_app_id" value="{{ get_config('fb_app_id') }}" autocomplete="off">
             </div>
 
             <div class="form-group">
                 <label class="col-form-label" for="google_analytics">@lang('juzaweb::app.google_analytics_id')</label>
-
                 <input type="text" name="google_analytics" class="form-control" id="google_analytics" value="{{ get_config('google_analytics') }}" autocomplete="off">
             </div>
 
-            <h5>@lang('juzaweb::app.registration')</h5>
+            <h5>{{ trans('juzaweb::app.registration') }}</h5>
 
             <div class="form-group">
                 <label class="col-form-label" for="user_registration">@lang('juzaweb::app.user_registration')</label>
@@ -103,13 +92,6 @@
             </div>
         </div>
     </div>
-
-    {{--<h5>@lang('juzaweb::app.tmdb')</h5>
-    <div class="form-group">
-        <label class="col-form-label" for="tmdb_api_key">@lang('juzaweb::app.tmdb_api_key')</label>
-
-        <input type="text" name="tmdb_api_key" class="form-control" id="tmdb_api_key" value="{{ get_config('tmdb_api_key') }}" autocomplete="off">
-    </div>--}}
 
     <div class="row">
         <div class="col-md-6"></div>

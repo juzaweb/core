@@ -1,13 +1,7 @@
 @extends('juzaweb::layouts.backend')
 
-@section('title', $title)
 
 @section('content')
-
-{{ Breadcrumbs::render('manager', [
-        'name' => trans('juzaweb::app.comment_setting'),
-        'url' => route('admin.setting.comment')
-    ]) }}
 
 <div class="juzaweb__utils__content">
     <form method="post" action="{{ route('admin.setting.comment.save') }}" class="form-ajax">
