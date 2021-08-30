@@ -98,12 +98,12 @@ class Config extends Model
                 return $default;
             }
 
-            if (is_json($config->value)) {
-                return json_decode($config->value, true);
-            }
-
             return $config->value;
         });
+
+        if (is_json($value)) {
+            return json_decode($value, true);
+        }
 
         return $value;
     }

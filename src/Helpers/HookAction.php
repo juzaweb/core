@@ -87,13 +87,13 @@ class HookAction
      * @param array $args
      *      - name : Name form setting
      *      - view : View form setting
-     **/
+     */
     public function addSettingForm($key, $args = [])
     {
         Hook::addFilter('admin.general_settings.forms', function ($items) use ($key, $args) {
             $items[$key] = $args;
             return $items;
-        });
+        }, $args['priority'] ?? 10);
     }
 
 

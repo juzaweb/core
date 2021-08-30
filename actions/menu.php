@@ -14,6 +14,17 @@
 
 use Juzaweb\Core\Facades\HookAction;
 
+HookAction::addSettingForm('general', [
+    'name' => trans('juzaweb::app.general_setting'),
+    'view' => 'juzaweb::backend.setting.system.form.general'
+]);
+
+HookAction::addSettingForm('recaptcha', [
+    'name' => trans('juzaweb::app.google_recaptcha'),
+    'view' => 'juzaweb::backend.setting.system.form.recaptcha',
+    'priority' => 15
+]);
+
 HookAction::addAdminMenu(
     trans('juzaweb::app.dashboard'),
     'dashboard',

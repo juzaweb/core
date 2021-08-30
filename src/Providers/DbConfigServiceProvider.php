@@ -17,6 +17,7 @@ class DbConfigServiceProvider extends ServiceProvider
         }
         
         $mail = get_config('email');
+
         if ($mail) {
             $config = [
                 'driver'     => 'smtp',

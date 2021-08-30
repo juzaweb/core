@@ -41,18 +41,7 @@ class SystemSettingController extends BackendController
 
     protected function getForms()
     {
-        $items = [
-            'general' => [
-                'name' => trans('juzaweb::app.general_setting'),
-                'view' => 'juzaweb::backend.setting.system.form.general'
-            ],
-            'recaptcha' => [
-                'name' => trans('juzaweb::app.google_recaptcha'),
-                'view' => 'juzaweb::backend.setting.system.form.recaptcha'
-            ]
-        ];
-
-        return apply_filters('admin.general_settings.forms', $items);
+        return apply_filters('admin.general_settings.forms', []);
     }
 
     protected function getSettings()
