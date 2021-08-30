@@ -95,6 +95,4 @@ class HookAction
             return $items;
         }, $args['priority'] ?? 10);
     }
-
-
 }

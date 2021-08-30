@@ -13,6 +13,7 @@
 namespace Juzaweb\Core\Traits;
 
 use Illuminate\Support\Arr;
+use Juzaweb\Theme\Abstracts\MenuBoxAbstract;
 
 trait MenuHookAction
 {
@@ -64,49 +65,38 @@ trait MenuHookAction
     }
 
     /**
-     * Registers menu item in menu builder.
+     * Register menu box
      *
      * @param string $key
      * @param array $args
-     *      - label (Required): Label for item
-     *      - component (Required): Menu item class handle
-     * @throws \Exception
-     * */
-    public function registerMenuItem($key, $args = [])
+     */
+    public function registerMenuBox($key, $args = [])
     {
-        if (empty($args['label'])) {
-            throw new \Exception('Args label is required');
-        }
+        $opts = [
+            'title' => '',
+            'key' => $key,
+            'group' => 'custom',
+            'menu_box' => '',
+            'priority' => 20,
+        ];
 
-        if (empty($args['component'])) {
-            throw new \Exception('Args component is required');
-        }
+        $item = array_merge($opts, $args);
+        /**
+         * @var MenuBoxAbstract $menuBox
+         */
+        $menuBox = $item['menu_box'];
 
-        add_filters('juzaweb.menu_blocks', function ($items) use ($key, $args) {
-            array_merge([
-                'label' => '',
-                'component' => '',
-                'position' => 20
-            ], $args);
-            $args['key'] = $key;
-
-            $items[$key] = collect($args);
+        add_filters('juzaweb.menu_boxs', function ($items) use ($key, $item) {
+            $items[$key] = collect($item);
             return $items;
-        });
-    }
+        }, $item['priority']);
 
-    public function addMetaBox($key, $title, $args = [])
-    {
-        add_filters('juzaweb.menu_boxs', function ($items) use ($key, $title, $args) {
-            array_merge([
-                'title' => $title,
-                'callback' => '',
-                'position' => 20,
-            ], $args);
-
-            $args['key'] = $key;
-            $items[$key] = collect($args);
-            return $items;
-        });
+        add_action('juzaweb.add_menu_items', function () use ($key, $item, $menuBox) {
+            echo view('jw_theme::backend.items.menu_box', [
+                'label' => $item['title'],
+                'key' => $key,
+                'slot' => $menuBox->addView()->render()
+            ])->render();
+        }, $item['priority']);
     }
 }

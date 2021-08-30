@@ -10,6 +10,7 @@ namespace Juzaweb\Core\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Juzaweb\Theme\Support\PostTypeMenuBox;
 
 trait PostTypeHookAction
 {
@@ -98,6 +99,7 @@ trait PostTypeHookAction
             'priority' => 20,
             'show_in_menu' => true,
             'rewrite' => true,
+            'menu_box' => true,
             'menu_position' => 20,
             'menu_icon' => 'fa fa-list-alt',
             'supports' => [],
@@ -145,6 +147,15 @@ trait PostTypeHookAction
                 'label' => $args->get('label'),
                 'base' => $args->get('singular'),
                 'priority' => $args->get('priority'),
+            ]);
+        }
+
+        if ($args->get('menu_box')) {
+            $this->registerMenuBox('post_type.' . $key, [
+                'title' => $args->get('label'),
+                'group' => 'post_type',
+                'menu_box' => new PostTypeMenuBox($key, $args),
+                'priority' => 10
             ]);
         }
     }
