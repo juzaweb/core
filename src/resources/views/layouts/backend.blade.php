@@ -18,6 +18,7 @@
 
     <script src="{{ asset('vendor/juzaweb/styles/js/vendor.js') }}"></script>
     <script src="{{ asset('vendor/juzaweb/styles/js/backend.js') }}"></script>
+    <script src="{{ asset('js/menu.js') }}"></script>
     <script src="{{ asset('vendor/juzaweb/styles/ckeditor/ckeditor.js') }}"></script>
 
     @do_action('juzaweb_header')
@@ -64,7 +65,7 @@
                 <div class="mb-3"></div>
             @endif
 
-            <h4 class="font-weight-bold ml-3">{{ $title }}</h4>
+            <h4 class="font-weight-bold ml-3 text-capitalize">{{ $title }}</h4>
 
             <div class="juzaweb__utils__content">
 

@@ -4,9 +4,9 @@
 
         @foreach($items as $item)
             @if(isset($item['url']))
-                <li class="breadcrumb-item"><a href="{{ $item['url'] }}">{{ $item['title'] }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ $item['url'] }}" class="text-capitalize">{{ $item['title'] }}</a></li>
             @else
-                <li class="breadcrumb-item active" aria-current="page">{{ $item['title'] }}</li>
+                <li class="breadcrumb-item text-capitalize active" aria-current="page">{{ $item['title'] }}</li>
             @endif
         @endforeach
     </ol>

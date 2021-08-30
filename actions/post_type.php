@@ -21,6 +21,7 @@ add_action('juzaweb.add_menu_items', function () {
         $content .= view('jw_theme::backend.items.menu_box', [
             'label' => $postType->get('label'),
             'key' => $key,
+            'type' => 'post_type',
             'slot' => view('jw_theme::backend.items.post_type_box', [
                 'key' => $key,
                 'postType' => $postType
