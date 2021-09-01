@@ -31,37 +31,36 @@
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="description">@lang('juzaweb::app.site_description')</label>
-                <textarea class="form-control" name="description" id="description" rows="5">{{ get_config('description') }}</textarea>
+                <label class="col-form-label" for="description">@lang('juzaweb::app.tagline')</label>
+                <textarea class="form-control" name="description" id="description" rows="4">{{ get_config('description') }}</textarea>
+                <p class="description">{{ trans('juzaweb::app.site_description_note') }}</p>
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="logo">@lang('juzaweb::app.logo') <span class="float-right"><a href="javascript:void(0)" data-input="logo" data-preview="preview-logo" class="file-manager"><i class="fa fa-edit"></i> @lang('juzaweb::app.change_image')</a></span></label>
-                <div id="preview-logo">
-                    <img src="{{ upload_url(get_config('logo')) }}" alt="" class="w-25">
-                </div>
-                <input id="logo" class="form-control" type="hidden" name="logo" value="{{ get_config('logo') }}">
+                <label class="col-form-label" for="timezone">@lang('juzaweb::app.timezone')</label>
+                <select name="timezone" class="form-control"></select>
+                <p class="timezone">{{ trans('juzaweb::app.timezone_description') }}</p>
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="icon">@lang('juzaweb::app.icon') <span class="float-right"><a href="javascript:void(0)" data-input="icon" data-preview="preview-icon" class="file-manager"><i class="fa fa-edit"></i> @lang('juzaweb::app.change_image')</a></span></label>
-                <div id="preview-icon">
-                    <img src="{{ upload_url(get_config('icon')) }}" alt="" class="w-25">
-                </div>
-                <input id="icon" class="form-control" type="hidden" name="icon" value="{{ get_config('icon') }}">
+                <label class="col-form-label" for="language">@lang('juzaweb::app.site_language')</label>
+                <select name="language" class="form-control"></select>
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="banner">@lang('juzaweb::app.banner') <span class="float-right"><a href="javascript:void(0)" data-input="banner" data-preview="preview-banner" class="file-manager"><i class="fa fa-edit"></i> @lang('juzaweb::app.change_image')</a></span></label>
-                <div id="preview-banner">
-                    <img src="{{ upload_url(get_config('banner')) }}" alt="" class="w-25">
-                </div>
-                <input id="banner" class="form-control" type="hidden" name="banner" value="{{ get_config('banner') }}">
+                <label class="col-form-label" for="language">@lang('juzaweb::app.Date Format')</label>
+
             </div>
+
+            <div class="form-group">
+                <label class="col-form-label" for="language">@lang('juzaweb::app.Time Format')</label>
+
+            </div>
+
         </div>
 
         <div class="col-md-4">
-            <h5>{{ trans('juzaweb::app.social') }}</h5>
+            <h5>{{ trans('juzaweb::app.analytics') }}</h5>
 
             <div class="form-group">
                 <label class="col-form-label" for="fb_app_id">@lang('juzaweb::app.fb_app_id')</label>

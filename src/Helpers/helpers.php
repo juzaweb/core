@@ -15,13 +15,12 @@
 use Illuminate\Support\Facades\Auth;
 use Juzaweb\Core\Helpers\Breadcrumb;
 use Juzaweb\Core\Models\Config;
-use Juzaweb\Theme\Models\Menu;
 use Juzaweb\Core\Models\User;
 use Juzaweb\Theme\Models\Page;
-use Juzaweb\Theme\Models\ThemeConfig;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Facades\Hook;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Carbon;
 
 define('JW_DATE', 1);
 define('JW_DATE_TIME', 2);
@@ -145,55 +144,25 @@ if (!function_exists('is_url')) {
     }
 }
 
-function menu_info($id) {
-    return Menu::where('id', '=', $id)
-        ->first(['id', 'name']);
-}
-
-function theme_setting($code) {
-    $config = ThemeConfig::where('code', '=', $code)
-        ->first(['content']);
-    
-    if ($config) {
-        return json_decode($config->content);
-    }
-    
-    return false;
-}
-
-function menu_setting($menu_id) {
-    try {
-        $menu = Menu::find($menu_id);
-        if ($menu) {
-            return json_decode($menu->content);
+if (!function_exists('count_unread_notifications')) {
+    /**
+     * Count number unread notifications
+     *
+     * @return int
+     */
+    function count_unread_notifications() {
+        $user = Auth::user();
+        if (method_exists($user, 'unreadNotifications')) {
+            return $user->unreadNotifications()->count(['id']);
         }
-    }
-    catch (Exception $exception) {
-        \Log::error($exception->getMessage());
-    }
-    return [];
-}
 
-function count_unread_notifications() {
-    $user = Auth::user();
-    if (method_exists($user, 'unreadNotifications')) {
-        return $user->unreadNotifications()->count(['id']);
+        return 0;
     }
-
-    return 0;
-}
-
-function core_path($path = null) {
-    if ($path) {
-        return __DIR__ . '/../' . $path;
-    }
-
-    return __DIR__ . '/../';
 }
 
 function user_avatar($user = null) {
     if ($user) {
-        if (!is_a($user, User::class)) {
+        if (!$user instanceof User) {
             $user = User::find($user);
         }
 
@@ -211,8 +180,8 @@ function user_avatar($user = null) {
     return asset('vendor/juzaweb/styles/images/thumb-default.png');
 }
 
-if (!function_exists('breadcrumb')) {
-    function breadcrumb($name, $addItems = [])
+if (!function_exists('jw_breadcrumb')) {
+    function jw_breadcrumb($name, $addItems = [])
     {
         $items = apply_filters($name . '_breadcrumb', []);
 
@@ -226,21 +195,23 @@ if (!function_exists('breadcrumb')) {
     }
 }
 
-function combine_pivot($entities, $pivots = [])
-{
-    // Set array
-    $pivotArray = [];
-    // Loop through all pivot attributes
-    foreach ($pivots as $pivot => $value) {
-        // Combine them to pivot array
-        $pivotArray += [$pivot => $value];
+if (!function_exists('combine_pivot')) {
+    function combine_pivot($entities, $pivots = [])
+    {
+        // Set array
+        $pivotArray = [];
+        // Loop through all pivot attributes
+        foreach ($pivots as $pivot => $value) {
+            // Combine them to pivot array
+            $pivotArray += [$pivot => $value];
+        }
+        // Get the total of arrays we need to fill
+        $total = count($entities);
+        // Make filler array
+        $filler = array_fill(0, $total, $pivotArray);
+        // Combine and return filler pivot array with data
+        return array_combine($entities, $filler);
     }
-    // Get the total of arrays we need to fill
-    $total = count($entities);
-    // Make filler array
-    $filler = array_fill(0, $total, $pivotArray);
-    // Combine and return filler pivot array with data
-    return array_combine($entities, $filler);
 }
 
 if (!function_exists('path_url')) {
@@ -404,6 +375,10 @@ if (!function_exists('jw_date_format')) {
      */
     function jw_date_format($date, $format = JW_DATE_TIME)
     {
+        if ($date instanceof Carbon) {
+            $date = $date->format('Y-m-d H:i:s');
+        }
+
         $dateFormat = get_config('date_format', 'F j, Y');
         switch ($format) {
             case JW_DATE:
@@ -412,7 +387,7 @@ if (!function_exists('jw_date_format')) {
 
         $timeFormat = get_config('time_format', 'g:i a');
 
-        return date($dateFormat . ' ' . $timeFormat, $date);
+        return date($dateFormat . ' ' . $timeFormat, strtotime($date));
     }
 }
 

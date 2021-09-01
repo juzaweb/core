@@ -305,11 +305,16 @@ return [
     'reading' => 'Reading',
     'permalink' => 'Permalink',
     'permalinks' => 'Permalinks',
+    'tagline' => 'Tagline',
+    'timezone' => 'Timezone',
     'select' => 'Select :name',
     'reading_settings' => 'Reading Settings',
     'permalink_description' => 'If you like, you may enter custom structures for your category and tag URLs here. For example, using topics as your category base would make your category links like :url/topics/uncategorized/. If you leave these blank the defaults will be used.',
     'your_homepage_displays' => 'Your homepage displays',
     'your_latest_posts' => 'Your latest posts',
     'a_static_page' => 'A static page (select below)',
+    'site_description_note' => 'In a few words, explain what this site is about.',
+    'timezone_description' => 'Choose either a city in the same timezone as you or a UTC (Coordinated Universal Time) time offset.',
+    'universal_time_is' => 'Universal time is',
 ];
 

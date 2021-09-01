@@ -56,11 +56,11 @@
 
         <div class="juzaweb__layout__content">
             @if(!request()->is(config('juzaweb.admin_prefix') . '/dashboard'))
-            {{ breadcrumb('admin', [
-                    [
-                        'title' => $title
-                    ]
-                ]) }}
+                {{ jw_breadcrumb('admin', [
+                        [
+                            'title' => $title
+                        ]
+                    ]) }}
             @else
                 <div class="mb-3"></div>
             @endif
