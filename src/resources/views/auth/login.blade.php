@@ -40,7 +40,7 @@
                             <input type="checkbox" name="remember" value="1" checked> @lang('juzaweb::app.remember_me')
                         </form>
 
-                        <a href="{{ route('admin.forgot_password') }}" class="kit__utils__link font-size-16">
+                        <a href="{{ route('admin.forgot_password') }}" class="jw__utils__link font-size-16">
                             @lang('juzaweb::app.forgot_password')
                         </a>
                     </div>
@@ -48,7 +48,7 @@
                     @if(get_config('users_can_register'))
                     <div class="text-center pt-2 mb-auto">
                         <span class="mr-2">@lang('juzaweb::message.login_form.dont_have_an_account')</span>
-                        <a href="{{ route('admin.register') }}" class="kit__utils__link font-size-16">
+                        <a href="{{ route('admin.register') }}" class="jw__utils__link font-size-16">
                             @lang('juzaweb::app.sign_up')
                         </a>
                     </div>

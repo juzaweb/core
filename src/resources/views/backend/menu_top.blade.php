@@ -51,7 +51,7 @@
             <div style="width: 350px;">
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="kit__l1">
+                        <div class="jw__l1">
                             <div class="text-uppercase mb-2 text-gray-6 mb-2 font-weight-bold">@lang('juzaweb::app.notifications') ({{ $total }})</div>
                             <hr>
                             <ul class="list-unstyled">
@@ -59,11 +59,11 @@
                                     <p>@lang('juzaweb::app.no_notifications')</p>
                                 @else
                                     @foreach($items as $notify)
-                                        <li class="kit__l1__item">
-                                            <a href="{{ @$notify->data['url'] }}" class="kit__l1__itemLink" data-turbolinks="false">
-                                                <div class="kit__l1__itemPic mr-3">
+                                        <li class="jw__l1__item">
+                                            <a href="{{ @$notify->data['url'] }}" class="jw__l1__itemLink" data-turbolinks="false">
+                                                <div class="jw__l1__itemPic mr-3">
                                                     @if(empty($notify->data['image']))
-                                                        <i class="kit__l1__itemIcon fa fa-envelope-square"></i>
+                                                        <i class="jw__l1__itemIcon fa fa-envelope-square"></i>
                                                     @else
                                                         <img src="{{ upload_url($notify->data['image']) }}" alt="">
                                                     @endif

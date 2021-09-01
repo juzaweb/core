@@ -27,7 +27,7 @@
                     </div>
                     <div class="text-center pt-2 mb-auto">
                         <span class="mr-2">Already have an account?</span>
-                        <a href="{{ route('admin.login') }}" class="kit__utils__link font-size-16">
+                        <a href="{{ route('admin.login') }}" class="jw__utils__link font-size-16">
                             {{ trans('juzaweb::app.login') }}
                         </a>
                     </div>

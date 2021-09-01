@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="juzaweb__menuLeft__scroll kit__customScroll">
+            <div class="juzaweb__menuLeft__scroll jw__customScroll">
                 @include('juzaweb::backend.menu_left')
             </div>
         </div>
