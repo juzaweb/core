@@ -90,16 +90,19 @@ class Config extends Model
     }
     
     public static function getConfig($key, $default = null) {
-
         $value = Cache::rememberForever('jw_config.' . $key, function () use ($key, $default) {
             $config = Config::where('code', '=', $key)->first(['value']);
 
-            if (empty($config)) {
+            if (empty($value)) {
                 return $default;
             }
 
             return $config->value;
         });
+
+        if (empty($value)) {
+            return $default;
+        }
 
         if (is_json($value)) {
             return json_decode($value, true);
@@ -111,7 +114,7 @@ class Config extends Model
     public static function setConfig($key, $value = null) {
         $setting = null;
         if (is_string($value)) {
-            $setting = $value;;
+            $setting = $value;
         }
 
         if (is_array($value)) {

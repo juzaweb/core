@@ -17,6 +17,7 @@ use Juzaweb\Core\Helpers\Breadcrumb;
 use Juzaweb\Core\Models\Config;
 use Juzaweb\Theme\Models\Menu;
 use Juzaweb\Core\Models\User;
+use Juzaweb\Theme\Models\Page;
 use Juzaweb\Theme\Models\ThemeConfig;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Facades\Hook;
@@ -142,16 +143,6 @@ if (!function_exists('is_url')) {
 
         return true;
     }
-}
-
-function theme_config($code) {
-    $config = ThemeConfig::where('code', '=', $code)
-        ->first(['content']);
-    if ($config) {
-        return json_decode($config->content, true);
-    }
-    
-    return false;
 }
 
 function menu_info($id) {
@@ -305,8 +296,12 @@ if (!function_exists('is_json')) {
      * @return bool
      */
     function is_json($string) {
-        json_decode($string);
-        return json_last_error() === JSON_ERROR_NONE;
+        try {
+            json_decode($string);
+            return json_last_error() === JSON_ERROR_NONE;
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 }
 
@@ -399,7 +394,7 @@ if (! function_exists('is_active_route')) {
     }
 }
 
-if (!function_exists('date_format')) {
+if (!function_exists('jw_date_format')) {
     /**
      * Format date to global format cms
      *
@@ -407,7 +402,7 @@ if (!function_exists('date_format')) {
      * @param int $format // JW_DATE || JW_DATE_TIME
      * @return string
      */
-    function date_format($date, $format = JW_DATE_TIME)
+    function jw_date_format($date, $format = JW_DATE_TIME)
     {
         $dateFormat = get_config('date_format', 'F j, Y');
         switch ($format) {
@@ -430,5 +425,12 @@ if (!function_exists('jw_current_user')) {
     function jw_current_user()
     {
         return Auth::user();
+    }
+}
+
+if (!function_exists('jw_get_page')) {
+    function jw_get_page($id)
+    {
+        return Page::find($id);
     }
 }

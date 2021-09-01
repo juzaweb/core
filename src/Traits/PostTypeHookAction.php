@@ -71,7 +71,8 @@ trait PostTypeHookAction
             if ($args->get('rewrite')) {
                 $this->registerPermalink($args->get('menu_slug'), [
                     'label' => $args->get('label'),
-                    'base' => $type . '-' . $taxonomy,
+                    'base' => Str::singular($type . '-' . $taxonomy),
+                    'priority' => $args->get('priority'),
                 ]);
             }
         }
@@ -99,6 +100,7 @@ trait PostTypeHookAction
             'priority' => 20,
             'show_in_menu' => true,
             'rewrite' => true,
+            'taxonomy_rewrite' => true,
             'menu_box' => true,
             'menu_position' => 20,
             'menu_icon' => 'fa fa-list-alt',
@@ -124,20 +126,20 @@ trait PostTypeHookAction
         if (in_array('category', $supports)) {
             $this->registerTaxonomy('categories', $key, [
                 'label' => trans('juzaweb::app.categories'),
-                'priority' => $args->get('priority'),
+                'priority' => $args->get('priority') + 5,
                 'menu_position' => 4,
                 'show_in_menu' => $args->get('show_in_menu'),
-                'rewrite' => $args->get('rewrite'),
+                'rewrite' => $args->get('taxonomy_rewrite'),
             ]);
         }
 
         if (in_array('tag', $args['supports'])) {
             $this->registerTaxonomy('tags', $key, [
                 'label' => trans('juzaweb::app.tags'),
-                'priority' => $args->get('priority'),
+                'priority' => $args->get('priority') + 6,
                 'menu_position' => 15,
                 'show_in_menu' => $args->get('show_in_menu'),
-                'rewrite' => $args->get('rewrite'),
+                'rewrite' => $args->get('taxonomy_rewrite'),
                 'supports' => []
             ]);
         }

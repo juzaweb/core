@@ -5,10 +5,11 @@ namespace Juzaweb\Core\Http\Controllers\Backend;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Juzaweb\Core\Http\Controllers\BackendController;
-use Juzaweb\Core\Models\Menu;
+use Juzaweb\Theme\Models\Menu;
 use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Models\Taxonomy;
 use Juzaweb\Core\Traits\ArrayPagination;
+use Juzaweb\Theme\Models\Page;
 
 class LoadDataController extends BackendController
 {
@@ -41,7 +42,7 @@ class LoadDataController extends BackendController
             ->where('taxonomy', '=', $taxonomy);
 
         if ($search) {
-            $query->whereTranslationLike('name', '%'. $search .'%');
+            $query->where('name', 'like', '%'. $search .'%');
         }
 
         if ($explodes) {
@@ -69,9 +70,9 @@ class LoadDataController extends BackendController
         ]);
         
         if ($search) {
-            $query->where(function ($sub) use ($search) {
-                $sub->orWhere('name', 'like', '%'. $search .'%');
-                $sub->orWhere('email', 'like', '%'. $search .'%');
+            $query->where(function (Builder $q) use ($search) {
+                $q->where('name', 'like', '%'. $search .'%');
+                $q->orWhere('email', 'like', '%'. $search .'%');
             });
         }
         
@@ -99,8 +100,8 @@ class LoadDataController extends BackendController
         ]);
         
         if ($search) {
-            $query->where(function ($sub) use ($search) {
-                $sub->orWhere('name', 'like', '%'. $search .'%');
+            $query->where(function (Builder $q) use ($search) {
+                $q->orWhere('name', 'like', '%'. $search .'%');
             });
         }
         
@@ -140,6 +141,35 @@ class LoadDataController extends BackendController
         $paginate = $this->arrayPaginate($results, 10);
 
         $data['results'] = $paginate->values();
+
+        if ($paginate->nextPageUrl()) {
+            $data['pagination'] = ['more' => true];
+        }
+
+        return response()->json($data);
+    }
+
+    protected function loadPages(Request $request)
+    {
+        $search = $request->get('search');
+        $explodes = $request->get('explodes');
+
+        $query = Page::query();
+        $query->select([
+            'id',
+            'name as text'
+        ]);
+
+        if ($search) {
+            $query->where('name', 'like', '%'. $search .'%');
+        }
+
+        if ($explodes) {
+            $query->whereNotIn('id', $explodes);
+        }
+
+        $paginate = $query->paginate(10);
+        $data['results'] = $query->get();
 
         if ($paginate->nextPageUrl()) {
             $data['pagination'] = ['more' => true];

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed applyFilters($tag, $value, ...$args)
  * @method static void addFilter($tag, $callback, $priority = 20, $arguments = 1)
  * @method static void addAction($tag, $callback, $priority = 20, $arguments = 1)
+ * @method static void registerMenuBox($tag, array $args = [])
  * @see \Juzaweb\Core\Helpers\HookAction
  **/
 class HookAction extends Facade

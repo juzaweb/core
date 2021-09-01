@@ -34,7 +34,7 @@ class PerformanceServiceProvider extends ServiceProvider
 
     protected function bootSchemeSsl()
     {
-        if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && !empty($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+        if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             if ($_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
                 URL::forceScheme('https');
             }
