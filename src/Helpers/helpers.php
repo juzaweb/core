@@ -12,6 +12,7 @@
  * Time: 10:05 PM
  */
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Juzaweb\Core\Helpers\Breadcrumb;
 use Juzaweb\Core\Models\Config;
@@ -407,5 +408,33 @@ if (!function_exists('jw_get_page')) {
     function jw_get_page($id)
     {
         return Page::find($id);
+    }
+}
+
+if (!function_exists('array_only')) {
+    /**
+     * Get a subset of the items from the given array.
+     *
+     * @param  array  $array
+     * @param  array|string $keys
+     * @return array
+     */
+    function array_only($array, $keys)
+    {
+        return Arr::only($array, $keys);
+    }
+}
+
+if (!function_exists('array_except')) {
+    /**
+     * Get all of the given array except for a specified array of keys.
+     *
+     * @param  array  $array
+     * @param  array|string  $keys
+     * @return array
+     */
+    function array_except($array, $keys)
+    {
+        return Arr::except($array, $keys);
     }
 }

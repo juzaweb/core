@@ -75,12 +75,17 @@ trait MenuHookAction
         $opts = [
             'title' => '',
             'key' => $key,
-            'group' => 'custom',
+            'group' => '',
             'menu_box' => '',
             'priority' => 20,
         ];
 
         $item = array_merge($opts, $args);
+
+        if (empty($item['group'])) {
+            throw new \Exception('Menu Box group is required.');
+        }
+
         /**
          * @var MenuBoxAbstract $menuBox
          */
