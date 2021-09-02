@@ -20,33 +20,22 @@
         </div>
     </div>
 
-    <div class="dropdown mr-4 d-none d-sm-block">
-        <a href="" class="dropdown-toggle text-nowrap" data-toggle="dropdown" data-offset="5,15">
-            <span class="dropdown-toggle-text">EN</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" role="menu">
-            <a class="dropdown-item " href="javascript:void(0)"><span class="text-uppercase font-size-12 mr-1">EN</span>
-                English</a>
-        </div>
-    </div>
-
     @do_action('backend.menu_top')
 
-    {{--<div class="juzaweb__topbar__actionsDropdown dropdown mr-4 d-none d-sm-block">
+    <div class="juzaweb__topbar__actionsDropdown dropdown mr-4 d-none d-sm-block">
         <a href="javascript:void(0)" class="dropdown-toggle text-nowrap" data-toggle="dropdown" aria-expanded="false" data-offset="0,15">
             <i class="dropdown-toggle-icon fa fa-bell-o"></i>
         </a>
         @php
-            $total = Auth::user()
-                        ->unreadNotifications()
-                        ->count();
+            $total = count_unread_notifications();
 
             $items = Auth::user()
-            ->unreadNotifications()
-            ->orderBy('id', 'DESC')
-            ->limit(5)
-            ->get(['id', 'data', 'created_at']);
+                ->unreadNotifications()
+                ->orderBy('id', 'DESC')
+                ->limit(5)
+                ->get(['id', 'data', 'created_at']);
         @endphp
+
         <div class="juzaweb__topbar__actionsDropdownMenu dropdown-menu dropdown-menu-right" role="menu">
             <div style="width: 350px;">
                 <div class="card-body">
@@ -82,7 +71,7 @@
                 </div>
             </div>
         </div>
-    </div>--}}
+    </div>
 
     @php
         $user = jw_current_user();

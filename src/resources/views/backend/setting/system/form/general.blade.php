@@ -5,6 +5,21 @@
         $verification = get_config('user_verification');
         $timezones = timezone_identifiers_list();
         $sitetimezone = get_config('timezone', 'UTC');
+        $dateFormat = get_config('date_format', 'F j, Y');
+        $timeFormat = get_config('time_format', 'g:i a');
+
+        $dateFormats = [
+            'F j, Y' => now()->format('F j, Y'),
+            'Y-m-d' => now()->format('Y-m-d'),
+            'm/d/Y' => now()->format('m/d/Y'),
+            'd/m/Y' => now()->format('d/m/Y'),
+        ];
+
+        $timeFormats = [
+            'g:i a' => now()->format('g:i a'),
+            'g:i A' => now()->format('g:i A'),
+            'H:i' => now()->format('H:i'),
+        ]
     @endphp
 
     <div class="row mt-3">
@@ -60,12 +75,46 @@
 
             <div class="form-group">
                 <label class="col-form-label" for="date_format">@lang('juzaweb::app.date_format')</label>
+                <fieldset>
+                    @foreach($dateFormats as $key => $item)
+                    <label class="mb-2">
+                        <input type="radio" name="date_format" value="{{ $key }}" @if($key == $dateFormat) checked="checked" @endif>
+                        <span class="date-time-text format-i18n mr-2">{{ $item }}</span><code>{{ $key }}</code>
+                    </label><br>
+                    @endforeach
 
+                        {{--<label>
+                            <input type="radio" name="date_format" id="date_format_custom_radio" value="custom">
+                            <span class="date-time-text date-time-custom-text">Custom:<span class="screen-reader-text"> enter a custom date format in the following field</span></span>
+                        </label>
+
+                        <label for="date_format_custom" class="screen-reader-text">Custom date format:</label>
+                        <input type="text" name="date_format_custom" id="date_format_custom" value="F j, Y" class="form-control w-25">
+                        <br>
+
+                        <p><strong>Preview:</strong>
+                            <span class="example">September 2, 2021</span><span class="spinner"></span>
+                        </p>--}}
+                </fieldset>
             </div>
 
             <div class="form-group">
                 <label class="col-form-label" for="time_format">@lang('juzaweb::app.time_format')</label>
+                <fieldset>
+                    @foreach($timeFormats as $key => $item)
+                    <label><input type="radio" name="time_format" value="{{ $key }}" @if($key == $timeFormat) checked="checked" @endif> <span class="date-time-text format-i18n mr-2">{{ $item }}</span><code>{{ $key }}</code></label><br>
+                    @endforeach
 
+                    {{--<label for="time_format_custom" class="screen-reader-text">Custom time format:</label>
+                    <input type="text" name="time_format_custom" id="time_format_custom" value="g:i a" class="form-control w-25">
+                    <br>
+
+                    <p><strong>Preview:</strong> <span class="example">6:47 am</span><span class="spinner"></span>
+                    </p>--}}
+
+                    <p class="date-time-doc"><a href="https://wordpress.org/support/article/formatting-date-and-time/" target="_blank" rel="nofollow">Documentation on date and time formatting</a>.</p>
+
+                </fieldset>
             </div>
 
         </div>
