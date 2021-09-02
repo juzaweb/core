@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Juzaweb\Core\Helpers\Installer;
 
 class DbConfigServiceProvider extends ServiceProvider
 {
@@ -17,6 +16,8 @@ class DbConfigServiceProvider extends ServiceProvider
         }
         
         $mail = get_config('email');
+        $timezone = get_config('timezone');
+        $language = get_config('language');
 
         if ($mail) {
             $config = [
@@ -33,6 +34,15 @@ class DbConfigServiceProvider extends ServiceProvider
             ];
 
             Config::set('mail', $config);
+        }
+
+        if ($timezone) {
+            Config::set('app.timezone', $timezone);
+            date_default_timezone_set($timezone);
+        }
+
+        if ($language) {
+            Config::set('app.locale', $language);
         }
     }
     

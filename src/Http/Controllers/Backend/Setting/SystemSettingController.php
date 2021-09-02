@@ -11,7 +11,7 @@ class SystemSettingController extends BackendController
     public function index($form = 'general')
     {
         $forms = $this->getForms();
-        
+
         return view('juzaweb::backend.setting.system.index', [
             'title' => trans('juzaweb::app.system_setting'),
             'component' => $form,
@@ -21,7 +21,7 @@ class SystemSettingController extends BackendController
     
     public function save(Request $request)
     {
-        $configs = $request->only($this->getSettings());
+        $configs = $request->all();
         foreach ($configs as $key => $config) {
             if ($request->has($key)) {
                 Config::setConfig($key, $config);
@@ -42,12 +42,5 @@ class SystemSettingController extends BackendController
     protected function getForms()
     {
         return apply_filters('admin.general_settings.forms', []);
-    }
-
-    protected function getSettings()
-    {
-        $items = Config::getConfigs();
-
-        return apply_filters('admin.setting_fields', $items);
     }
 }

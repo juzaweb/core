@@ -3,6 +3,8 @@
     @php
         $registration = get_config('user_registration');
         $verification = get_config('user_verification');
+        $timezones = timezone_identifiers_list();
+        $sitetimezone = get_config('timezone', 'UTC');
     @endphp
 
     <div class="row mt-3">
@@ -37,23 +39,32 @@
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="timezone">@lang('juzaweb::app.timezone')</label>
-                <select name="timezone" class="form-control"></select>
-                <p class="timezone">{{ trans('juzaweb::app.timezone_description') }}</p>
+                <label class="col-form-label" for="timezone">{{ trans('juzaweb::app.timezone') }}</label>
+                <select name="timezone" class="form-control select2">
+                    @foreach($timezones as $timezone)
+                        <option value="{{ $timezone }}" @if($sitetimezone == $timezone) selected @endif>{{ $timezone }}</option>
+                    @endforeach
+                </select>
+                <p class="description">{{ trans('juzaweb::app.timezone_description') }}</p>
+                <p class="description">{{ trans('juzaweb::app.current_time') }} {{ now()->format('Y-m-d H:i:s') }}</p>
             </div>
 
             <div class="form-group">
                 <label class="col-form-label" for="language">@lang('juzaweb::app.site_language')</label>
-                <select name="language" class="form-control"></select>
+                <select name="language" class="form-control load-locales">
+                    @if($locale = get_config('language'))
+                        <option value="{{ $locale }}">{{ config("locales.{$locale}.name") }}</option>
+                    @endif    
+                </select>
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="language">@lang('juzaweb::app.Date Format')</label>
+                <label class="col-form-label" for="date_format">@lang('juzaweb::app.date_format')</label>
 
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="language">@lang('juzaweb::app.Time Format')</label>
+                <label class="col-form-label" for="time_format">@lang('juzaweb::app.time_format')</label>
 
             </div>
 
@@ -98,11 +109,11 @@
         <div class="col-md-6">
             <div class="btn-group float-right">
                 <button type="submit" class="btn btn-success">
-                    <i class="fa fa-save"></i> @lang('juzaweb::app.save')
+                    <i class="fa fa-save"></i> {{ trans('juzaweb::app.save') }}
                 </button>
 
                 <button type="reset" class="btn btn-default">
-                    <i class="fa fa-refresh"></i> @lang('juzaweb::app.reset')
+                    <i class="fa fa-refresh"></i> {{ trans('juzaweb::app.reset') }}
                 </button>
             </div>
         </div>
