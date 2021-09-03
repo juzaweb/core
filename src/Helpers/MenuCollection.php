@@ -7,7 +7,7 @@ class MenuCollection
     protected $item;
     
     /**
-     * Make menu
+     * Make menu Collection
      *
      * @param array $items
      * @param string $sortBy

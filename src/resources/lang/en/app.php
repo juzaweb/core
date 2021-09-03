@@ -321,5 +321,8 @@ return [
     'site_language' => 'Site language',
     'analytics' => 'Analytics',
     'current_time' => 'Current time',
+    'target' => 'Target',
+    'target_self' => 'Open in Self tab',
+    'target_blank' => 'Open in new tab',
 ];
 

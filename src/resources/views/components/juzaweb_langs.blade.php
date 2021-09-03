@@ -3,10 +3,10 @@ $langs = array_merge(trans('juzaweb::app', [], 'en'), trans('juzaweb::app'));
 @endphp
 <script type="text/javascript">
     /**
-     * MYMO CMS - THE BEST LARAVEL CMS
+     * JUZAWEB CMS - THE BEST CMS FOR LARAVEL PROJECT
      *
-     * @package    juzawebcms/juzawebcms
-     * @link       https://github.com/juzawebcms/juzawebcms
+     * @package    juzaweb/laravel-cms
+     * @link       https://juzaweb.com/cms
      * @license    MIT
      */
     var juzaweb = {
