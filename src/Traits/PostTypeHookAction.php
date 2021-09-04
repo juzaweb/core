@@ -10,7 +10,9 @@ namespace Juzaweb\Core\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Juzaweb\Core\Models\Taxonomy;
 use Juzaweb\Theme\Support\PostTypeMenuBox;
+use Juzaweb\Theme\Support\TaxonomyMenuBox;
 
 trait PostTypeHookAction
 {
@@ -36,8 +38,10 @@ trait PostTypeHookAction
                 'parent' => $objectType,
                 'menu_slug' => $type . '.' . $taxonomy,
                 'menu_position' => 20,
+                'model' => Taxonomy::class,
                 'menu_icon' => 'fa fa-list',
                 'show_in_menu' => true,
+                'menu_box' => true,
                 'rewrite' => true,
                 'supports' => [
                     'thumbnail',
@@ -69,10 +73,23 @@ trait PostTypeHookAction
             }
 
             if ($args->get('rewrite')) {
+                $base = Str::singular($type . '-' . $taxonomy);
                 $this->registerPermalink($args->get('menu_slug'), [
                     'label' => $args->get('label'),
-                    'base' => Str::singular($type . '-' . $taxonomy),
+                    'base' => $base,
                     'priority' => $args->get('priority'),
+                ]);
+            }
+
+            if ($args->get('menu_box')) {
+                $this->registerMenuBox($args->get('menu_slug'), [
+                    'title' => $args->get('label_type'),
+                    'group' => 'taxonomy',
+                    'priority' => 15,
+                    'menu_box' => new TaxonomyMenuBox(
+                        $args->get('menu_slug'),
+                        $args
+                    ),
                 ]);
             }
         }
