@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void addAction($tag, $callback, $priority = 20, $arguments = 1)
  * @method static void registerMenuBox($tag, array $args = [])
  * @method static array getMenuBoxs(array $keys = [])
+ * @method static \Illuminate\Support\Collection getMenuBox(string $key)
  * @see \Juzaweb\Core\Helpers\HookAction
  **/
 class HookAction extends Facade

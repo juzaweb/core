@@ -82,10 +82,6 @@ trait MenuHookAction
 
         $item = array_merge($opts, $args);
 
-        if (empty($item['group'])) {
-            throw new \Exception('Menu Box group is required.');
-        }
-
         /**
          * @var MenuBoxAbstract $menuBox
          */
@@ -127,5 +123,21 @@ trait MenuHookAction
         }
 
         return $menuBoxs;
+    }
+
+    /**
+     * Get registed menu box
+     *
+     * @param string|array $key
+     * @return \Illuminate\Support\Collection|false
+     */
+    public function getMenuBox($key)
+    {
+        $menuBoxs = $this->applyFilters('juzaweb.menu_boxs', []);
+        if ($key) {
+            return Arr::get($menuBoxs, $key);
+        }
+
+        return false;
     }
 }
