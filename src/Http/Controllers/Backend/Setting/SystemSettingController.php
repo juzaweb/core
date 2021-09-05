@@ -3,7 +3,6 @@
 namespace Juzaweb\Core\Http\Controllers\Backend\Setting;
 
 use Juzaweb\Core\Http\Controllers\BackendController;
-use Juzaweb\Core\Models\Config;
 use Illuminate\Http\Request;
 
 class SystemSettingController extends BackendController
@@ -24,7 +23,7 @@ class SystemSettingController extends BackendController
         $configs = $request->all();
         foreach ($configs as $key => $config) {
             if ($request->has($key)) {
-                Config::setConfig($key, $config);
+                set_config($key, $config);
             }
         }
     
