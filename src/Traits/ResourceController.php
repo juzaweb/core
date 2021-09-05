@@ -66,7 +66,8 @@ trait ResourceController
         }
 
         return $this->success([
-            'message' => trans('juzaweb::app.created_successfully')
+            'message' => trans('juzaweb::app.created_successfully'),
+            'redirect' => action([static::class, 'index'])
         ]);
     }
 
