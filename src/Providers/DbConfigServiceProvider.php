@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Juzaweb\Core\Contracts\ConfigContract;
 use Juzaweb\Core\Support\Config as JwConfig;
+use Juzaweb\Theme\Contracts\ThemeConfigContract;
+use Juzaweb\Theme\Support\ThemeConfig;
 
 class DbConfigServiceProvider extends ServiceProvider
 {
@@ -56,6 +58,10 @@ class DbConfigServiceProvider extends ServiceProvider
 
         $this->app->singleton(ConfigContract::class, function () {
             return new JwConfig();
+        });
+
+        $this->app->singleton(ThemeConfigContract::class, function () {
+            return new ThemeConfig(jw_current_theme());
         });
     }
     
