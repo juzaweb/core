@@ -6,16 +6,12 @@
  * @author     The Anh Dang <dangtheanh16@gmail.com>
  * @link       https://github.com/juzawebcms/juzawebcms
  * @license    MIT
- *
- * Created by JUZAWEB.
- * Date: 5/25/2021
- * Time: 10:05 PM
  */
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Juzaweb\Core\Helpers\Breadcrumb;
-use Juzaweb\Core\Models\Config;
+use Juzaweb\Core\Facades\Config;
 use Juzaweb\Core\Models\User;
 use Juzaweb\Theme\Models\Page;
 use Illuminate\Support\Str;

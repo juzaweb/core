@@ -3,6 +3,7 @@
 namespace Juzaweb\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Core\Contracts\EventyContract;
 
 class Eventy extends Facade
 {
@@ -13,6 +14,6 @@ class Eventy extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'eventy';
+        return EventyContract::class;
     }
 }

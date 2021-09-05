@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Juzaweb\Core\Contracts\ConfigContract;
+use Juzaweb\Core\Support\Config as JwConfig;
 
 class DbConfigServiceProvider extends ServiceProvider
 {
@@ -14,7 +16,7 @@ class DbConfigServiceProvider extends ServiceProvider
         if (!$this->checkDbConnection()) {
             return;
         }
-        
+
         $mail = get_config('email');
         $timezone = get_config('timezone');
         $language = get_config('language');
@@ -23,7 +25,7 @@ class DbConfigServiceProvider extends ServiceProvider
             $config = [
                 'driver'     => 'smtp',
                 'host'       => $mail['host'] ?? '',
-                'port'       => (int) $mail['port'] ?? '',
+                'port'       => $mail['port'] ?? '',
                 'from'       => [
                     'address'   => $mail['from_address'] ?? '',
                     'name'      => $mail['from_name'] ?? '',
@@ -44,6 +46,17 @@ class DbConfigServiceProvider extends ServiceProvider
         if ($language) {
             Config::set('app.locale', $language);
         }
+    }
+
+    public function register()
+    {
+        if (!$this->checkDbConnection()) {
+            return;
+        }
+
+        $this->app->singleton(ConfigContract::class, function () {
+            return new JwConfig();
+        });
     }
     
     protected function checkDbConnection()

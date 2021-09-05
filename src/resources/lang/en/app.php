@@ -324,5 +324,6 @@ return [
     'target' => 'Target',
     'target_self' => 'Open in Self tab',
     'target_blank' => 'Open in new tab',
+    'site_identity' => 'Site identity',
 ];
 

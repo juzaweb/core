@@ -18,14 +18,14 @@ class HookBladeServiceProvider extends ServiceProvider
          * Adds a directive in Blade for actions
          */
         Blade::directive('do_action', function ($expression) {
-            return "<?php app('eventy')->action({$expression}); ?>";
+            return "<?php app(\Juzaweb\Core\Contracts\EventyContract::class)->action({$expression}); ?>";
         });
 
         /*
          * Adds a directive in Blade for filters
          */
         Blade::directive('apply_filters', function ($expression) {
-            return "<?php echo app('eventy')->filter({$expression}); ?>";
+            return "<?php echo app(\Juzaweb\Core\Contracts\EventyContract::class)->filter({$expression}); ?>";
         });
         
     }
