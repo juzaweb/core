@@ -96,12 +96,36 @@ trait MenuHookAction
             return $items;
         }, $item['priority']);
 
-        add_action('juzaweb.add_menu_items', function () use ($key, $item, $menuBox) {
+        add_action('juzaweb.add_menu_items', function () use (
+            $key,
+            $item,
+            $menuBox
+        ) {
             echo view('jw_theme::backend.items.menu_box', [
                 'label' => $item['title'],
                 'key' => $key,
                 'slot' => $menuBox->addView()->render()
             ])->render();
         }, $item['priority']);
+    }
+
+    /**
+     * Get registed menu box
+     *
+     * @param string|array $keys
+     * @return array
+     */
+    public function getMenuBoxs($keys = [])
+    {
+        $menuBoxs = $this->applyFilters('juzaweb.menu_boxs', []);
+        if ($keys) {
+            if (is_string($keys)) {
+                $keys = [$keys];
+            }
+
+            return array_only($menuBoxs, $keys);
+        }
+
+        return $menuBoxs;
     }
 }

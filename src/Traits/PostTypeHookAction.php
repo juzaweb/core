@@ -30,13 +30,15 @@ trait PostTypeHookAction
         $objectTypes = is_string($objectType) ? [$objectType] : $objectType;
         foreach ($objectTypes as $objectType) {
             $type = Str::singular($objectType);
+            $menuSlug = $type . '.' . $taxonomy;
+
             $opts = [
                 'label_type' => ucfirst($type) .' '. $args['label'],
                 'priority' => 20,
                 'description' => '',
                 'hierarchical' => false,
                 'parent' => $objectType,
-                'menu_slug' => $type . '.' . $taxonomy,
+                'menu_slug' => $menuSlug,
                 'menu_position' => 20,
                 'model' => Taxonomy::class,
                 'menu_icon' => 'fa fa-list',
@@ -63,7 +65,7 @@ trait PostTypeHookAction
             if ($args->get('show_in_menu')) {
                 $this->addAdminMenu(
                     $args->get('label'),
-                    $args->get('menu_slug'),
+                    $menuSlug,
                     [
                         'icon' => $args->get('menu_icon', 'fa fa-list'),
                         'parent' => $args->get('parent'),
@@ -74,7 +76,7 @@ trait PostTypeHookAction
 
             if ($args->get('rewrite')) {
                 $base = Str::singular($type . '-' . $taxonomy);
-                $this->registerPermalink($args->get('menu_slug'), [
+                $this->registerPermalink($menuSlug, [
                     'label' => $args->get('label'),
                     'base' => $base,
                     'priority' => $args->get('priority'),
@@ -82,12 +84,12 @@ trait PostTypeHookAction
             }
 
             if ($args->get('menu_box')) {
-                $this->registerMenuBox($args->get('menu_slug'), [
+                $this->registerMenuBox($menuSlug, [
                     'title' => $args->get('label_type'),
                     'group' => 'taxonomy',
                     'priority' => 15,
                     'menu_box' => new TaxonomyMenuBox(
-                        $args->get('menu_slug'),
+                        $menuSlug,
                         $args
                     ),
                 ]);
