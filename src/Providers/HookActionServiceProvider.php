@@ -25,7 +25,7 @@ class HookActionServiceProvider extends ServiceProvider
 
                 $files = File::allFiles($path);
                 foreach ($files as $file) {
-                    require ($file->getRealPath());
+                    include ($file->getRealPath());
                 }
             }
         });
