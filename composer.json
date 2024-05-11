@@ -1,41 +1,30 @@
 {
     "name": "juzaweb/core",
-    "description": "Juzaweb CMS",
+    "description": "Juzaweb CMS Core",
     "keywords": [],
     "license": "MIT",
-    "homepage": "https://juzaweb.com/cms",
+    "homepage": "https://juzaweb.com",
     "require": {
-        "php": "^7.2.5|^8.0",
-        "guzzlehttp/guzzle": "^6.5",
+        "php": "^8.0|^8.1",
+        "awobaz/compoships": "^2.2",
+        "doctrine/dbal": "^3.3",
         "intervention/image": "^2.5",
-        "laravelium/sitemap": "6.*",
-        "pion/laravel-chunk-upload": "^1.4",
-        "sokil/php-vast": "^2.0",
+        "juzaweb/config": "^2.2",
+        "juzaweb/laravel-chunk-upload": "^1.5",
+        "juzaweb/laravel-translation-loader": "^2.0",
+        "laravel/socialite": "^5.5",
+        "laravel/passport": "^10.4",
         "spatie/image-optimizer": "^1.4",
-        "tymon/jwt-auth": "^1.0",
-        "darkaonline/l5-swagger": "^6.0"
+        "spatie/laravel-activitylog": "^4.7"
     },
     "require-dev": {
-      "laravel/laravel": "^6.0 | ^7.0 | ^8.0",
-      "phpunit/phpunit": "6.0 | 7.0 | 7.5 | 8.4 | ^8.5"
+      "laravel/laravel": "^9.0",
+      "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
           "Juzaweb\\Core\\Tests\\": "tests/",
           "Juzaweb\\Core\\": "src/"
-        },
-        "files": [
-            "src/Helpers/helpers.php"
-        ]
-    },
-    "extra": {
-      "laravel": {
-        "providers": [
-          "Juzaweb\\Core\\Providers\\CoreServiceProvider"
-        ],
-        "dont-discover": [
-          "darkaonline/l5-swagger"
-        ]
-      }
+        }
     }
 }
