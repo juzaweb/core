@@ -6,7 +6,6 @@
     "homepage": "https://juzaweb.com",
     "require": {
         "php": "^8.0|^8.1",
-        "awobaz/compoships": "^2.2",
         "doctrine/dbal": "^3.3",
         "intervention/image": "^2.5",
         "juzaweb/config": "^2.2",
