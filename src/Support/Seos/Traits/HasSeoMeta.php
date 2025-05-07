@@ -1,0 +1,78 @@
+<?php
+/**
+ * LARABIZ CMS - Full SPA Laravel CMS
+ *
+ * @package    larabizcms/larabiz
+ * @author     The Anh Dang
+ * @link       https://larabiz.com
+ */
+
+namespace Juzaweb\Core\Seos\Traits;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Juzaweb\Core\Models\Model;
+use Juzaweb\Core\Models\SeoMeta;
+use Juzaweb\Core\Seos\Observes\HasSeoMetaObserve;
+
+/**
+ * @property SeoMeta $seoMeta
+ * @method static Builder|static withSeoMeta(?string $locale = null)
+ * @mixin Model
+ */
+trait HasSeoMeta
+{
+    public static function bootHasSeoMeta(): void
+    {
+        static::observe(HasSeoMetaObserve::class);
+    }
+
+    abstract public function seoMetaFill(): array;
+
+    public function seoMeta(): MorphOne
+    {
+        return $this->morphOne(
+            SeoMeta::class,
+            'seometable',
+            'seometable_type',
+            'seometable_id',
+            'id',
+            'id'
+        );
+    }
+
+    public function scopeWithSeoMeta(Builder $builder, ?string $locale = null): Builder
+    {
+        return $builder->with(['seoMeta.translations' => fn ($q) => $q->where('locale', $locale ?? app()->getLocale())]);
+    }
+
+    /**
+     * @param  string<'title', 'description', 'keywords', 'image'>  $key
+     * @param  string|null  $locale
+     * @return null|string
+     */
+    public function getSeoMeta(string $key, string $locale = null): ?string
+    {
+        $locale = $locale ?? app()->getLocale();
+
+        return $this->seoMeta?->translate($locale)->{$key};
+    }
+
+    /**
+     * @param  array|string<'title', 'description', 'keywords', 'image'>  $key
+     * @param  string|null  $value
+     * @param  string|null  $locale
+     * @return void
+     */
+    public function setSeoMeta(array|string $key, ?string $value = null, string $locale = null): void
+    {
+        $locale = $locale ?? app()->getLocale();
+
+        if (is_array($key)) {
+            $this->seoMeta?->translateOrNew($locale)->fill($key)->save();
+            return;
+        }
+
+        $this->seoMeta?->translateOrNew($locale)->fill([$key => $value])->save();
+    }
+}

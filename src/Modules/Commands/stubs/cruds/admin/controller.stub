@@ -1,0 +1,73 @@
+<?php
+/**
+ * LARABIZ CMS - Full SPA Laravel CMS
+ *
+ * @package    larabizcom/larabiz
+ * @author     The Anh Dang
+ * @link       https://larabiz.com
+ */
+
+namespace $CLASS_NAMESPACE$;
+
+use Juzaweb\Core\Facades\Breadcrumb;
+use Juzaweb\Core\Http\Controllers\AdminController;
+use Juzaweb\Core\PageBuilder\Page;
+use $REPOSITORY_NAMESPACE$;
+use $DATATABLE_NAMESPACE$;
+use $FORM_NAMESPACE$;
+
+class $CLASS$ extends AdminController
+{
+    public function __construct(
+        protected $REPOSITORY_CLASS$ $$REPOSITORY_NAME$
+    ) {
+        //
+    }
+
+    public function index(): Page
+    {
+        Breadcrumb::add(__('$TITLE$'));
+
+        $page = Page::make()->template('crud-index');
+
+        $page->fill(['title' => __('$TITLE$'), 'description' => __('$TITLE$')]);
+
+        $page->add($DATATABLE_CLASS$::make());
+
+        return $page;
+    }
+
+    public function create(): Page
+    {
+        Breadcrumb::add(__('$TITLE$'), '/admin-cp/$URL_PREFIX$');
+        Breadcrumb::add(__('New $SINGULAR_TITLE$'));
+
+        $page = Page::make();
+
+        $page->fill(['title' => __('New $SINGULAR_TITLE$'), 'description' => __('New $SINGULAR_TITLE$')]);
+
+        $page->add($FORM_CLASS$::make(['method' => 'POST', 'action' => '/$URL_PREFIX$']));
+
+        return $page;
+    }
+
+    public function edit(string $id): Page
+    {
+        $model = $this->$REPOSITORY_NAME$->find($id);
+
+        abort_if($model === null, 404, __('$SINGULAR_TITLE$ not found'));
+
+        $page = Page::make(
+            [
+                'title' => __('Edit $SINGULAR_TITLE$: :name', ['name' => $model->name]),
+                'description' => __('Edit $SINGULAR_TITLE$: :name', ['name' => $model->name]),
+            ]
+        );
+        Breadcrumb::add(__('$TITLE$'), '/admin-cp/$URL_PREFIX$');
+        Breadcrumb::add(__('Edit $SINGULAR_TITLE$: :name', ['name' => $model->name]));
+
+        $page->add($FORM_CLASS$::make(['method' => 'PUT', 'action' => "/$URL_PREFIX$/{$model->id}"])->withModel($model));
+
+        return $page;
+    }
+}

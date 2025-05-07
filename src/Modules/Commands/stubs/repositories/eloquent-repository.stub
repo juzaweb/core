@@ -1,0 +1,24 @@
+<?php
+/**
+ * LARABIZ CMS - Full SPA Laravel CMS
+ *
+ * @package    larabizcms/larabiz
+ * @author     The Anh Dang
+ * @link       https://larabiz.com
+ */
+
+namespace $CLASS_NAMESPACE$;
+
+use Juzaweb\Core\Repositories\EloquentRepository;
+use Juzaweb\Core\Repositories\Traits\HasBulkActions;
+use $MODEL_NAMESPACE$;
+
+class $CLASS$ extends EloquentRepository implements $REPOSITORY_NAME$
+{
+    use HasBulkActions;
+
+    public function model(): string
+    {
+        return $MODEL_CLASS$::class;
+    }
+}

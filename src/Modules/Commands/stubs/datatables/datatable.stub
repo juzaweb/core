@@ -1,0 +1,35 @@
+<?php
+/**
+ * LARABIZ CMS - Full SPA Laravel CMS
+ *
+ * @package    larabizcom/larabiz
+ * @author     The Anh Dang
+ * @link       https://larabiz.com
+ */
+
+namespace $CLASS_NAMESPACE$;
+
+use Juzaweb\Core\DataTables\Abstracts\DataTable;
+use Juzaweb\Core\DataTables\Components\BulkAction;
+use Juzaweb\Core\DataTables\Components\Column;
+
+class $CLASS$ extends DataTable
+{
+    protected ?string $dataUrl = '/$URL_PREFIX$';
+
+    protected ?string $bulkActionUrl = '/$URL_PREFIX$/bulk';
+
+    protected ?string $deleteUrl = '/$URL_PREFIX$/{id}';
+
+    protected ?string $editUrl = '/admin-cp/$URL_PREFIX$/{id}/edit';
+
+    public function columns(): array
+    {
+        return $COLUMNS$;
+    }
+
+    public function bulkActions(): array
+    {
+        return $BULK_ACTIONS$;
+    }
+}

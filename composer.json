@@ -1,0 +1,45 @@
+{
+    "name": "juzaweb/core",
+    "description": "Juzaweb CMS Core",
+    "keywords": [],
+    "license": "MIT",
+    "homepage": "https://juzaweb.com",
+    "require": {
+        "php": "^8.2",
+        "astrotomic/laravel-translatable": "^11.13",
+        "darkaonline/l5-swagger": "^8.6",
+        "doctrine/dbal": "^4.2",
+        "hassankhan/config": "^2.2",
+        "juzaweb/laravel-translation-loader": "^2.0",
+        "laravel/socialite": "^5.5",
+        "laravel/framework": "^11.34",
+        "laravel/passport": "^12.2",
+        "wikimedia/composer-merge-plugin": "^2.1",
+        "intervention/image": "^2.5",
+        "spatie/image-optimizer": "^1.4",
+        "spatie/laravel-analytics": "^5.4",
+        "spatie/laravel-sitemap": "^7.3",
+        "oomphinc/composer-installers-extender": "^2.0",
+        "maatwebsite/excel": "^3.1"
+    },
+    "require-dev": {
+      "laravel/laravel": "^11.31",
+      "phpunit/phpunit": "^11.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+          "Juzaweb\\Core\\Tests\\": "tests/",
+          "Juzaweb\\Core\\": "src/"
+        },
+        "files": [
+            "helpers/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Juzaweb\\Core\\Providers\\CoreServiceProvider"
+            ]
+        }
+    }
+}

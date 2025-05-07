@@ -1,0 +1,41 @@
+<?php
+/**
+ * LARABIZ CMS - Full SPA Laravel CMS
+ *
+ * @package    larabizcom/larabiz
+ * @author     The Anh Dang
+ * @link       https://larabiz.com
+ */
+
+namespace $NAMESPACE$;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Juzaweb\Core\Rules\AllExist;
+use $REPOSITORY_NAMESPACE$;
+
+class $CLASS$ extends FormRequest
+{
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'action' => ['required', Rule::in(app($REPOSITORY_CLASS$::class)->bulkActions())],
+            'ids' => ['required', 'array', 'min:1', new AllExist('$TABLE$', 'id')],
+        ];
+    }
+
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+}
