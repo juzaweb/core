@@ -15,7 +15,7 @@ trait CausesActivity
 {
     use \Spatie\Activitylog\Traits\CausesActivity;
 
-    public function logActivity(string $logName = null): ActivityLogger
+    public function logActivity(?string $logName = null): ActivityLogger
     {
         return activity($logName)->causedBy($this);
     }

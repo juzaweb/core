@@ -8,13 +8,13 @@
  * @link       https://larabiz.com
  */
 
-namespace LarabizCMS\Core\Helpers\Traits;
+namespace Juzaweb\Core\Helpers\Traits;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\JsonResponse;
-use LarabizCMS\Core\Support\Resources\ModelCollectionResource;
-use LarabizCMS\Core\Support\Resources\ModelResource;
+use Juzaweb\Core\Support\Resources\ModelCollectionResource;
+use Juzaweb\Core\Support\Resources\ModelResource;
 
 trait RestResponses
 {

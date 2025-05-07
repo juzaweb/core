@@ -63,12 +63,12 @@ class CoreServiceProvider extends ServiceProvider
     {
         Validator::extend(
             'recaptcha',
-            '\LarabizCMS\Core\Rules\ReCaptchaValidator@validate'
+            '\Juzaweb\Core\Rules\ReCaptchaValidator@validate'
         );
 
         Validator::extend(
             'domain',
-            '\LarabizCMS\Core\Rules\DomainValidator@validate'
+            '\Juzaweb\Core\Rules\DomainValidator@validate'
         );
 
         Rule::macro(
