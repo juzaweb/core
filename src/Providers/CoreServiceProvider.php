@@ -20,6 +20,8 @@ use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
 use Juzaweb\Core\Support;
 use Juzaweb\Core\Contracts;
+use Juzaweb\Core\Translations\Contracts\Translation;
+use Juzaweb\Core\Translations\TranslationRepository;
 
 class CoreServiceProvider extends ServiceProvider
 {

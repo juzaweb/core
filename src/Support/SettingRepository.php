@@ -28,11 +28,7 @@ class SettingRepository implements SettingContract
 
     public function get(string $key, mixed $default = null): mixed
     {
-        $setting = $this->settings()->get($key);
-
-        $value = $this->configs()->get($key) ?? $this->settings()->get($key)['default'] ?? $default;
-
-        return Arr::get($setting ?? [], 'element.element')  == 'checkbox_field' ? (bool) $value : $value;
+        return $this->configs()->get($key) ?? $this->settings()->get($key)['default'] ?? $default;
     }
 
     public function set(string $key, mixed $value = null): SettingModel
