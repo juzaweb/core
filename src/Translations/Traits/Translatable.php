@@ -16,9 +16,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Juzaweb\Core\Models\Enums\TranslateHistoryStatus;
 use Juzaweb\Core\Models\TranslateHistory;
-use LarabizCMS\Premium\Translations\Exceptions\TranslationDoesNotExistException;
-use LarabizCMS\Premium\Translations\Exceptions\TranslationExistException;
-use LarabizCMS\Premium\Translations\Translater;
+use Juzaweb\Premium\Translations\Exceptions\TranslationDoesNotExistException;
+use Juzaweb\Premium\Translations\Exceptions\TranslationExistException;
+use Juzaweb\Premium\Translations\Translater;
 
 /**
  * @property array $translatedAttributes

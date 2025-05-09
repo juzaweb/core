@@ -161,17 +161,17 @@ class Media extends Model
         'file_type',
     ];
 
-    protected $searchable = [
+    protected array $searchable = [
         'name',
         'extension',
     ];
 
-    protected $sortable = [
+    protected array $sortable = [
         'name',
         'extension',
     ];
 
-    protected $sortDefault = [
+    protected array $sortDefault = [
         'type' => 'asc',
         'id' => 'desc',
     ];
