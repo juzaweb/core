@@ -9,8 +9,8 @@
 
 namespace Juzaweb\Core\Contracts;
 
-use Juzaweb\Core\Routes\Resources\AdminResource;
-use Juzaweb\Core\Routes\Resources\APIResource;
+use Juzaweb\Core\Support\Routes\Resources\AdminResource;
+use Juzaweb\Core\Support\Routes\Resources\APIResource;
 
 interface RouteResource
 {

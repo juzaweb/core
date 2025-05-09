@@ -7,11 +7,8 @@
  * @link       https://larabiz.com
  */
 
-namespace Juzaweb\Core\Models;
+return [
+    'enabled' => env('LB_THEME_ENABLED', true),
 
-use Juzaweb\Core\Traits\HasAPI;
-
-class Activity extends \Spatie\Activitylog\Models\Activity
-{
-    use HasAPI;
-}
+    'path' => base_path('themes'),
+];

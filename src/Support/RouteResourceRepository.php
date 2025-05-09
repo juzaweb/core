@@ -9,7 +9,25 @@
 
 namespace Juzaweb\Core\Support;
 
-class RouteResourceRepository
-{
+use Illuminate\Contracts\Routing\Registrar;
+use Juzaweb\Core\Contracts\RouteResource;
+use Juzaweb\Core\Support\Routes\Resources\AdminResource;
+use Juzaweb\Core\Support\Routes\Resources\APIResource;
 
+class RouteResourceRepository implements RouteResource
+{
+    public function __construct(protected Registrar $registrar)
+    {
+        //
+    }
+
+    public function admin(string $name, string $controller): AdminResource
+    {
+        return new AdminResource($this->registrar, $name, $controller);
+    }
+
+    public function api(string $name, string $controller): APIResource
+    {
+        return new APIResource($this->registrar, $name, $controller);
+    }
 }

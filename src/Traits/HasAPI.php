@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
  */
 trait HasAPI
 {
-    use Sortable, Searchable, Filterable, HasResource;
+    use HasResource;
 
     public function apiWithDefaults(): array
     {

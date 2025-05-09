@@ -10,19 +10,9 @@
 
 namespace Juzaweb\Core\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as ModelAlias;
 use Juzaweb\Core\Traits\QueryCacheable;
 
-/**
- * Juzaweb\Core\Models\Model
- *
- * @property array $translatedAttributes
- * @method static Builder|Model newModelQuery()
- * @method static Builder|Model newQuery()
- * @method static Builder|Model query()
- * @mixin \Eloquent
- */
 class Model extends ModelAlias
 {
     use QueryCacheable;

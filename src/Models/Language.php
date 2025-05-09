@@ -82,14 +82,14 @@ class Language extends Model
 
     public static function languages(): Collection
     {
-        return self::cacheFor(config('larabiz.query_cache.lifetime'))
+        return self::cacheFor(config('core.query_cache.lifetime'))
             ->get()
             ->keyBy('code');
     }
 
     public static function default(): ?self
     {
-        return self::cacheFor(config('larabiz.query_cache.lifetime'))
+        return self::cacheFor(config('core.query_cache.lifetime'))
             ->where(['code' => setting('language', config('app.locale'))])
             ->first();
     }
