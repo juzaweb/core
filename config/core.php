@@ -9,9 +9,14 @@
 
 return [
     /**
+     * Admin panel prefix
+     */
+    'admin_prefix' => env('JW_ADMIN_PREFIX', 'admin-cp'),
+
+    /**
      * Default Authentication middleware
      */
-    'auth_middleware' => ['auth:api'],
+    'auth_middleware' => ['auth'],
 
     'query_cache' => [
         /**
