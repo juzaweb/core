@@ -41,10 +41,19 @@
                         <h1>{{ $title }}</h1>
                     </div>
                     <div class="col-sm-6">
+                        @php
+                        $breadcrumbs = \Juzaweb\Core\Facades\Breadcrumb::getItems();
+                        @endphp
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                            <li class="breadcrumb-item active">Fixed Layout</li>
+                            @foreach($breadcrumbs as $breadcrumb)
+                                @if($breadcrumb['url'])
+                                    <li class="breadcrumb-item">
+                                        <a href="{{ $breadcrumb['url'] }}">{{ $breadcrumb['title'] }}</a>
+                                    </li>
+                                @else
+                                    <li class="breadcrumb-item active">{{ $breadcrumb['title'] }}</li>
+                                @endif
+                            @endforeach
                         </ol>
                     </div>
                 </div>

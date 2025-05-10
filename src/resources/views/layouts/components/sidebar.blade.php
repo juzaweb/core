@@ -10,8 +10,12 @@
             @foreach($roots as $root)
                 @php
                     $children = $menus->where('parent', $root['key'])->sortBy('priority');
+                    $active = request()->is(ltrim($root['url'], '/'));
                 @endphp
-                <a href="{{ $root['url'] }}" target="{{ $root['target'] }}" class="nav-link">
+                <a href="{{ $root['url'] }}"
+                   target="{{ $root['target'] }}"
+                   class="nav-link @if($active) active @endif"
+                >
                     <i class="nav-icon fas {{ $root['icon'] }}"></i>
                     <p>
                         {{ $root['title'] }}
@@ -21,16 +25,16 @@
                     </p>
                 </a>
                 @if($children->isNotEmpty())
-                <ul class="nav nav-treeview">
-                    @foreach($children as $child)
-                        <li class="nav-item">
-                            <a href="{{ $child['url'] }}" class="nav-link">
-                                <i class="nav-icon fas {{ $child['icon'] }}"></i>
-                                <p>{{ $child['title'] }}</p>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+                    <ul class="nav nav-treeview">
+                        @foreach($children as $child)
+                            <li class="nav-item">
+                                <a href="{{ $child['url'] }}" class="nav-link">
+                                    <i class="nav-icon fas {{ $child['icon'] }}"></i>
+                                    <p>{{ $child['title'] }}</p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 @endif
             @endforeach
         </li>
