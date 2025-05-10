@@ -10,8 +10,8 @@
 namespace Juzaweb\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Juzaweb\Core\Routes\Resources\AdminResource;
-use Juzaweb\Core\Routes\Resources\APIResource;
+use Juzaweb\Core\Support\Routes\Resources\AdminResource;
+use Juzaweb\Core\Support\Routes\Resources\APIResource;
 
 /**
  * @method static APIResource api(string $name, string $controller)

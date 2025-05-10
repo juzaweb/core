@@ -34,12 +34,12 @@ class AdminResource extends Resource
 
         if (in_array('store', $this->methods)) {
             $this->registrar->post($this->name, [$this->controller, 'store'])
-                ->middleware($this->getMiddleware('store'));
+                ->middleware($this->getMiddleware('create'));
         }
 
         if (in_array('update', $this->methods)) {
             $this->registrar->put("{$this->name}/{id}", [$this->controller, 'update'])
-                ->middleware($this->getMiddleware('update'));
+                ->middleware($this->getMiddleware('edit'));
         }
 
         if (in_array('destroy', $this->methods)) {
@@ -55,12 +55,16 @@ class AdminResource extends Resource
 
     public function getMiddleware(string $method): array
     {
-        if (isset($this->permissions[$method])) {
-            return $this->permissions[$method];
+        if (isset($this->middleware[$method])) {
+            return $this->middleware[$method];
         }
 
-        return [
-            ...$this->getPermissions($method),
-        ];
+        $middleware = [];
+
+        if ($permissions = $this->getPermissions($method)) {
+            $middleware[] = 'permission:'. implode(',', $permissions);
+        }
+
+        return $middleware;
     }
 }

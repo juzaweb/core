@@ -17,6 +17,7 @@ use Juzaweb\Core\Media\Contracts\ImageConversion;
 use Juzaweb\Core\Media\Contracts\Media;
 use Juzaweb\Core\Media\ImageConversionRepository;
 use Juzaweb\Core\Media\MediaRepository;
+use Juzaweb\Core\Modules\Providers\ModulesServiceProvider;
 use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
 use Juzaweb\Core\Support;
@@ -48,6 +49,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
         $this->app->register(PermissionServiceProvider::class);
+        $this->app->register(ModulesServiceProvider::class);
         $this->app->register(AdminServiceProvider::class);
     }
 
@@ -110,7 +112,6 @@ class CoreServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/core.php' => config_path('core.php'),
             __DIR__ . '/../../config/modules.php' => config_path('modules.php'),
             __DIR__ . '/../../config/media.php' => config_path('media.php'),
-            __DIR__ . '/../../config/notification.php' => config_path('notification.php'),
         ], 'core-config');
 
         $this->publishes([

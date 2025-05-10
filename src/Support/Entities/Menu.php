@@ -27,7 +27,7 @@ class Menu extends Customizer
 
     protected string $position = 'admin-left';
 
-    protected string $icon = 'list';
+    protected string $icon = 'fa-circle';
 
     protected ?string $parent = null;
 
@@ -40,6 +40,8 @@ class Menu extends Customizer
     protected string $prefix = 'admin-cp';
 
     protected ?string $slug = null;
+
+    protected ?string $url = null;
 
     public function __construct(
         protected GlobalData $globalData,
@@ -108,6 +110,13 @@ class Menu extends Customizer
         return $this->noPermission();
     }
 
+    public function url(string $url): static
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
     public function add(): void
     {
         $this->hook->addAction(Actions::MENU_INIT, [$this, 'register'], $this->priority);
@@ -128,6 +137,8 @@ class Menu extends Customizer
             $slug = '';
         }
 
+        $url = rtrim($this->url ? "/{$this->prefix}/{$this->url}" : "/{$this->prefix}/{$slug}", '/');
+
         return [
             'key' => $this->key,
             'title' => $this->getTitle(),
@@ -137,7 +148,7 @@ class Menu extends Customizer
             'parent' => $this->parent,
             'target' => $this->target,
             'position' => $this->position,
-            'url' => rtrim("/{$this->prefix}/{$slug}", '/'),
+            'url' => $url,
             'permissions' => $this->getPermissions(),
             'priority' => $this->priority,
         ];
