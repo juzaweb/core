@@ -7,6 +7,11 @@
  * @link       https://larabiz.com
  */
 
-use Juzaweb\Core\Http\Controllers\Admin\DashboardController;
+namespace Juzaweb\Core\Models\Enums;
 
-Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+enum UserStatus: string
+{
+    case ACTIVE = 'active';
+    case INACTIVE = 'inactive';
+    case BANNED = 'banned';
+}

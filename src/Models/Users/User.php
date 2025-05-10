@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Juzaweb\Core\Facades\GlobalData;
 use Juzaweb\Core\Models\Authenticatable;
+use Juzaweb\Core\Models\Enums\UserStatus;
 use Juzaweb\Core\Models\Media;
 use Juzaweb\Core\Models\PasswordReset;
 use Juzaweb\Core\Permissions\Traits\HasPermissions;
@@ -70,6 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'birthday' => 'date',
         'is_super_admin' => 'boolean',
+        'status' => UserStatus::class,
     ];
 
     protected $searchable = ['name', 'email'];
@@ -96,7 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function scopeActive(Builder $builder): Builder
     {
-        return $builder->where('status', self::STATUS_ACTIVE);
+        return $builder->where('status', UserStatus::ACTIVE);
     }
 
     public function passwordResets(): HasMany
@@ -109,9 +111,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->passwordResets()->exists();
     }
 
+    public function isActive(): bool
+    {
+        return $this->status === UserStatus::ACTIVE;
+    }
+
+    public function isInactive(): bool
+    {
+        return $this->status === UserStatus::INACTIVE;
+    }
+
     public function isBanned(): bool
     {
-        return $this->status === 'banned';
+        return $this->status === UserStatus::BANNED;
     }
 
     public function isSuperAdmin(): bool
@@ -121,6 +133,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasPermission(): bool
     {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
         if ($this->roles()->exists()) {
             return true;
         }
