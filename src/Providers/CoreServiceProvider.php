@@ -36,6 +36,8 @@ class CoreServiceProvider extends ServiceProvider
         $this->registerServices();
 
         $this->registerPublishes();
+
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
     }
 
     protected function registerProviders(): void

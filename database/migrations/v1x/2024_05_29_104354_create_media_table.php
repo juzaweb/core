@@ -4,7 +4,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Juzaweb\Core\Models\Media;
+use Juzaweb\Core\Models\Enums\MediaType;
 
 return new class extends Migration
 {
@@ -22,7 +22,7 @@ return new class extends Migration
                 $table->string('disk', 20)->index()->default('public');
                 $table->nullableUuidMorphs('uploaded_by');
                 $table->string('name');
-                $table->string('type', 5)->index()->default(Media::TYPE_FILE);
+                $table->string('type', 5)->index()->default(MediaType::FILE->value);
                 $table->string('path', 190)->nullable();
                 $table->string('mime_type', 100)->index()->nullable();
                 $table->string('extension', 10)->index()->nullable();
