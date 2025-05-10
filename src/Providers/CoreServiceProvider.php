@@ -16,6 +16,7 @@ use Juzaweb\Core\Media\Contracts\ImageConversion;
 use Juzaweb\Core\Media\Contracts\Media;
 use Juzaweb\Core\Media\ImageConversionRepository;
 use Juzaweb\Core\Media\MediaRepository;
+use Juzaweb\Core\Commands;
 use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
 use Juzaweb\Core\Support;
@@ -24,9 +25,11 @@ use Juzaweb\Core\Translations\TranslationRepository;
 
 class CoreServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->customServices();
+
+        $this->registerCommands();
     }
 
     public function register(): void
@@ -147,5 +150,14 @@ class CoreServiceProvider extends ServiceProvider
                 return new ModelUnique($modelClass, $modelAttribute, $callback);
             }
         );
+    }
+
+    protected function registerCommands(): void
+    {
+        $this->commands([
+            Commands\MakeUserCommand::class,
+            Commands\CacheSizeCommand::class,
+            Commands\TestMailCommand::class,
+        ]);
     }
 }

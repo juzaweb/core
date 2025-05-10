@@ -14,7 +14,6 @@ use Juzaweb\Core\Facades\GlobalData;
 use Juzaweb\Core\Models\Authenticatable;
 use Juzaweb\Core\Models\Media;
 use Juzaweb\Core\Models\PasswordReset;
-use Juzaweb\Core\Notifications\Traits\Subscriptable;
 use Juzaweb\Core\Permissions\Traits\HasPermissions;
 use Juzaweb\Core\Permissions\Traits\HasRoles;
 use Juzaweb\Core\Traits\CausesActivity;
