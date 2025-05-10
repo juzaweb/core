@@ -10,10 +10,8 @@
 
 namespace Juzaweb\Core\Providers;
 
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -24,8 +22,18 @@ class RouteServiceProvider extends ServiceProvider
             //     ->prefix('api/v1')
             //     ->group(__DIR__ . '/../routes/api.php');
 
-            Route::middleware('web')
+            Route::middleware([
+                'web',
+                ...config('core.auth_middleware', []),
+                'admin',
+            ])
                 ->group(__DIR__ . '/../routes/admin.php');
+
+            Route::middleware(['web', 'guest'])
+                ->group(__DIR__ . '/../routes/auth.php');
+
+            Route::middleware(['web'])
+                ->group(__DIR__ . '/../routes/web.php');
         });
     }
 }

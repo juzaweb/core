@@ -9,9 +9,9 @@
 
 namespace Juzaweb\Core\Providers;
 
-use App\Providers\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Juzaweb\Core\Contracts;
 use Juzaweb\Core\Media\Contracts\ImageConversion;
 use Juzaweb\Core\Media\Contracts\Media;
 use Juzaweb\Core\Media\ImageConversionRepository;
@@ -19,7 +19,6 @@ use Juzaweb\Core\Media\MediaRepository;
 use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
 use Juzaweb\Core\Support;
-use Juzaweb\Core\Contracts;
 use Juzaweb\Core\Translations\Contracts\Translation;
 use Juzaweb\Core\Translations\TranslationRepository;
 
@@ -41,6 +40,7 @@ class CoreServiceProvider extends ServiceProvider
 
     protected function registerProviders(): void
     {
+        $this->app->register(RouteServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
         $this->app->register(PermissionServiceProvider::class);
     }

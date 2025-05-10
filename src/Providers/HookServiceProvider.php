@@ -8,7 +8,6 @@
 
 namespace Juzaweb\Core\Providers;
 
-use App\Providers\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Juzaweb\Core\Contracts\Hook;
 use Juzaweb\Core\Hooks\HookRepository;

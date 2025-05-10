@@ -8,7 +8,7 @@
  * @link       https://larabiz.com
  */
 
-namespace Juzaweb\Core\Helpers\Traits;
+namespace Juzaweb\Core\Traits;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Support\Arrayable;
@@ -16,7 +16,7 @@ use Illuminate\Http\JsonResponse;
 use Juzaweb\Core\Support\Resources\ModelCollectionResource;
 use Juzaweb\Core\Support\Resources\ModelResource;
 
-trait RestResponses
+trait HasRestResponses
 {
     /**
      * Generate a JSON response for errors REST API call.

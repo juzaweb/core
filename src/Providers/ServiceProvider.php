@@ -7,9 +7,11 @@
  * @link       https://larabiz.com
  */
 
-namespace Juzaweb\Core\Http\Controllers;
+namespace Juzaweb\Core\Providers;
 
-abstract class APIController extends Controller
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+
+abstract class ServiceProvider extends BaseServiceProvider
 {
-    //
+
 }

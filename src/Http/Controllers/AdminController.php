@@ -9,9 +9,9 @@
 
 namespace Juzaweb\Core\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Juzaweb\Core\Traits\HasSessionResponses;
 
 abstract class AdminController extends Controller
 {
-    //
+    use HasSessionResponses;
 }

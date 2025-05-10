@@ -11,11 +11,11 @@ namespace Juzaweb\Core\Http\Middleware;
 
 use Closure;
 use GuzzleHttp\Client;
-use Juzaweb\Core\Helpers\Traits\RestResponses;
+use Juzaweb\Core\Traits\HasRestResponses;
 
 class Captcha
 {
-    use RestResponses;
+    use HasRestResponses;
 
     public function handle($request, Closure $next)
     {

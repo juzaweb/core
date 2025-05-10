@@ -9,7 +9,6 @@
 
 namespace Juzaweb\Core\Providers;
 
-use App\Providers\ServiceProvider;
 use Juzaweb\Core\Contracts\Theme;
 use Juzaweb\Core\Themes\Commands;
 use Juzaweb\Core\Themes\ThemeRepository;
