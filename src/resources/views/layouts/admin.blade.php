@@ -97,9 +97,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" integrity="sha384-/RlQG9uf0M2vcTw3CX7fbqgbj/h8wKxw7C3zu9/GxcBPRKOEcESxaxufwRXqzq6n" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/v/bs4/jq-3.7.0/jszip-3.10.1/dt-2.3.0/af-2.7.0/b-3.2.3/b-colvis-3.2.3/b-html5-3.2.3/b-print-3.2.3/datatables.min.js" integrity="sha384-J7p4zLxX5RxiVwyCbBJc0kKzeMCSeYhZWpNQKtoJCnefbLILktRG2qnTnb8j1u1Q" crossorigin="anonymous"></script>
 
-
 @yield('scripts')
-<!-- AdminLTE for demo purposes -->
-{{--<script src="../../dist/js/demo.js"></script>--}}
 </body>
 </html>

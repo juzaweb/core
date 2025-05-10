@@ -12,7 +12,9 @@
         @foreach($roots as $root)
             @php
                 $children = $menus->where('parent', $root['key'])->sortBy('priority');
-                $active = request()->is(ltrim($root['url'], '/'));
+                $active = request()->is(ltrim($root['url'], '/')) || $children->filter(
+                    fn ($child) => request()->is(ltrim($child['url'], '/'))
+                )->isNotEmpty();
             @endphp
             <li class="nav-item @if($active) menu-is-opening menu-open @endif">
                 <a href="{{ $root['url'] }}"

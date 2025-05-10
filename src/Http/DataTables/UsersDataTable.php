@@ -13,7 +13,6 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
@@ -36,13 +35,7 @@ class UsersDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-            ]);
+            ->selectStyleSingle();
     }
 
     public function getColumns(): array
@@ -54,10 +47,5 @@ class UsersDataTable extends DataTable
             Column::make('created_at'),
             Column::make('updated_at'),
         ];
-    }
-
-    protected function filename(): string
-    {
-        return 'Users_'.date('YmdHis');
     }
 }
