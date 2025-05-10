@@ -28,13 +28,12 @@ return [
         'enabled' => false,
         'path' => base_path('vendor/larabizcms/core/src/Plugins/Commands/stubs'),
         'files' => [
-            'routes/web' => 'src/Routes/web.php',
-            'routes/api' => 'src/Routes/api.php',
-            // 'views/index' => 'resources/views/index.blade.php',
+            'routes/web' => 'src/routes/web.php',
+            'routes/api' => 'src/routes/api.php',
+            'views/index' => 'resources/views/index.blade.php',
             // 'views/master' => 'resources/views/layouts/master.blade.php',
             'scaffold/config' => 'config/config.php',
             'composer' => 'composer.json',
-            'customizer' => 'src/customizer.php',
             // 'assets/js/app' => 'Resources/js/app.js',
             // 'assets/sass/app' => 'Resources/sass/app.scss',
             // 'vite' => 'vite.config.js',
@@ -114,8 +113,8 @@ return [
             'request' => ['path' => 'src/Http/Requests', 'generate' => true, 'namespace' => 'Http/Requests'],
             'provider' => ['path' => 'src/Providers', 'generate' => true, 'namespace' => 'Providers'],
             'assets' => ['path' => 'assets', 'generate' => true],
-            'lang' => ['path' => 'src/Resources/lang', 'generate' => true],
-            'views' => ['path' => 'src/Resources/views', 'generate' => true],
+            'lang' => ['path' => 'src/resources/lang', 'generate' => true],
+            'views' => ['path' => 'src/resources/views', 'generate' => true],
             'test' => ['path' => 'tests/Unit', 'generate' => true, 'namespace' => 'Tests\\Unit'],
             'test-feature' => ['path' => 'tests/Feature', 'generate' => true, 'namespace' => 'Tests\\Feature'],
             'repository' => ['path' => 'src/Repositories', 'generate' => false, 'namespace' => 'Repositories'],
@@ -127,7 +126,7 @@ return [
             'emails' => ['path' => 'src/Emails', 'generate' => false, 'namespace' => 'Emails'],
             'notifications' => ['path' => 'src/Notifications', 'generate' => false, 'namespace' => 'Notifications'],
             'resource' => ['path' => 'src/Http/Resources', 'generate' => false, 'namespace' => 'Http/Resources'],
-            'component-view' => ['path' => 'src/Resources/views/components', 'generate' => false],
+            'component-view' => ['path' => 'src/resources/views/components', 'generate' => false],
             'component-class' => ['path' => 'src/View/Components', 'generate' => false, 'namespace' => 'View/Components'],
             'datatable' => [
                 'path' => 'src/Http/DataTables',
@@ -152,26 +151,6 @@ return [
                 'excludeActions' => [
                     'restore',
                     'forceDelete',
-                ],
-            ],
-            'form' => [
-                'path' => 'src/Http/Forms',
-                'generate' => false,
-                'namespace' => 'Http/Forms',
-                // Exclude columns of Form
-                'excludeColumns' => [
-                    'updated_at',
-                    'deleted_at',
-                ],
-                // Sidebar columns in Form
-                'sidebarColumns' => [
-                    'thumbnail',
-                    'avatar',
-                    'locale',
-                ],
-                // Checkbox columns
-                'checkboxColumns' => [
-                    'active',
                 ],
             ],
         ],
