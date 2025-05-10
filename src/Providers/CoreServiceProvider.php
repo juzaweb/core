@@ -11,12 +11,12 @@ namespace Juzaweb\Core\Providers;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Juzaweb\Core\Commands;
 use Juzaweb\Core\Contracts;
 use Juzaweb\Core\Media\Contracts\ImageConversion;
 use Juzaweb\Core\Media\Contracts\Media;
 use Juzaweb\Core\Media\ImageConversionRepository;
 use Juzaweb\Core\Media\MediaRepository;
-use Juzaweb\Core\Commands;
 use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
 use Juzaweb\Core\Support;
@@ -48,6 +48,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
         $this->app->register(PermissionServiceProvider::class);
+        $this->app->register(AdminServiceProvider::class);
     }
 
     protected function registerServices(): void
@@ -84,6 +85,14 @@ class CoreServiceProvider extends ServiceProvider
             function ($app) {
                 return new TranslationRepository();
             }
+        );
+
+        $this->app->singleton(
+            Contracts\Menu::class,
+            fn ($app) => new Support\MenuRepository(
+                $app[Contracts\GlobalData::class],
+                $app[Contracts\Hook::class]
+            )
         );
     }
 
