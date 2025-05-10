@@ -45,6 +45,12 @@
                         $breadcrumbs = \Juzaweb\Core\Facades\Breadcrumb::getItems();
                         @endphp
                         <ol class="breadcrumb float-sm-right">
+                            @if($breadcrumbs)
+                            <li class="breadcrumb-item">
+                                <a href="{{ admin_url() }}">{{ __('Dashboard') }}</a>
+                            </li>
+                            @endif
+
                             @foreach($breadcrumbs as $breadcrumb)
                                 @if($breadcrumb['url'])
                                     <li class="breadcrumb-item">
