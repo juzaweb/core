@@ -8,7 +8,8 @@
  */
 
 use Juzaweb\Core\Http\Controllers\Admin\DashboardController;
+use Juzaweb\Core\Http\Controllers\Admin\SettingController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-Route::get('/settings', [DashboardController::class, 'index']);
+Route::get('/settings', [SettingController::class, 'index']);

@@ -21,7 +21,8 @@
         "spatie/laravel-sitemap": "^7.3",
         "oomphinc/composer-installers-extender": "^2.0",
         "maatwebsite/excel": "^3.1",
-        "spatie/laravel-activitylog": "^4.10"
+        "spatie/laravel-activitylog": "^4.10",
+        "yajra/laravel-datatables-oracle": "^11.0"
     },
     "require-dev": {
         "laravel/laravel": "^11.31",
@@ -41,7 +42,10 @@
         "laravel": {
             "providers": [
                 "Juzaweb\\Core\\Providers\\CoreServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Field": "Juzaweb\\Core\\Facades\\Field"
+            }
         }
     }
 }
