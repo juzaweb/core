@@ -86,6 +86,12 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'core');
 
+        $this->mergeConfigFrom(__DIR__ . '/../../config/core.php', 'core');
+
+        $this->mergeConfigFrom(__DIR__ . '/../../config/modules.php', 'modules');
+
+        $this->mergeConfigFrom(__DIR__ . '/../../config/media.php', 'media');
+
         $this->publishes([
             __DIR__ . '/../../config/core.php' => config_path('core.php'),
             __DIR__ . '/../../config/modules.php' => config_path('modules.php'),

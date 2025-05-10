@@ -10,16 +10,12 @@
 namespace Juzaweb\Core\Http\Controllers\Auth;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Juzaweb\Core\Http\Controllers\Controller;
+use Juzaweb\Core\Http\Controllers\AdminController;
 use Juzaweb\Core\Http\Requests\Auth\LoginRequest;
-use Juzaweb\Core\Traits\HasSessionResponses;
 
-class LoginController extends Controller
+class LoginController extends AdminController
 {
-    use HasSessionResponses;
-
     public function index()
     {
         return view('core::auth.login', ['title' => __('Login')]);
@@ -29,8 +25,14 @@ class LoginController extends Controller
     {
         $remember = $request->boolean('remember');
 
-        if (Auth::attempt($request->safe()->only('email', 'password'), $remember)) {
+        if (!Auth::attempt($request->safe()->only('email', 'password'), $remember)) {
             do_action('login.failed');
+
+            return $this->error(
+                [
+                    'message' => trans('Login failed'),
+                ]
+            );
         }
 
         /**
@@ -42,7 +44,7 @@ class LoginController extends Controller
 
         return $this->success(
             [
-                'message' => trans('cms::app.login_successfully'),
+                'message' => trans('Login successfully'),
                 'redirect' => $user->hasPermission() ? route('admin.dashboard') : '/',
             ]
         );

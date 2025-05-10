@@ -36,7 +36,7 @@ return [
      *
      * @see https://larabiz.com/docs/v1/larabiz/the-basics/media#content-image-optimizer
      */
-    'image-optimize' => env('LB_MEDIA_IMAGE_OPTIMIZE', false),
+    'image-optimize' => env('JW_MEDIA_IMAGE_OPTIMIZE', false),
 
     /**
      * Mime types for images

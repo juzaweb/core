@@ -8,7 +8,7 @@
  */
 
 return [
-    'enabled' => env('LB_THEME_ENABLED', true),
+    'enabled' => env('JW_THEME_ENABLED', true),
 
     'path' => base_path('themes'),
 ];

@@ -22,11 +22,14 @@ class RouteServiceProvider extends ServiceProvider
             //     ->prefix('api/v1')
             //     ->group(__DIR__ . '/../routes/api.php');
 
+            $adminPrefix = $this->app['config']->get('core.admin_prefix');
+
             Route::middleware([
                 'web',
                 ...config('core.auth_middleware', []),
                 'admin',
             ])
+                ->prefix($adminPrefix)
                 ->group(__DIR__ . '/../routes/admin.php');
 
             Route::middleware(['web', 'guest'])
