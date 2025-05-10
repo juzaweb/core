@@ -4,14 +4,17 @@
         $menus = \Juzaweb\Core\Facades\Menu::get('admin-left');
         $roots = $menus->whereNull('parent')->sortBy('priority');
     @endphp
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+    <ul class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false"
+    >
         @foreach($roots as $root)
             @php
                 $children = $menus->where('parent', $root['key'])->sortBy('priority');
                 $active = request()->is(ltrim($root['url'], '/'));
             @endphp
-            <li class="nav-item">
+            <li class="nav-item @if($active) menu-is-opening menu-open @endif">
                 <a href="{{ $root['url'] }}"
                    target="{{ $root['target'] }}"
                    class="nav-link @if($active) active @endif"
