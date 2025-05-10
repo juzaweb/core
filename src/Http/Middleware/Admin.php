@@ -11,6 +11,7 @@
 namespace Juzaweb\Core\Http\Middleware;
 
 use Closure;
+use Juzaweb\Core\Support\Actions;
 
 class Admin
 {
@@ -19,6 +20,8 @@ class Admin
         abort_unless($user = $request->user(), 403, __('You cannot access this page.'));
 
         abort_unless($user->hasPermission(), 403, __('You cannot access this page.'));
+
+        do_action(Actions::MENU_INIT);
 
         return $next($request);
     }
