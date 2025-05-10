@@ -10,3 +10,5 @@
 use Juzaweb\Core\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+Route::get('/settings', [DashboardController::class, 'index']);
