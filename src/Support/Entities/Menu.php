@@ -25,7 +25,7 @@ class Menu extends Customizer
 
     protected int $priority = 20;
 
-    protected string $position;
+    protected string $position = 'admin-left';
 
     protected string $icon = 'list';
 
@@ -117,7 +117,7 @@ class Menu extends Customizer
     {
         $key = Str::replace('.', '-', $this->key);
 
-        $this->globalData->set("admin_menu.{$key}", $this->toArray());
+        $this->globalData->set("menus.{$this->position}.{$key}", $this->toArray());
     }
 
     public function toArray(): array
@@ -132,7 +132,6 @@ class Menu extends Customizer
             'key' => $this->key,
             'title' => $this->getTitle(),
             'icon' => Str::snake($this->icon),
-            'type' => 'item',
             'external' => $this->external,
             'disabled' => $this->disabled,
             'parent' => $this->parent,

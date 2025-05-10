@@ -9,6 +9,7 @@
 
 namespace Juzaweb\Core\Contracts;
 
+use Illuminate\Support\Collection;
 use Juzaweb\Core\Support\MenuRepository;
 
 /**
@@ -17,4 +18,6 @@ use Juzaweb\Core\Support\MenuRepository;
 interface Menu
 {
     public function make(string $key, ?string $title = null): \Juzaweb\Core\Support\Entities\Menu;
+
+    public function get(string $position): Collection;
 }
