@@ -19,7 +19,7 @@ class BreadcrumbFactory implements Breadcrumb, Arrayable
     public function add(string $title, string $url = null): void
     {
         $this->items[] = [
-            'title' => $title,
+            'title' => __($title),
             'url' => $url,
         ];
     }
