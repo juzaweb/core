@@ -139,6 +139,7 @@ class Menu extends Customizer
             'position' => $this->position,
             'url' => rtrim("/{$this->prefix}/{$slug}", '/'),
             'permissions' => $this->getPermissions(),
+            'priority' => $this->priority,
         ];
     }
 }

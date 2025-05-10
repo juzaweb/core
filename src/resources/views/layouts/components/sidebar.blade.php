@@ -2,16 +2,16 @@
 <nav class="mt-2">
     @php
         $menus = \Juzaweb\Core\Facades\Menu::get('admin-left');
-        $roots = $menus->whereNull('parent');
+        $roots = $menus->whereNull('parent')->sortBy('priority');
     @endphp
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
         <li class="nav-item">
             @foreach($roots as $root)
                 @php
-                    $children = $menus->where('parent', $root['key']);
+                    $children = $menus->where('parent', $root['key'])->sortBy('priority');
                 @endphp
-                <a href="{{ $root['url'] }}" class="nav-link">
+                <a href="{{ $root['url'] }}" target="{{ $root['target'] }}" class="nav-link">
                     <i class="nav-icon fas {{ $root['icon'] }}"></i>
                     <p>
                         {{ $root['title'] }}
