@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('status', 10)->index()->default('active');
             $table->boolean('is_super_admin')->default(false);
+            $table->string('random_password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

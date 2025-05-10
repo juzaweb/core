@@ -9,8 +9,6 @@
 
 namespace Juzaweb\Core\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-
 abstract class APIController extends Controller
 {
     //

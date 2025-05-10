@@ -12,10 +12,10 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
-use LarabizCMS\Core\Contracts\Setting;
-use LarabizCMS\Core\Models\Language;
+use Juzaweb\Core\Contracts\Setting;
+use Juzaweb\Core\Models\Language;
 use App\Models\User;
-use LarabizCMS\Core\Facades\Hook;
+use Juzaweb\Core\Facades\Hook;
 
 require __DIR__ .'/modules.php';
 require __DIR__ .'/permissions.php';

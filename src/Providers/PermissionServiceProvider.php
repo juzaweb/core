@@ -2,19 +2,18 @@
 
 namespace Juzaweb\Core\Providers;
 
-use App\Providers\ServiceProvider;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\Compilers\BladeCompiler;
 use Juzaweb\Core\Models\Permissions\Permission;
 use Juzaweb\Core\Models\Permissions\Role;
+use Juzaweb\Core\Permissions\Contracts\Permission as PermissionContract;
+use Juzaweb\Core\Permissions\Contracts\Role as RoleContract;
 use Juzaweb\Core\Permissions\Middleware\PermissionMiddleware;
 use Juzaweb\Core\Permissions\Middleware\RoleMiddleware;
 use Juzaweb\Core\Permissions\Middleware\RoleOrPermissionMiddleware;
 use Juzaweb\Core\Permissions\PermissionRegistrar;
-use Juzaweb\Core\Permissions\Contracts\Permission as PermissionContract;
-use Juzaweb\Core\Permissions\Contracts\Role as RoleContract;
 
 class PermissionServiceProvider extends ServiceProvider
 {

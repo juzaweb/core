@@ -230,7 +230,7 @@ class Analytic
 
     public static function mostVisitedPagesChart(): BarChart
     {
-        $excludePages = config('larabiz.dashboard_analytics_exclude_pages', []);
+        $excludePages = config('core.dashboard_analytics_exclude_pages', []);
         $analytics = Analytics::fetchMostVisitedPages(Period::create(now()->subDays(7), now()), 10)
             ->groupBy('fullPageUrl')
             ->map(

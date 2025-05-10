@@ -20,16 +20,18 @@
         "spatie/laravel-analytics": "^5.4",
         "spatie/laravel-sitemap": "^7.3",
         "oomphinc/composer-installers-extender": "^2.0",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "spatie/laravel-activitylog": "^4.10"
     },
     "require-dev": {
-      "laravel/laravel": "^11.31",
-      "phpunit/phpunit": "^11.0.1"
+        "laravel/laravel": "^11.31",
+        "phpunit/phpunit": "^11.0.1"
     },
     "autoload": {
         "psr-4": {
-          "Juzaweb\\Core\\Tests\\": "tests/",
-          "Juzaweb\\Core\\": "src/"
+            "Juzaweb\\Core\\Tests\\": "tests/",
+            "Juzaweb\\Core\\": "src/",
+            "Juzaweb\\Core\\Database\\Factories\\": "database/factories/"
         },
         "files": [
             "helpers/helpers.php"

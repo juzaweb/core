@@ -1,12 +1,12 @@
 <?php
 
-namespace LarabizCMS\Core\Database\Factories;
+namespace Juzaweb\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
-use LarabizCMS\Core\Models\Media;
-use LarabizCMS\Core\Models\Model;
+use Juzaweb\Core\Models\Media;
+use Juzaweb\Core\Models\Model;
 
 /**
  * @extends Factory<Model>

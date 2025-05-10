@@ -9,11 +9,6 @@
 
 namespace Juzaweb\Core\Traits;
 
-use Illuminate\Support\Arr;
-use LarabizCMS\Premium\Translations\Exceptions\TranslationDoesNotExistException;
-use LarabizCMS\Premium\Translations\Exceptions\TranslationExistException;
-use LarabizCMS\Premium\Translations\Translater;
-
 trait WithTranslate
 {
     //

@@ -2,97 +2,26 @@
 
 namespace Juzaweb\Core\Models;
 
-use Eloquent;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Filesystem\FilesystemAdapter;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Juzaweb\Core\Http\Resources\MediaResource;
 use Juzaweb\Core\Media\Contracts\Media as MediaContract;
+use Juzaweb\Core\Models\Enums\MediaType;
 use Juzaweb\Core\Traits\HasAPI;
-use Juzaweb\Core\Traits\QueryCacheable;
+use Juzaweb\Core\Database\Factories\MediaFactory;
 
-/**
- * Juzaweb\Core\Models\Media
- *
- * @property int $id
- * @property string $disk
- * @property string|null $user_id
- * @property string $name
- * @property string $type
- * @property string $path
- * @property string|null $mime_type
- * @property string|null $extension
- * @property int $size
- * @property array|null $conversions
- * @property array|null $metadata
- * @property int|null $parent_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read string $media_url
- * @method static Builder|Media newModelQuery()
- * @method static Builder|Media newQuery()
- * @method static Builder|Media onlyTrashed()
- * @method static Builder|Media query()
- * @method static Builder|Media whereConversions($value)
- * @method static Builder|Media whereCreatedAt($value)
- * @method static Builder|Media whereDeletedAt($value)
- * @method static Builder|Media whereDisk($value)
- * @method static Builder|Media whereExtension($value)
- * @method static Builder|Media whereId($value)
- * @method static Builder|Media whereMetadata($value)
- * @method static Builder|Media whereMimeType($value)
- * @method static Builder|Media whereName($value)
- * @method static Builder|Media whereParentId($value)
- * @method static Builder|Media wherePath($value)
- * @method static Builder|Media whereSize($value)
- * @method static Builder|Media whereType($value)
- * @method static Builder|Media whereUpdatedAt($value)
- * @method static Builder|Media whereUserId($value)
- * @method static Builder|Media withTrashed()
- * @method static Builder|Media withoutTrashed()
- * @property string|null $uploaded_by_type
- * @property int|null $uploaded_by_id
- * @property string|null $image_size
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Media> $children
- * @property-read int|null $children_count
- * @property-read bool $is_directory
- * @property-read bool $is_image
- * @property-read bool $is_video
- * @property-read string $readable_size
- * @property-read string|null $url
- * @property-read Media|null $parent
- * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $uploadable
- * @method static Builder|Media acceptFilterable(array $params = [])
- * @method static Builder|Media api(array $params = [])
- * @method static Builder|Media filter(array $params)
- * @method static Builder|Media search(string $keyword)
- * @method static Builder|Media sort(array $params)
- * @method static Builder|Media whereImageSize($value)
- * @method static Builder|Media whereUploadedById($value)
- * @method static Builder|Media whereUploadedByType($value)
- * @property-read Media|null $parents
- * @method static Builder|Media rootFilterable(array $params = [])
- * @property-read string $file_type
- * @method static Builder|Media fileTypeFilterable(array $params = [])
- * @mixin Eloquent
- */
 class Media extends Model
 {
-    use HasAPI, HasFactory, SoftDeletes, HasUuids, QueryCacheable;
-
-    public const TYPE_FILE = 'file';
-    public const TYPE_DIR = 'dir';
+    use HasAPI, HasFactory, SoftDeletes, HasUuids;
 
     public const IMAGE_MIME_TYPES = [
         'image/png',
@@ -141,6 +70,7 @@ class Media extends Model
     protected $casts = [
         'conversions' => 'array',
         'metadata' => 'array',
+        'type' => MediaType::class,
     ];
 
     protected $appends = [
@@ -161,17 +91,17 @@ class Media extends Model
         'file_type',
     ];
 
-    protected $searchable = [
+    protected array $searchable = [
         'name',
         'extension',
     ];
 
-    protected $sortable = [
+    protected array $sortable = [
         'name',
         'extension',
     ];
 
-    protected $sortDefault = [
+    protected array $sortDefault = [
         'type' => 'asc',
         'id' => 'desc',
     ];
@@ -183,9 +113,14 @@ class Media extends Model
 
     public static function findByPath(string $path, ?string $disk = 'public', array $columns = ['*']): ?Model
     {
-        return static::where('path', $path)
+        return static::query()->where('path', $path)
             ->when($disk, fn ($q) => $q->where('disk', $disk))
             ->first($columns);
+    }
+
+    protected static function newFactory(): MediaFactory
+    {
+        return MediaFactory::new();
     }
 
     public function uploadable(): MorphTo
@@ -272,7 +207,7 @@ class Media extends Model
 
         return $builder->where(
             function (Builder $q) use ($accept) {
-                $q->where('type', self::TYPE_DIR);
+                $q->where('type', MediaType::DIRECTORY);
                 $q->orWhereIn('mime_type', $accept);
             }
         );
@@ -288,7 +223,7 @@ class Media extends Model
 
         return $builder->where(
             function (Builder $q) use ($fileType) {
-                $q->where('type', self::TYPE_DIR);
+                $q->where('type', MediaType::DIRECTORY);
 
                 foreach ($fileType as $type) {
                     switch ($type) {
@@ -326,7 +261,7 @@ class Media extends Model
      */
     public function getUrlAttribute(): ?string
     {
-        if ($this->type == self::TYPE_DIR) {
+        if ($this->type == MediaType::DIRECTORY) {
             return null;
         }
 
@@ -381,7 +316,7 @@ class Media extends Model
 
     public function isDirectory(): bool
     {
-        return $this->type === static::TYPE_DIR;
+        return $this->type === MediaType::DIRECTORY;
     }
 
     public function getIsImageAttribute(): bool

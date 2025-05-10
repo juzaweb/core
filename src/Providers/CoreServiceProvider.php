@@ -9,35 +9,93 @@
 
 namespace Juzaweb\Core\Providers;
 
-use App\Providers\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Juzaweb\Core\Contracts;
+use Juzaweb\Core\Media\Contracts\ImageConversion;
+use Juzaweb\Core\Media\Contracts\Media;
+use Juzaweb\Core\Media\ImageConversionRepository;
+use Juzaweb\Core\Media\MediaRepository;
+use Juzaweb\Core\Commands;
 use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
+use Juzaweb\Core\Support;
+use Juzaweb\Core\Translations\Contracts\Translation;
+use Juzaweb\Core\Translations\TranslationRepository;
 
 class CoreServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->customServices();
+
+        $this->registerCommands();
     }
 
     public function register(): void
     {
+        $this->registerProviders();
+
         $this->registerServices();
 
         $this->registerPublishes();
+
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
     }
 
-    protected function registerServices()
+    protected function registerProviders(): void
     {
+        $this->app->register(RouteServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
         $this->app->register(PermissionServiceProvider::class);
+    }
+
+    protected function registerServices(): void
+    {
+        $this->app->singleton(Contracts\GlobalData::class, function () {
+            return new Support\GlobalDataRepository();
+        });
+
+        $this->app->singleton(Contracts\Setting::class, function ($app) {
+            return new Support\SettingRepository($app['cache'], $app[Contracts\GlobalData::class]);
+        });
+
+        $this->app->singleton(Contracts\Breadcrumb::class, function () {
+            return new Support\BreadcrumbFactory();
+        });
+
+        $this->app->singleton(Contracts\CacheGroup::class, fn ($app) => new Support\CacheGroupRepository($app['cache']));
+
+        $this->app->singleton(ImageConversion::class, ImageConversionRepository::class);
+
+        $this->app->singleton(Media::class, MediaRepository::class);
+
+        $this->app->singleton(Contracts\Field::class, function ($app) {
+            return new Support\FieldFactory();
+        });
+
+        $this->app->singleton(
+            Contracts\RouteResource::class,
+            fn ($app) => new Support\RouteResourceRepository($app->make('router'))
+        );
+
+        $this->app->singleton(
+            Translation::class,
+            function ($app) {
+                return new TranslationRepository();
+            }
+        );
     }
 
     protected function registerPublishes(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'core');
+
+        $this->mergeConfigFrom(__DIR__ . '/../../config/core.php', 'core');
+
+        $this->mergeConfigFrom(__DIR__ . '/../../config/modules.php', 'modules');
+
+        $this->mergeConfigFrom(__DIR__ . '/../../config/media.php', 'media');
 
         $this->publishes([
             __DIR__ . '/../../config/core.php' => config_path('core.php'),
@@ -92,5 +150,14 @@ class CoreServiceProvider extends ServiceProvider
                 return new ModelUnique($modelClass, $modelAttribute, $callback);
             }
         );
+    }
+
+    protected function registerCommands(): void
+    {
+        $this->commands([
+            Commands\MakeUserCommand::class,
+            Commands\CacheSizeCommand::class,
+            Commands\TestMailCommand::class,
+        ]);
     }
 }
