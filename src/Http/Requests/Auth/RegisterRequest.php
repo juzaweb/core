@@ -1,7 +1,11 @@
 <?php
 namespace Juzaweb\Core\Http\Requests\Auth;
 
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use OpenApi\Annotations as OA;
 
 /**
@@ -29,10 +33,38 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'birthday' => ['nullable', 'date_format:Y-m-d'],
-            // 'avatar' => ['nullable', 'mimes:jpg,jpeg,png'],
             'email' => ['required', 'string', 'email:rfc', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'birthday' => ['nullable', 'date_format:Y-m-d'],
         ];
+    }
+
+    public function register(): User
+    {
+        $verifyEmail = setting('user_verification');
+
+        $data = $this->safe()->merge([
+            'password' => Hash::make($this->post('password')),
+        ])->all();
+
+        /** @var User $user */
+        $user = DB::transaction(
+            function () use ($data, $verifyEmail) {
+                $user = new User();
+                $user->fill($data);
+
+                if (! $verifyEmail) {
+                    $user->forceFill(['email_verified_at' => now()]);
+                }
+
+                $user->save();
+
+                return $user;
+            }
+        );
+
+        event(new Registered($user));
+
+        return $user;
     }
 }
