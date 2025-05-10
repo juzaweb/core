@@ -3,7 +3,13 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <a href="{{ admin_url('users/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{ __('Add User') }}</a>
+            <a href="{{ admin_url('users') }}" class="btn btn-warning">
+                <i class="fas fa-arrow-left"></i> {{ __('Back') }}
+            </a>
+
+            <button class="btn btn-primary">
+                <i class="fas fa-save"></i> {{ __('Save') }}
+            </button>
         </div>
     </div>
 
@@ -14,7 +20,7 @@
                     <h3 class="card-title">{{ __('Users') }}</h3>
                 </div>
                 <div class="card-body">
-                    {{ $dataTable->table() }}
+
                 </div>
             </div>
         </div>
@@ -22,5 +28,5 @@
 @endsection
 
 @section('scripts')
-    {{ $dataTable->scripts() }}
+
 @endsection
