@@ -8,10 +8,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="site_name">Site Name</label>
-                        <input type="text" name="site_name" class="form-control" id="site_name" placeholder="Site Name">
-                    </div>
+                    {{ Field::textarea() }}
                 </div>
             </div>
         </div>

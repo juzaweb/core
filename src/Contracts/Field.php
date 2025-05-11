@@ -9,12 +9,13 @@
 
 namespace Juzaweb\Core\Contracts;
 
-use Juzaweb\Core\PageBuilder\Elements\Forms;
+use Illuminate\Database\Eloquent\Model;
+use Juzaweb\Core\Support\Fields;
 
 /**
- * @see \Juzaweb\Core\PageBuilder\FieldFactory
+ * @see \Juzaweb\Core\Support\FieldFactory
  */
 interface Field
 {
-
+    public function text(string|Model $label, string $name, array $options = []): Fields\Text;
 }

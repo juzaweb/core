@@ -9,18 +9,18 @@
 
 namespace Juzaweb\Core\Facades;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
-use Juzaweb\Core\PageBuilder\Elements\Forms\{Checkbox, Editor, Language, Select, Text, Textarea};
-use Juzaweb\Core\PageBuilder\FieldFactory;
+use Juzaweb\Core\Support\Fields;
 
 /**
- * @method static Text text(string|array|null $name = null, ?string $label = null, array $attributes = [])
- * @method static Textarea textarea(string|array|null $name = null, ?string $label = null, array $attributes = [])
- * @method static Checkbox checkbox(string|array|null $name = null, ?string $label = null, array $attributes = [])
- * @method static Select select(string|array|null $name = null, ?string $label = null, array $attributes = [])
- * @method static Editor editor(string|array|null $name = null, ?string $label = null, array $attributes = [])
- * @method static Language language(string|array|null $name = null, ?string $label = null, array $attributes = [])
- * @see FieldFactory
+ * @method static Fields\Text text(string|Model $label, string $name, array $options = [])
+ * @method static Fields\Textarea textarea(string|Model $label, string $name, array $options = [])
+ * @method static Fields\Checkbox checkbox(string|Model $label, string $name, array $options = [])
+ * @method static Fields\Select select(string|Model $label, string $name, array $options = [])
+ * @method static Fields\Editor editor(string|Model $label, string $name, array $options = [])
+ * @method static Fields\Language language(string|Model $label, string $name, array $options = [])
+ * @see \Juzaweb\Core\Support\FieldFactory
  */
 class Field extends Facade
 {
