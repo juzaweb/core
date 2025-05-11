@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\DevTool\Commands\Theme;
+namespace Juzaweb\Core\Themes\Commands;
 
 use Illuminate\Support\Facades\File;
 

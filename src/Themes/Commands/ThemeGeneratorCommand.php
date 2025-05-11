@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\DevTool\Commands\Theme;
+namespace Juzaweb\Core\Themes\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -55,8 +55,8 @@ class ThemeGeneratorCommand extends Command
 
     public function handle(): void
     {
-        $this->themePath = config('juzaweb.theme.path');
-        $this->themeFolders = config('theme.stubs.folders');
+        $this->themePath = config('themes.path');
+        $this->themeFolders = config('themes.stubs.folders');
         $this->theme['name'] = strtolower($this->argument('name'));
         $this->themeStubPath = $this->getThemeStubPath();
         $this->init();
@@ -79,7 +79,7 @@ class ThemeGeneratorCommand extends Command
 
         $this->generateThemeInfo();
 
-        $themeStubFiles = config('theme.stubs.files');
+        $themeStubFiles = config('themes.stubs.files');
         $themeStubFiles['theme'] = 'theme.json';
         $themeStubFiles['changelog'] = 'changelog.md';
         $this->makeDir($createdThemePath);
@@ -129,7 +129,7 @@ class ThemeGeneratorCommand extends Command
      * @param  string  $createdThemePath
      * @throws FileNotFoundException
      */
-    public function createStubs($themeStubFiles, $createdThemePath): void
+    public function createStubs(array $themeStubFiles, string $createdThemePath): void
     {
         foreach ($themeStubFiles as $filename => $storePath) {
             if ($filename == 'changelog') {
@@ -157,7 +157,7 @@ class ThemeGeneratorCommand extends Command
      * @return void
      * @throws FileNotFoundException
      */
-    protected function makeFile($file, $storePath): void
+    protected function makeFile(string $file, string $storePath): void
     {
         if (File::exists($file)) {
             $content = $this->replaceStubs(File::get($file));
@@ -172,7 +172,7 @@ class ThemeGeneratorCommand extends Command
      *
      * @return string
      */
-    protected function replaceStubs($contents): string
+    protected function replaceStubs(string $contents): string
     {
         $mainString = [
             '[NAME]',

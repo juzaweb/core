@@ -67,7 +67,10 @@ class CoreServiceProvider extends ServiceProvider
             return new Support\BreadcrumbFactory();
         });
 
-        $this->app->singleton(Contracts\CacheGroup::class, fn ($app) => new Support\CacheGroupRepository($app['cache']));
+        $this->app->singleton(
+            Contracts\CacheGroup::class,
+            fn ($app) => new Support\CacheGroupRepository($app['cache'])
+        );
 
         $this->app->singleton(ImageConversion::class, ImageConversionRepository::class);
 
@@ -104,14 +107,17 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/core.php', 'core');
 
+        $this->mergeConfigFrom(__DIR__ . '/../../config/media.php', 'media');
+
         $this->mergeConfigFrom(__DIR__ . '/../../config/modules.php', 'modules');
 
-        $this->mergeConfigFrom(__DIR__ . '/../../config/media.php', 'media');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/themes.php', 'themes');
 
         $this->publishes([
             __DIR__ . '/../../config/core.php' => config_path('core.php'),
-            __DIR__ . '/../../config/modules.php' => config_path('modules.php'),
             __DIR__ . '/../../config/media.php' => config_path('media.php'),
+            __DIR__ . '/../../config/modules.php' => config_path('modules.php'),
+            __DIR__ . '/../../config/themes.php' => config_path('themes.php'),
         ], 'core-config');
 
         $this->publishes([
