@@ -84,7 +84,7 @@ class ThemeGeneratorCommand extends Command
         $themeStubFiles['changelog'] = 'changelog.md';
         $this->makeDir($createdThemePath);
 
-        foreach ($this->themeFolders as $key => $folder) {
+        foreach ($this->themeFolders as $folder) {
             $this->makeDir($createdThemePath.'/'.$folder);
         }
 

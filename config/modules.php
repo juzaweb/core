@@ -26,7 +26,7 @@ return [
 
     'stubs' => [
         'enabled' => false,
-        'path' => base_path('vendor/larabizcms/core/src/Plugins/Commands/stubs'),
+        'path' => base_path('vendor/juzaweb/core/stubs/modules'),
         'files' => [
             'routes/web' => 'src/routes/web.php',
             'routes/api' => 'src/routes/api.php',
