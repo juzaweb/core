@@ -70,7 +70,7 @@ class Theme implements Arrayable
     public function activate(): bool
     {
         File::put(
-            $this->config->get('themes.path') . '/theme_statuses.json',
+            $this->config->get('themes.path') . '/statuses.json',
             json_encode(['name' => $this->name()], JSON_THROW_ON_ERROR)
         );
 

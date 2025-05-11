@@ -92,7 +92,7 @@ class ThemeRepository implements ThemeContract
         }
 
         $theme = null;
-        $statusPath = $this->config->get('themes.path') . '/theme_statuses.json';
+        $statusPath = $this->config->get('themes.path') . '/statuses.json';
         if (File::exists($statusPath)) {
             $theme = json_decode(File::get($statusPath), true, 512, JSON_THROW_ON_ERROR);
         }
