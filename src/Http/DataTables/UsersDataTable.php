@@ -29,7 +29,6 @@ class UsersDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('email'),
-            Column::make('created_at'),
             Column::make('updated_at'),
             Column::make('actions'),
         ];
@@ -39,6 +38,7 @@ class UsersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
+            ->editColumn('created_at', fn (User $user) => $user->created_at?->format('Y-m-d H:i:s'))
             ->editColumn(
                 'actions',
                 fn (User $user) => ''

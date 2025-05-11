@@ -1,0 +1,26 @@
+<?php
+/**
+ * LARABIZ CMS - Full SPA Laravel CMS
+ *
+ * @package    larabizcms/larabiz
+ * @author     The Anh Dang
+ * @link       https://larabiz.com
+ */
+
+namespace $CLASS_NAMESPACE$;
+
+use LarabizCMS\Core\Repositories\Repository;
+use $MODEL_NAMESPACE$;
+
+/**
+ * @mixin $MODEL_CLASS$
+ */
+interface $CLASS$ extends Repository
+{
+    /**
+     * Get model class name.
+     *
+     * @return string
+     */
+    public function model(): string;
+}

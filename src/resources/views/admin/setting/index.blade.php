@@ -3,15 +3,14 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Settings</h3>
+            <h3 class="card-title">{{ __('Settings') }}</h3>
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="site_name">Site Name</label>
-                        <input type="text" name="site_name" class="form-control" id="site_name" placeholder="Site Name">
-                    </div>
+                <div class="col-md-8">
+                    {{ Field::text(__('Site Name'), 'site_name', ['placeholder' => __('Site Name')]) }}
+
+                    {{ Field::text(__('Site Name'), 'site_name', ['placeholder' => __('Site Name')]) }}
                 </div>
             </div>
         </div>

@@ -1,0 +1,15 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use LarabizCMS\Core\Models\Model;
+use LarabizCMS\Core\Traits\HasAPI;
+
+class $CLASS$ extends Model
+{
+    use HasAPI;
+
+    protected $table = '$TABLE$';
+
+    protected $fillable = $FILLABLE$;
+}
