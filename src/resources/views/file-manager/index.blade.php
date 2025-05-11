@@ -8,9 +8,8 @@
         <meta name="msapplication-navbutton-color" content="#333844">
         <meta name="apple-mobile-web-app-status-bar-style" content="#333844">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ trans('cms::filemanager.title-page') }}</title>
+        <title>{{ trans('core::filemanager.title-page') }}</title>
         <link rel="shortcut icon" type="image/png" href="{{ asset('jw-styles/juzaweb/images/favicon.ico') }}">
-        {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css">--}}
         <link rel="stylesheet" href="{{ asset('jw-styles/juzaweb/css/filemanager.min.css') }}">
     </head>
 <body>
@@ -18,7 +17,7 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark" id="nav">
     <a class="navbar-brand invisible-lg d-none d-lg-inline" id="to-previous">
         <i class="fa fa-arrow-left fa-fw"></i>
-        <span class="d-none d-lg-inline">{{ trans('cms::filemanager.nav-back') }}</span>
+        <span class="d-none d-lg-inline">{{ trans('core::filemanager.nav-back') }}</span>
     </a>
     <a class="navbar-brand d-block d-lg-none" id="show_tree">
         <i class="fa fa-bars fa-fw"></i>
@@ -28,7 +27,7 @@
     <div class="ml-auto px-2">
         {{--<a class="navbar-link d-none" id="multi_selection_toggle">
             <i class="fa fa-check-double fa-fw"></i>
-            <span class="d-none d-lg-inline">{{ trans('cms::filemanager.menu-multiple') }}</span>
+            <span class="d-none d-lg-inline">{{ trans('core::filemanager.menu-multiple') }}</span>
         </a>--}}
     </div>
     <a class="navbar-toggler collapsed border-0 px-1 py-2 m-0" data-toggle="collapse" data-target="#nav-buttons">
@@ -39,18 +38,18 @@
             <li class="nav-item">
                 <a class="nav-link" data-display="grid">
                     <i class="fa fa-th-large fa-fw"></i>
-                    <span>{{ trans('cms::filemanager.nav-thumbnails') }}</span>
+                    <span>{{ trans('core::filemanager.nav-thumbnails') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-display="list">
                     <i class="fa fa-list-ul fa-fw"></i>
-                    <span>{{ trans('cms::filemanager.nav-list') }}</span>
+                    <span>{{ trans('core::filemanager.nav-list') }}</span>
                 </a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-sort fa-fw"></i>{{ trans('cms::filemanager.nav-sort') }}
+                    <i class="fa fa-sort fa-fw"></i>{{ trans('core::filemanager.nav-sort') }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right border-0"></div>
             </li>
@@ -59,11 +58,11 @@
 </nav>
 
 <nav class="bg-light fixed-bottom border-top d-none" id="actions">
-    <a data-action="open" data-multiple="false"><i class="fa fa-folder-open"></i>{{ trans('cms::filemanager.btn-open') }}
+    <a data-action="open" data-multiple="false"><i class="fa fa-folder-open"></i>{{ trans('core::filemanager.btn-open') }}
     </a>
-    <a data-action="preview" data-multiple="true"><i class="fa fa-images"></i>{{ trans('cms::filemanager.menu-view') }}
+    <a data-action="preview" data-multiple="true"><i class="fa fa-images"></i>{{ trans('core::filemanager.menu-view') }}
     </a>
-    <a data-action="use" data-multiple="true"><i class="fa fa-check"></i>{{ trans('cms::filemanager.btn-confirm') }}
+    <a data-action="use" data-multiple="true"><i class="fa fa-check"></i>{{ trans('core::filemanager.btn-confirm') }}
     </a>
 </nav>
 
@@ -81,7 +80,7 @@
 
         <div id="empty" class="d-none">
             <i class="fa fa-folder-open"></i>
-            {{ trans('cms::filemanager.message-empty') }}
+            {{ trans('core::filemanager.message-empty') }}
         </div>
 
         <div id="content"></div>
@@ -107,11 +106,11 @@
                 <h5 class="modal-title" id="myModalLabel">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active text-capitalize" id="upload-tab" data-toggle="tab" href="#upload-form" role="tab" aria-controls="upload-form" aria-selected="true">{{ trans(('cms::app.upload_media')) }}</a>
+                            <a class="nav-link active text-capitalize" id="upload-tab" data-toggle="tab" href="#upload-form" role="tab" aria-controls="upload-form" aria-selected="true">{{ trans(('core::app.upload_media')) }}</a>
                         </li>
                         @if(config('juzaweb.filemanager.upload_from_url'))
                             <li class="nav-item">
-                                <a class="nav-link text-capitalize" id="import-tab" data-toggle="tab" href="#import-form" role="tab" aria-controls="import-form" aria-selected="false">{{ trans('cms::app.file_manager.upload_from_url') }}</a>
+                                <a class="nav-link text-capitalize" id="import-tab" data-toggle="tab" href="#import-form" role="tab" aria-controls="import-form" aria-selected="false">{{ trans('core::app.file_manager.upload_from_url') }}</a>
                             </li>
                         @endif
                     </ul>
@@ -127,7 +126,7 @@
                             <div class="form-group" id="attachment">
                                 <div class="controls text-center">
                                     <div class="input-group w-100">
-                                        <a class="btn btn-primary w-100 text-white" id="upload-button">{{ trans('cms::filemanager.message-choose') }}</a>
+                                        <a class="btn btn-primary w-100 text-white" id="upload-button">{{ trans('core::filemanager.message-choose') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -141,11 +140,11 @@
                     <div class="tab-pane fade" id="import-form" role="tabpanel" aria-labelledby="import-tab">
                         <form action="{{ route('filemanager.import') }}" role="form" method="post" id="import-url">
 
-                            {{ Field::text(trans('cms::app.url'), 'url', ['required' => true]) }}
+                            {{ Field::text(trans('core::app.url'), 'url', ['required' => true]) }}
 
                             <div class="form-check">
                                 <input type="checkbox" name="download" class="form-check-input" value="1" id="download-checkbox" checked>
-                                <label class="form-check-label" for="download-checkbox">{{ trans('cms::app.file_manager.download_to_server') }}</label>
+                                <label class="form-check-label" for="download-checkbox">{{ trans('core::app.file_manager.download_to_server') }}</label>
                             </div>
 
                             <input type="hidden" name="working_dir" class='working_dir'>
@@ -153,7 +152,7 @@
                             <input type='hidden' name='disk' value='{{ request()->get('disk') }}'>
 
                             <button type="submit" class="btn btn-success mt-2">
-                                <i class="fa fa-cloud-upload"></i> {{ trans('cms::app.file_manager.upload_file') }}
+                                <i class="fa fa-cloud-upload"></i> {{ trans('core::app.file_manager.upload_file') }}
                             </button>
                         </form>
                     </div>
@@ -161,7 +160,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">
-                    {{ trans('cms::filemanager.btn-close') }}
+                    {{ trans('core::filemanager.btn-close') }}
                 </button>
             </div>
         </div>
@@ -173,8 +172,8 @@
         <div class="modal-content">
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">{{ trans('cms::filemanager.btn-close') }}</button>
-                <button type="button" class="btn btn-primary w-100" data-dismiss="modal">{{ trans('cms::filemanager.btn-confirm') }}</button>
+                <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">{{ trans('core::filemanager.btn-close') }}</button>
+                <button type="button" class="btn btn-primary w-100" data-dismiss="modal">{{ trans('core::filemanager.btn-confirm') }}</button>
             </div>
         </div>
     </div>
@@ -190,8 +189,8 @@
                 <input type="text" class="form-control"/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">{{ trans('cms::filemanager.btn-close') }}</button>
-                <button type="button" class="btn btn-primary w-100" data-dismiss="modal">{{ trans('cms::filemanager.btn-confirm') }}</button>
+                <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">{{ trans('core::filemanager.btn-close') }}</button>
+                <button type="button" class="btn btn-primary w-100" data-dismiss="modal">{{ trans('core::filemanager.btn-confirm') }}</button>
             </div>
         </div>
     </div>
@@ -222,7 +221,7 @@
 </div>
 
 <script>
-    var lang = @json(trans('cms::filemanager'));
+    var lang = @json(trans('core::filemanager'));
     var actions = [
         // {
         //   name: 'use',
@@ -289,7 +288,7 @@
 
     let multi_selection_enabled = @if($multiChoose == 1) true @else false @endif;
 </script>
-<script src="{{ asset('jw-styles/juzaweb/js/filemanager.min.js') }}?v={{ \Juzaweb\CMS\Version::getVersion() }}"></script>
+<script src="{{ asset('jw-styles/juzaweb/js/filemanager.min.js') }}"></script>
 
 <script>
     Dropzone.options.uploadForm = {
