@@ -21,6 +21,8 @@
                 </div>
                 <div class="card-body">
                     {!! Field::text('Name', 'name') !!}
+
+                    {!! Field::text('Email', 'email') !!}
                 </div>
             </div>
         </div>
