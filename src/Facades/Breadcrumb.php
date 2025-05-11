@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void items(array $items)
  * @method static void addItems(array $items)
  * @method static array getItems()
+ * @see BreadcrumbFactory
  */
 class Breadcrumb extends Facade
 {

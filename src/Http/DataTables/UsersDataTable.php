@@ -18,24 +18,9 @@ use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
 {
-    public function dataTable(QueryBuilder $query): EloquentDataTable
-    {
-        return (new EloquentDataTable($query))->setRowId('id');
-    }
-
     public function query(User $model): QueryBuilder
     {
         return $model->newQuery();
-    }
-
-    public function html(): HtmlBuilder
-    {
-        return $this->builder()
-            ->setTableId('users-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->orderBy(1)
-            ->selectStyleSingle();
     }
 
     public function getColumns(): array
@@ -46,6 +31,27 @@ class UsersDataTable extends DataTable
             Column::make('email'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::make('actions'),
         ];
+    }
+
+    public function dataTable(QueryBuilder $query): EloquentDataTable
+    {
+        return (new EloquentDataTable($query))
+            ->setRowId('id')
+            ->editColumn(
+                'actions',
+                fn (User $user) => ''
+            );
+    }
+
+    public function html(): HtmlBuilder
+    {
+        return $this->builder()
+            ->setTableId('users-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->orderBy(1)
+            ->selectStyleSingle();
     }
 }
