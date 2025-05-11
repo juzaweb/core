@@ -20,7 +20,7 @@
                     <h3 class="card-title">{{ __('Users') }}</h3>
                 </div>
                 <div class="card-body">
-
+                    {!! Field::text('Name', 'name') !!}
                 </div>
             </div>
         </div>

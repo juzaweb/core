@@ -9,7 +9,12 @@
 
 namespace Juzaweb\Core\Support;
 
+use Illuminate\Database\Eloquent\Model;
+
 class FieldFactory
 {
-
+    public function text(string|Model $label, string $name, array $options = []): Fields\Text
+    {
+        return new Fields\Text($label, $name, $options);
+    }
 }
