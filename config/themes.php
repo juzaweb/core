@@ -21,6 +21,8 @@ return [
             'search' => 'views/search.blade.php',
             'profile' => 'views/profile/index.blade.php',
             'register_json' => 'register.json',
+            'web' => 'src/routes/web.php',
+            'composer' => 'composer.json',
         ],
         'folders' => [
             'assets/js' => 'assets/js',

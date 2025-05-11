@@ -1,5 +1,5 @@
-@extends('cms::layouts.frontend')
+@extends('theme::layouts.main')
 
-{% block content %}
+@section('content')
 
-{% endblock %}
+@endsection
