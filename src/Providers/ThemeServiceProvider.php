@@ -23,6 +23,7 @@ class ThemeServiceProvider extends ServiceProvider
                 Commands\ThemeActiveCommand::class,
                 Commands\ThemePublishCommand::class,
                 Commands\ThemeGeneratorCommand::class,
+                Commands\DownloadStyleCommand::class,
             ]
         );
 

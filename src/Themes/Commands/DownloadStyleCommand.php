@@ -11,7 +11,7 @@ class DownloadStyleCommand extends DownloadTemplateCommandAbstract
 
     protected array $data;
 
-    public function handle()
+    public function handle(): void
     {
         $this->sendAsks();
 
@@ -36,7 +36,7 @@ mix.combine([
         File::put("themes/{$this->data['name']}/assets/mix.js", $mix);
     }
 
-    protected function sendAsks()
+    protected function sendAsks(): void
     {
         $this->data['url'] = $this->ask(
             'Url Template?',
@@ -66,7 +66,7 @@ mix.combine([
 
             $name = explode('?', basename($href))[0];
 
-            $path = "themes/{$this->data['name']}/assets/styles/css/{$name}";
+            $path = "themes/{$this->data['name']}/assets/css/{$name}";
 
             $this->downloadFile($href, base_path($path));
 
@@ -96,7 +96,7 @@ mix.combine([
 
             $name = explode('?', basename($href))[0];
 
-            $path = "themes/{$this->data['name']}/assets/styles/js/{$name}";
+            $path = "themes/{$this->data['name']}/assets/js/{$name}";
 
             try {
                 $this->downloadFile($href, base_path($path));
