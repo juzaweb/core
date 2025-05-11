@@ -9,6 +9,7 @@
 
 namespace Juzaweb\Core\Themes;
 
+use Illuminate\Contracts\Config\Repository as ConfigContract;
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Support\Arr;
@@ -18,7 +19,6 @@ use Illuminate\View\ViewFinderInterface;
 use Juzaweb\Core\Contracts\Setting;
 use Juzaweb\Core\Contracts\Theme as ThemeContract;
 use Juzaweb\Core\Themes\Exceptions\ThemeNotFoundException;
-use Juzaweb\Core\Translations\Contracts\Translation;
 
 class ThemeRepository implements ThemeContract
 {
@@ -32,6 +32,8 @@ class ThemeRepository implements ThemeContract
 
     protected Translator $translator;
 
+    protected ConfigContract $config;
+
     public function __construct(
         protected ApplicationContract $app,
         protected string $path
@@ -39,6 +41,7 @@ class ThemeRepository implements ThemeContract
         $this->setting = $app[Setting::class];
         $this->viewFinder = $app['view']->getFinder();
         $this->translator = $app['translator'];
+        $this->config = $this->app['config'];
     }
 
     /**
@@ -88,10 +91,10 @@ class ThemeRepository implements ThemeContract
             return $this->currentTheme;
         }
 
-        try {
-            $theme = $this->setting->get('theme_statuses', []);
-        } catch (\Exception $exception) {
-            $theme = null;
+        $theme = null;
+        $statusPath = $this->config->get('themes.path') . '/theme_statuses.json';
+        if (File::exists($statusPath)) {
+            $theme = json_decode(File::get($statusPath), true, 512, JSON_THROW_ON_ERROR);
         }
 
         if (empty($theme)) {
@@ -119,35 +122,9 @@ class ThemeRepository implements ThemeContract
             return;
         }
 
-        $viewPath = $theme->path('src/views');
-        $langPath = $theme->path('src/lang');
-
-        $viewPublishPath = resource_path('views/themes/' . $theme->name());
-        $langPublishPath = resource_path('lang/themes/' . $theme->name());
-
-        $namespace = 'theme';
-        $this->viewFinder->addNamespace($namespace, $viewPath);
-
-        if (is_dir($viewPublishPath)) {
-            $this->viewFinder->prependNamespace($namespace, $viewPublishPath);
+        foreach ($theme->get('providers', []) as $provider) {
+            $this->app->register($provider);
         }
-
-        $this->translator->addNamespace($namespace, $langPath);
-
-        if (is_dir($langPublishPath)) {
-            $this->translator->addNamespace($namespace, $langPublishPath);
-        }
-
-        $lowerName = $theme->lowerName();
-
-        $this->app[Translation::class]->register("{$lowerName}_theme", [
-            'type' => 'theme',
-            'key' => $lowerName,
-            'namespace' => '*',
-            'lang_path' => $theme->path('/lang'),
-            'src_path' => $theme->path('/src'),
-            'publish_path' => resource_path("lang/vendor/{$lowerName}"),
-        ]);
     }
 
     protected function scan(): Collection

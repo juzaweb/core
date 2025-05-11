@@ -10,7 +10,7 @@ class DownloadTemplateCommand extends DownloadTemplateCommandAbstract
 
     protected array $data;
 
-    public function handle()
+    public function handle(): void
     {
         $this->sendBaseDataAsks();
 
@@ -45,15 +45,15 @@ class DownloadTemplateCommand extends DownloadTemplateCommandAbstract
 
         $this->data['file'] = $this->ask(
             'Theme File?',
-            $this->getDataDefault('file', 'index.twig')
+            $this->getDataDefault('file', 'index.blade.php')
         );
 
         $this->setDataDefault('file', $this->data['file']);
 
         $extension = pathinfo($this->data['file'], PATHINFO_EXTENSION);
 
-        if ($extension != 'twig') {
-            $this->data['file'] = "{$this->data['file']}.twig";
+        if ($extension != 'php') {
+            $this->data['file'] = "{$this->data['file']}.blade.php";
         }
 
         $path = "themes/{$this->data['name']}/views/{$this->data['file']}";
@@ -64,11 +64,11 @@ class DownloadTemplateCommand extends DownloadTemplateCommandAbstract
 
         File::put(
             $path,
-            "{% extends 'cms::layouts.frontend' %}
+            "@extends('theme::layouts.frontend')
 
-                {% block content %}
+                @section('content')
                     {$content}
-                {% endblock %}"
+                @endsection"
         );
     }
 }

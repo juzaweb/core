@@ -15,10 +15,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Juzaweb\Core\Contracts\Setting;
 use Juzaweb\Core\Contracts\Theme as ThemeContract;
+use Illuminate\Contracts\Config\Repository as ConfigContract;
 
 class Theme implements Arrayable
 {
     protected Setting $setting;
+
+    protected ConfigContract $config;
 
     public function __construct(
         protected Application $app,
@@ -26,6 +29,7 @@ class Theme implements Arrayable
         protected string $path
     ) {
         $this->setting = $app[Setting::class];
+        $this->config = $this->app['config'];
     }
 
     /**
@@ -65,9 +69,10 @@ class Theme implements Arrayable
 
     public function activate(): bool
     {
-        $this->setting->set('theme_statuses', [
-            'name' => $this->name(),
-        ]);
+        File::put(
+            $this->config->get('themes.path') . '/theme_statuses.json',
+            json_encode(['name' => $this->name()], JSON_THROW_ON_ERROR)
+        );
 
         return true;
     }
