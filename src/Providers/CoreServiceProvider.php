@@ -50,6 +50,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(HookServiceProvider::class);
         $this->app->register(PermissionServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
+        $this->app->register(ThemeServiceProvider::class);
         $this->app->register(AdminServiceProvider::class);
     }
 

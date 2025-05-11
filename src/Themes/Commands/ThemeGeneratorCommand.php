@@ -144,7 +144,13 @@ class ThemeGeneratorCommand extends Command
             }
 
             $themeStubFile = $this->themeStubPath.'/'.$filename.'.stub';
-            $this->makeFile($themeStubFile, $createdThemePath.'/'.$storePath);
+            $filePath = $createdThemePath.'/'.$storePath;
+
+            if (! File::isDirectory(dirname($filePath))) {
+                File::makeDirectory(dirname($filePath), 0755, true);
+            }
+
+            $this->makeFile($themeStubFile, $filePath);
         }
     }
 
@@ -198,7 +204,7 @@ class ThemeGeneratorCommand extends Command
 
     protected function getThemeStubPath(): string
     {
-        return __DIR__.'/../../stubs/theme';
+        return config('themes.stubs.path');
     }
 
     protected function getArguments(): array
