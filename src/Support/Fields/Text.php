@@ -9,61 +9,7 @@
 
 namespace Juzaweb\Core\Support\Fields;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Database\Eloquent\Model;
-
-class Text implements Renderable, \Stringable
+class Text extends Field
 {
-    public function __construct(
-        protected string|Model $label,
-        protected string $name,
-        protected array $options = []
-    ) {
-    }
-
-    public function id(string $id): static
-    {
-        $this->options['id'] = $id;
-
-        return $this;
-    }
-
-    public function placeholder(string $placeholder): static
-    {
-        $this->options['placeholder'] = $placeholder;
-
-        return $this;
-    }
-
-    public function value(string $value): static
-    {
-        $this->options['value'] = $value;
-
-        return $this;
-    }
-
-    public function classes(string|array $classes): static
-    {
-        if (! is_array($classes)) {
-            $classes = [$classes];
-        }
-
-        $this->options['classes'] = $classes;
-
-        return $this;
-    }
-
-    public function render(): \Illuminate\Contracts\View\View|string
-    {
-        return view('core::fields.text', [
-            'label' => $this->label,
-            'name' => $this->name,
-            'options' => $this->options,
-        ]);
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
-    }
+    //
 }
