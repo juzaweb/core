@@ -313,7 +313,7 @@ if (!function_exists('is_url')) {
 if (!function_exists('is_admin_page')) {
     function is_admin_page(): bool
     {
-        return request()->is('admin-cp*');
+        return request()->is(config('core.admin_prefix') . '*');
     }
 }
 
@@ -327,5 +327,45 @@ if (!function_exists('get_error_by_exception')) {
             'code' => $e->getCode(),
             'exception' => get_class($e),
         ];
+    }
+}
+
+if (!function_exists('get_domain_by_url')) {
+    function get_domain_by_url(string $url, bool $noneWWW = false): string|bool
+    {
+        if (str_starts_with($url, 'https://')
+            || str_starts_with($url, 'http://')
+            || str_starts_with($url, '//')
+        ) {
+            $domain = explode('/', $url)[2];
+            if ($noneWWW) {
+                if (str_starts_with($domain, 'www.')) {
+                    $domain = str_replace('www.', '', $domain);
+                }
+            }
+
+            return explode('?', $domain)[0];
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists('number_human_format')) {
+    function number_human_format(int $number): string
+    {
+        if ($number < 1000000) {
+            return number_format($number);
+        }
+
+        if ($number < 1000000000) {
+            return number_format($number / 1000000, 2) . ' M';
+        }
+
+        if ($number < 1000000000000) {
+            return number_format($number / 1000000000, 2) . ' B';
+        }
+
+        return number_format($number / 1000000000000, 2) . ' T';
     }
 }
