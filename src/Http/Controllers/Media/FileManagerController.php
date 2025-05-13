@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Backend\Http\Controllers\FileManager;
+namespace Juzaweb\Core\Http\Controllers\Media;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;

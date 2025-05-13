@@ -18,4 +18,6 @@ Route::post('auth/register', [AuthController::class, 'doRegister'])
     ->name('auth.register')
     ->middleware(['throttle:5,1']);
 
-Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::post('auth/logout', [AuthController::class, 'logout'])
+    ->middleware(['auth'])
+    ->name('auth.logout');
