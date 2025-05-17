@@ -369,3 +369,10 @@ if (!function_exists('number_human_format')) {
         return number_format($number / 1000000000000, 2) . ' T';
     }
 }
+
+if (! function_exists('upload_url')) {
+    function upload_url(string $path): string
+    {
+        return asset('storage/' . $path);
+    }
+}

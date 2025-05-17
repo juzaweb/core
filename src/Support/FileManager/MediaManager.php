@@ -10,7 +10,7 @@
 
 namespace Juzaweb\CMS\Support\FileManager;
 
-use Juzaweb\Backend\Repositories\MediaFileRepository;
+use Juzaweb\Backend\Repositories\MediaRepository;
 use Juzaweb\Backend\Repositories\MediaFolderRepository;
 use Juzaweb\CMS\Contracts\MediaManagerContract;
 use Juzaweb\CMS\Models\Model;
@@ -18,11 +18,11 @@ use Juzaweb\CMS\Repositories\BaseRepository;
 
 class MediaManager implements MediaManagerContract
 {
-    protected MediaFileRepository $fileRepository;
+    protected MediaRepository $fileRepository;
     protected MediaFolderRepository $folderRepository;
 
     public function __construct(
-        MediaFileRepository $fileRepository,
+        MediaRepository $fileRepository,
         MediaFolderRepository $folderRepository
     ) {
         $this->fileRepository = $fileRepository;

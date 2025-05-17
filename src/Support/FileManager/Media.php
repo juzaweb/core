@@ -10,18 +10,18 @@
 
 namespace Juzaweb\CMS\Support\FileManager;
 
-use Juzaweb\Backend\Repositories\MediaFileRepository;
+use Juzaweb\Backend\Repositories\MediaRepository;
 use Juzaweb\Backend\Repositories\MediaFolderRepository;
 use Juzaweb\CMS\Models\Model;
 
 class Media
 {
-    protected MediaFileRepository $fileRepository;
+    protected MediaRepository $fileRepository;
     protected MediaFolderRepository $folderRepository;
     protected Model $model;
 
     public function __construct(
-        MediaFileRepository $fileRepository,
+        MediaRepository $fileRepository,
         MediaFolderRepository $folderRepository,
         Model $model
     ) {

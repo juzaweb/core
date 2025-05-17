@@ -5,7 +5,7 @@ namespace Juzaweb\Core\Tests;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Juzaweb\Core\Media\MediaUploader;
+use Juzaweb\FileManager\MediaUploader;
 
 class UploaderTest extends TestCase
 {

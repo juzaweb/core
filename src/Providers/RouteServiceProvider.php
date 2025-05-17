@@ -32,7 +32,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix($adminPrefix)
                 ->group(__DIR__ . '/../routes/admin.php');
 
-            Route::middleware(['web', 'guest'])
+            Route::middleware(['web'])
                 ->group(__DIR__ . '/../routes/auth.php');
 
             Route::middleware(['web'])
