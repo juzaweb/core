@@ -1,7 +1,7 @@
 <?php
 
 Route::group(
-    ['prefix' => 'media/browser', 'middleware' => ['auth']],
+    ['prefix' => 'media', 'middleware' => ['auth']],
     function () {
         \Juzaweb\FileManager\Media::browser();
     }
