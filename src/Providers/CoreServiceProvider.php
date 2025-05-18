@@ -27,6 +27,9 @@ class CoreServiceProvider extends ServiceProvider
         $this->customServices();
 
         $this->registerCommands();
+
+        $this->app['router']->aliasMiddleware('admin', \Juzaweb\Core\Http\Middleware\Admin::class);
+        $this->app['router']->aliasMiddleware('signed', \Juzaweb\Core\Http\Middleware\ValidateSignature::class);
     }
 
     public function register(): void
