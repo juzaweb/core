@@ -10,8 +10,9 @@
 namespace Juzaweb\Core\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Juzaweb\Core\Media\Traits\HasMedia;
 use Juzaweb\Core\Traits\HasSlug;
+use Juzaweb\FileManager\Models\Media;
+use Juzaweb\FileManager\Traits\HasMedia;
 
 class PageTranslation extends Model
 {

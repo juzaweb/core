@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
 
 /**
- * @property-read \Juzaweb\Core\Models\Media $resource
+ * @property-read \Juzaweb\FileManager\Models\Media $resource
  */
 class MediaResource extends JsonResource
 {
