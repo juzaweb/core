@@ -15,7 +15,8 @@ class AdminServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        Menu::make('dashboard', 'Dashboard')->icon('fa-tachometer-alt');
+        Menu::make('dashboard', 'Dashboard')
+            ->icon('fa-tachometer-alt');
 
         Menu::make('settings', 'Settings')
             ->icon('fa-cogs')
