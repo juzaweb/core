@@ -1,6 +1,6 @@
 <?php
 
-namespace Workbench\App\Models;
+namespace App\Models;
 
 use Juzaweb\Core\Models\Users\User as Authenticatable;
 

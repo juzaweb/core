@@ -1,14 +1,14 @@
 laravel: '@testbench'
 
 providers:
-  - Workbench\App\Providers\WorkbenchServiceProvider
+  - App\Providers\WorkbenchServiceProvider
   - Juzaweb\Core\Providers\CoreServiceProvider
 
 migrations:
   - workbench/database/migrations
 
 seeders:
-  - Workbench\Database\Seeders\DatabaseSeeder
+  - Database\Seeders\DatabaseSeeder
 
 workbench:
   start: '/'
