@@ -36,8 +36,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->registerServices();
 
         $this->registerPublishes();
-
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
     }
 
     protected function registerProviders(): void
@@ -98,6 +96,10 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'core');
 
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'core');
+
         $this->mergeConfigFrom(__DIR__ . '/../../config/core.php', 'core');
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/modules.php', 'modules');
@@ -119,7 +121,7 @@ class CoreServiceProvider extends ServiceProvider
         ], 'core-views');
 
         $this->publishes([
-            __DIR__ . '/../../assets' => public_path(),
+            __DIR__ . '/../../assets/public' => public_path('vendor/core'),
         ], 'core-assets');
     }
 

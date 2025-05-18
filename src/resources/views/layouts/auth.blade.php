@@ -10,7 +10,7 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-    <link rel="stylesheet" href="{{ mix('assets/core/css/admin.min.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'vendor/core') }}">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -23,7 +23,7 @@
 </div>
 <!-- /.login-box -->
 
-<script src="{{ mix('assets/core/js/admin.min.js') }}"></script>
+<script src="{{ mix('js/admin.min.js', 'vendor/core') }}"></script>
 
 </body>
 </html>
