@@ -9,6 +9,7 @@
 
 namespace Juzaweb\Core\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Juzaweb\Core\Commands;
@@ -30,6 +31,11 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->app['router']->aliasMiddleware('admin', \Juzaweb\Core\Http\Middleware\Admin::class);
         $this->app['router']->aliasMiddleware('signed', \Juzaweb\Core\Http\Middleware\ValidateSignature::class);
+
+        Carbon::macro('toUserTimezone', function () {
+            $tz = auth()->user()?->timezone ?? config('app.timezone');
+            return $this->copy()->setTimezone($tz);
+        });
     }
 
     public function register(): void
@@ -64,11 +70,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->singleton(Contracts\Breadcrumb::class, function () {
             return new Support\BreadcrumbFactory();
         });
-
-        $this->app->singleton(
-            Contracts\CacheGroup::class,
-            fn ($app) => new Support\CacheGroupRepository($app['cache'])
-        );
 
         $this->app->singleton(Contracts\Field::class, function ($app) {
             return new Support\FieldFactory();
