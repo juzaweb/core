@@ -12,7 +12,7 @@
         "hassankhan/config": "^2.2",
         "juzaweb/file-manager": "^2.0",
         "juzaweb/html-dom": "^1.0",
-        "juzaweb/laravel-query-cache": "dev-master",
+        "juzaweb/laravel-query-cache": "^1.0",
         "juzaweb/laravel-translation-loader": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/passport": "^12.2",
