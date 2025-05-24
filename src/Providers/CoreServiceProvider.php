@@ -10,6 +10,7 @@
 namespace Juzaweb\Core\Providers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Juzaweb\Core\Commands;
@@ -34,6 +35,21 @@ class CoreServiceProvider extends ServiceProvider
             $tz = auth()->user()?->timezone ?? config('app.timezone');
             return $this->copy()->setTimezone($tz);
         });
+
+        // Before check user permission
+        Gate::before(
+            function ($user, $ability) {
+                // Super admin has all permission
+                /** @var \App\Models\User $user */
+                if ($user->hasRoleAllPermissions()) {
+                    return true;
+                }
+
+                if ($user->isBanned()) {
+                    return false;
+                }
+            }
+        );
     }
 
     public function register(): void
