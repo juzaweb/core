@@ -11,9 +11,9 @@ namespace Juzaweb\Core\Support;
 
 use Illuminate\Support\Collection;
 use Juzaweb\Core\Contracts\GlobalData;
-use Juzaweb\Core\Contracts\Hook;
 use Juzaweb\Core\Contracts\Menu as MenuContract;
 use Juzaweb\Core\Support\Entities\Menu;
+use Juzaweb\Hooks\Contracts\Hook;
 
 class MenuRepository implements MenuContract
 {

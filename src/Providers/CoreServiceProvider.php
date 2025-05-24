@@ -10,6 +10,7 @@
 namespace Juzaweb\Core\Providers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Juzaweb\Core\Commands;
@@ -18,8 +19,6 @@ use Juzaweb\Core\Modules\Providers\ModulesServiceProvider;
 use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
 use Juzaweb\Core\Support;
-use Juzaweb\Core\Translations\Contracts\Translation;
-use Juzaweb\Core\Translations\TranslationRepository;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -36,6 +35,21 @@ class CoreServiceProvider extends ServiceProvider
             $tz = auth()->user()?->timezone ?? config('app.timezone');
             return $this->copy()->setTimezone($tz);
         });
+
+        // Before check user permission
+        Gate::before(
+            function ($user, $ability) {
+                // Super admin has all permission
+                /** @var \App\Models\User $user */
+                if ($user->hasRoleAllPermissions()) {
+                    return true;
+                }
+
+                if ($user->isBanned()) {
+                    return false;
+                }
+            }
+        );
     }
 
     public function register(): void
@@ -50,8 +64,6 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerProviders(): void
     {
         $this->app->register(RouteServiceProvider::class);
-        $this->app->register(HookServiceProvider::class);
-        $this->app->register(PermissionServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemeServiceProvider::class);
         $this->app->register(AdminServiceProvider::class);
@@ -81,17 +93,10 @@ class CoreServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(
-            Translation::class,
-            function ($app) {
-                return new TranslationRepository();
-            }
-        );
-
-        $this->app->singleton(
             Contracts\Menu::class,
             fn ($app) => new Support\MenuRepository(
                 $app[Contracts\GlobalData::class],
-                $app[Contracts\Hook::class]
+                $app[\Juzaweb\Hooks\Contracts\Hook::class]
             )
         );
     }

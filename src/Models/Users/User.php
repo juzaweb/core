@@ -14,13 +14,13 @@ use Juzaweb\Core\Facades\GlobalData;
 use Juzaweb\Core\Models\Authenticatable;
 use Juzaweb\Core\Models\Enums\UserStatus;
 use Juzaweb\Core\Models\PasswordReset;
-use Juzaweb\Core\Permissions\Traits\HasPermissions;
-use Juzaweb\Core\Permissions\Traits\HasRoles;
 use Juzaweb\Core\Traits\CausesActivity;
 use Juzaweb\Core\Traits\HasAPI;
 use Juzaweb\Core\Traits\HasPassportPasswordGrant;
 use Juzaweb\Core\Traits\HasSocialConnection;
 use Juzaweb\FileManager\Models\Media;
+use Juzaweb\Permissions\Traits\HasPermissions;
+use Juzaweb\Permissions\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail

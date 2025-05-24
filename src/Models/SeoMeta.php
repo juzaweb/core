@@ -2,7 +2,7 @@
 
 namespace Juzaweb\Core\Models;
 
-use Juzaweb\Core\Translations\Traits\Translatable;
+use Juzaweb\Translations\Traits\Translatable;
 
 /**
  *

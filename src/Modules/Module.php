@@ -13,7 +13,7 @@ use Illuminate\Support\Traits\Macroable;
 use Illuminate\Translation\Translator;
 use Juzaweb\Core\Modules\Contracts\ActivatorInterface;
 use Juzaweb\Core\Modules\Support\Json;
-use Juzaweb\Core\Translations\Contracts\Translation;
+use Juzaweb\Translations\Contracts\Translation;
 
 class Module
 {

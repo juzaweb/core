@@ -13,7 +13,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Models\Model;
 use Juzaweb\Core\Modules\Module;
-use Juzaweb\Core\Translations\Contracts\Translatable;
+use Juzaweb\Translations\Contracts\Translatable;
 use Symfony\Component\Console\Input\InputOption;
 
 trait UseFromModel
