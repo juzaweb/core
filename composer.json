@@ -47,7 +47,7 @@
             }
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "autoload-dev": {
         "psr-4": {
             "App\\": "workbench/app/",
@@ -61,7 +61,6 @@
         "build": "@php vendor/bin/testbench workbench:build --ansi",
         "serve": [
             "Composer\\Config::disableProcessTimeout",
-            "@build",
             "@php vendor/bin/testbench serve --ansi"
         ]
     }
