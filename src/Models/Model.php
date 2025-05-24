@@ -11,7 +11,7 @@
 namespace Juzaweb\Core\Models;
 
 use Illuminate\Database\Eloquent\Model as ModelAlias;
-use Juzaweb\Core\Traits\QueryCacheable;
+use Juzaweb\QueryCache\QueryCacheable;
 
 class Model extends ModelAlias
 {

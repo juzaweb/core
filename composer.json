@@ -10,17 +10,18 @@
         "darkaonline/l5-swagger": "^8.6",
         "doctrine/dbal": "^4.2",
         "hassankhan/config": "^2.2",
-        "juzaweb/laravel-translation-loader": "^2.0",
-        "juzaweb/html-dom": "^1.0",
         "juzaweb/file-manager": "^2.0",
-        "laravel/socialite": "^5.5",
+        "juzaweb/html-dom": "^1.0",
+        "juzaweb/laravel-query-cache": "^1.0",
+        "juzaweb/laravel-translation-loader": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/passport": "^12.2",
+        "laravel/socialite": "^5.5",
+        "maatwebsite/excel": "^3.1",
         "spatie/image-optimizer": "^1.4",
+        "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-analytics": "^5.4",
         "spatie/laravel-sitemap": "^7.3",
-        "maatwebsite/excel": "^3.1",
-        "spatie/laravel-activitylog": "^4.10",
         "yajra/laravel-datatables": "^11.0"
     },
     "require-dev": {
@@ -63,5 +64,8 @@
             "Composer\\Config::disableProcessTimeout",
             "@php vendor/bin/testbench serve --ansi"
         ]
+    },
+    "config": {
+        "sort-packages": true
     }
 }
