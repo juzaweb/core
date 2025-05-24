@@ -50,7 +50,6 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerProviders(): void
     {
         $this->app->register(RouteServiceProvider::class);
-        $this->app->register(HookServiceProvider::class);
         $this->app->register(PermissionServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemeServiceProvider::class);
@@ -91,7 +90,7 @@ class CoreServiceProvider extends ServiceProvider
             Contracts\Menu::class,
             fn ($app) => new Support\MenuRepository(
                 $app[Contracts\GlobalData::class],
-                $app[Contracts\Hook::class]
+                $app[\Juzaweb\Hooks\Contracts\Hook::class]
             )
         );
     }

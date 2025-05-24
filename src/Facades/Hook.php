@@ -10,7 +10,7 @@
 namespace Juzaweb\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Juzaweb\Core\Contracts\Hook as HookContract;
+use Juzaweb\Hooks\Contracts\Hook as HookContract;
 
 class Hook extends Facade
 {

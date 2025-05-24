@@ -11,13 +11,13 @@ namespace Juzaweb\Core\Support\Entities;
 
 use Illuminate\Support\Str;
 use Juzaweb\Core\Contracts\GlobalData;
-use Juzaweb\Core\Contracts\Hook;
 use Juzaweb\Core\Support\Abstracts\Customizer;
 use Juzaweb\Core\Support\Actions;
 use Juzaweb\Core\Support\Traits\HasPermission;
 use Juzaweb\Core\Support\Traits\HasTitle;
 use Juzaweb\Core\Traits\Fillable;
 use Juzaweb\Core\Traits\Whenable;
+use Juzaweb\Hooks\Contracts\Hook;
 
 class Menu extends Customizer
 {
