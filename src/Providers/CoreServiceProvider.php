@@ -18,8 +18,6 @@ use Juzaweb\Core\Modules\Providers\ModulesServiceProvider;
 use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
 use Juzaweb\Core\Support;
-use Juzaweb\Core\Translations\Contracts\Translation;
-use Juzaweb\Core\Translations\TranslationRepository;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -50,7 +48,6 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerProviders(): void
     {
         $this->app->register(RouteServiceProvider::class);
-        $this->app->register(PermissionServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemeServiceProvider::class);
         $this->app->register(AdminServiceProvider::class);
@@ -77,13 +74,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->singleton(
             Contracts\RouteResource::class,
             fn ($app) => new Support\RouteResourceRepository($app->make('router'))
-        );
-
-        $this->app->singleton(
-            Translation::class,
-            function ($app) {
-                return new TranslationRepository();
-            }
         );
 
         $this->app->singleton(

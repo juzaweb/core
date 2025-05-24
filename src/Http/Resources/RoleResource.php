@@ -10,8 +10,7 @@
 namespace Juzaweb\Core\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Juzaweb\Core\Models\Permissions\Role;
-use OpenApi\Annotations as OA;
+use Juzaweb\Permissions\Models\Role;
 
 /**
  * @property-read Role $resource

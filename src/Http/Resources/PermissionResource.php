@@ -10,7 +10,7 @@
 namespace Juzaweb\Core\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Juzaweb\Core\Models\Permissions\Permission;
+use Juzaweb\Permissions\Models\Permission;
 use OpenApi\Annotations as OA;
 
 /**

@@ -14,7 +14,7 @@ use Juzaweb\Core\Support\Resources\ModelResource;
 use OpenApi\Annotations as OA;
 
 /**
- * @property-read \Juzaweb\Core\Models\Language $resource
+ * @property-read \Juzaweb\Translations\Models\Language $resource
  *
  * @OA\Schema(
  *       schema="LanguageResource",

@@ -9,7 +9,7 @@ use Juzaweb\Core\Modules\Contracts\RepositoryInterface;
 use Juzaweb\Core\Modules\Support\Config\GenerateConfigReader;
 use Juzaweb\Core\Modules\Support\Stub;
 use Juzaweb\Core\Modules\Traits\UseFromModel;
-use Juzaweb\Core\Translations\Contracts\Translatable;
+use Juzaweb\Translations\Contracts\Translatable;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
