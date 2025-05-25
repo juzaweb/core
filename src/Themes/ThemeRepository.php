@@ -19,6 +19,9 @@ use Illuminate\View\ViewFinderInterface;
 use Juzaweb\Core\Contracts\Setting;
 use Juzaweb\Core\Contracts\Theme as ThemeContract;
 use Juzaweb\Core\Themes\Exceptions\ThemeNotFoundException;
+use Juzaweb\Translations\Contracts\Translation;
+use Laravel\Folio\FolioManager;
+use Laravel\Folio\PendingRoute;
 
 class ThemeRepository implements ThemeContract
 {
@@ -34,6 +37,11 @@ class ThemeRepository implements ThemeContract
 
     protected ConfigContract $config;
 
+    /**
+     * @var FolioManager|PendingRoute $folio
+     */
+    protected FolioManager $folio;
+
     public function __construct(
         protected ApplicationContract $app,
         protected string $path
@@ -42,6 +50,7 @@ class ThemeRepository implements ThemeContract
         $this->viewFinder = $app['view']->getFinder();
         $this->translator = $app['translator'];
         $this->config = $this->app['config'];
+        $this->folio = $app[FolioManager::class];
     }
 
     /**
@@ -125,6 +134,43 @@ class ThemeRepository implements ThemeContract
         foreach ($theme->get('providers', []) as $provider) {
             $this->app->register($provider);
         }
+
+        $viewPath = $theme->path('views');
+        $langPath = $theme->path('lang');
+
+        $viewPublishPath = resource_path('views/themes/' . $theme->name());
+        $langPublishPath = resource_path('lang/themes/' . $theme->name());
+
+        $namespace = 'theme';
+        $this->viewFinder->addNamespace($namespace, $viewPath);
+
+        if (is_dir($viewPublishPath)) {
+            $this->viewFinder->prependNamespace($namespace, $viewPublishPath);
+        }
+
+        $this->translator->addNamespace($namespace, $langPath);
+
+        if (is_dir($langPublishPath)) {
+            $this->translator->addNamespace($namespace, $langPublishPath);
+        }
+
+        $this->folio->path("{$viewPath}/pages")
+            ->middleware([
+                '*' => [
+                    'web',
+                ],
+            ]);
+
+        $lowerName = $theme->lowerName();
+
+        $this->app[Translation::class]->register("{$lowerName}_theme", [
+            'type' => 'theme',
+            'key' => $lowerName,
+            'namespace' => '*',
+            'lang_path' => $theme->path('/lang'),
+            'src_path' => $theme->path('/src'),
+            'publish_path' => $langPublishPath,
+        ]);
     }
 
     protected function scan(): Collection
