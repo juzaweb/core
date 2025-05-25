@@ -11,13 +11,13 @@ namespace Juzaweb\Core\Themes\Commands;
 
 use Juzaweb\TemplateDownloader\Commands\DownloadTemplateCommandAbstract;
 
-class DownloadStyleCommand extends DownloadTemplateCommandAbstract
+class DownloadTemplateCommand extends DownloadTemplateCommandAbstract
 {
-    protected $name = 'theme:download-style';
+    protected $name = 'theme:download-template';
 
-    protected array $data;
+    protected array $data = [];
 
-    public function handle(): void
+    public function handle()
     {
         $this->data['name'] = $this->ask(
             'Theme Name?',
