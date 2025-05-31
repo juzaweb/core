@@ -9,11 +9,11 @@
 
 namespace Juzaweb\Core\Support\Fields;
 
-class Text extends Field
+class Textarea extends Field
 {
     public function render(): \Illuminate\Contracts\View\View|string
     {
-        return view('core::fields.text', [
+        return view('core::fields.textarea', [
             'label' => $this->label,
             'name' => $this->name,
             'options' => $this->options,
