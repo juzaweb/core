@@ -28,7 +28,11 @@ mix.combine(
         `assets/plugins/select2/js/select2.full.min.js`,
         `assets/plugins/jquery-validation/jquery.validate.min.js`,
         `assets/plugins/jquery-validation/additional-methods.min.js`,
+        `assets/plugins/sweetalert2/sweetalert2.min.js`,
         `assets/dist/js/admin.min.js`,
+        `assets/js/helpers.js`,
+        `assets/js/filemanager.js`,
+        `assets/js/form-ajax.js`,
     ],
     `assets/public/js/admin.min.js`
 ).mergeManifest();
@@ -39,8 +43,10 @@ mix.styles(
         `assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css`,
         `assets/plugins/select2/css/select2.min.css`,
         `assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css`,
+        `assets/plugins/sweetalert2/sweetalert2.min.css`,
+        `assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css`,
         `assets/dist/css/admin.min.css`,
-        `assets/dist/css/custom.css`,
+        `assets/css/custom.css`,
     ],
     `assets/public/css/admin.min.css`
 ).mergeManifest();
