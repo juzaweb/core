@@ -24,6 +24,15 @@ mix.combine(
     [
         `assets/plugins/jquery/jquery.min.js`,
         `assets/plugins/bootstrap/js/bootstrap.bundle.min.js`,
+        `assets/plugins/datatables/jquery.dataTables.min.js`,
+        `assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js`,
+        `assets/plugins/datatables-responsive/js/dataTables.responsive.min.js`,
+        `assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js`,
+        // `assets/plugins/datatables-buttons/js/dataTables.buttons.min.js`,
+        // `assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js`,
+        // `assets/plugins/datatables-buttons/js/buttons.html5.min.js`,
+        // `assets/plugins/datatables-buttons/js/buttons.print.min.js`,
+        // `assets/plugins/datatables-buttons/js/buttons.colVis.min.js`,
         `assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js`,
         `assets/plugins/select2/js/select2.full.min.js`,
         `assets/plugins/jquery-validation/jquery.validate.min.js`,
@@ -37,6 +46,9 @@ mix.combine(
 mix.styles(
     [
         `assets/plugins/fontawesome/css/all.min.css`,
+        `assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css`,
+        `assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css`,
+        // `assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css`,
         `assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css`,
         `assets/plugins/select2/css/select2.min.css`,
         `assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css`,
