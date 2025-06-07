@@ -14,11 +14,13 @@
 
                     {{ Field::select(__('Language'), 'language')->dropDownList(['en' => 'Eng']) }}
 
-                    {{ Field::image(__('Language'), 'language') }}
+                    {{ Field::checkbox(__('Enable User Registration'), 'user_registration', ['value' => setting('user_registration')]) }}
 
-                    {{ Field::images(__('Language'), 'language') }}
+                    {{ Field::checkbox(__('Enable User Verification'), 'user_verification', ['value' => setting('user_verification')]) }}
+                </div>
 
-                    {{ Field::editor(__('Terms of Service'), 'terms_of_service', ['placeholder' => __('Terms of Service')]) }}
+                <div class="col-md-4">
+
                 </div>
             </div>
         </div>
