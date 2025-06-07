@@ -9,6 +9,8 @@
 
 namespace Juzaweb\Core\Support\Fields;
 
+use Illuminate\Contracts\View\View;
+
 class Select extends Field
 {
     public function dropDownList(array $options): static
@@ -32,12 +34,8 @@ class Select extends Field
         return $this;
     }
 
-    public function render(): \Illuminate\Contracts\View\View|string
+    public function render(): View|string
     {
-        return view('core::fields.select', [
-            'label' => $this->label,
-            'name' => $this->name,
-            'options' => $this->options,
-        ]);
+        return view('core::fields.select', $this->renderParams());
     }
 }

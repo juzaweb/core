@@ -65,4 +65,20 @@ abstract class Field implements Renderable, \Stringable, Htmlable
     {
         return $this->render();
     }
+
+    protected function renderParams(array $extra = []): array
+    {
+        $params = [
+            'label' => $this->label,
+            'name' => $this->name,
+            'options' => $this->options,
+        ];
+
+        if ($this->label instanceof Model) {
+            $params['label'] = title_from_key($this->name);
+            $params['value'] = $this->label->{$this->name};
+        }
+
+        return array_merge($params, $extra);
+    }
 }

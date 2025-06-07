@@ -27,4 +27,19 @@ class FieldFactory
     {
         return new Fields\Select($label, $name, $options);
     }
+
+    public function image(string|Model $label, string $name, array $options = []): Fields\Image
+    {
+        return new Fields\Image($label, $name, $options);
+    }
+
+    public function checkbox(string|Model $label, string $name, array $options = []): Fields\Checkbox
+    {
+        return new Fields\Checkbox($label, $name, $options);
+    }
+
+    public function editor(string|Model $label, string $name, array $options = []): Fields\Editor
+    {
+        return new Fields\Editor($label, $name, $options);
+    }
 }
