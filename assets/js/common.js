@@ -93,12 +93,18 @@ $(function () {
 
     $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
         if (jqxhr.status === 401) {
-            window.location = "/";
+            window.location = "/user/login";
         }
 
         if (jqxhr.status === 419) {
             window.location = location.toString();
         }
+    });
+
+    $(document).on('click', '.jw-checkbox .form-check-input', function () {
+        $(this).closest('.jw-checkbox')
+            .find('.jw-checkbox-input')
+            .val($(this).is(':checked') ? '1' : '0');
     });
 
     initSelect2('body');

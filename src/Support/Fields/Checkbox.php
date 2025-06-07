@@ -9,7 +9,15 @@
 
 namespace Juzaweb\Core\Support\Fields;
 
-class Checkbox
-{
+use Illuminate\Contracts\View\View;
 
+class Checkbox extends Field
+{
+    public function render(): View|string
+    {
+        return view(
+            'core::fields.checkbox',
+            $this->renderParams()
+        );
+    }
 }
