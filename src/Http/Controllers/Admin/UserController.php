@@ -10,20 +10,21 @@
 namespace Juzaweb\Core\Http\Controllers\Admin;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Juzaweb\Core\Facades\Breadcrumb;
 use Juzaweb\Core\Http\Controllers\AdminController;
 use Juzaweb\Core\Http\DataTables\UsersDataTable;
+use Juzaweb\Core\Http\Requests\UserRequest;
+use Juzaweb\Permissions\Models\Role;
 
 class UserController extends AdminController
 {
     public function index(UsersDataTable $dataTable)
     {
-        Breadcrumb::add('Users');
+        Breadcrumb::add(__('Users'));
 
         return $dataTable->render(
             'core::admin.user.index',
-            ['title' => __('Users')]
+            []
         );
     }
 
@@ -34,10 +35,12 @@ class UserController extends AdminController
         Breadcrumb::add(__('Add User'));
 
         $model = new User();
+        $action = action([static::class, 'store']);
+        $roles = Role::get();
 
         return view(
             'core::admin.user.form',
-            compact('model')
+            compact('model', 'action', 'roles')
         );
     }
 
@@ -51,14 +54,29 @@ class UserController extends AdminController
 
         Breadcrumb::add(__('Edit User: :name', ['name' => $model->name]));
 
+        $action = action([static::class, 'store'], ['id' => $model->id]);
+        $roles = Role::get();
+
         return view(
             'core::admin.user.form',
-            compact('model')
+            compact('model', 'action', 'roles')
         );
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
+        $data = $request->safe()->all();
 
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        $model = User::create($data);
+
+        return $this->success(
+            __('User :name created successfully', ['name' => $model->name]),
+        );
     }
 }
