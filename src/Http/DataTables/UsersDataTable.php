@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Juzaweb\Core\DataTables\Action;
 use Juzaweb\Core\DataTables\Column;
+use Juzaweb\Core\DataTables\ColumnEditer;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Services\DataTable;
@@ -27,8 +28,8 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::checkbox('select_all'),
-            Column::make('id'),
+            Column::checkbox('<input type="checkbox" class="select-all">'),
+            Column::make('id')->visible(false),
             Column::make('name'),
             Column::make('email'),
             Column::make('created_at'),
@@ -42,17 +43,17 @@ class UsersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->editColumn('created_at', fn (User $user) => $user->created_at?->format('Y-m-d H:i:s'))
+            ->editColumn(
+                'created_at',
+                fn (User $user) => $user->created_at?->format('Y-m-d H:i:s')
+            )
             ->editColumn(
                 'actions',
-                fn (User $user) => view(
-                    'core::components.datatables.actions',
+                fn (User $user) => ColumnEditer::actions(
+                    $user,
                     [
-                        'model' => $user,
-                        'actions' => [
-                            Action::edit(admin_url("users/{$user->id}/edit")),
-                            Action::delete(),
-                        ],
+                        Action::edit(admin_url("users/{$user->id}/edit")),
+                        Action::delete(),
                     ]
                 )
             );
