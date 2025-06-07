@@ -26,6 +26,7 @@ workbench:
   assets:
     - laravel-assets
     - core-assets
+    - media-assets
   sync:
     - from: storage
       to: workbench/storage
