@@ -47,4 +47,11 @@ class FieldFactory
     {
         return new Fields\Editor($label, $name, $options);
     }
+
+    public function password(string|Model $label, string $name, array $options = []): Fields\Text
+    {
+        $options['type'] = 'password';
+
+        return new Fields\Text($label, $name, $options);
+    }
 }

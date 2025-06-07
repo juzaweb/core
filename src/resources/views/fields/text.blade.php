@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="{{ $options['id'] ?? $name }}">{{ $label }}</label>
-    <input type="text"
+    <input type="{{ $options['type'] ?? 'text' }}"
            name="{{ $name }}"
            id="{{ $options['id'] ?? $name }}"
            class="form-control {{ isset($options['classes']) ? implode(' ', $options['classes']) : '' }}"

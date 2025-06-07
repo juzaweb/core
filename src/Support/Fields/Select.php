@@ -10,11 +10,20 @@
 namespace Juzaweb\Core\Support\Fields;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 
 class Select extends Field
 {
-    public function dropDownList(array $options): static
+    public function dropDownList(array|Collection $options, ?string $key = null, ?string $value = null): static
     {
+        if ($key) {
+            if (is_array($options)) {
+                $options = collect($options)->pluck($value, $key);
+            } elseif ($options instanceof Collection) {
+                $options = $options->pluck($value, $key);
+            }
+        }
+
         $this->options['options'] = $options;
 
         return $this;

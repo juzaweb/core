@@ -7,7 +7,11 @@
             @foreach(Arr::except($options, ['classes', 'id', 'options']) as $key => $value) {{ $key }}="{{ $value }}" @endforeach
     >
         @foreach($options['options'] ?? [] as $key => $val)
-            <option value="{{ $key }}" @selected(($options['value'] ?? null) == $key)>{{ $val }}</option>
+
+
+            <option value="{{ $key }}" @selected(($options['value'] ?? null) == $key)>
+                {{ $val }}
+            </option>
         @endforeach
     </select>
 </div>
