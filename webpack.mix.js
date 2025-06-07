@@ -32,6 +32,7 @@ mix.combine(
         `assets/plugins/toastr/toastr.min.js`,
         `assets/dist/js/admin.min.js`,
         `assets/js/helpers.js`,
+        `assets/js/common.js`,
         `assets/js/filemanager.js`,
         `assets/js/form-ajax.js`,
     ],
