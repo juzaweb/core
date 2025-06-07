@@ -1,4 +1,4 @@
-/*!
+/*
  * Select2 4.0.13
  * https://select2.github.io
  *
@@ -6518,7 +6518,7 @@ S2.define('select2/selection/stopPropagation',[
   return StopPropagation;
 });
 
-/*!
+/*
  * jQuery Mousewheel 3.1.13
  *
  * Copyright jQuery Foundation and other contributors

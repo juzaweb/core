@@ -1,4 +1,4 @@
-/*! Bootstrap integration for DataTables' Buttons
+/* Bootstrap integration for DataTables' Buttons
  * ©2016 SpryMedia Ltd - datatables.net/license
  */
 
@@ -71,7 +71,7 @@ $.extend( true, DataTable.Buttons.defaults, {
 			tag: 'button',
 			className: 'dt-btn-split-drop-button btn btn-secondary',
 			closeButton: false
-		} 
+		}
 	},
 	buttonCreated: function ( config, button ) {
 		return config.buttons ?

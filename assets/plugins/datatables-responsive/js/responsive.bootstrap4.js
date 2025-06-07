@@ -1,4 +1,4 @@
-/*! Bootstrap 4 integration for DataTables' Responsive
+/* Bootstrap 4 integration for DataTables' Responsive
  * ©2016 SpryMedia Ltd - datatables.net/license
  */
 
@@ -61,7 +61,7 @@ _display.modal = function ( options ) {
 				if ( options && options.header ) {
 					var header = _modal.find('div.modal-header');
 					var button = header.find('button').detach();
-					
+
 					header
 						.empty()
 						.append( '<h4 class="modal-title">'+options.header( row )+'</h4>' )
