@@ -31,9 +31,37 @@ class Action
      */
     protected string $type = 'url';
 
+    /**
+     * @var string
+     */
+    protected string $color = 'primary';
+
+    protected ?string $action = null;
+
+    /**
+     * Create a new Action instance.
+     *
+     * @param string $label
+     * @param string|null $url
+     * @param string|null $icon
+     * @return static
+     */
+    public static function make(string $label, ?string $url = null, ?string $icon = null): static
+    {
+        return new static($label, $url, $icon);
+    }
+
     public static function edit(string $url): static
     {
-        return new static(__('Edit'), $url, 'fas fa-edit');
+        return static::make(__('Edit'), $url, 'fas fa-edit');
+    }
+
+    public static function delete(): static
+    {
+        return static::make(__('Delete'), null, 'fas fa-trash')
+            ->type('action')
+            ->action('delete')
+            ->color('danger');
     }
 
     /**
@@ -50,12 +78,48 @@ class Action
         $this->label = $label;
     }
 
-    public function getIcon(): string
+    public function type(string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function color(string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function action(string $action): static
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function getAction(): ?string
+    {
+        return $this->action;
+    }
+
+    public function getColor(): string
+    {
+        return $this->color;
+    }
+
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
 
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }

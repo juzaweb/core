@@ -27,11 +27,14 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::checkbox('select_all'),
             Column::make('id'),
             Column::make('name'),
             Column::make('email'),
             Column::make('created_at'),
-            Column::make('actions')->orderable(false)->searchable(false),
+            Column::computed('actions')
+                ->addClass('text-center')
+                ->width('200px'),
         ];
     }
 
@@ -47,7 +50,8 @@ class UsersDataTable extends DataTable
                     [
                         'model' => $user,
                         'actions' => [
-                            Action::edit(admin_url('users/' . $user->id . '/edit')),
+                            Action::edit(admin_url("users/{$user->id}/edit")),
+                            Action::delete(),
                         ],
                     ]
                 )

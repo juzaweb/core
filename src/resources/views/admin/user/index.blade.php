@@ -14,7 +14,16 @@
                     <h3 class="card-title">{{ __('Users') }}</h3>
                 </div>
                 <div class="card-body">
-                    {{ $dataTable->table() }}
+                    <div class="table-responsive">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div>
+
+                            </div>
+                        </div>
+
+                        {{ $dataTable->table() }}
+                    </div>
+
                 </div>
             </div>
         </div>
