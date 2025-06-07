@@ -94,6 +94,16 @@
 <script type="text/javascript">
     const juzaweb = {
         adminPrefix: "{{ config('core.admin_prefix') }}",
+        documentBaseUrl: "{{ url('/storage') }}/",
+        lang: {
+            successfully: '{{ __('Successfully') }}',
+            error: '{{ __('Error') }}',
+            warning: '{{ __('Warning') }}',
+            confirm: '{{ __('Are you sure?') }}',
+            cancel: '{{ __('Cancel') }}',
+            ok: '{{ __('OK') }}',
+            yes: '{{ __('Yes') }}',
+        },
     }
 </script>
 <script src="{{ mix('js/admin.min.js', 'vendor/core') }}"></script>
