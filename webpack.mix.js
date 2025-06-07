@@ -25,7 +25,7 @@ mix.combine(
         `assets/plugins/jquery/jquery.min.js`,
         `assets/plugins/bootstrap/js/bootstrap.bundle.min.js`,
         `assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js`,
-        `assets/plugins/select2/js/select2.full.min.js`,
+        `assets/plugins/select2/js/select2.min.js`,
         `assets/plugins/jquery-validation/jquery.validate.min.js`,
         `assets/plugins/jquery-validation/additional-methods.min.js`,
         `assets/plugins/sweetalert2/sweetalert2.min.js`,
