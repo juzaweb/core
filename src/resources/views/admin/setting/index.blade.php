@@ -16,6 +16,8 @@
 
                     {{ Field::image(__('Language'), 'language') }}
 
+                    {{ Field::images(__('Language'), 'language') }}
+
                     {{ Field::editor(__('Terms of Service'), 'terms_of_service', ['placeholder' => __('Terms of Service')]) }}
                 </div>
             </div>

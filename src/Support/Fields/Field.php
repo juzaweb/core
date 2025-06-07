@@ -11,9 +11,11 @@ namespace Juzaweb\Core\Support\Fields;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Stringable;
 
-abstract class Field implements Renderable, \Stringable, Htmlable
+abstract class Field implements Renderable, Stringable, Htmlable
 {
     public function __construct(
         protected string|Model $label,
@@ -54,14 +56,14 @@ abstract class Field implements Renderable, \Stringable, Htmlable
         return $this;
     }
 
-    abstract public function render(): \Illuminate\Contracts\View\View|string;
+    abstract public function render(): View|string;
 
     public function __toString(): string
     {
         return $this->render();
     }
 
-    public function toHtml(): \Illuminate\Contracts\View\View|string
+    public function toHtml(): View|string
     {
         return $this->render();
     }

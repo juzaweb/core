@@ -33,6 +33,11 @@ class FieldFactory
         return new Fields\Image($label, $name, $options);
     }
 
+    public function images(string|Model $label, string $name, array $options = []): Fields\Images
+    {
+        return new Fields\Images($label, $name, $options);
+    }
+
     public function checkbox(string|Model $label, string $name, array $options = []): Fields\Checkbox
     {
         return new Fields\Checkbox($label, $name, $options);
