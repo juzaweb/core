@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    @php
+        $breadcrumbs = \Juzaweb\Core\Facades\Breadcrumb::getItems();
+        $title = $breadcrumbs ? last($breadcrumbs)['title'] : __('Dashboard');
+    @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -37,13 +41,12 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
+
                     <div class="col-sm-6">
                         <h1>{{ $title }}</h1>
                     </div>
+
                     <div class="col-sm-6">
-                        @php
-                        $breadcrumbs = \Juzaweb\Core\Facades\Breadcrumb::getItems();
-                        @endphp
                         <ol class="breadcrumb float-sm-right">
                             @if($breadcrumbs)
                             <li class="breadcrumb-item">

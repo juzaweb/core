@@ -26,6 +26,8 @@
                     {{ Field::image(__('Logo'), 'logo', ['value' => setting('icon')]) }}
 
                     {{ Field::image(__('Icon'), 'icon', ['value' => setting('icon')]) }}
+
+                    {{ Field::image(__('Banner (for social)'), 'banner', ['value' => setting('banner')]) }}
                 </div>
             </div>
         </div>

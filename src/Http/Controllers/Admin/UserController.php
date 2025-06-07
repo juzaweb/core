@@ -9,6 +9,7 @@
 
 namespace Juzaweb\Core\Http\Controllers\Admin;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Juzaweb\Core\Facades\Breadcrumb;
 use Juzaweb\Core\Http\Controllers\AdminController;
@@ -28,25 +29,31 @@ class UserController extends AdminController
 
     public function create()
     {
-        Breadcrumb::add('Users', admin_url('users'));
+        Breadcrumb::add(__('Users'), admin_url('users'));
 
-        Breadcrumb::add('Add User');
+        Breadcrumb::add(__('Add User'));
+
+        $model = new User();
 
         return view(
             'core::admin.user.form',
-            ['title' => __('Add User')]
+            compact('model')
         );
     }
 
     public function edit(string $id)
     {
-        Breadcrumb::add('Users', admin_url('users'));
+        $model = User::find($id);
 
-        Breadcrumb::add('Edit User');
+        abort_if($model === null, 404, __('User not found'));
+
+        Breadcrumb::add(__('Users'), admin_url('users'));
+
+        Breadcrumb::add(__('Edit User: :name', ['name' => $model->name]));
 
         return view(
             'core::admin.user.form',
-            ['title' => __('Add User')]
+            compact('model')
         );
     }
 

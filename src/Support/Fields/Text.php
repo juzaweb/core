@@ -13,10 +13,9 @@ class Text extends Field
 {
     public function render(): \Illuminate\Contracts\View\View|string
     {
-        return view('core::fields.text', [
-            'label' => $this->label,
-            'name' => $this->name,
-            'options' => $this->options,
-        ]);
+        return view(
+            'core::fields.text',
+            $this->renderParams()
+        );
     }
 }

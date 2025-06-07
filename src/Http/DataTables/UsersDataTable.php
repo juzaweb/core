@@ -11,9 +11,10 @@ namespace Juzaweb\Core\Http\DataTables;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Juzaweb\Core\DataTables\Action;
+use Juzaweb\Core\DataTables\Column;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
@@ -29,8 +30,8 @@ class UsersDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('email'),
-            Column::make('updated_at'),
-            Column::make('actions'),
+            Column::make('created_at'),
+            Column::make('actions')->orderable(false)->searchable(false),
         ];
     }
 
@@ -41,7 +42,15 @@ class UsersDataTable extends DataTable
             ->editColumn('created_at', fn (User $user) => $user->created_at?->format('Y-m-d H:i:s'))
             ->editColumn(
                 'actions',
-                fn (User $user) => ''
+                fn (User $user) => view(
+                    'core::components.datatables.actions',
+                    [
+                        'model' => $user,
+                        'actions' => [
+                            Action::edit(admin_url('users/' . $user->id . '/edit')),
+                        ],
+                    ]
+                )
             );
     }
 

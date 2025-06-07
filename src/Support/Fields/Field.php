@@ -78,7 +78,7 @@ abstract class Field implements Renderable, Stringable, Htmlable
 
         if ($this->label instanceof Model) {
             $params['label'] = title_from_key($this->name);
-            $params['value'] = $this->label->{$this->name};
+            $params['options']['value'] = $this->label->{$this->name};
         }
 
         return array_merge($params, $extra);
