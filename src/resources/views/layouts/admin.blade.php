@@ -9,6 +9,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link href="https://cdn.datatables.net/v/bs4/jq-3.7.0/jszip-3.10.1/dt-2.3.0/af-2.7.0/b-3.2.3/b-colvis-3.2.3/b-html5-3.2.3/b-print-3.2.3/datatables.min.css" rel="stylesheet" integrity="sha384-qDfn09R/hNBbMsK48pEFcvpZr2u0sa+owVHZaoYuTEQvzrDWdXkEbmC34ST5CaBx" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'vendor/core') }}">
     <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'vendor/core') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -106,6 +107,7 @@
         },
     }
 </script>
+<script src="{{ mix('js/vendor.min.js', 'vendor/core') }}"></script>
 <script src="{{ mix('js/admin.min.js', 'vendor/core') }}"></script>
 <script src="{{ asset('vendor/core/js/tinymce/tinymce.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" integrity="sha384-VFQrHzqBh5qiJIU0uGU5CIW3+OWpdGGJM9LBnGbuIH2mkICcFZ7lPd/AAtI7SNf7" crossorigin="anonymous"></script>

@@ -30,13 +30,8 @@ mix.combine(
         `assets/plugins/jquery-validation/additional-methods.min.js`,
         `assets/plugins/sweetalert2/sweetalert2.min.js`,
         `assets/plugins/toastr/toastr.min.js`,
-        `assets/dist/js/admin.min.js`,
-        `assets/js/helpers.js`,
-        `assets/js/common.js`,
-        `assets/js/filemanager.js`,
-        `assets/js/form-ajax.js`,
     ],
-    `assets/public/js/admin.min.js`
+    'assets/public/js/vendor.min.js'
 ).mergeManifest();
 
 mix.styles(
@@ -48,6 +43,24 @@ mix.styles(
         `assets/plugins/sweetalert2/sweetalert2.min.css`,
         `assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css`,
         `assets/plugins/toastr/toastr.min.css`,
+    ],
+    'assets/public/css/vendor.min.css'
+);
+
+mix.combine(
+    [
+
+        `assets/dist/js/admin.min.js`,
+        `assets/js/helpers.js`,
+        `assets/js/common.js`,
+        `assets/js/filemanager.js`,
+        `assets/js/form-ajax.js`,
+    ],
+    `assets/public/js/admin.min.js`
+).mergeManifest();
+
+mix.styles(
+    [
         `assets/dist/css/admin.min.css`,
         `assets/css/custom.css`,
     ],

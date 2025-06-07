@@ -1,4 +1,6 @@
 {
-    "/js/admin.min.js": "/js/admin.min.js?id=e960a7cd0f5383a25a7e953f402dc93a",
-    "/css/admin.min.css": "/css/admin.min.css?id=c7ae4bc04caac6c6eeaabce35962bc14"
+    "/js/admin.min.js": "/js/admin.min.js?id=812ed5809b7f1a111263fd5893961cc8",
+    "/css/admin.min.css": "/css/admin.min.css?id=155b7cdd078da9ecdc8c863f4a2e4d2d",
+    "/js/vendor.min.js": "/js/vendor.min.js?id=8398660ffd13376d4640ceab6f6bc259",
+    "/css/vendor.min.css": "/css/vendor.min.css?id=a1edc72cda90374dc1911fc248364d68"
 }
