@@ -58,8 +58,8 @@ $(function () {
         let input = $(this).data('input');
         let preview = $(this).data('preview');
         let name = $(this).data('name');
-        let prefix = juzaweb.adminPrefix + '/media/browser';
-        let disk = $(this).data('disk');
+        let disk = $(this).data('disk') || 'public';
+        let prefix = `/media/${disk}/browser`;
 
         juzawebFileManager({
             type: type,
@@ -90,7 +90,7 @@ $(function () {
         let targetInput = item.find('.input-path');
         let targetPreview = item.find('.dropify-render');
         let targetName = item.find('.dropify-filename-inner');
-        let prefix = juzaweb.adminPrefix + '/media/browser';
+        let prefix = '/media/public/browser';
 
         juzawebFileManager({
             type: 'image',

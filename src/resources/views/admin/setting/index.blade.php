@@ -13,14 +13,12 @@
                     {{ Field::textarea(__('Site Description'), 'description', ['placeholder' => __('Site Description')]) }}
 
                     {{ Field::select(__('Language'), 'language')->dropDownList(['en' => 'Eng']) }}
+
+                    {{ Field::image(__('Language'), 'language') }}
+
+                    {{ Field::editor(__('Terms of Service'), 'terms_of_service', ['placeholder' => __('Terms of Service')]) }}
                 </div>
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-
-    </script>
 @endsection
