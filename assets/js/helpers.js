@@ -109,3 +109,39 @@ function toggle_global_loading(status, timeout = 300) {
         }, timeout);
     }
 }
+
+function replace_template( template, data ) {
+    return template.replace(
+        /{(\w*)}/g,
+        function( m, key ){
+            return data.hasOwnProperty( key ) ? data[ key ] : "";
+        }
+    );
+}
+
+function process_each(elements, cb, timeout, options = {}) {
+    let i = 0;
+    let l = elements.length;
+
+    (function fn() {
+        let result = cb.call(elements[i++]);
+        if (i < l) {
+            setTimeout(fn, timeout);
+        } else {
+            if (options.completeCallback || false) {
+                options.completeCallback(result);
+            }
+        }
+    }());
+}
+
+function random_string(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+}

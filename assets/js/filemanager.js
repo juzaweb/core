@@ -24,7 +24,7 @@ let juzawebFileManager = function (options, cb) {
 
 $.fn.filemanager = function(type, options) {
     let element = this;
-    let prefix = juzaweb.adminPrefix + '/file-manager';
+    let prefix = '/media/public/browser';
     this.on('click', function(e) {
         juzawebFileManager({
             type: type,
@@ -119,7 +119,7 @@ $(function () {
     });
 
     bodyElement.on('click', '.add-image-images', function () {
-        let prefix = juzaweb.adminPrefix + '/file-manager';
+        let prefix = '/media/public/browser';
         let item = $(this).closest('.form-images');
         let inputName = item.find('.input-name').val();
 
@@ -131,11 +131,11 @@ $(function () {
             let temp = document.getElementById('form-images-template').innerHTML;
             let str = "";
 
-            $.each(files, function (index, item) {
+            $.each(files, function (index, file) {
                 str += replace_template(temp, {
                     name: inputName,
-                    url: item.url,
-                    path: item.path
+                    url: file.url,
+                    path: file.path,
                 });
             });
 
