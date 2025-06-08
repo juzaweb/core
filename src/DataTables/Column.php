@@ -61,6 +61,16 @@ class Column extends \Yajra\DataTables\Html\Column
             ->width('150px');
     }
 
+    public static function updatedAt(): static
+    {
+        /** @var Column */
+        return static::computed('updated_at')
+            ->title(__('Updated At'))
+            ->addClass('text-center')
+            ->searchable(false)
+            ->width('150px');
+    }
+
     public function center(): static
     {
         $this->addClass('text-center');
