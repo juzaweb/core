@@ -104,11 +104,11 @@ if (! function_exists('admin_url')) {
      */
     function admin_url(?string $uri = null): string
     {
-        return rtrim(
+        return url(rtrim(
             '/' . config('core.admin_prefix') . '/'
             . ltrim($uri, '/'),
             '/'
-        );
+        ));
     }
 }
 

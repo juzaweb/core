@@ -91,20 +91,20 @@ function sendDataTablesActionRequest(endpoint, ids, action) {
         dataType: 'json',
         data: {
             'ids': ids,
-            'action': action
+            'action': action,
         },
         beforeSend: function () {
             toggle_global_loading(true);
         },
         success: function (response) {
             if (response.data.window_redirect) {
-                show_message(response);
+                show_notify(response);
                 window.location = response.data.window_redirect;
                 return false;
             }
 
             if (response.data.redirect) {
-                show_message(response);
+                show_notify(response);
                 setTimeout(function () {
                     window.location = response.data.redirect;
                 }, 1000);
@@ -116,7 +116,7 @@ function sendDataTablesActionRequest(endpoint, ids, action) {
         },
         error: function (response) {
             toggle_global_loading(false);
-            show_message(response);
+            show_notify(response);
         },
         complete: function () {
             toggle_global_loading(false);
@@ -180,25 +180,39 @@ $(function () {
         let endpoint = $(this).data('endpoint');
 
         if (action == 'delete') {
-            Swal.fire({
-                title: '',
-                text: juzaweb.lang.remove_question,
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: juzaweb.lang.yes + '!',
-                cancelButtonText: juzaweb.lang.cancel + '!',
-            }).then((result) => {
-                if (result.value) {
+            confirm_message(juzaweb.lang.remove_question, function (result) {
+                if (result) {
                     sendDataTablesActionRequest(endpoint, ids, action);
                 }
-            });
+            })
         } else {
             sendDataTablesActionRequest(endpoint, ids, action);
         }
 
         return false;
+    });
+
+    $(document).on('click', '.jw-datatable-bulk-action', function () {
+        let action = $(this).data('action');
+        let endpoint = $(this).data('endpoint');
+        let ids = $(".jw-datatable-checkbox:checked").map(
+            function(){
+                return $(this).val();
+            }
+        ).get();
+
+        if (action == 'delete') {
+            confirm_message(
+                juzaweb.lang.remove_question,
+                function (result) {
+                    if (result) {
+                        sendDataTablesActionRequest(endpoint, ids, action);
+                    }
+                }
+            );
+        } else {
+            sendDataTablesActionRequest(endpoint, ids, action);
+        }
     });
 
     initSelect2('body');

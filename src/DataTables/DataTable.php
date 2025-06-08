@@ -41,6 +41,7 @@ abstract class DataTable extends BaseDataTable
             ->minifiedAjax()
             ->orderBy($this->orderBy)
             ->selectStyleSingle()
+            ->actionUrl($this->getActionUrl())
             ->bulkActions($this->bulkActions());
     }
 

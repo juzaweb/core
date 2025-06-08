@@ -17,6 +17,8 @@
                                 class="dropdown-item jw-datatable-bulk-action jw-datatable-bulk-action_{{ $action->getAction() }} {{ $action->getColor() ? 'text-' . $action->getColor() : '' }}"
                                 href="javascript:void(0)"
                                 data-action="{{ $action->getAction() }}"
+                                data-type="{{ $action->getType() }}"
+                                data-endpoint="{{ $endpoint }}"
                         >
                             <i class="{{ $action->getIcon() }}"></i>
 

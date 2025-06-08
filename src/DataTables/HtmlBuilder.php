@@ -17,6 +17,8 @@ class HtmlBuilder extends Builder
 {
     protected array $bulkActions = [];
 
+    protected ?string $actionUrl = null;
+
     public function table(array $attributes = [], bool $drawFooter = false, bool $drawSearch = false): HtmlString
     {
         $table = parent::table($attributes, $drawFooter, $drawSearch);
@@ -27,10 +29,18 @@ class HtmlBuilder extends Builder
                 'bulkActions' => $this->bulkActions,
                 'tableId' => $this->getTableId(),
                 'searchable' => $this->attributes['searching'] ?? true,
+                'endpoint' => $this->actionUrl,
             ]
         )->render();
 
         return new HtmlString($filters . $table->toHtml());
+    }
+
+    public function actionUrl(string $url): static
+    {
+        $this->actionUrl = $url;
+
+        return $this;
     }
 
     public function bulkActions(array $actions): static
