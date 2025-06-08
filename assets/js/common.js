@@ -213,6 +213,32 @@ $(function () {
         }
     });
 
+    $(document).on('change', '.jw-datatable_filters input, .jw-datatable_filters select', function () {
+        const paramKey = $(this).attr('name');
+        const paramValue = $(this).val();
+
+        // Parse current URL
+        let url = new URL(window.location.href);
+        let params = new URLSearchParams(url.search);
+
+        // Set or update the parameter
+        params.set(paramKey, paramValue);
+
+        // Construct the new URL
+        url.search = params.toString();
+        let newurl = url.toString();
+
+        // Push new state to browser history
+        window.history.pushState({ path: newurl }, '', newurl);
+
+        // Update the datatable source and reload
+        $('#jw-datatable').DataTable()
+            .ajax
+            .url(newurl);
+
+        $('#jw-datatable').DataTable().ajax.reload();
+    });
+
     initSelect2('body');
 
     initEditor('body');

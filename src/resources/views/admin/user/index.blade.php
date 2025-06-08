@@ -8,6 +8,15 @@
     </div>
 
     <div class="row mt-3">
+        <div class="col-md-12 jw-datatable_filters">
+            {{ Field::select(__('Status'), 'status', ['classes' => ['']])->dropDownList(
+                [
+                    '' => __('All'),
+                    ...\Juzaweb\Core\Models\Enums\UserStatus::all(),
+                ]
+            ) }}
+        </div>
+
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
