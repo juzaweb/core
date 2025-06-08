@@ -10,7 +10,6 @@
 
 namespace Juzaweb\Core\DataTables;
 
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Services\DataTable as BaseDataTable;
 
 abstract class DataTable extends BaseDataTable
@@ -23,6 +22,11 @@ abstract class DataTable extends BaseDataTable
 
     abstract public function getColumns(): array;
 
+    public function bulkActions(): array
+    {
+        return [];
+    }
+
     public function html(): HtmlBuilder
     {
         return $this->builder()
@@ -31,6 +35,23 @@ abstract class DataTable extends BaseDataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->orderBy(1)
-            ->selectStyleSingle();
+            ->selectStyleSingle()
+            ->bulkActions($this->bulkActions());
+    }
+
+    /**
+     * Get DataTables Html Builder instance.
+     */
+    public function builder(): HtmlBuilder
+    {
+        if (method_exists($this, 'htmlBuilder')) {
+            return $this->htmlBuilder = $this->htmlBuilder();
+        }
+
+        if (! $this->htmlBuilder) {
+            $this->htmlBuilder = app(HtmlBuilder::class);
+        }
+
+        return $this->htmlBuilder;
     }
 }

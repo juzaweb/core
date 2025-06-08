@@ -14,17 +14,6 @@
                     <h3 class="card-title">{{ __('Users') }}</h3>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-9">
-
-                        </div>
-                        <div class="col-md-3">
-                            <div id="jw-datatable_filter" class="jw-datatable_filter">
-                                <label>Search: <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="jw-datatable"></label>
-                            </div>
-                        </div>
-                    </div>
-
                     {{ $dataTable->table() }}
                 </div>
             </div>
