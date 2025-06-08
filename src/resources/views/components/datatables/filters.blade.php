@@ -6,13 +6,13 @@
 
                 <div class="form-group col-md-1">
                     <button type="submit" class="btn btn-primary btn-block">
-                        <i class="fas fa-filter"></i> Filter
+                        <i class="fas fa-filter"></i> @lang('Filter')
                     </button>
                 </div>
 
                 <div class="form-group col-md-1">
                     <a href="{{ request()->url() }}" class="btn btn-light border btn-block">
-                        <i class="fas fa-sync-alt"></i> Reset
+                        <i class="fas fa-sync-alt"></i> @lang('Reset')
                     </a>
                 </div>
             </div>
