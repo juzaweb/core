@@ -13,6 +13,7 @@ function confirm_message(question, callback, title = '', type = 'warning') {
         title: title,
         text: question,
         type: type,
+        position: 'top',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -23,8 +24,7 @@ function confirm_message(question, callback, title = '', type = 'warning') {
     });
 }
 
-function get_message_response(response)
-{
+function get_message_response(response) {
     // Get response message
     if (response.data) {
         if (response.data.message) {
@@ -68,19 +68,18 @@ function get_message_response(response)
     }
 }
 
-function show_message(response, append = false)
-{
+function show_message(response, append = false) {
     let msg = get_message_response(response);
     if (!msg) {
         return;
     }
 
-    let msgHTML = `<div class="alert alert-${msg.success ? 'success' : 'danger' } jw-message">
+    let msgHTML = `<div class="alert alert-${msg.success ? 'success' : 'danger'} jw-message">
         <button type="button" class="close" data-dismiss="alert" aria-label="${juzaweb.lang.close}">
             <span aria-hidden="true">&times;</span>
         </button>
 
-        ${msg.success ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' } ${msg.message}
+        ${msg.success ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>'} ${msg.message}
     </div>`;
 
     if (append) {
@@ -104,17 +103,17 @@ function toggle_global_loading(status, timeout = 300) {
     if (status) {
         $("#admin-overlay").fadeIn(300);
     } else {
-        setTimeout(function(){
+        setTimeout(function () {
             $("#admin-overlay").fadeOut(300);
         }, timeout);
     }
 }
 
-function replace_template( template, data ) {
+function replace_template(template, data) {
     return template.replace(
         /{(\w*)}/g,
-        function( m, key ){
-            return data.hasOwnProperty( key ) ? data[ key ] : "";
+        function (m, key) {
+            return data.hasOwnProperty(key) ? data[key] : "";
         }
     );
 }
@@ -144,4 +143,14 @@ function random_string(length) {
             charactersLength));
     }
     return result;
+}
+
+function toggle_global_loading(status, timeout = 300) {
+    if (status) {
+        $("#admin-overlay").fadeIn(300);
+    } else {
+        setTimeout(function(){
+            $("#admin-overlay").fadeOut(300);
+        }, timeout);
+    }
 }

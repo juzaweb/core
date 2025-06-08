@@ -46,14 +46,7 @@ class SettingRepository implements SettingContract
     public function sets(array $keys): Collection
     {
         foreach ($keys as $key => $value) {
-            SettingModel::updateOrCreate(
-                [
-                    'code' => $key,
-                ],
-                [
-                    'value' => $value,
-                ]
-            );
+            $this->set($key, $value);
         }
 
         return $this->configs()->only(array_keys($keys));

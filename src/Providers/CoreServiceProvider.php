@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Juzaweb\Core\Commands;
 use Juzaweb\Core\Contracts;
+use Juzaweb\Core\DataTables\HtmlBuilder;
 use Juzaweb\Core\Modules\Providers\ModulesServiceProvider;
 use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
@@ -35,6 +36,8 @@ class CoreServiceProvider extends ServiceProvider
             $tz = auth()->user()?->timezone ?? config('app.timezone');
             return $this->copy()->setTimezone($tz);
         });
+
+        $this->app->bind('datatables.html', fn () => $this->app->make(HtmlBuilder::class));
 
         // Before check user permission
         Gate::before(

@@ -9,17 +9,19 @@
 
 namespace Juzaweb\Core\DataTables;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 
 class ColumnEditer
 {
-    public static function actions(Model $model, array $actions)
+    public static function actions(Model $model, array $actions, string $endpoint): View
     {
         return view(
             'core::components.datatables.actions',
             [
                 'model' => $model,
                 'actions' => $actions,
+                'endpoint' => $endpoint,
             ]
         );
     }

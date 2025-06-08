@@ -11,17 +11,19 @@ namespace Juzaweb\Core\Http\DataTables;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Model;
 use Juzaweb\Core\DataTables\Action;
+use Juzaweb\Core\DataTables\BulkAction;
 use Juzaweb\Core\DataTables\Column;
-use Juzaweb\Core\DataTables\ColumnEditer;
 use Juzaweb\Core\DataTables\DataTable;
-use Yajra\DataTables\EloquentDataTable;
 
 class UsersDataTable extends DataTable
 {
+    protected string $actionUrl = 'users/bulk';
+
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->filter(request()->all());
     }
 
     public function getColumns(): array
@@ -36,30 +38,18 @@ class UsersDataTable extends DataTable
         ];
     }
 
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+    public function bulkActions(): array
     {
-        return (new EloquentDataTable($query))
-            ->setRowId('id')
-            ->rawColumns($this->rawColumns)
-            ->addColumn(
-                'checkbox',
-                function ($row) {
-                    return '<input type="checkbox" name="rows[]" value="' . $row->id . '">';
-                }
-            )
-            ->editColumn(
-                'created_at',
-                fn (User $user) => $user->created_at?->format('Y-m-d H:i:s')
-            )
-            ->editColumn(
-                'actions',
-                fn (User $user) => ColumnEditer::actions(
-                    $user,
-                    [
-                        Action::edit(admin_url("users/{$user->id}/edit")),
-                        Action::delete(),
-                    ]
-                )
-            );
+        return [
+            BulkAction::delete(),
+        ];
+    }
+
+    public function actions(Model $model): array
+    {
+        return [
+            Action::edit(admin_url("users/{$model->id}/edit")),
+            Action::delete(),
+        ];
     }
 }

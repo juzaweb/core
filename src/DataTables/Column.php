@@ -9,7 +9,9 @@
 
 namespace Juzaweb\Core\DataTables;
 
-class Column extends \Yajra\DataTables\Html\Column
+use Yajra\DataTables\Html\Column as BaseColumn;
+
+class Column extends BaseColumn
 {
     public static function actions(): static
     {

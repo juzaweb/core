@@ -2003,9 +2003,9 @@ pre code {
   -webkit-overflow-scrolling: touch;
 }
 
-.table-responsive > .table-bordered {
+/* .table-responsive > .table-bordered {
   border: 0;
-}
+} */
 
 .form-control {
   display: block;

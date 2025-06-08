@@ -18,6 +18,12 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
 <div class="wrapper">
+    <div id="admin-overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
+        </div>
+    </div>
+
     @include('core::layouts.components.navbar')
 
     <!-- Main Sidebar Container -->
@@ -118,6 +124,8 @@
             cancel: '{{ __('Cancel') }}',
             ok: '{{ __('OK') }}',
             yes: '{{ __('Yes') }}',
+            remove_question: '{{ __('Are you sure you want to remove?') }}',
+            please_wait: '{{ __('Please wait...') }}',
         },
     }
 </script>
