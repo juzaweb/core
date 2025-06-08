@@ -14,9 +14,8 @@ use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Juzaweb\Core\DataTables\Action;
 use Juzaweb\Core\DataTables\Column;
 use Juzaweb\Core\DataTables\ColumnEditer;
+use Juzaweb\Core\DataTables\DataTable;
 use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
 {
@@ -28,14 +27,12 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::checkbox('<input type="checkbox" class="select-all">'),
-            Column::make('id')->visible(false),
+            Column::checkbox(),
+            Column::id(),
             Column::make('name'),
             Column::make('email'),
             Column::make('created_at'),
-            Column::computed('actions')
-                ->addClass('text-center')
-                ->width('200px'),
+            Column::actions(),
         ];
     }
 
@@ -43,6 +40,13 @@ class UsersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
+            ->rawColumns($this->rawColumns)
+            ->addColumn(
+                'checkbox',
+                function ($row) {
+                    return '<input type="checkbox" name="rows[]" value="' . $row->id . '">';
+                }
+            )
             ->editColumn(
                 'created_at',
                 fn (User $user) => $user->created_at?->format('Y-m-d H:i:s')
@@ -57,15 +61,5 @@ class UsersDataTable extends DataTable
                     ]
                 )
             );
-    }
-
-    public function html(): HtmlBuilder
-    {
-        return $this->builder()
-            ->setTableId('users-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->orderBy(1)
-            ->selectStyleSingle();
     }
 }

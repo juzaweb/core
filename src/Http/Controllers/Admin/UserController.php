@@ -54,7 +54,7 @@ class UserController extends AdminController
 
         Breadcrumb::add(__('Edit User: :name', ['name' => $model->name]));
 
-        $action = action([static::class, 'store'], ['id' => $model->id]);
+        $action = action([static::class, 'update'], ['id' => $model->id]);
         $roles = Role::get();
 
         return view(
@@ -77,6 +77,40 @@ class UserController extends AdminController
 
         return $this->success(
             __('User :name created successfully', ['name' => $model->name]),
+        );
+    }
+
+    public function update(UserRequest $request, string $id)
+    {
+        $model = User::find($id);
+
+        abort_if($model === null, 404, __('User not found'));
+
+        $data = $request->safe()->all();
+
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        $model->update($data);
+
+        return $this->success(
+            __('User :name updated successfully', ['name' => $model->name]),
+        );
+    }
+
+    public function destroy(string $id)
+    {
+        $model = User::find($id);
+
+        abort_if($model === null, 404, __('User not found'));
+
+        $model->delete();
+
+        return $this->success(
+            __('User :name deleted successfully', ['name' => $model->name]),
         );
     }
 }

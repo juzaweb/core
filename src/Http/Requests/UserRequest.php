@@ -23,6 +23,7 @@ class UserRequest extends FormRequest
                 Rule::requiredIf(function () {
                     return $this->isMethod('post');
                 }),
+                'nullable', // Allow null for PUT/PATCH requests
                 'string',
                 'min:8', // Minimum 8 characters
                 'confirmed', // Must match the password confirmation field

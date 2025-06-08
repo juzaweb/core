@@ -72,6 +72,8 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                <div id="jquery-message"></div>
+
                 @yield('content')
             </div>
         </section>
