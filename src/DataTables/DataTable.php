@@ -22,6 +22,8 @@ abstract class DataTable extends BaseDataTable
 
     protected array $rawColumns = ['actions', 'checkbox'];
 
+    protected string $tableClass = 'table-bordered table-hover';
+
     protected string $id = 'jw-datatable';
 
     protected string $rowId = 'id';
@@ -36,6 +38,7 @@ abstract class DataTable extends BaseDataTable
     {
         return $this->builder()
             ->dom($this->dom)
+            ->addTableClass($this->tableClass)
             ->setTableId($this->id)
             ->columns($this->getColumns())
             ->minifiedAjax()

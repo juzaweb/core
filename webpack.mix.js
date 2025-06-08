@@ -73,7 +73,7 @@ mix.combine(
 
 mix.styles(
     [
-        `assets/dist/css/admin.min.css`,
+        `assets/dist/css/admin.css`,
         `assets/css/custom.css`,
     ],
     `assets/public/css/admin.min.css`
