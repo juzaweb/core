@@ -15,7 +15,7 @@ use Yajra\DataTables\Services\DataTable as BaseDataTable;
 
 abstract class DataTable extends BaseDataTable
 {
-    protected string $dom = '<"row"<"col-md-7 offset-md-5"f>><"table-responsive"rt><"row"<"col-md-5"l><"col-md-7"p>><"clear">';
+    protected string $dom = '<"table-responsive"rt><"row"<"col-md-5"l><"col-md-7"p>><"clear">';
 
     protected array $rawColumns = ['actions', 'checkbox'];
 

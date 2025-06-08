@@ -84,6 +84,8 @@ function initEditor(parnet = 'body') {
     });
 }
 
+let searchTimeout;
+
 $(function () {
     $.ajaxSetup({
         headers: {
@@ -110,6 +112,17 @@ $(function () {
     $(document).on('click', '#select-all', function () {
         const rows = $('#jw-datatable').DataTable().rows({ 'search': 'applied' }).nodes();
         $('input[type="checkbox"]', rows).prop('checked', this.checked);
+    });
+
+    $(document).on('input', '.jw-datatable_filter input[type="search"]', function () {
+        clearTimeout(searchTimeout);
+
+        const value = this.value;
+
+        searchTimeout = setTimeout(function () {
+            const dt = $('#jw-datatable').DataTable();
+            dt.search(value).draw();
+        }, 300);
     });
 
     initSelect2('body');

@@ -174,3 +174,20 @@ Form file management
 }
 
 /** ------------ End Form Image */
+
+/** --- DataTables Filters */
+div.jw-datatable_filter {
+  text-align: right;
+}
+div.jw-datatable_filter label {
+  font-weight: normal;
+  white-space: nowrap;
+  text-align: left;
+}
+div.jw-datatable_filter input {
+  margin-left: 0.5em;
+  display: inline-block;
+  width: auto;
+}
+
+/** --- End DataTables Filters */
