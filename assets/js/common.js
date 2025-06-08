@@ -112,6 +112,7 @@ function sendDataTablesActionRequest(endpoint, ids, action) {
             }
 
             toggle_global_loading(false);
+            $('#select-all').prop('checked', false);
             $('#jw-datatable').DataTable().draw();
         },
         error: function (response) {
@@ -195,11 +196,7 @@ $(function () {
     $(document).on('click', '.jw-datatable-bulk-action', function () {
         let action = $(this).data('action');
         let endpoint = $(this).data('endpoint');
-        let ids = $(".jw-datatable-checkbox:checked").map(
-            function(){
-                return $(this).val();
-            }
-        ).get();
+        let ids = $(".jw-datatable-checkbox:checked").map(function(){return $(this).val()}).get();
 
         if (action == 'delete') {
             confirm_message(
