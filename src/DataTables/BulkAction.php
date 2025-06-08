@@ -1,15 +1,16 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    larabizcms/larabiz
+ * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
+ * @license    GNU V2
  */
 
 namespace Juzaweb\Core\DataTables;
 
-class Action
+class BulkAction
 {
     /**
      * @var ?string
@@ -29,7 +30,7 @@ class Action
     /**
      * @var string
      */
-    protected string $type = 'url';
+    protected string $type = 'action';
 
     /**
      * @var string
@@ -49,11 +50,6 @@ class Action
     public static function make(string $label, ?string $url = null, ?string $icon = null): static
     {
         return new static($label, $url, $icon);
-    }
-
-    public static function edit(string $url): static
-    {
-        return static::make(__('Edit'), $url, 'fas fa-edit');
     }
 
     public static function delete(): static

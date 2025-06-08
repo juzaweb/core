@@ -26,6 +26,7 @@ class HtmlBuilder extends Builder
             [
                 'bulkActions' => $this->bulkActions,
                 'tableId' => $this->getTableId(),
+                'searchable' => $this->attributes['searching'] ?? true,
             ]
         )->render();
 
