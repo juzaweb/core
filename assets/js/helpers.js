@@ -1,7 +1,7 @@
 toastr.options.timeOut = 3000;
 
-function toastr_message(message, status, title = null) {
-    if (status == true) {
+function toastr_message(message, success, title = null) {
+    if (success == true) {
         toastr.success(message, title || juzaweb.lang.successfully + ' !!');
     } else {
         toastr.error(message, title || juzaweb.lang.error + ' !!');
@@ -29,7 +29,7 @@ function get_message_response(response)
     if (response.data) {
         if (response.data.message) {
             return {
-                status: response.status,
+                success: response.success,
                 message: response.data.message
             };
         }
@@ -62,8 +62,8 @@ function get_message_response(response)
     // Get message errors
     if (response.message) {
         return {
-            status: false,
-            message: response.message.message
+            success: false,
+            message: response.message.message,
         };
     }
 }
@@ -75,12 +75,12 @@ function show_message(response, append = false)
         return;
     }
 
-    let msgHTML = `<div class="alert alert-${msg.status ? 'success' : 'danger' } jw-message">
+    let msgHTML = `<div class="alert alert-${msg.success ? 'success' : 'danger' } jw-message">
         <button type="button" class="close" data-dismiss="alert" aria-label="${juzaweb.lang.close}">
             <span aria-hidden="true">&times;</span>
         </button>
 
-        ${msg.status ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' } ${msg.message}
+        ${msg.success ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' } ${msg.message}
     </div>`;
 
     if (append) {
@@ -92,7 +92,7 @@ function show_message(response, append = false)
 
 function show_notify(response) {
     let msg = get_message_response(response);
-    toastr_message(msg.message, msg.status);
+    toastr_message(msg.message, msg.success);
 }
 
 function htmlspecialchars(str) {
