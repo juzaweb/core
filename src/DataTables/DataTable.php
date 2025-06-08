@@ -43,29 +43,44 @@ abstract class DataTable extends BaseDataTable
 
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))
-            ->setRowId('id')
-            ->rawColumns($this->rawColumns)
-            ->editColumn(
+        $builder = (new EloquentDataTable($query))
+            ->setRowId($this->rowId)
+            ->rawColumns($this->rawColumns);
+
+        if ($this->hasColumn('created_at')) {
+            $builder->editColumn(
+                'created_at',
+                fn (Model $model) => $model->created_at?->toUserTimezone()->format('Y-m-d H:i:s')
+            );
+        }
+
+        if ($this->hasColumn('updated_at')) {
+            $builder->editColumn(
+                'updated_at',
+                fn (Model $model) => $model->updated_at?->toUserTimezone()->format('Y-m-d H:i:s')
+            );
+        }
+
+        if ($this->hasCheckboxColumn()) {
+            $builder->editColumn(
                 'checkbox',
                 function ($row) {
                     return '<input type="checkbox" name="rows[]" class="jw-datatable-checkbox" value="' . $row->id . '">';
                 }
-            )
-            ->editColumn(
-                'created_at',
-                fn (Model $user) => $user->created_at?->format('Y-m-d H:i:s')
-            )
-            ->editColumn(
+            );
+        }
+
+        if ($this->hasColumn('actions')) {
+            $builder->editColumn(
                 'actions',
-                fn (Model $user) => ColumnEditer::actions(
-                    $user,
-                    [
-                        Action::edit(admin_url("users/{$user->id}/edit")),
-                        Action::delete(),
-                    ]
+                fn (Model $model) => ColumnEditer::actions(
+                    $model,
+                    $this->actions($model)
                 )
             );
+        }
+
+        return $builder;
     }
 
     /**
@@ -87,5 +102,22 @@ abstract class DataTable extends BaseDataTable
     public function bulkActions(): array
     {
         return [];
+    }
+
+    public function actions(Model $model): array
+    {
+        return [];
+    }
+
+    protected function hasCheckboxColumn(): bool
+    {
+        return $this->hasColumn('checkbox');
+    }
+
+    protected function hasColumn(string $name): bool
+    {
+        return collect($this->getColumns())->filter(
+            fn ($column) => $column->name === $name
+        )->isNotEmpty();
     }
 }

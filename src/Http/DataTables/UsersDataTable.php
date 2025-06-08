@@ -11,12 +11,11 @@ namespace Juzaweb\Core\Http\DataTables;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Model;
 use Juzaweb\Core\DataTables\Action;
 use Juzaweb\Core\DataTables\BulkAction;
 use Juzaweb\Core\DataTables\Column;
-use Juzaweb\Core\DataTables\ColumnEditer;
 use Juzaweb\Core\DataTables\DataTable;
-use Yajra\DataTables\EloquentDataTable;
 
 class UsersDataTable extends DataTable
 {
@@ -41,6 +40,14 @@ class UsersDataTable extends DataTable
     {
         return [
             BulkAction::delete(),
+        ];
+    }
+
+    public function actions(Model $model): array
+    {
+        return [
+            Action::edit(admin_url("users/{$model->id}/edit")),
+            Action::delete(),
         ];
     }
 }
