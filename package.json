@@ -2,7 +2,7 @@
     "private": true,
     "type": "commonjs",
     "scripts": {
-        "prod": "mix --production",
+        "prod": "mix --production && vendor/bin/testbench vendor:publish --tag=core-assets --force",
         "hot": "mix watch --hot"
     },
     "devDependencies": {
