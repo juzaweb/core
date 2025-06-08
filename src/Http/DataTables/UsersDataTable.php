@@ -31,7 +31,7 @@ class UsersDataTable extends DataTable
             Column::id(),
             Column::make('name'),
             Column::make('email'),
-            Column::make('created_at'),
+            Column::createdAt(),
             Column::actions(),
         ];
     }

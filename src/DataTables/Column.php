@@ -13,6 +13,7 @@ class Column extends \Yajra\DataTables\Html\Column
 {
     public static function actions(): static
     {
+        /** @var Column $column */
         $column = static::computed('actions');
         $column->title(__('Actions'));
         $column->addClass('text-center');
@@ -48,6 +49,16 @@ class Column extends \Yajra\DataTables\Html\Column
         $column->orderable(false);
         $column->searchable(false);
         return $column;
+    }
+
+    public static function createdAt(): static
+    {
+        /** @var Column */
+        return static::computed('created_at')
+            ->title(__('Created At'))
+            ->addClass('text-center')
+            ->searchable(false)
+            ->width('150px');
     }
 
     public function center(): static
