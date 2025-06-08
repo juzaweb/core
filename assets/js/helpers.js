@@ -13,6 +13,7 @@ function confirm_message(question, callback, title = '', type = 'warning') {
         title: title,
         text: question,
         type: type,
+        position: 'top',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',

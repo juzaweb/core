@@ -24,7 +24,7 @@ class HtmlBuilder extends Builder
         $table = parent::table($attributes, $drawFooter, $drawSearch);
 
         $filters = $this->view->make(
-            'core::components.datatables.filters',
+            'core::components.datatables.bulk-actions',
             [
                 'bulkActions' => $this->bulkActions,
                 'tableId' => $this->getTableId(),
