@@ -143,3 +143,13 @@ function random_string(length) {
     }
     return result;
 }
+
+function toggle_global_loading(status, timeout = 300) {
+    if (status) {
+        $("#admin-overlay").fadeIn(300);
+    } else {
+        setTimeout(function(){
+            $("#admin-overlay").fadeOut(300);
+        }, timeout);
+    }
+}

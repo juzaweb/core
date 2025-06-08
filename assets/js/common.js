@@ -13,7 +13,7 @@ function initEditor(parnet = 'body') {
         selector: parnet + ' .jw-editor',
         convert_urls: true,
         document_base_url: juzaweb.documentBaseUrl,
-        urlconverter_callback: function(url, node, on_save, name) {
+        urlconverter_callback: function (url, node, on_save, name) {
             return url.replace(juzaweb.documentBaseUrl, '');
         },
         height: 400,
@@ -34,33 +34,33 @@ function initEditor(parnet = 'body') {
         },
         toolbar: [
             {
-                name: 'new', items: [ 'newdocument' ]
+                name: 'new', items: ['newdocument']
             },
             {
-                name: 'history', items: [ 'undo', 'redo' ]
+                name: 'history', items: ['undo', 'redo']
             },
             {
-                name: 'styles', items: [ 'styleselect' ]
+                name: 'styles', items: ['styleselect']
             },
             {
-                name: 'formatting', items: [ 'bold', 'italic']
+                name: 'formatting', items: ['bold', 'italic']
             },
             {
-                name: 'alignment', items: [ 'alignleft', 'aligncenter', 'alignright', 'alignjustify' ]
+                name: 'alignment', items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify']
             },
             {
-                name: 'indentation', items: [ 'outdent', 'indent' ]
+                name: 'indentation', items: ['outdent', 'indent']
             },
             {
-                name: 'media', items: [ 'link', 'image', 'media' ]
+                name: 'media', items: ['link', 'image', 'media']
             },
             {
-                name: 'view', items: [ 'code', 'preview', 'fullscreen' ]
+                name: 'view', items: ['code', 'preview', 'fullscreen']
             }
         ],
-        file_picker_callback : function(callback, value, meta) {
+        file_picker_callback: function (callback, value, meta) {
             let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
-            let y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+            let y = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
             let cmsURL = '/media/public/browser?editor=' + meta.fieldname;
 
             if (meta.filetype === 'image') {
@@ -70,16 +70,56 @@ function initEditor(parnet = 'body') {
             }
 
             tinyMCE.activeEditor.windowManager.openUrl({
-                url : cmsURL,
-                title : 'File Manager',
-                width : x * 0.8,
-                height : y * 0.8,
-                resizable : "yes",
-                close_previous : "no",
+                url: cmsURL,
+                title: 'File Manager',
+                width: x * 0.8,
+                height: y * 0.8,
+                resizable: "yes",
+                close_previous: "no",
                 onMessage: (api, message) => {
                     callback(message.content);
                 }
             });
+        }
+    });
+}
+
+function sendDataTablesActionRequest(endpoint, ids, action) {
+    $.ajax({
+        type: "POST",
+        url: endpoint,
+        dataType: 'json',
+        data: {
+            'ids': ids,
+            'action': action
+        },
+        beforeSend: function () {
+            toggle_global_loading(true);
+        },
+        success: function (response) {
+            if (response.data.window_redirect) {
+                show_message(response);
+                window.location = response.data.window_redirect;
+                return false;
+            }
+
+            if (response.data.redirect) {
+                show_message(response);
+                setTimeout(function () {
+                    window.location = response.data.redirect;
+                }, 1000);
+                return false;
+            }
+
+            toggle_global_loading(false);
+            $('#jw-datatable').DataTable().draw();
+        },
+        error: function (response) {
+            toggle_global_loading(false);
+            show_message(response);
+        },
+        complete: function () {
+            toggle_global_loading(false);
         }
     });
 }
@@ -132,6 +172,33 @@ $(function () {
             const dt = $('#jw-datatable').DataTable();
             dt.search(value).draw();
         }, 300);
+    });
+
+    $(document).on('click', '#jw-datatable .datatables-row-action[data-type="action"]', function () {
+        let ids = [$(this).data('id')];
+        let action = $(this).data('action');
+        let endpoint = $(this).data('endpoint');
+
+        if (action == 'delete') {
+            Swal.fire({
+                title: '',
+                text: juzaweb.lang.remove_question,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: juzaweb.lang.yes + '!',
+                cancelButtonText: juzaweb.lang.cancel + '!',
+            }).then((result) => {
+                if (result.value) {
+                    sendDataTablesActionRequest(endpoint, ids, action);
+                }
+            });
+        } else {
+            sendDataTablesActionRequest(endpoint, ids, action);
+        }
+
+        return false;
     });
 
     initSelect2('body');

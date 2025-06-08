@@ -19,6 +19,8 @@ use Juzaweb\Core\DataTables\DataTable;
 
 class UsersDataTable extends DataTable
 {
+    protected string $actionUrl = 'users/bulk';
+
     public function query(User $model): QueryBuilder
     {
         return $model->newQuery();

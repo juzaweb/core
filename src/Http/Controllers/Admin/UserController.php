@@ -10,10 +10,14 @@
 namespace Juzaweb\Core\Http\Controllers\Admin;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Juzaweb\Core\Facades\Breadcrumb;
 use Juzaweb\Core\Http\Controllers\AdminController;
 use Juzaweb\Core\Http\DataTables\UsersDataTable;
+use Juzaweb\Core\Http\Requests\BulkActionsRequest;
 use Juzaweb\Core\Http\Requests\UserRequest;
+use Juzaweb\Core\Models\Enums\UserStatus;
 use Juzaweb\Permissions\Models\Role;
 
 class UserController extends AdminController
@@ -63,7 +67,7 @@ class UserController extends AdminController
         );
     }
 
-    public function store(UserRequest $request)
+    public function store(UserRequest $request): JsonResponse|RedirectResponse
     {
         $data = $request->safe()->all();
 
@@ -80,7 +84,7 @@ class UserController extends AdminController
         );
     }
 
-    public function update(UserRequest $request, string $id)
+    public function update(UserRequest $request, string $id): JsonResponse|RedirectResponse
     {
         $model = User::find($id);
 
@@ -101,7 +105,7 @@ class UserController extends AdminController
         );
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse|RedirectResponse
     {
         $model = User::find($id);
 
@@ -112,5 +116,28 @@ class UserController extends AdminController
         return $this->success(
             __('User :name deleted successfully', ['name' => $model->name]),
         );
+    }
+
+    public function bulk(BulkActionsRequest $request): JsonResponse|RedirectResponse
+    {
+        $action = $request->input('action');
+        $ids = $request->input('ids', []);
+
+        switch ($action) {
+            case 'delete':
+                User::whereIn('id', $ids)->where('is_super_admin', '!=', true)->delete();
+                return $this->success(__('Selected users deleted successfully'));
+            case 'activate':
+                User::whereIn('id', $ids)->where('is_super_admin', '!=', true)->update(['status' => UserStatus::ACTIVE]);
+                return $this->success(__('Selected users activated successfully'));
+            case 'deactivate':
+                User::whereIn('id', $ids)->where('is_super_admin', '!=', true)->update(['status' => UserStatus::INACTIVE]);
+                return $this->success(__('Selected users deactivated successfully'));
+            case 'banned':
+                User::whereIn('id', $ids)->where('is_super_admin', '!=', true)->update(['status' => UserStatus::BANNED]);
+                return $this->success(__('Selected users banned successfully'));
+            default:
+                return $this->error(__('Invalid action'));
+        }
     }
 }

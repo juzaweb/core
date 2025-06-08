@@ -12,6 +12,7 @@ namespace Juzaweb\Core\DataTables;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable as BaseDataTable;
 
@@ -26,6 +27,8 @@ abstract class DataTable extends BaseDataTable
     protected string $rowId = 'id';
 
     protected int|array $orderBy = 1;
+
+    protected string $actionUrl = '';
 
     abstract public function getColumns(): array;
 
@@ -75,7 +78,8 @@ abstract class DataTable extends BaseDataTable
                 'actions',
                 fn (Model $model) => ColumnEditer::actions(
                     $model,
-                    $this->actions($model)
+                    $this->actions($model),
+                    $this->getActionUrl()
                 )
             );
         }
@@ -107,6 +111,13 @@ abstract class DataTable extends BaseDataTable
     public function actions(Model $model): array
     {
         return [];
+    }
+
+    public function getActionUrl(): string
+    {
+        return Str::contains($this->actionUrl, 'http')
+            ? $this->actionUrl
+            : admin_url($this->actionUrl);
     }
 
     protected function hasCheckboxColumn(): bool
