@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 
 trait HasSessionResponses
 {
-    protected function response(array|string $data, string $status): JsonResponse|RedirectResponse
+    protected function response(array|string $data, bool $success = true): JsonResponse|RedirectResponse
     {
         if (! is_array($data)) {
             $data = ['message' => $data];
@@ -20,7 +20,7 @@ trait HasSessionResponses
         if (request()->ajax() || request()->isJson()) {
             return response()->json(
                 [
-                    'status' => $status,
+                    'success' => $success,
                     'data' => $data,
                 ]
             );
@@ -30,10 +30,10 @@ trait HasSessionResponses
             return redirect()->to($data['redirect']);
         }
 
-        $data['status'] = $status;
+        $data['success'] = $success;
         $back = back()->withInput()->with($data);
 
-        if ($status === 'error') {
+        if (! $success) {
             $back->withErrors([$data['message']]);
         }
 
@@ -52,7 +52,7 @@ trait HasSessionResponses
             $message = ['message' => $message];
         }
 
-        return $this->response($message, 'success');
+        return $this->response($message);
     }
 
     /**
@@ -67,6 +67,6 @@ trait HasSessionResponses
             $message = ['message' => $message];
         }
 
-        return $this->response($message, 'error');
+        return $this->response($message, false);
     }
 }
