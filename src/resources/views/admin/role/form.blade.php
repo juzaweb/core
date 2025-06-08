@@ -47,14 +47,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($permissions as $permission)
+                                    @foreach($groups as $group)
                                         <tr>
-                                            <td>{{ $permission->name }}</td>
-                                            <td>{{ $permission->description }}</td>
-                                            <td>
-                                                {{ Field::checkbox($model, 'permissions[]') }}
-                                            </td>
+                                            <th colspan="3">{{ $group->name }}</th>
                                         </tr>
+                                        @foreach($permissions->get($group->code) as $permission)
+                                            <tr>
+                                                <td>{{ $permission->name }}</td>
+                                                <td>{{ $permission->description }}</td>
+                                                <td>
+
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                             </table>
