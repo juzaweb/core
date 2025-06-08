@@ -11,5 +11,11 @@ namespace Juzaweb\Core\Support\Fields;
 
 class Text extends Field
 {
-    //
+    public function render(): \Illuminate\Contracts\View\View|string
+    {
+        return view(
+            'core::fields.text',
+            $this->renderParams()
+        );
+    }
 }

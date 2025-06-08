@@ -17,6 +17,6 @@ Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 RouteResource::admin('users', UserController::class);
 
-RouteResource::admin('roles', UserController::class);
+// RouteResource::admin('roles', UserController::class);
 
 Route::get('/settings', [SettingController::class, 'index']);

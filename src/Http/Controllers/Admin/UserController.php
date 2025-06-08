@@ -9,49 +9,108 @@
 
 namespace Juzaweb\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use Juzaweb\Core\Facades\Breadcrumb;
 use Juzaweb\Core\Http\Controllers\AdminController;
 use Juzaweb\Core\Http\DataTables\UsersDataTable;
+use Juzaweb\Core\Http\Requests\UserRequest;
+use Juzaweb\Permissions\Models\Role;
 
 class UserController extends AdminController
 {
     public function index(UsersDataTable $dataTable)
     {
-        Breadcrumb::add('Users');
+        Breadcrumb::add(__('Users'));
 
         return $dataTable->render(
             'core::admin.user.index',
-            ['title' => __('Users')]
+            []
         );
     }
 
     public function create()
     {
-        Breadcrumb::add('Users', admin_url('users'));
+        Breadcrumb::add(__('Users'), admin_url('users'));
 
-        Breadcrumb::add('Add User');
+        Breadcrumb::add(__('Add User'));
+
+        $model = new User();
+        $action = action([static::class, 'store']);
+        $roles = Role::get();
 
         return view(
             'core::admin.user.form',
-            ['title' => __('Add User')]
+            compact('model', 'action', 'roles')
         );
     }
 
     public function edit(string $id)
     {
-        Breadcrumb::add('Users', admin_url('users'));
+        $model = User::find($id);
 
-        Breadcrumb::add('Edit User');
+        abort_if($model === null, 404, __('User not found'));
+
+        Breadcrumb::add(__('Users'), admin_url('users'));
+
+        Breadcrumb::add(__('Edit User: :name', ['name' => $model->name]));
+
+        $action = action([static::class, 'update'], ['id' => $model->id]);
+        $roles = Role::get();
 
         return view(
             'core::admin.user.form',
-            ['title' => __('Add User')]
+            compact('model', 'action', 'roles')
         );
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
+        $data = $request->safe()->all();
 
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        $model = User::create($data);
+
+        return $this->success(
+            __('User :name created successfully', ['name' => $model->name]),
+        );
+    }
+
+    public function update(UserRequest $request, string $id)
+    {
+        $model = User::find($id);
+
+        abort_if($model === null, 404, __('User not found'));
+
+        $data = $request->safe()->all();
+
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        $model->update($data);
+
+        return $this->success(
+            __('User :name updated successfully', ['name' => $model->name]),
+        );
+    }
+
+    public function destroy(string $id)
+    {
+        $model = User::find($id);
+
+        abort_if($model === null, 404, __('User not found'));
+
+        $model->delete();
+
+        return $this->success(
+            __('User :name deleted successfully', ['name' => $model->name]),
+        );
     }
 }

@@ -42,7 +42,7 @@ class ThemePublishCommand extends Command
 
     protected function publishAssets(ThemeEntity $theme): void
     {
-        $sourceFolder = $theme->path('assets');
+        $sourceFolder = $theme->path('assets/public');
         $publicFolder = public_path('themes/'. $theme->name());
 
         if (!File::isDirectory($publicFolder)) {

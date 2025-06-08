@@ -11,10 +11,11 @@ namespace Juzaweb\Core\Http\DataTables;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Juzaweb\Core\DataTables\Action;
+use Juzaweb\Core\DataTables\Column;
+use Juzaweb\Core\DataTables\ColumnEditer;
+use Juzaweb\Core\DataTables\DataTable;
 use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
 {
@@ -26,11 +27,12 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::checkbox(),
+            Column::id(),
             Column::make('name'),
             Column::make('email'),
-            Column::make('updated_at'),
-            Column::make('actions'),
+            Column::createdAt(),
+            Column::actions(),
         ];
     }
 
@@ -38,20 +40,26 @@ class UsersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->editColumn('created_at', fn (User $user) => $user->created_at?->format('Y-m-d H:i:s'))
+            ->rawColumns($this->rawColumns)
+            ->addColumn(
+                'checkbox',
+                function ($row) {
+                    return '<input type="checkbox" name="rows[]" value="' . $row->id . '">';
+                }
+            )
+            ->editColumn(
+                'created_at',
+                fn (User $user) => $user->created_at?->format('Y-m-d H:i:s')
+            )
             ->editColumn(
                 'actions',
-                fn (User $user) => ''
+                fn (User $user) => ColumnEditer::actions(
+                    $user,
+                    [
+                        Action::edit(admin_url("users/{$user->id}/edit")),
+                        Action::delete(),
+                    ]
+                )
             );
-    }
-
-    public function html(): HtmlBuilder
-    {
-        return $this->builder()
-            ->setTableId('users-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->orderBy(1)
-            ->selectStyleSingle();
     }
 }

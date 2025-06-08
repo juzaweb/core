@@ -23,7 +23,7 @@ class AdminResource extends Resource
         }
 
         if (in_array('edit', $this->methods)) {
-            $this->registrar->get("{$this->name}/{id}/edit", [$this->controller, 'show'])
+            $this->registrar->get("{$this->name}/{id}/edit", [$this->controller, 'edit'])
                 ->middleware($this->getMiddleware('edit'));
         }
 

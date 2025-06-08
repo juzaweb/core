@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    @php
+        $breadcrumbs = \Juzaweb\Core\Facades\Breadcrumb::getItems();
+        $title = $breadcrumbs ? last($breadcrumbs)['title'] : __('Dashboard');
+    @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -8,7 +12,7 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link href="https://cdn.datatables.net/v/bs4/jq-3.7.0/jszip-3.10.1/dt-2.3.0/af-2.7.0/b-3.2.3/b-colvis-3.2.3/b-html5-3.2.3/b-print-3.2.3/datatables.min.css" rel="stylesheet" integrity="sha384-qDfn09R/hNBbMsK48pEFcvpZr2u0sa+owVHZaoYuTEQvzrDWdXkEbmC34ST5CaBx" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'vendor/core') }}">
     <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'vendor/core') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -37,13 +41,12 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
+
                     <div class="col-sm-6">
                         <h1>{{ $title }}</h1>
                     </div>
+
                     <div class="col-sm-6">
-                        @php
-                        $breadcrumbs = \Juzaweb\Core\Facades\Breadcrumb::getItems();
-                        @endphp
                         <ol class="breadcrumb float-sm-right">
                             @if($breadcrumbs)
                             <li class="breadcrumb-item">
@@ -69,6 +72,8 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                <div id="jquery-message"></div>
+
                 @yield('content')
             </div>
         </section>
@@ -91,11 +96,34 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
+<script type="text/html" id="form-images-template">
+    @component('core::fields.components.image-item', [
+        'name' => '{name}',
+        'path' => '{path}',
+        'url' => '{url}',
+    ])
+
+    @endcomponent
+</script>
+
+<script type="text/javascript">
+    const juzaweb = {
+        adminPrefix: "{{ config('core.admin_prefix') }}",
+        documentBaseUrl: "{{ url('/storage') }}/",
+        lang: {
+            successfully: '{{ __('Successfully') }}',
+            error: '{{ __('Error') }}',
+            warning: '{{ __('Warning') }}',
+            confirm: '{{ __('Are you sure?') }}',
+            cancel: '{{ __('Cancel') }}',
+            ok: '{{ __('OK') }}',
+            yes: '{{ __('Yes') }}',
+        },
+    }
+</script>
+<script src="{{ mix('js/vendor.min.js', 'vendor/core') }}"></script>
+<script src="{{ asset('vendor/core/js/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ mix('js/admin.min.js', 'vendor/core') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" integrity="sha384-VFQrHzqBh5qiJIU0uGU5CIW3+OWpdGGJM9LBnGbuIH2mkICcFZ7lPd/AAtI7SNf7" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" integrity="sha384-/RlQG9uf0M2vcTw3CX7fbqgbj/h8wKxw7C3zu9/GxcBPRKOEcESxaxufwRXqzq6n" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/v/bs4/jq-3.7.0/jszip-3.10.1/dt-2.3.0/af-2.7.0/b-3.2.3/b-colvis-3.2.3/b-html5-3.2.3/b-print-3.2.3/datatables.min.js" integrity="sha384-J7p4zLxX5RxiVwyCbBJc0kKzeMCSeYhZWpNQKtoJCnefbLILktRG2qnTnb8j1u1Q" crossorigin="anonymous"></script>
 
 @yield('scripts')
 </body>
