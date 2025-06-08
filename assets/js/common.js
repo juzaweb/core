@@ -93,7 +93,7 @@ $(function () {
 
     $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
         if (jqxhr.status === 401) {
-            window.location = "/user/login";
+            window.location = "/admin-cp/login";
         }
 
         if (jqxhr.status === 419) {
@@ -105,6 +105,11 @@ $(function () {
         $(this).closest('.jw-checkbox')
             .find('.jw-checkbox-input')
             .val($(this).is(':checked') ? '1' : '0');
+    });
+
+    $(document).on('click', '#select-all', function () {
+        const rows = $('#jw-datatable').DataTable().rows({ 'search': 'applied' }).nodes();
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
     });
 
     initSelect2('body');

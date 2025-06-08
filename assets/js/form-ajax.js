@@ -9,7 +9,7 @@
  */
 
 $(document).ready(function () {
-    function sendMessageByResponse(response, notify = false) {
+    function sendMessageByResponse(response, notify = true) {
         if (notify) {
             if (typeof show_notify !== 'undefined' && typeof show_notify === 'function') {
                 show_notify(response);
