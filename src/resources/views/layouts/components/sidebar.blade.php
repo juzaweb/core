@@ -12,9 +12,11 @@
         @foreach($roots as $root)
             @php
                 $children = $menus->where('parent', $root['key'])->sortBy('priority');
-                $active = request()->is(ltrim($root['url'], '/')) || $children->filter(
-                    fn ($child) => request()->is(ltrim($child['url'], '/'))
-                )->isNotEmpty();
+                $active = request()->is(ltrim($root['url'], '/'))
+                    || $children->filter(
+                        fn ($child) => request()->is(ltrim($child['url'], '/'))
+                            || request()->is(ltrim($child['url'], '/') . '/*')
+                    )->isNotEmpty();
             @endphp
             <li class="nav-item @if($active) menu-is-opening menu-open @endif">
                 <a href="{{ $root['url'] }}"
@@ -33,7 +35,8 @@
                     <ul class="nav nav-treeview">
                         @foreach($children as $child)
                             @php
-                            $active = request()->is(ltrim($child['url'], '/'));
+                            $active = request()->is(ltrim($child['url'], '/'))
+                                || request()->is(ltrim($child['url'], '/') . '/*');
                             @endphp
                             <li class="nav-item">
                                 <a href="{{ $child['url'] }}" class="nav-link @if($active) active @endif">
