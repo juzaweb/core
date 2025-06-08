@@ -113,6 +113,7 @@ function sendDataTablesActionRequest(endpoint, ids, action) {
 
             toggle_global_loading(false);
             $('#select-all').prop('checked', false);
+            $('.jw-datatable-bulk-actions .dropdown-toggle').prop('disabled', true);
             $('#jw-datatable').DataTable().draw();
         },
         error: function (response) {
