@@ -111,7 +111,16 @@ $(function () {
 
     $(document).on('click', '#select-all', function () {
         const rows = $('#jw-datatable').DataTable().rows({ 'search': 'applied' }).nodes();
-        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        const checked = this.checked;
+
+        $('input[type="checkbox"]', rows).prop('checked', checked);
+        $('.jw-datatable-bulk-actions .dropdown-toggle').prop('disabled', !checked);
+    });
+
+    $(document).on('change', '.jw-datatable-checkbox', function () {
+        const checked = $('.jw-datatable-checkbox:checked').length > 0;
+
+        $('.jw-datatable-bulk-actions .dropdown-toggle').prop('disabled', !checked);
     });
 
     $(document).on('input', '.jw-datatable_filter input[type="search"]', function () {

@@ -43,31 +43,4 @@ class UsersDataTable extends DataTable
             BulkAction::delete(),
         ];
     }
-
-    public function dataTable(QueryBuilder $query): EloquentDataTable
-    {
-        return (new EloquentDataTable($query))
-            ->setRowId('id')
-            ->rawColumns($this->rawColumns)
-            ->addColumn(
-                'checkbox',
-                function ($row) {
-                    return '<input type="checkbox" name="rows[]" value="' . $row->id . '">';
-                }
-            )
-            ->editColumn(
-                'created_at',
-                fn (User $user) => $user->created_at?->format('Y-m-d H:i:s')
-            )
-            ->editColumn(
-                'actions',
-                fn (User $user) => ColumnEditer::actions(
-                    $user,
-                    [
-                        Action::edit(admin_url("users/{$user->id}/edit")),
-                        Action::delete(),
-                    ]
-                )
-            );
-    }
 }

@@ -10,6 +10,9 @@
 
 namespace Juzaweb\Core\DataTables;
 
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Model;
+use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable as BaseDataTable;
 
 abstract class DataTable extends BaseDataTable
@@ -20,12 +23,11 @@ abstract class DataTable extends BaseDataTable
 
     protected string $id = 'jw-datatable';
 
-    abstract public function getColumns(): array;
+    protected string $rowId = 'id';
 
-    public function bulkActions(): array
-    {
-        return [];
-    }
+    protected int|array $orderBy = 1;
+
+    abstract public function getColumns(): array;
 
     public function html(): HtmlBuilder
     {
@@ -34,9 +36,36 @@ abstract class DataTable extends BaseDataTable
             ->setTableId($this->id)
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->orderBy(1)
+            ->orderBy($this->orderBy)
             ->selectStyleSingle()
             ->bulkActions($this->bulkActions());
+    }
+
+    public function dataTable(QueryBuilder $query): EloquentDataTable
+    {
+        return (new EloquentDataTable($query))
+            ->setRowId('id')
+            ->rawColumns($this->rawColumns)
+            ->editColumn(
+                'checkbox',
+                function ($row) {
+                    return '<input type="checkbox" name="rows[]" class="jw-datatable-checkbox" value="' . $row->id . '">';
+                }
+            )
+            ->editColumn(
+                'created_at',
+                fn (Model $user) => $user->created_at?->format('Y-m-d H:i:s')
+            )
+            ->editColumn(
+                'actions',
+                fn (Model $user) => ColumnEditer::actions(
+                    $user,
+                    [
+                        Action::edit(admin_url("users/{$user->id}/edit")),
+                        Action::delete(),
+                    ]
+                )
+            );
     }
 
     /**
@@ -53,5 +82,10 @@ abstract class DataTable extends BaseDataTable
         }
 
         return $this->htmlBuilder;
+    }
+
+    public function bulkActions(): array
+    {
+        return [];
     }
 }

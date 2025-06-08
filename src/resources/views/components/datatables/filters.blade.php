@@ -1,14 +1,20 @@
 <div class="row">
     <div class="col-md-9">
         @if(count($bulkActions) > 0)
-            <div class="btn-group float-left" role="group" aria-label="User Actions">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="btn-group float-left jw-datatable-bulk-actions" role="group" aria-label="User Actions">
+                <button type="button"
+                        class="btn btn-secondary dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        disabled
+                >
                     {{ __('Bulk Actions') }}
                 </button>
-                <div class="dropdown-menu jw-datatable-bulk-actions">
+                <div class="dropdown-menu">
                     @foreach($bulkActions as $action)
                         <a
-                                class="dropdown-item jw-datatable-bulk-action jw-datatable-bulk-action_{{ $action->getAction() }}"
+                                class="dropdown-item jw-datatable-bulk-action jw-datatable-bulk-action_{{ $action->getAction() }} {{ $action->getColor() ? 'text-' . $action->getColor() : '' }}"
                                 href="javascript:void(0)"
                                 data-action="{{ $action->getAction() }}"
                         >

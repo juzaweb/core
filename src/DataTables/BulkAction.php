@@ -35,7 +35,7 @@ class BulkAction
     /**
      * @var string
      */
-    protected string $color = 'primary';
+    protected ?string $color = null;
 
     protected ?string $action = null;
 
