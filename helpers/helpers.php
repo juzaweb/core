@@ -411,9 +411,12 @@ if (! function_exists('map_params')) {
         return preg_replace_callback(
             '/\{(\w+)\}/',
             function ($matches) use ($params) {
-                // Return the replacement value if it exists,
-                // otherwise return the original placeholder
-                return $params[$matches[1]] ?? $matches[0];
+                if (! isset($params[$matches[1]])) {
+                    throw new \RuntimeException("Param {$matches[1]} not found");
+                }
+
+                // Return the replacement value if it exists
+                return $params[$matches[1]];
             },
             $text
         );
