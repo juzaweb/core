@@ -393,8 +393,8 @@ if (! function_exists('upload_url')) {
     }
 }
 
-if (! function_exists('map_url_params')) {
-    function map_url_params(string $url, array $params): string
+if (! function_exists('map_params')) {
+    function map_params(string $url, array $params): string
     {
         return preg_replace_callback(
             '/\{(\w+)\}/',
