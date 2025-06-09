@@ -9,9 +9,9 @@
 
 namespace $CLASS_NAMESPACE$;
 
-use LarabizCMS\Core\DataTables\Abstracts\DataTable;
-use LarabizCMS\Core\DataTables\Components\BulkAction;
-use LarabizCMS\Core\DataTables\Components\Column;
+use Juzaweb\Core\DataTables\Abstracts\DataTable;
+use Juzaweb\Core\DataTables\Components\BulkAction;
+use Juzaweb\Core\DataTables\Components\Column;
 
 class $CLASS$ extends DataTable
 {

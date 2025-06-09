@@ -12,7 +12,7 @@ namespace $CLASS_NAMESPACE$;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use LarabizCMS\Core\Http\Controllers\APIController;
+use Juzaweb\Core\Http\Controllers\APIController;
 use $REQUEST_NAMESPACE$;
 use $BULK_REQUEST_NAMESPACE$;
 use $REPOSITORY_NAMESPACE$;

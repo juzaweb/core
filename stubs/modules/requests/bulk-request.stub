@@ -11,7 +11,7 @@ namespace $NAMESPACE$;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use LarabizCMS\Core\Rules\AllExist;
+use Juzaweb\Core\Rules\AllExist;
 use $REPOSITORY_NAMESPACE$;
 
 class $CLASS$ extends FormRequest

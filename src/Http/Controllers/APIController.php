@@ -9,7 +9,9 @@
 
 namespace Juzaweb\Core\Http\Controllers;
 
+use Juzaweb\Core\Traits\HasRestResponses;
+
 abstract class APIController extends Controller
 {
-    //
+    use HasRestResponses;
 }

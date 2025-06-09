@@ -9,9 +9,9 @@
 
 namespace $CLASS_NAMESPACE$;
 
-use LarabizCMS\Core\Facades\Breadcrumb;
-use LarabizCMS\Core\Http\Controllers\AdminController;
-use LarabizCMS\Core\PageBuilder\Page;
+use Juzaweb\Core\Facades\Breadcrumb;
+use Juzaweb\Core\Http\Controllers\AdminController;
+use Juzaweb\Core\PageBuilder\Page;
 use $REPOSITORY_NAMESPACE$;
 use $DATATABLE_NAMESPACE$;
 use $FORM_NAMESPACE$;

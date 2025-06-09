@@ -9,12 +9,12 @@
 
 namespace $CLASS_NAMESPACE$;
 
-use LarabizCMS\Core\Facades\Field;
+use Juzaweb\Core\Facades\Field;
 use $MODEL_NAMESPACE$;
-use LarabizCMS\Core\PageBuilder\Abstracts\FormBuilder;
-use LarabizCMS\Core\PageBuilder\Elements\Card;
-use LarabizCMS\Core\PageBuilder\Elements\Grids\Container;
-use LarabizCMS\Core\PageBuilder\Elements\Grids\Col12;
+use Juzaweb\Core\PageBuilder\Abstracts\FormBuilder;
+use Juzaweb\Core\PageBuilder\Elements\Card;
+use Juzaweb\Core\PageBuilder\Elements\Grids\Container;
+use Juzaweb\Core\PageBuilder\Elements\Grids\Col12;
 
 class $CLASS$ extends FormBuilder
 {

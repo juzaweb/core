@@ -2,8 +2,8 @@
 
 namespace $NAMESPACE$;
 
-use LarabizCMS\Core\Models\Model;
-use LarabizCMS\Core\Traits\HasAPI;
+use Juzaweb\Core\Models\Model;
+use Juzaweb\Core\Traits\HasAPI;
 
 class $CLASS$ extends Model
 {

@@ -9,7 +9,7 @@
 
 namespace $CLASS_NAMESPACE$;
 
-use LarabizCMS\Core\Repositories\Repository;
+use Juzaweb\Core\Repositories\Repository;
 use $MODEL_NAMESPACE$;
 
 /**
