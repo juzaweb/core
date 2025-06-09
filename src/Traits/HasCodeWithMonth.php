@@ -40,6 +40,12 @@ trait HasCodeWithMonth
         return $code;
     }
 
+    /**
+     * Boot the HasCodeWithMonth trait for a model.
+     *
+     * When creating the model, if the code attribute is not set,
+     * generate a unique code using the generateCode method.
+     */
     protected static function bootHasCodeWithMonth(): void
     {
         /**

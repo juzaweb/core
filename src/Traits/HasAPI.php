@@ -50,6 +50,16 @@ trait HasAPI
             ->sort($params);
     }
 
+    /**
+     * Get the cache duration for API queries.
+     *
+     * This method returns the cache duration for API queries, either as an integer representing
+     * the number of seconds or as a DateTime instance. If the `cacheForApiTime` property exists
+     * on the instance, its value is returned. Otherwise, a default cache duration of 3600 seconds
+     * (1 hour) is returned.
+     *
+     * @return int|\DateTime The cache duration for API queries.
+     */
     protected function getCacheForApiTime(): int|\DateTime
     {
         if (property_exists($this, 'cacheForApiTime')) {

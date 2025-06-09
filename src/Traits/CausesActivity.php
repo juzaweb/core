@@ -15,6 +15,12 @@ trait CausesActivity
 {
     use \Spatie\Activitylog\Traits\CausesActivity;
 
+    /**
+     * Log an activity with an optional log name and mark the current user as the cause.
+     *
+     * @param string|null $logName Optional name for the log.
+     * @return ActivityLogger The activity logger instance.
+     */
     public function logActivity(?string $logName = null): ActivityLogger
     {
         return activity($logName)->causedBy($this);

@@ -21,11 +21,23 @@ trait HasMeta
 {
     abstract public function metas(): HasMany;
 
+    /**
+     * Get meta value
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return string|array
+     */
     public function getMeta(string $key, mixed $default = null): string|array
     {
         return $this->metas->where('meta_key', $key)->first()?->meta_value ?? $default;
     }
 
+    /**
+     * Get all meta data
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getMetas(): Collection
     {
         return $this->metas;
@@ -78,6 +90,13 @@ trait HasMeta
         );
     }
 
+    /**
+     * Set a meta value for the model.
+     *
+     * @param string $key The meta key to set
+     * @param string|array|int|null $value The value to set
+     * @return void
+     */
     public function setMeta(string $key, string|array|int|null $value): void
     {
         $this->metas()->updateOrCreate(
@@ -90,6 +109,12 @@ trait HasMeta
         );
     }
 
+    /**
+     * Delete a meta value by its key.
+     *
+     * @param string $key The meta key to delete
+     * @return bool
+     */
     public function deleteMeta(string $key): bool
     {
         $this->metas()->where('meta_key', $key)->delete();
@@ -97,6 +122,12 @@ trait HasMeta
         return true;
     }
 
+    /**
+     * Delete multiple meta values by their keys.
+     *
+     * @param array $keys The array of meta keys to delete
+     * @return bool
+     */
     public function deleteMetas(array $keys): bool
     {
         $this->metas()->whereIn('meta_key', $keys)->delete();
@@ -104,6 +135,12 @@ trait HasMeta
         return true;
     }
 
+    /**
+     * Synchronize the given meta values with the existing ones.
+     *
+     * @param array $data The array of meta values to synchronize. The keys are the meta keys and the values are the meta values.
+     * @return void
+     */
     public function syncMetas(array $data = []): void
     {
         $this->syncMetasWithoutDetaching($data);
@@ -111,6 +148,12 @@ trait HasMeta
         $this->metas()->whereNotIn('meta_key', array_keys($data))->delete();
     }
 
+    /**
+     * Synchronize the given meta values with the existing ones without detaching the removed ones.
+     *
+     * @param array $data The array of meta values to synchronize. The keys are the meta keys and the values are the meta values.
+     * @return void
+     */
     public function syncMetasWithoutDetaching(array $data = []): void
     {
         foreach ($data as $key => $val) {

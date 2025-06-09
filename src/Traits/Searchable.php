@@ -121,6 +121,14 @@ trait Searchable
         );
     }
 
+    /**
+     * Get the searchable fields for the model.
+     *
+     * The searchable fields are defined in the model's $searchable property.
+     * If the $searchable property is not set, an empty array is returned.
+     *
+     * @return array The searchable fields for the model.
+     */
     public function getSearchable(): array
     {
         return $this->searchable ?? [];
