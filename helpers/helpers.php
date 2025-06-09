@@ -392,3 +392,16 @@ if (! function_exists('upload_url')) {
         return asset('storage/' . $path);
     }
 }
+
+if (! function_exists('map_url_params')) {
+    function map_url_params(string $url, array $params): string
+    {
+        return preg_replace_callback(
+            '/\{(\w+)\}/',
+            function($matches) use ($params) {
+                return $params[$matches[1]] ?? $matches[0];
+            },
+            $url
+        );
+    }
+}

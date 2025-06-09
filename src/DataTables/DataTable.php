@@ -88,6 +88,13 @@ abstract class DataTable extends BaseDataTable
             );
         }
 
+        if ($editColumn = $this->getColumn('edit')) {
+            $builder->editColumn(
+                $editColumn->name,
+                fn (Model $model) => ColumnEditer::editLink($model, $this->getActionUrl(), $editColumn->name)
+            );
+        }
+
         return $builder;
     }
 
@@ -131,8 +138,13 @@ abstract class DataTable extends BaseDataTable
 
     protected function hasColumn(string $name): bool
     {
+        return $this->getColumn($name) !== null;
+    }
+
+    protected function getColumn(string $name): ?Column
+    {
         return collect($this->getColumns())->filter(
             fn ($column) => $column->name === $name
-        )->isNotEmpty();
+        )->first();
     }
 }

@@ -34,16 +34,20 @@ class ColumnEditer
         );
     }
 
-    public static function name(Model $model): View
+    public static function editLink(Model $model, string $editUrl, string $data = 'name'): View
     {
         return view(
-            'core::components.datatables.name',
-            [
-                'model' => $model
-            ]
+            'core::components.datatables.edit-link',
+            compact('model', 'editUrl', 'data')
         );
     }
 
+    /**
+     * Create a column of checkboxes.
+     *
+     * @param Model $model
+     * @return View
+     */
     public static function checkbox(Model $model): View
     {
         return view(

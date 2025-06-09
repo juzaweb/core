@@ -91,6 +91,17 @@ class Column extends BaseColumn
         return $column;
     }
 
+    public static function editLink(
+        array|string $data,
+        string $editUrl,
+        string $title
+    ): static {
+        $column = static::make($data, 'edit');
+        $column->title($title);
+        $column->offsetSet('url', $editUrl);
+        return $column;
+    }
+
     /**
      * Create a column for the "created_at" timestamp.
      * This column is not searchable and is displayed with a width of 150px.
