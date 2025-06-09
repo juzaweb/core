@@ -37,6 +37,9 @@ class BulkAction
      */
     protected ?string $color = null;
 
+    /**
+     * @var ?string
+     */
     protected ?string $action = null;
 
     /**
@@ -82,6 +85,15 @@ class BulkAction
         $this->label = $label;
     }
 
+    /**
+     * Set the type of action.
+     *
+     * @param string $type
+     *      Supported types are `url` and `action`.
+     *      - `url`: The action will link to the given URL.
+     *      - `action`: The action will trigger the given action.
+     * @return static
+     */
     public function type(string $type): static
     {
         $this->type = $type;
@@ -89,6 +101,13 @@ class BulkAction
         return $this;
     }
 
+    /**
+     * Set the color of the bulk action.
+     *
+     * @param string $color
+     *      The color used to represent the bulk action visually.
+     * @return static
+     */
     public function color(string $color): static
     {
         $this->color = $color;
@@ -96,6 +115,13 @@ class BulkAction
         return $this;
     }
 
+    /**
+     * Set the action for the bulk action.
+     *
+     * @param string $action
+     *      The action used to trigger the bulk action.
+     * @return static
+     */
     public function action(string $action): static
     {
         $this->action = $action;

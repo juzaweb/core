@@ -1,6 +1,6 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
  * @package    larabizcom/larabiz
  * @author     Larabiz Team <admin@larabiz.com>
