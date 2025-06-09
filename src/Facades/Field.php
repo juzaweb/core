@@ -4,7 +4,7 @@
  *
  * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  */
 
 namespace Juzaweb\Core\Facades;

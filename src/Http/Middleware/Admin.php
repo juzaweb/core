@@ -4,7 +4,7 @@
  *
  * @package    larabizcom/larabiz
  * @author     Larabiz Team <admin@larabiz.com>
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  * @license    MIT
  */
 
