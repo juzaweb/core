@@ -394,14 +394,28 @@ if (! function_exists('upload_url')) {
 }
 
 if (! function_exists('map_params')) {
-    function map_params(string $url, array $params): string
+    /**
+     * Replace placeholders in a string with values from an associative array.
+     *
+     * This function searches for placeholders in the format {placeholder} within
+     * the provided text and replaces them with corresponding values from the
+     * provided associative array. If a placeholder does not exist in the array,
+     * it remains unchanged in the text.
+     *
+     * @param string $text The text containing placeholders to replace.
+     * @param array $params An associative array of placeholder names and their replacement values.
+     * @return string The text with placeholders replaced by values from the array.
+     */
+    function map_params(string $text, array $params): string
     {
         return preg_replace_callback(
             '/\{(\w+)\}/',
-            function($matches) use ($params) {
+            function ($matches) use ($params) {
+                // Return the replacement value if it exists,
+                // otherwise return the original placeholder
                 return $params[$matches[1]] ?? $matches[0];
             },
-            $url
+            $text
         );
     }
 }
