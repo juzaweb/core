@@ -72,7 +72,7 @@ abstract class DataTable extends BaseDataTable
             $builder->editColumn(
                 'checkbox',
                 function ($row) {
-                    return '<input type="checkbox" name="rows[]" class="jw-datatable-checkbox" value="' . $row->id . '">';
+                    return ColumnEditer::checkbox($row);
                 }
             );
         }

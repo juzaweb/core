@@ -52,6 +52,14 @@ class BulkAction
         return new static($label, $url, $icon);
     }
 
+    /**
+     * Create a delete action.
+     *
+     * This action is used to represent a deletion operation
+     * with a trash icon and a danger color.
+     *
+     * @return static The configured delete action instance.
+     */
     public static function delete(): static
     {
         return static::make(__('Delete'), null, 'fas fa-trash')

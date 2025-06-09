@@ -14,6 +14,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ColumnEditer
 {
+    /**
+     * Create a column of actions.
+     *
+     * @param Model $model
+     * @param array $actions
+     * @param string $endpoint
+     * @return View
+     */
     public static function actions(Model $model, array $actions, string $endpoint): View
     {
         return view(
@@ -26,21 +34,21 @@ class ColumnEditer
         );
     }
 
-    public static function name(Model $model): string
+    public static function name(Model $model): View
     {
         return view(
             'core::components.datatables.name',
             [
                 'model' => $model
             ]
-        )->render();
+        );
     }
 
-    public static function checkbox(Model $model): string
+    public static function checkbox(Model $model): View
     {
         return view(
             'core::components.datatables.checkbox',
             ['model' => $model]
-        )->render();
+        );
     }
 }
