@@ -7,6 +7,13 @@ use Illuminate\Http\RedirectResponse;
 
 trait HasSessionResponses
 {
+    /**
+     * Handle response
+     *
+     * @param array|string $data
+     * @param bool $success
+     * @return JsonResponse|RedirectResponse
+     */
     protected function response(array|string $data, bool $success = true): JsonResponse|RedirectResponse
     {
         if (! is_array($data)) {
@@ -18,6 +25,7 @@ trait HasSessionResponses
         }
 
         if (request()->ajax() || request()->isJson()) {
+            // Return json response
             return response()->json(
                 [
                     'success' => $success,
@@ -26,14 +34,17 @@ trait HasSessionResponses
             );
         }
 
+        // Return redirect response
         if (!empty($data['redirect'])) {
             return redirect()->to($data['redirect']);
         }
 
+        // Return back with message
         $data['success'] = $success;
         $back = back()->withInput()->with($data);
 
         if (! $success) {
+            // Return back with errors
             $back->withErrors([$data['message']]);
         }
 

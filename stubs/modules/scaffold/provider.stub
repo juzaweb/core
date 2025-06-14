@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use LarabizCMS\Core\Providers\ServiceProvider;
+use Juzaweb\Core\Providers\ServiceProvider;
 
 class $CLASS$ extends ServiceProvider
 {

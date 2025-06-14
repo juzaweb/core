@@ -4,7 +4,7 @@
  *
  * @package    larabizcom/larabiz
  * @author     The Anh Dang
- * @link       https://larabiz.com/cms
+ * @link       https://cms.juzaweb.com/cms
  * @license    GNU V2
  */
 

@@ -1,10 +1,10 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    larabizcms/larabiz
+ * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  */
 
 namespace Juzaweb\Core\DataTables;
@@ -13,6 +13,15 @@ use Yajra\DataTables\Html\Column as BaseColumn;
 
 class Column extends BaseColumn
 {
+    /**
+     * Creates a column configuration for actions with predefined settings.
+     *
+     * This static method generates a column specifically for handling actions
+     * in a data table. It sets the column title to "Actions", centers the text,
+     * and sets a fixed width of 200 pixels.
+     *
+     * @return static Returns a configured Column instance for actions.
+     */
     public static function actions(): static
     {
         /** @var Column $column */
@@ -23,6 +32,17 @@ class Column extends BaseColumn
         return $column;
     }
 
+    /**
+     * Creates a column configuration for checkbox with predefined settings.
+     *
+     * This static method generates a column specifically for handling checkbox
+     * in a data table. It sets the column title to a checkbox with the given
+     * title, centers the text, and sets a fixed width of 30 pixels. It also
+     * disables ordering, exporting, and searching.
+     *
+     * @param string $title The title of the column.
+     * @return static Returns a configured Column instance for checkbox.
+     */
     public static function checkbox($title = ''): static
     {
         return static::make('checkbox')
@@ -34,15 +54,33 @@ class Column extends BaseColumn
             ->searchable(false);
     }
 
-    public static function id(string $id = null, bool $visible = false): static
+    /**
+     * Creates a column configuration for displaying the record ID.
+     *
+     * This static method generates a column specifically for displaying the
+     * record ID in a data table. It sets the column title to "ID", centers the
+     * text, and sets the initial visibility to the given value. It also sets
+     * the default field name to "id".
+     *
+     * @param string $id The field name to use for the record ID.
+     * @param bool $visible The initial visibility of the column.
+     * @return static Returns a configured Column instance for the record ID.
+     */
+    public static function id(?string $id = null, bool $visible = false): static
     {
-        $column = static::make('id', $id ?: 'id');
+        $column = static::make('id', $id ?? 'id');
         $column->visible($visible);
         $column->title(__('ID'));
         $column->addClass('text-center');
         return $column;
     }
 
+    /**
+     * Create a column for the row index.
+     * This column is not orderable or searchable.
+     *
+     * @return static
+     */
     public static function rowIndex(): static
     {
         $column = static::make('DT_RowIndex');
@@ -53,6 +91,23 @@ class Column extends BaseColumn
         return $column;
     }
 
+    public static function editLink(
+        array|string $data,
+        string $editUrl,
+        string $title
+    ): static {
+        $column = static::make($data, 'edit');
+        $column->title($title);
+        $column->offsetSet('url', $editUrl);
+        return $column;
+    }
+
+    /**
+     * Create a column for the "created_at" timestamp.
+     * This column is not searchable and is displayed with a width of 150px.
+     *
+     * @return static
+     */
     public static function createdAt(): static
     {
         /** @var Column */
@@ -63,6 +118,12 @@ class Column extends BaseColumn
             ->width('150px');
     }
 
+    /**
+     * Create a column for the "updated_at" timestamp.
+     * This column is not searchable and is displayed with a width of 150px.
+     *
+     * @return static
+     */
     public static function updatedAt(): static
     {
         /** @var Column */
@@ -73,6 +134,11 @@ class Column extends BaseColumn
             ->width('150px');
     }
 
+    /**
+     * Adds the 'text-center' class to the column, centering its content.
+     *
+     * @return static The current instance for method chaining.
+     */
     public function center(): static
     {
         $this->addClass('text-center');

@@ -2,10 +2,9 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    larabizcom/larabiz
+ * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://larabiz.com
- * @license    GNU V2
+ * @link       https://cms.juzaweb.com
  */
 
 namespace Juzaweb\Core\Http\Controllers\Auth;

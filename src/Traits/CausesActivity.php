@@ -1,10 +1,10 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    larabizcms/larabiz
+ * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  */
 
 namespace Juzaweb\Core\Traits;
@@ -15,6 +15,12 @@ trait CausesActivity
 {
     use \Spatie\Activitylog\Traits\CausesActivity;
 
+    /**
+     * Log an activity with an optional log name and mark the current user as the cause.
+     *
+     * @param string|null $logName Optional name for the log.
+     * @return ActivityLogger The activity logger instance.
+     */
     public function logActivity(?string $logName = null): ActivityLogger
     {
         return activity($logName)->causedBy($this);

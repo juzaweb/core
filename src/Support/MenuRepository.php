@@ -1,10 +1,10 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    larabizcms/larabiz
+ * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  */
 
 namespace Juzaweb\Core\Support;
@@ -22,7 +22,7 @@ class MenuRepository implements MenuContract
         protected Hook $hook,
     ) {
     }
-    
+
     public function make(string $key, ?string $title = null): Menu
     {
         return new Menu($this->globalData, $this->hook, $key, $title);
