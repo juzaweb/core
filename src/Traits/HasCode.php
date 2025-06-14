@@ -21,13 +21,14 @@ trait HasCode
     /**
      * Generate a unique code
      *
+     * @param  int  $length
      * @return string
      */
-    public static function generateCode(): string
+    public static function generateCode(int $length = 16): string
     {
         // keep generating a new code until we find one that doesn't already exist
         do {
-            $code = Str::random(15);
+            $code = Str::random($length);
         } while (static::withoutGlobalScopes()->where('code', $code)->exists());
 
         return $code;
@@ -42,9 +43,14 @@ trait HasCode
         static::creating(
             function ($model) {
                 if (!$model->getAttribute('code')) {
-                    $model->setAttribute('code', static::generateCode());
+                    $model->setAttribute('code', static::generateCode($model->getCodeLength()));
                 }
             }
         );
+    }
+
+    protected function getCodeLength(): int
+    {
+        return 16; // Default code length, can be overridden in the model
     }
 }
