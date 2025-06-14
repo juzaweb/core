@@ -24,8 +24,6 @@ class SettingRequest extends FormRequest
     {
         $settings = app(Setting::class)->settings();
 
-        dd($settings);
-
         return $this->collect()
             ->only($settings->keys())
             ->mapWithKeys(
