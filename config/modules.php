@@ -182,10 +182,10 @@ return [
     */
 
     'composer' => [
-        'vendor' => 'larabizcms',
+        'vendor' => 'juzaweb',
         'author' => [
-            'name' => 'Larabiz CMS',
-            'email' => 'admin@larabiz.com',
+            'name' => 'Juzaweb CMS',
+            'email' => 'admin@juzaweb.com',
         ],
         'composer-output' => false,
     ],
