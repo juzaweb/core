@@ -28,7 +28,7 @@ class $CLASS$ extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')->group(__DIR__ . '/../Routes/web.php');
+        Route::middleware('web')->group(__DIR__ . '/../routes/web.php');
     }
 
     /**
@@ -42,6 +42,6 @@ class $CLASS$ extends ServiceProvider
     {
         Route::prefix('api/v1')
             ->middleware('api')
-            ->group(__DIR__ . '/../Routes/api.php');
+            ->group(__DIR__ . '/../routes/api.php');
     }
 }
