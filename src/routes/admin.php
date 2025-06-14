@@ -7,11 +7,11 @@
  * @link       https://larabiz.com
  */
 
-use Juzaweb\Core\Facades\RouteResource;
-use Juzaweb\Core\Http\Controllers\Admin\DashboardController;
-use Juzaweb\Core\Http\Controllers\Admin\SettingController;
-use Juzaweb\Core\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Juzaweb\Core\Facades\RouteResource;
+use Juzaweb\Core\Http\Controllers\Admin\SettingController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 

@@ -1,10 +1,11 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    larabizcms/larabiz
+ * @package    larabizcom/larabiz
  * @author     The Anh Dang
  * @link       https://larabiz.com
+ * @license    GNU V2
  */
 
 namespace Juzaweb\Core\Http\Controllers\Auth;
