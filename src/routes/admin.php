@@ -7,15 +7,8 @@
  * @link       https://cms.juzaweb.com
  */
 
-use Juzaweb\Core\Facades\RouteResource;
-use Juzaweb\Core\Http\Controllers\Admin\DashboardController;
-use Juzaweb\Core\Http\Controllers\Admin\SettingController;
-use Juzaweb\Core\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
-
-RouteResource::admin('users', UserController::class);
+use Juzaweb\Core\Http\Controllers\Admin\SettingController;
 
 // RouteResource::admin('roles', UserController::class);
 

@@ -69,7 +69,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemeServiceProvider::class);
-        $this->app->register(AdminServiceProvider::class);
     }
 
     protected function registerServices(): void
