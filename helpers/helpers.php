@@ -4,7 +4,7 @@
  *
  * @package    larabizcom/larabiz
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  * @license    GNU V2
  */
 
@@ -51,12 +51,21 @@ if (! function_exists('is_json')) {
 }
 
 if (! function_exists('setting')) {
+    /**
+     * Get or set a setting value
+     *
+     * @param string|null $key The setting key
+     * @param string|array|null $default The default value if the setting doesn't exist
+     * @return string|array|null|Setting A setting value or the Setting instance if no key is provided
+     */
     function setting(?string $key = null, string|array|null $default = null): null|string|array|Setting
     {
         if (func_num_args() > 0) {
+            // Get a setting value
             return app(Setting::class)->get($key, $default);
         }
 
+        // Return the Setting instance if no key is provided
         return app(Setting::class);
     }
 }
@@ -69,13 +78,22 @@ if (! function_exists('cache_prefix')) {
 }
 
 if (! function_exists('title_from_key')) {
+    /**
+     * Generate a title from the given key.
+     *
+     * @param string $key The key to generate a title from.
+     * @return string The generated title.
+     */
     function title_from_key(string $key): string
     {
+        // Split the key by '.' and only keep the key after the first dot if it exists
         $keys = explode('.', $key);
         if (count($keys) > 1) {
             $key = $keys[1];
         }
 
+        // Replace underscores, dashes, forward slashes, and backslashes with spaces
+        // and then convert the string to title case
         return Str::title(Str::replace(['_', '-', '/', '\\'], ' ', $key));
     }
 }
@@ -181,6 +199,13 @@ if (! function_exists('used_recaptcha')) {
 }
 
 if (! function_exists('date_range')) {
+    /**
+     * Returns an array of strings representing the dates in the given range.
+     *
+     * @param Carbon $from
+     * @param Carbon $to
+     * @return array
+     */
     function date_range(Carbon $from, Carbon $to): array
     {
         $result = [];
@@ -195,6 +220,13 @@ if (! function_exists('date_range')) {
 }
 
 if (! function_exists('month_range')) {
+    /**
+     * Returns an array of strings representing the months in the given date range.
+     *
+     * @param Carbon $from The start date of the range.
+     * @param Carbon $to The end date of the range.
+     * @return array An array of strings in 'Y-m' format, representing each month in the range.
+     */
     function month_range(Carbon $from, Carbon $to): array
     {
         $result = [];
@@ -209,6 +241,16 @@ if (! function_exists('month_range')) {
 }
 
 if (! function_exists('array_to_array_string')) {
+    /**
+     * Converts an array to a string, similar to var_export.
+     * This method is useful for debugging and logging.
+     *
+     * @param array $array The array to convert.
+     * @return string The string representation of the array.
+     *
+     * Example:
+     * array_to_array_string(['foo', 'bar', 3]) // returns "['foo', 'bar', 3]"
+     */
     function array_to_array_string(array $array): string
     {
         $string = json_encode($array, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
@@ -242,13 +284,32 @@ if (!function_exists('is_url')) {
 }
 
 if (!function_exists('is_admin_page')) {
+    /**
+     * Determine if the current page is an admin page.
+     *
+     * @return bool
+     */
     function is_admin_page(): bool
     {
+        // Check if the current page is an admin page by checking if the
+        // current URL matches the prefix defined in the config.
         return request()->is(config('core.admin_prefix') . '*');
     }
 }
 
 if (!function_exists('get_error_by_exception')) {
+    /**
+     * Extracts error information from the given exception.
+     *
+     * @param \Throwable $e The exception to extract information from.
+     * @return array An associative array containing the error information.
+     *               The keys in the array are:
+     *               - message: The error message.
+     *               - line: The line number where the error occurred.
+     *               - file: The file path where the error occurred.
+     *               - code: The error code.
+     *               - exception: The class name of the exception.
+     */
     function get_error_by_exception(\Throwable $e): array
     {
         return [
@@ -262,48 +323,102 @@ if (!function_exists('get_error_by_exception')) {
 }
 
 if (!function_exists('get_domain_by_url')) {
+    /**
+     * Extracts the domain from a given URL.
+     *
+     * @param string $url The URL to extract the domain from.
+     * @param bool $noneWWW If true, remove 'www.' from the domain.
+     * @return string|bool The extracted domain or false if the URL is invalid.
+     */
     function get_domain_by_url(string $url, bool $noneWWW = false): string|bool
     {
-        if (str_starts_with($url, 'https://')
-            || str_starts_with($url, 'http://')
-            || str_starts_with($url, '//')
-        ) {
+        // Check if the URL starts with a valid protocol or is protocol-relative
+        if (str_starts_with($url, 'https://') || str_starts_with($url, 'http://') || str_starts_with($url, '//')) {
+            // Extract the domain from the URL
             $domain = explode('/', $url)[2];
-            if ($noneWWW) {
-                if (str_starts_with($domain, 'www.')) {
-                    $domain = str_replace('www.', '', $domain);
-                }
+
+            // Remove 'www.' prefix if $noneWWW is true
+            if ($noneWWW && str_starts_with($domain, 'www.')) {
+                $domain = str_replace('www.', '', $domain);
             }
 
+            // Return the domain without any query parameters
             return explode('?', $domain)[0];
         }
 
+        // Return false if the URL does not start with a valid protocol
         return false;
     }
 }
 
 if (!function_exists('number_human_format')) {
+    /**
+     * Formats a given number as a human-readable string.
+     *
+     * @param int $number The number to format.
+     * @return string The formatted number as a string.
+     */
     function number_human_format(int $number): string
     {
+        // If the number is less than 1M, just use the standard number format
         if ($number < 1000000) {
             return number_format($number);
         }
 
+        // If the number is between 1M and 1B, use 'M' as the suffix
         if ($number < 1000000000) {
             return number_format($number / 1000000, 2) . ' M';
         }
 
+        // If the number is between 1B and 1T, use 'B' as the suffix
         if ($number < 1000000000000) {
             return number_format($number / 1000000000, 2) . ' B';
         }
 
+        // If the number is greater than 1T, use 'T' as the suffix
         return number_format($number / 1000000000000, 2) . ' T';
     }
 }
 
 if (! function_exists('upload_url')) {
+    /**
+     * Get the URL of the uploaded file.
+     *
+     * @param string $path The path to the uploaded file.
+     * @return string The URL of the uploaded file.
+     */
     function upload_url(string $path): string
     {
         return asset('storage/' . $path);
+    }
+}
+
+if (! function_exists('map_params')) {
+    /**
+     * Replace placeholders in a string with values from an associative array.
+     *
+     * This function searches for placeholders in the format {placeholder} within
+     * the provided text and replaces them with corresponding values from the
+     * provided associative array. If a placeholder does not exist in the array,
+     * it remains unchanged in the text.
+     *
+     * @param string $text The text containing placeholders to replace.
+     * @param array $params An associative array of placeholder names and their replacement values.
+     * @return string The text with placeholders replaced by values from the array.
+     */
+    function map_params(string $text, array $params): string
+    {
+        return preg_replace_callback(
+            '/\{(\w+)\}/',
+            function ($matches) use ($params) {
+                if (! isset($params[$matches[1]])) {
+                    throw new \RuntimeException("Param {$matches[1]} not found");
+                }
+
+                // Return the replacement value if it exists
+                return $params[$matches[1]];
+            },
+            $text
+        );
     }
 }

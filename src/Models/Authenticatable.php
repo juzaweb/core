@@ -1,10 +1,10 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
  * @package    larabizcom/larabiz
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  */
 
 namespace Juzaweb\Core\Models;

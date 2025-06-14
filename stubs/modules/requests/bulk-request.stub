@@ -1,17 +1,17 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
  * @package    larabizcom/larabiz
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  */
 
 namespace $NAMESPACE$;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use LarabizCMS\Core\Rules\AllExist;
+use Juzaweb\Core\Rules\AllExist;
 use $REPOSITORY_NAMESPACE$;
 
 class $CLASS$ extends FormRequest

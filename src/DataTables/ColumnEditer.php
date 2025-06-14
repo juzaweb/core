@@ -1,10 +1,10 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    larabizcms/larabiz
+ * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  */
 
 namespace Juzaweb\Core\DataTables;
@@ -14,6 +14,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ColumnEditer
 {
+    /**
+     * Create a column of actions.
+     *
+     * @param Model $model
+     * @param array $actions
+     * @param string $endpoint
+     * @return View
+     */
     public static function actions(Model $model, array $actions, string $endpoint): View
     {
         return view(
@@ -26,21 +34,25 @@ class ColumnEditer
         );
     }
 
-    public static function name(Model $model): string
+    public static function editLink(Model $model, string $editUrl, string $data = 'name'): View
     {
         return view(
-            'core::components.datatables.name',
-            [
-                'model' => $model
-            ]
-        )->render();
+            'core::components.datatables.edit-link',
+            compact('model', 'editUrl', 'data')
+        );
     }
 
-    public static function checkbox(Model $model): string
+    /**
+     * Create a column of checkboxes.
+     *
+     * @param Model $model
+     * @return View
+     */
+    public static function checkbox(Model $model): View
     {
         return view(
             'core::components.datatables.checkbox',
             ['model' => $model]
-        )->render();
+        );
     }
 }

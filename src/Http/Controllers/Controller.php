@@ -2,7 +2,9 @@
 
 namespace Juzaweb\Core\Http\Controllers;
 
-abstract class Controller extends \Illuminate\Routing\Controller
+use Illuminate\Routing\Controller as BaseController;
+
+abstract class Controller extends BaseController
 {
     //
 }

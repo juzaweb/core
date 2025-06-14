@@ -1,17 +1,17 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
  * @package    larabizcom/larabiz
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  */
 
 namespace $CLASS_NAMESPACE$;
 
-use LarabizCMS\Core\Facades\Breadcrumb;
-use LarabizCMS\Core\Http\Controllers\AdminController;
-use LarabizCMS\Core\PageBuilder\Page;
+use Juzaweb\Core\Facades\Breadcrumb;
+use Juzaweb\Core\Http\Controllers\AdminController;
+use Juzaweb\Core\PageBuilder\Page;
 use $REPOSITORY_NAMESPACE$;
 use $DATATABLE_NAMESPACE$;
 use $FORM_NAMESPACE$;

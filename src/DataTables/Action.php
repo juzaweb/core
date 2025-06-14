@@ -1,10 +1,10 @@
 <?php
 /**
- * LARABIZ CMS - Full SPA Laravel CMS
+ * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    larabizcms/larabiz
+ * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://larabiz.com
+ * @link       https://cms.juzaweb.com
  */
 
 namespace Juzaweb\Core\DataTables;
@@ -36,6 +36,9 @@ class Action
      */
     protected string $color = 'primary';
 
+    /**
+     * @var ?string
+     */
     protected ?string $action = null;
 
     /**
@@ -56,6 +59,11 @@ class Action
         return static::make(__('Edit'), $url, 'fas fa-edit');
     }
 
+    /**
+     * Get an instance of the delete action.
+     *
+     * @return static
+     */
     public static function delete(): static
     {
         return static::make(__('Delete'), null, 'fas fa-trash')
@@ -78,6 +86,15 @@ class Action
         $this->label = $label;
     }
 
+    /**
+     * Set the type of action.
+     *
+     * @param string $type
+     *      Supported types are `url` and `action`.
+     *      - `url`: The action will link to the given URL.
+     *      - `action`: The action will trigger the given action.
+     * @return static
+     */
     public function type(string $type): static
     {
         $this->type = $type;
@@ -85,6 +102,13 @@ class Action
         return $this;
     }
 
+    /**
+     * Set the color of the action.
+     *
+     * @param string $color
+     *      The color used to represent the action.
+     * @return static
+     */
     public function color(string $color): static
     {
         $this->color = $color;
@@ -92,6 +116,14 @@ class Action
         return $this;
     }
 
+    /**
+     * Set the action of the button.
+     *
+     * @param string $action
+     *      The action used to trigger the action.
+     *      If the type is `action`, this will be used as the action name.
+     * @return static
+     */
     public function action(string $action): static
     {
         $this->action = $action;
@@ -99,6 +131,13 @@ class Action
         return $this;
     }
 
+    /**
+     * Set the icon for the action.
+     *
+     * @param string $icon
+     *      The icon class used to represent the action visually.
+     * @return static
+     */
     public function icon(string $icon): static
     {
         $this->icon = $icon;
@@ -106,6 +145,12 @@ class Action
         return $this;
     }
 
+    /**
+     * Get the type of action.
+     *
+     * @return string
+     *      The type of action, either `url` or `action`.
+     */
     public function getType(): string
     {
         return $this->type;

@@ -4,6 +4,13 @@ use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Vite as ViteFacade;
 
 if (! function_exists('module_path')) {
+    /**
+     * Get the path for a specific module.
+     *
+     * @param string $name The name of the module
+     * @param string $path Optional additional path to append
+     * @return string The complete path to the module or the specified sub-path
+     */
     function module_path($name, $path = ''): string
     {
         $module = app('modules')->find($name);
