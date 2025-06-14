@@ -422,3 +422,15 @@ if (! function_exists('map_params')) {
         );
     }
 }
+
+if (! function_exists('theme_path')) {
+    /**
+     * Get the path to the theme directory.
+     *
+     * @return string The path to the theme directory.
+     */
+    function theme_path(?string $path = null): string
+    {
+        return config('themes.path') . ($path ? '/' . ltrim($path, '/') : '');
+    }
+}

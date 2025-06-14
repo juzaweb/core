@@ -8,7 +8,7 @@
     <title>@yield('title')</title>
     @yield('head')
 </head>
-<body class="juzweb-theme @yield('body-classes')">
+<body class="juzaweb-theme @yield('body-classes')">
     @yield('content')
 
     @yield('scripts')
