@@ -434,3 +434,152 @@ if (! function_exists('theme_path')) {
         return config('themes.path') . ($path ? '/' . ltrim($path, '/') : '');
     }
 }
+
+if (!function_exists('get_youtube_id')) {
+    /**
+     * Extracts the YouTube video ID from a given URL.
+     *
+     * This function uses a regular expression to match the YouTube video ID
+     * from various formats of YouTube URLs, including standard and shortened URLs.
+     *
+     * @param  string  $url The YouTube URL from which to extract the video ID.
+     * @return string|null The extracted video ID, or null if no valid ID is found.
+     */
+    function get_youtube_id(string $url): ?string
+    {
+        preg_match(
+            '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i',
+            $url,
+            $match
+        );
+
+        if (@$match[1]) {
+            return $match[1];
+        }
+
+        return null;
+    }
+}
+
+if (!function_exists('get_vimeo_id')) {
+    /**
+     * Extracts the Vimeo video ID from a given URL.
+     *
+     * This function uses a regular expression to match the Vimeo video ID
+     * from various formats of Vimeo URLs, including standard and player URLs.
+     *
+     * @param string $url The Vimeo URL from which to extract the video ID.
+     * @return string|null The extracted video ID, or an empty string if no valid ID is found.
+     */
+    function get_vimeo_id(string $url): ?string
+    {
+        $regs = [];
+        $id = '';
+        if (preg_match(
+            '%^https?:\/\/(?:www\.|player\.)?vimeo.com\/'
+            . '(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)'
+            . '(\d+)(?:$|\/|\?)(?:[?]?.*)$%im',
+            $url,
+            $regs
+        )
+        ) {
+            $id = $regs[3];
+        }
+
+        return $id;
+    }
+}
+
+if (!function_exists('get_google_drive_id')) {
+    /**
+     * Extracts the Google Drive file ID from a given URL.
+     *
+     * This function assumes that the Google Drive URL is in the format:
+     * https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+     * and extracts the FILE_ID part from it.
+     *
+     * @param string $url The Google Drive URL from which to extract the file ID.
+     * @return string The extracted file ID.
+     */
+    function get_google_drive_id(string $url): string
+    {
+        return explode('/', $url)[5];
+    }
+}
+
+if (!function_exists('convert_linux_path')) {
+    /**
+     * Convert a Windows-style path to a Linux-style path.
+     *
+     * This function replaces backslashes with forward slashes in the given path.
+     *
+     * @param string $path The Windows-style path to be converted.
+     * @return string The converted Linux-style path.
+     */
+    function convert_linux_path(string $path): string
+    {
+        return str_replace(
+            '\\',
+            '/',
+            $path
+        );
+    }
+}
+
+if (!function_exists('seo_string')) {
+    /**
+     * Generate a SEO-friendly string from the given input.
+     *
+     * This function strips HTML tags, replaces newlines and tabs with spaces,
+     * decodes HTML entities, and truncates the string to a specified length
+     * without cutting off in the middle of a word.
+     *
+     * @param  string  $string The input string to be processed.
+     * @param  int  $chars The maximum length of the resulting string (default is 70).
+     * @return string The processed SEO-friendly string.
+     */
+    function seo_string(string $string, int $chars = 70): string
+    {
+        $string = strip_tags($string);
+        $string = str_replace(["\n", "\t"], ' ', $string);
+        $string = html_entity_decode($string, ENT_HTML5);
+        return sub_char($string, $chars);
+    }
+}
+
+if (!function_exists('sub_char')) {
+    /**
+     * Truncate a string to a specified length, ensuring it does not cut off in the middle of a word.
+     *
+     * @param  string  $str The input string to be truncated.
+     * @param  int  $n The maximum length of the truncated string.
+     * @param  string  $end The string to append at the end if truncation occurs (default is '...').
+     * @return string The truncated string, or the original string if it is shorter than $n.
+     */
+    function sub_char(string $str, int $n, string $end = '...'): string
+    {
+        if (strlen($str) < $n) {
+            return $str;
+        }
+
+        $html = mb_substr($str, 0, $n);
+        $html = mb_substr($html, 0, mb_strrpos($html, ' '));
+        return $html . $end;
+    }
+}
+
+if (!function_exists('str_slug')) {
+    /**
+     * Generate a URL-friendly slug from the given string.
+     *
+     * This function replaces spaces and special characters with hyphens,
+     * converts the string to lowercase, and removes any leading or trailing hyphens.
+     *
+     * @param  string  $string The input string to be converted to a slug.
+     * @return string The generated slug.
+     */
+    function str_slug(string $string): string
+    {
+        return Str::slug($string);
+    }
+}
