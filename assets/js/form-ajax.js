@@ -52,43 +52,57 @@ $(function () {
             data: data,
             cache: false,
             contentType: false,
-            processData: false
-        }).done(function(response) {
-            sendMessageByResponse(response, notify);
+            processData: false,
+            success: function (response) {
+                sendMessageByResponse(response, notify);
 
-            if (response.redirect) {
-                setTimeout(function () {
-                    window.location = response.redirect;
-                }, 1000);
-                return false;
+                if (response.redirect) {
+                    setTimeout(function () {
+                        window.location = response.redirect;
+                    }, 1000);
+                    return false;
+                }
+
+                btnsubmit.find('i').attr('class', currentIcon);
+                btnsubmit.prop("disabled", false);
+
+                if (btnsubmit.data('loading-text')) {
+                    btnsubmit.html(currentText);
+                }
+
+                if (response.success === false) {
+                    return false;
+                }
+
+                if (submitSuccess) {
+                    eval(submitSuccess)(form, response);
+                }
+            },
+            error: function (jqxhr, textStatus, errorThrown) {
+                let response = jqxhr.responseJSON;
+
+                if (jqxhr.status === 422) {
+                    if (typeof response.errors !== 'undefined') {
+                        let hasShowInput = 0;
+
+                        $.each(response.errors, function (key, value) {
+                            form.find('.error-' + key).html(value[0]);
+                            hasShowInput += 1;
+                        });
+                    }
+
+                    sendMessageByResponse(jqxhr, notify);
+                } else {
+                    sendMessageByResponse(jqxhr, notify);
+                }
+
+                btnsubmit.find('i').attr('class', currentIcon);
+                btnsubmit.prop("disabled", false);
+
+                if (btnsubmit.data('loading-text')) {
+                    btnsubmit.html(currentText);
+                }
             }
-
-            btnsubmit.find('i').attr('class', currentIcon);
-            btnsubmit.prop("disabled", false);
-
-            if (btnsubmit.data('loading-text')) {
-                btnsubmit.html(currentText);
-            }
-
-            if (response.success === false) {
-                return false;
-            }
-
-            if (submitSuccess) {
-                eval(submitSuccess)(form, response);
-            }
-
-            return false;
-        }).fail(function(response) {
-            btnsubmit.find('i').attr('class', currentIcon);
-            btnsubmit.prop("disabled", false);
-
-            if (btnsubmit.data('loading-text')) {
-                btnsubmit.html(currentText);
-            }
-
-            sendMessageByResponse(response, notify);
-            return false;
         });
     }
 
