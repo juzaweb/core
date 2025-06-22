@@ -117,8 +117,8 @@
         adminPrefix: "{{ config('core.admin_prefix') }}",
         documentBaseUrl: "{{ url('/storage') }}/",
         lang: {
-            successfully: '{{ __('Successfully') }}',
-            error: '{{ __('Error') }}',
+            successfully: '{{ __('Successfully !!') }}',
+            error: '{{ __('Error !!') }}',
             warning: '{{ __('Warning') }}',
             confirm: '{{ __('Are you sure?') }}',
             cancel: '{{ __('Cancel') }}',
