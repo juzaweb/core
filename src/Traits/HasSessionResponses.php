@@ -30,7 +30,8 @@ trait HasSessionResponses
                 [
                     'success' => $success,
                     ...$data,
-                ]
+                ],
+                $success ? 200 : 422
             );
         }
 
