@@ -360,23 +360,28 @@ if (!function_exists('number_human_format')) {
      */
     function number_human_format(int $number): string
     {
-        // If the number is less than 1M, just use the standard number format
-        if ($number < 1000000) {
+        // If the number is less than 100k, just use the standard number format
+        if ($number < 100000) {
             return number_format($number);
+        }
+
+        // If the number is between 100k and 1M, use 'k' as the suffix
+        if ($number < 1000000) {
+            return number_format($number / 1000, 2) . 'K';
         }
 
         // If the number is between 1M and 1B, use 'M' as the suffix
         if ($number < 1000000000) {
-            return number_format($number / 1000000, 2) . ' M';
+            return number_format($number / 1000000, 2) . 'M';
         }
 
         // If the number is between 1B and 1T, use 'B' as the suffix
         if ($number < 1000000000000) {
-            return number_format($number / 1000000000, 2) . ' B';
+            return number_format($number / 1000000000, 2) . 'B';
         }
 
         // If the number is greater than 1T, use 'T' as the suffix
-        return number_format($number / 1000000000000, 2) . ' T';
+        return number_format($number / 1000000000000, 2) . 'T';
     }
 }
 
