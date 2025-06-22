@@ -40,13 +40,13 @@ class ModulesServiceProvider extends ServiceProvider
 
         Stub::setBasePath($path);
 
-        $this->app->booted(function ($app) {
-            /** @var RepositoryInterface $moduleRepository */
-            $moduleRepository = $app[RepositoryInterface::class];
-            if ($moduleRepository->config('stubs.enabled') === true) {
-                Stub::setBasePath($moduleRepository->config('stubs.path'));
-            }
-        });
+        // $this->app->booted(function ($app) {
+        //     /** @var RepositoryInterface $moduleRepository */
+        //     $moduleRepository = $app[RepositoryInterface::class];
+        //     if ($moduleRepository->config('stubs.enabled') === true) {
+        //         Stub::setBasePath($moduleRepository->config('stubs.path'));
+        //     }
+        // });
     }
 
     /**
