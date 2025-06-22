@@ -9,6 +9,11 @@ function toastr_message(message, success, title = null) {
 }
 
 function confirm_message(question, callback, title = '', type = 'warning') {
+    if (typeof Swal === 'undefined') {
+        console.error('SweetAlert2 is not defined. Please include it in your project.');
+        return;
+    }
+
     Swal.fire({
         title: title,
         text: question,
@@ -25,6 +30,13 @@ function confirm_message(question, callback, title = '', type = 'warning') {
 }
 
 function get_message_response(response) {
+    if (response.success === true) {
+        return {
+            success: true,
+            message: response.message
+        };
+    }
+
     // Get message validate
     if (response.responseJSON) {
         if (response.responseJSON.errors) {

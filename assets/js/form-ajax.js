@@ -39,7 +39,7 @@ $(function () {
 
     function sendRequestFormAjax(form, data, btnsubmit, currentText, currentIcon, captchaToken = null) {
         let submitSuccess = form.data('success');
-        let notify = form.data('notify') || true;
+        let notify = form.data('notify') ?? true;
 
         if (captchaToken) {
             data.append('g-recaptcha-response', captchaToken);
