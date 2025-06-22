@@ -17,6 +17,7 @@ class ModulesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->setupStubPath();
         $this->registerNamespaces();
         $this->registerModules();
     }
@@ -27,7 +28,6 @@ class ModulesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerServices();
-        $this->setupStubPath();
         $this->registerProviders();
     }
 
@@ -36,7 +36,8 @@ class ModulesServiceProvider extends ServiceProvider
      */
     public function setupStubPath()
     {
-        $path = $this->app['config']->get('modules.stubs.path') ?? __DIR__ . '/Commands/stubs';
+        $path = $this->app['config']->get('modules.stubs.path');
+
         Stub::setBasePath($path);
 
         $this->app->booted(function ($app) {

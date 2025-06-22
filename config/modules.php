@@ -25,8 +25,8 @@ return [
     */
 
     'stubs' => [
-        'enabled' => false,
-        'path' => base_path('vendor/juzaweb/core/stubs/modules'),
+        'enabled' => true,
+        'path' => base_path('vendor/juzaweb/core/stubs/modules/'),
         'files' => [
             'routes/web' => 'routes/web.php',
             'routes/api' => 'routes/api.php',
