@@ -55,6 +55,8 @@ function get_message_response(response) {
             message: response.message.message,
         };
     }
+
+    return null;
 }
 
 function show_message(response, append = false) {

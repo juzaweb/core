@@ -8,7 +8,23 @@
  * Date: 2021-03-12T21:04Z
  */
 
-$(document).ready(function () {
+$(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+
+    $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
+        if (jqxhr.status === 401) {
+            window.location = "/admin-cp/login";
+        }
+
+        if (jqxhr.status === 419) {
+            window.location = location.toString();
+        }
+    });
+
     function sendMessageByResponse(response, notify = true) {
         if (notify) {
             if (typeof show_notify !== 'undefined' && typeof show_notify === 'function') {
@@ -40,9 +56,9 @@ $(document).ready(function () {
         }).done(function(response) {
             sendMessageByResponse(response, notify);
 
-            if (response.data.redirect) {
+            if (response.redirect) {
                 setTimeout(function () {
-                    window.location = response.data.redirect;
+                    window.location = response.redirect;
                 }, 1000);
                 return false;
             }
@@ -54,7 +70,7 @@ $(document).ready(function () {
                 btnsubmit.html(currentText);
             }
 
-            if (response.status === false) {
+            if (response.success === false) {
                 return false;
             }
 
