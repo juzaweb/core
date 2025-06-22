@@ -29,7 +29,7 @@ trait HasSessionResponses
             return response()->json(
                 [
                     'success' => $success,
-                    'data' => $data,
+                    ...$data,
                 ]
             );
         }

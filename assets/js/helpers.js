@@ -1,10 +1,10 @@
 toastr.options.timeOut = 3000;
 
 function toastr_message(message, success, title = null) {
-    if (success == true) {
-        toastr.success(message, title || juzaweb.lang.successfully + ' !!');
+    if (success === true) {
+        toastr.success(message, title || juzaweb.lang.successfully);
     } else {
-        toastr.error(message, title || juzaweb.lang.error + ' !!');
+        toastr.error(message, title || juzaweb.lang.error);
     }
 }
 
@@ -25,17 +25,6 @@ function confirm_message(question, callback, title = '', type = 'warning') {
 }
 
 function get_message_response(response) {
-    // Get response message
-    if (response.data) {
-        if (response.data.message) {
-            return {
-                success: response.success,
-                message: response.data.message
-            };
-        }
-        return false;
-    }
-
     // Get message validate
     if (response.responseJSON) {
         if (response.responseJSON.errors) {
@@ -46,14 +35,14 @@ function get_message_response(response) {
             });
 
             return {
-                status: false,
+                success: false,
                 message: message
             };
         }
 
         else if (response.responseJSON.message) {
             return {
-                status: false,
+                success: false,
                 message: response.responseJSON.message
             };
         }
@@ -127,7 +116,7 @@ function process_each(elements, cb, timeout, options = {}) {
         if (i < l) {
             setTimeout(fn, timeout);
         } else {
-            if (options.completeCallback || false) {
+            if (options.completeCallback ?? false) {
                 options.completeCallback(result);
             }
         }
@@ -143,14 +132,4 @@ function random_string(length) {
             charactersLength));
     }
     return result;
-}
-
-function toggle_global_loading(status, timeout = 300) {
-    if (status) {
-        $("#admin-overlay").fadeIn(300);
-    } else {
-        setTimeout(function(){
-            $("#admin-overlay").fadeOut(300);
-        }, timeout);
-    }
 }
