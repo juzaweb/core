@@ -12,31 +12,31 @@ namespace Juzaweb\Core\Models\Enums;
 
 enum CommentStatus: string
 {
-    case Pending = 'pending';
-    case Approved = 'approved';
-    case Rejected = 'rejected';
+    case PENDING = 'pending';
+    case APPROVED = 'approved';
+    case REJECTED = 'rejected';
 
     public function label(): string
     {
         return match ($this) {
-            self::Pending => 'Pending',
-            self::Approved => 'Approved',
-            self::Rejected => 'Rejected',
+            self::PENDING => 'Pending',
+            self::APPROVED => 'Approved',
+            self::REJECTED => 'Rejected',
         };
     }
 
     public function isPending(): bool
     {
-        return $this === self::Pending;
+        return $this === self::PENDING;
     }
 
     public function isApproved(): bool
     {
-        return $this === self::Approved;
+        return $this === self::APPROVED;
     }
 
     public function isRejected(): bool
     {
-        return $this === self::Rejected;
+        return $this === self::REJECTED;
     }
 }

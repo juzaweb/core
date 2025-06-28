@@ -12,7 +12,10 @@ namespace Juzaweb\Core\Support\Traits;
 
 use Juzaweb\Core\Models\Comment;
 
-trait Commentable
+/**
+ * @mixin \Illuminate\Database\Eloquent\Model
+ */
+trait HasComments
 {
     /**
      * Get the comments for the model.
@@ -21,6 +24,16 @@ trait Commentable
      */
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commented');
+    }
+
+    /**
+     * Get the comment count for the model.
+     *
+     * @return int
+     */
+    public function getTotalComments()
+    {
+        return $this->comments()->count();
     }
 }

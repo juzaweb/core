@@ -35,9 +35,22 @@ class Comment extends Model
     ];
 
     /**
-     * Get the parent commentable model (post, video, etc.).
+     * Get the user who made the comment.
      */
     public function commentable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Get the object that was commented on.
+     *
+     * This method returns the model that the comment is associated with,
+     * such as a Video, Post, etc.
+     *
+     * @return MorphTo
+     */
+    public function commented(): MorphTo
     {
         return $this->morphTo();
     }
@@ -50,7 +63,7 @@ class Comment extends Model
      */
     public function scopeFrontend(Builder $builder): Builder
     {
-        return $builder->where('status', CommentStatus::Approved);
+        return $builder->where('status', CommentStatus::APPROVED);
     }
 
     /**
