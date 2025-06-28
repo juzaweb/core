@@ -10,6 +10,10 @@
 
 namespace Juzaweb\Core\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Juzaweb\Core\Models\Enums\CommentStatus;
+
 class Comment extends Model
 {
     protected $table = 'comments';
@@ -23,13 +27,39 @@ class Comment extends Model
         'commentable_type',
         'commentable_id',
         'content',
+        'status',
+    ];
+
+    protected $casts = [
+        'status' => CommentStatus::class,
     ];
 
     /**
      * Get the parent commentable model (post, video, etc.).
      */
-    public function commentable(): \Illuminate\Database\Eloquent\Relations\MorphTo
+    public function commentable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Scope a query to only include approved comments.
+     *
+     * @param Builder $builder
+     * @return Builder
+     */
+    public function scopeFrontend(Builder $builder): Builder
+    {
+        return $builder->where('status', CommentStatus::Approved);
+    }
+
+    /**
+     * Get the status label.
+     *
+     * @return string
+     */
+    public function getStatusLabel(): string
+    {
+        return $this->status->label();
     }
 }
