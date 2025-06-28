@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuidMorphs('commentable');
             $table->text('content');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('approved');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }
