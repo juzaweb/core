@@ -2,7 +2,6 @@
 
 namespace Juzaweb\Core\Models;
 
-use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -20,6 +19,7 @@ use Juzaweb\Core\Traits\HasSocialConnection;
 use Juzaweb\FileManager\Models\Media;
 use Juzaweb\Permissions\Traits\HasPermissions;
 use Juzaweb\Permissions\Traits\HasRoles;
+use Juzaweb\Themes\VideoSharing\database\factories\UserFactory;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
