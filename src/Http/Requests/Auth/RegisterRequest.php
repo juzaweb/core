@@ -1,11 +1,11 @@
 <?php
 namespace Juzaweb\Core\Http\Requests\Auth;
 
-use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Juzaweb\Core\Models\User;
 use OpenApi\Annotations as OA;
 
 /**

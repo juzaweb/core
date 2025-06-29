@@ -19,6 +19,6 @@ class WorkbenchServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        config(['auth.providers.users.model' => \App\Models\User::class]);
+        config(['auth.providers.users.model' => \Juzaweb\Core\Models\User::class]);
     }
 }

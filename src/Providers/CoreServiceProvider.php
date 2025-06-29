@@ -43,7 +43,7 @@ class CoreServiceProvider extends ServiceProvider
         Gate::before(
             function ($user, $ability) {
                 // Super admin has all permission
-                /** @var \App\Models\User $user */
+                /** @var \Juzaweb\Core\Models\User $user */
                 if ($user->hasRoleAllPermissions()) {
                     return true;
                 }

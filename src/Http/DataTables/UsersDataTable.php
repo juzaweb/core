@@ -9,13 +9,13 @@
 
 namespace Juzaweb\Core\Http\DataTables;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Juzaweb\Core\DataTables\Action;
 use Juzaweb\Core\DataTables\BulkAction;
 use Juzaweb\Core\DataTables\Column;
 use Juzaweb\Core\DataTables\DataTable;
+use Juzaweb\Core\Models\User;
 
 class UsersDataTable extends DataTable
 {

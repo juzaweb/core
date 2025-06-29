@@ -23,7 +23,7 @@ namespace Juzaweb\Core\Models;
  * @property \Illuminate\Support\Carbon|null $expires_at
  * @property-read \Laravel\Passport\Client|null $client
  * @property-read \Laravel\Passport\RefreshToken|null $refreshToken
- * @property-read \App\Models\User|null $user
+ * @property-read \Juzaweb\Core\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Token newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Token newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Token query()

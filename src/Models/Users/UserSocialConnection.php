@@ -4,7 +4,7 @@ namespace Juzaweb\Core\Models\Users;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Juzaweb\Core\Models\Model;
-use App\Models\User;
+use Juzaweb\Core\Models\User;
 
 /**
  * Juzaweb\Core\Models\Users\UserSocialConnection

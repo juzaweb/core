@@ -135,6 +135,12 @@ class ThemeRepository implements ThemeContract
             $this->app->register($provider);
         }
 
+        foreach ($theme->get('files', []) as $file) {
+            require ($theme->path($file));
+        }
+
+        return;
+
         $viewPath = $theme->path('views');
         $langPath = $theme->path('lang');
 

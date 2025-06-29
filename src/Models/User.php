@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Models\Users;
+namespace Juzaweb\Core\Models;
 
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,9 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Juzaweb\Core\Facades\GlobalData;
-use Juzaweb\Core\Models\Authenticatable;
 use Juzaweb\Core\Models\Enums\UserStatus;
-use Juzaweb\Core\Models\PasswordReset;
 use Juzaweb\Core\Support\Traits\Commentable;
 use Juzaweb\Core\Traits\CausesActivity;
 use Juzaweb\Core\Traits\HasAPI;

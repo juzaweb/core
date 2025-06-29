@@ -2,10 +2,10 @@
 
 namespace Juzaweb\Core\Traits;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
+use Juzaweb\Core\Models\User;
 
 /**
  * @mixin \Illuminate\Database\Eloquent\Model

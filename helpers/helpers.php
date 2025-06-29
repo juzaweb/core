@@ -8,12 +8,12 @@
  * @license    GNU V2
  */
 
-use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Contracts\Setting;
+use Juzaweb\Core\Models\User;
 use Juzaweb\Translations\Models\Language;
 
 require __DIR__ .'/modules.php';

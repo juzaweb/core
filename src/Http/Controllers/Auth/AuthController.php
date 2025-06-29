@@ -9,11 +9,12 @@
 
 namespace Juzaweb\Core\Http\Controllers\Auth;
 
-use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Juzaweb\Core\Http\Controllers\AdminController;
 use Juzaweb\Core\Http\Requests\Auth\LoginRequest;
 use Juzaweb\Core\Http\Requests\Auth\RegisterRequest;
+use Juzaweb\Core\Models\User;
 
 class AuthController extends AdminController
 {
@@ -69,7 +70,7 @@ class AuthController extends AdminController
         );
     }
 
-    public function logout(): \Illuminate\Http\RedirectResponse
+    public function logout(): RedirectResponse
     {
         Auth::logout();
 

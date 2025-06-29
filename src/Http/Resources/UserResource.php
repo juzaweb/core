@@ -10,8 +10,8 @@
 namespace Juzaweb\Core\Http\Resources;
 
 use Illuminate\Http\Request;
+use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Support\Resources\ModelResource;
-use App\Models\User;
 use OpenApi\Annotations as OA;
 
 /**
