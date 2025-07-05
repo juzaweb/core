@@ -43,6 +43,22 @@ mix.combine(
     'assets/public/js/vendor.min.js'
 ).mergeManifest();
 
+mix.combine(
+    [
+        `assets/plugins/datatables/jquery.dataTables.min.js`,
+        `assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js`,
+        `assets/plugins/datatables-responsive/js/dataTables.responsive.min.js`,
+        `assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js`,
+        // `assets/plugins/datatables-buttons/js/dataTables.buttons.min.js`,
+        // `assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js`,
+        // `assets/plugins/datatables-buttons/js/buttons.html5.min.js`,
+        // `assets/plugins/datatables-buttons/js/buttons.print.min.js`,
+        // `assets/plugins/datatables-buttons/js/buttons.colVis.min.js`,
+        `assets/js/datatable-helper.js`,
+    ],
+    'assets/public/js/datatables.min.js'
+).mergeManifest();
+
 mix.styles(
     [
         `assets/plugins/fontawesome/css/all.min.css`,
@@ -65,6 +81,7 @@ mix.combine(
         `assets/dist/js/admin.min.js`,
         `assets/js/helpers.js`,
         `assets/js/common.js`,
+        `assets/js/datatable-helper.js`,
         `assets/js/filemanager.js`,
         `assets/js/form-ajax.js`,
     ],
