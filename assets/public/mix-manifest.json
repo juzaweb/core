@@ -1,6 +1,7 @@
 {
-    "/js/admin.min.js": "/js/admin.min.js?id=d65acac73cbbc774ed8412190cd94c97",
+    "/js/admin.min.js": "/js/admin.min.js?id=e6ac81e40f33c2a994c81cd52225835f",
     "/css/admin.min.css": "/css/admin.min.css?id=72ac17ae4db2250a3258855c80ac9442",
     "/js/vendor.min.js": "/js/vendor.min.js?id=f8905093895a2bfd36298ccc1983dafb",
-    "/css/vendor.min.css": "/css/vendor.min.css?id=a6e59776ecdbe7acfa4b8d712a50fcdb"
+    "/css/vendor.min.css": "/css/vendor.min.css?id=a6e59776ecdbe7acfa4b8d712a50fcdb",
+    "/js/datatables.min.js": "/js/datatables.min.js?id=0801398d8ca892624d80b54ce362e80b"
 }
