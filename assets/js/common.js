@@ -97,16 +97,16 @@ function sendDataTablesActionRequest(endpoint, ids, action) {
             toggle_global_loading(true);
         },
         success: function (response) {
-            if (response.data.window_redirect) {
+            if (response.window_redirect) {
                 show_notify(response);
-                window.location = response.data.window_redirect;
+                window.location = response.window_redirect;
                 return false;
             }
 
-            if (response.data.redirect) {
+            if (response.redirect) {
                 show_notify(response);
                 setTimeout(function () {
-                    window.location = response.data.redirect;
+                    window.location = response.redirect;
                 }, 1000);
                 return false;
             }
