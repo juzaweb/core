@@ -12,6 +12,13 @@ namespace Juzaweb\Core\Facades;
 use Illuminate\Support\Facades\Facade;
 use Juzaweb\Core\Contracts\Setting as SettingContract;
 
+/**
+ * @method static \Juzaweb\Core\Support\Entities\Setting make(string $key)
+ * @method static mixed get(string $key, mixed $default = null)
+ * @method static bool|null boolean(string $key, mixed $default = null)
+ * @method static int|null integer(string $key, mixed $default = null)
+ * @method static \Illuminate\Support\Collection settings()
+ */
 class Setting extends Facade
 {
     /**

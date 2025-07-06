@@ -11,11 +11,11 @@
 namespace Juzaweb\Core\Support;
 
 use Illuminate\Cache\CacheManager;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Juzaweb\Core\Contracts\GlobalData;
 use Juzaweb\Core\Contracts\Setting as SettingContract;
 use Juzaweb\Core\Models\Setting as SettingModel;
+use Juzaweb\Core\Support\Entities\Setting;
 
 class SettingRepository implements SettingContract
 {
@@ -26,11 +26,56 @@ class SettingRepository implements SettingContract
         //
     }
 
+    public function make(string $key): Setting
+    {
+        return app(Setting::class, ['key' => $key]);
+    }
+
     public function get(string $key, mixed $default = null): mixed
     {
         return $this->configs()->get($key) ?? $this->settings()->get($key)['default'] ?? $default;
     }
 
+    public function boolean(string $key, mixed $default = null)
+    {
+        $value = $this->get($key, $default);
+
+        if ($value === null) {
+            return null;
+        }
+
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
+    public function integer(string $key, mixed $default = null): ?int
+    {
+        $value = $this->get($key, $default);
+
+        if ($value === null) {
+            return null;
+        }
+
+        return (int) $value;
+    }
+
+    public function float(string $key, mixed $default = null): ?float
+    {
+        $value = $this->get($key, $default);
+
+        if ($value === null) {
+            return null;
+        }
+
+        return (float) $value;
+    }
+
+    /**
+     * Sets a configuration value for the application.
+     *
+     * @param  string  $key  The key of the configuration.
+     * @param  mixed  $value  The value of the configuration.
+     * @return SettingModel The updated or created ConfigModel instance.
+     */
     public function set(string $key, mixed $value = null): SettingModel
     {
         return SettingModel::updateOrCreate(

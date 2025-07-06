@@ -21,6 +21,14 @@ use Juzaweb\Core\Models\Setting as SettingModel;
 interface Setting
 {
     /**
+     * Creates a new setting instance with the given key and optional label.
+     *
+     * @param  string  $key  The key for the setting.
+     * @return \Juzaweb\Core\Support\Entities\Setting
+     */
+    public function make(string $key): \Juzaweb\Core\Support\Entities\Setting;
+
+    /**
      * Retrieves the value of a configuration key.
      *
      * @param  string  $key  The configuration key to retrieve.

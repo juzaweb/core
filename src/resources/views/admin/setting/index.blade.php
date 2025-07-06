@@ -19,11 +19,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-9">
-                    {{ Field::text(__('Site Title'), 'title', ['placeholder' => __('Site Title')]) }}
+                    {{ Field::text(__('Site Title'), 'title', ['placeholder' => __('Site Title'), 'value' => setting('title')]) }}
 
-                    {{ Field::textarea(__('Site Description'), 'description', ['placeholder' => __('Site Description')]) }}
+                    {{ Field::textarea(__('Site Description'), 'description', [
+                        'placeholder' => __('Site Description'),
+                        'value' => setting('description'),
+                    ]) }}
 
-                    {{ Field::text(__('Site Name'), 'sitename', ['placeholder' => __('Ex: Juzaweb')]) }}
+                    {{ Field::text(__('Site Name'), 'sitename', ['value' => setting('sitename'), 'placeholder' => __('Ex: Juzaweb')]) }}
 
                     {{ Field::select(__('Language'), 'language', ['value' => config('language', 'en')])
                         ->dropDownList(collect(config('locales'))->pluck('name', 'code')->toArray()) }}
@@ -34,9 +37,9 @@
                 </div>
 
                 <div class="col-md-3">
-                    {{ Field::image(__('Logo'), 'logo', ['value' => setting('icon')]) }}
+                    {{ Field::image(__('Logo'), 'logo', ['value' => setting('logo')]) }}
 
-                    {{ Field::image(__('Icon'), 'icon', ['value' => setting('icon')]) }}
+                    {{ Field::image(__('Favicon'), 'favicon', ['value' => setting('favicon')]) }}
 
                     {{ Field::image(__('Banner (for social)'), 'banner', ['value' => setting('banner')]) }}
                 </div>

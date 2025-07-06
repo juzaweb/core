@@ -5,6 +5,21 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">{{ __('Sign in to start your session') }}</p>
 
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @endif
+
             <form action="{{ route('auth.login') }}" method="post">
                 @csrf
 
@@ -41,15 +56,15 @@
                 </div>
             </form>
 
-            {{--<div class="social-auth-links text-center mb-3">
+            <div class="social-auth-links text-center mb-3">
                 <p>- OR -</p>
-                <a href="#" class="btn btn-block btn-primary">
+                <a href="{{ route('auth.social.redirect', ['facebook']) }}" class="btn btn-block btn-primary">
                     <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
                 </a>
-                <a href="#" class="btn btn-block btn-danger">
-                    <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                <a href="{{ route('auth.social.redirect', ['google']) }}" class="btn btn-block btn-danger">
+                    <i class="fab fa-google-plus mr-2"></i> Sign in using Google
                 </a>
-            </div>--}}
+            </div>
             <!-- /.social-auth-links -->
 
             <p class="mb-1">

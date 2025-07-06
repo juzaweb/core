@@ -16,10 +16,16 @@ use Illuminate\Validation\Rule;
 use Juzaweb\Core\Commands;
 use Juzaweb\Core\Contracts;
 use Juzaweb\Core\DataTables\HtmlBuilder;
+use Juzaweb\Core\Facades\Menu;
+use Juzaweb\Core\Facades\Setting;
+use Juzaweb\Core\Http\Middleware\Admin;
+use Juzaweb\Core\Http\Middleware\ValidateSignature;
+use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Modules\Providers\ModulesServiceProvider;
 use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
 use Juzaweb\Core\Support;
+use Juzaweb\Hooks\Contracts\Hook;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -29,8 +35,8 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->registerCommands();
 
-        $this->app['router']->aliasMiddleware('admin', \Juzaweb\Core\Http\Middleware\Admin::class);
-        $this->app['router']->aliasMiddleware('signed', \Juzaweb\Core\Http\Middleware\ValidateSignature::class);
+        $this->app['router']->aliasMiddleware('admin', Admin::class);
+        $this->app['router']->aliasMiddleware('signed', ValidateSignature::class);
 
         Carbon::macro('toUserTimezone', function () {
             $tz = auth()->user()?->timezone ?? config('app.timezone');
@@ -43,7 +49,7 @@ class CoreServiceProvider extends ServiceProvider
         Gate::before(
             function ($user, $ability) {
                 // Super admin has all permission
-                /** @var \Juzaweb\Core\Models\User $user */
+                /** @var User $user */
                 if ($user->hasRoleAllPermissions()) {
                     return true;
                 }
@@ -53,6 +59,9 @@ class CoreServiceProvider extends ServiceProvider
                 }
             }
         );
+
+        $this->registerSettings();
+        $this->registerMenus();
     }
 
     public function register(): void
@@ -98,7 +107,7 @@ class CoreServiceProvider extends ServiceProvider
             Contracts\Menu::class,
             fn ($app) => new Support\MenuRepository(
                 $app[Contracts\GlobalData::class],
-                $app[\Juzaweb\Hooks\Contracts\Hook::class]
+                $app[Hook::class]
             )
         );
     }
@@ -178,5 +187,60 @@ class CoreServiceProvider extends ServiceProvider
             Commands\CacheSizeCommand::class,
             Commands\TestMailCommand::class,
         ]);
+    }
+
+    protected function registerMenus(): void
+    {
+        $this->booted(
+            function () {
+                Menu::make('dashboard', __('Dashboard'))
+                    ->icon('fa-tachometer-alt');
+
+                Menu::make('settings', __('Settings'))
+                    ->icon('fa-cogs')
+                    ->priority(99);
+
+                Menu::make('general', __('General'))
+                    ->url('settings')
+                    ->parent('settings');
+
+                Menu::make('social-login', __('Social Login'))
+                    ->url('social-login')
+                    ->parent('settings');
+
+                // Menu::make('roles', __('Roles'))
+                //     ->parent('settings');
+
+                Menu::make('users', __('Users'))
+                    ->parent('settings');
+            }
+        );
+    }
+
+    protected function registerSettings(): void
+    {
+        $this->booted(
+            function () {
+                Setting::make('title')
+                    ->default(config('app.name'))
+                    ->add();
+
+                Setting::make('description')->add();
+                Setting::make('sitename')->add();
+
+                // logo, favicon, banner, user_registration, user_verification
+                Setting::make('logo')->add();
+                Setting::make('favicon')->add();
+                Setting::make('banner')->add();
+
+                Setting::make('user_registration')
+                    ->default(true)
+                    ->add();
+
+                Setting::make('user_verification')
+                    ->default(false)
+                    ->add();
+            }
+        );
     }
 }

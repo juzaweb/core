@@ -13,10 +13,14 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Juzaweb\Core\Support\Traits\HasRules;
+use Juzaweb\Core\Traits\Whenable;
 use Stringable;
 
 abstract class Field implements Renderable, Stringable, Htmlable
 {
+    use HasRules, Whenable;
+
     public function __construct(
         protected string|Model $label,
         protected string $name,
@@ -74,6 +78,7 @@ abstract class Field implements Renderable, Stringable, Htmlable
             'label' => $this->label,
             'name' => $this->name,
             'options' => $this->options,
+            'rules' => $this->getRules(),
         ];
 
         if ($this->label instanceof Model) {

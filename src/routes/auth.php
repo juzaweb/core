@@ -8,6 +8,7 @@
  */
 
 use Juzaweb\Core\Http\Controllers\Auth\AuthController;
+use Juzaweb\Core\Http\Controllers\Auth\SocialLoginController;
 
 Route::get('admin-cp/login', [AuthController::class, 'login'])
     ->name('login')
@@ -26,3 +27,9 @@ Route::post('auth/register', [AuthController::class, 'doRegister'])
 Route::post('auth/logout', [AuthController::class, 'logout'])
     ->name('auth.logout')
     ->middleware(['auth']);
+
+Route::get('auth/social/{driver}/redirect', [SocialLoginController::class, 'redirect'])
+    ->middleware(['guest'])
+    ->name('auth.social.redirect');
+Route::get('auth/social/{driver}/callback', [SocialLoginController::class, 'callback'])
+    ->middleware(['guest']);
