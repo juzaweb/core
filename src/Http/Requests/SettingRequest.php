@@ -27,7 +27,9 @@ class SettingRequest extends FormRequest
         return $this->collect()
             ->only($settings->keys())
             ->mapWithKeys(
-                fn ($value, $key) => [$key => $settings[$key]['rules'] ?? ['nullable', 'string']],
+                fn ($value, $key) => [
+                    $key => $settings[$key]['rules'] ?: ['nullable', 'string']
+                ],
             )
             ->filter()
             ->toArray();
