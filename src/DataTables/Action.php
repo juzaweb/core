@@ -56,7 +56,12 @@ class Action
 
     public static function edit(string $url): static
     {
-        return static::make(__('Edit'), $url, 'fas fa-edit');
+        return static::link(__('Edit'), $url, 'fas fa-edit');
+    }
+
+    public static function link(string $label, string $url, string $icon = 'fas fa-link'): static
+    {
+        return static::make($label, $url, $icon);
     }
 
     /**

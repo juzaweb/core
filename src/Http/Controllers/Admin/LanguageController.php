@@ -11,6 +11,7 @@
 namespace Juzaweb\Core\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\DB;
+use Juzaweb\Core\Facades\Breadcrumb;
 use Juzaweb\Core\Http\Controllers\AdminController;
 use Juzaweb\Core\Http\DataTables\LanguagesDataTable;
 use Juzaweb\Core\Http\Requests\BulkActionsRequest;
@@ -22,6 +23,8 @@ class LanguageController extends AdminController
     public function index()
     {
         $dataTable = new LanguagesDataTable();
+
+        Breadcrumb::add(__('Languages'));
 
         return $dataTable->render(
             'core::admin.language.index'

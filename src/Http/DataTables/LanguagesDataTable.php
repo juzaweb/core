@@ -41,17 +41,22 @@ class LanguagesDataTable extends DataTable
         ];
     }
 
+    public function actions(Model $model): array
+    {
+        return [
+            Action::link(
+                __('Phrases'),
+                route('admin.languages.translations', [$model->code]),
+                'fas fa-language'
+            ),
+            Action::delete(),
+        ];
+    }
+
     public function bulkActions(): array
     {
         return [
             BulkAction::delete(),
-        ];
-    }
-
-    public function actions(Model $model): array
-    {
-        return [
-            Action::delete(),
         ];
     }
 }
