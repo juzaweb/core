@@ -14,7 +14,7 @@
         <div class="dropify-preview image-hidden" @if($path) style="display: block" @endif>
             <span class="dropify-render">
                 @if(!empty($path))
-                    <img src="{{ upload_url($path) }}" alt="">
+                    <img src="{{ upload_url($path) }}" alt="{{ $name }}">
                 @endif
             </span>
             <div class="dropify-infos">
