@@ -80,4 +80,18 @@ class Setting implements Arrayable
             'rules' => $this->getRules(),
         ];
     }
+
+    public function withAdded(bool $added): static
+    {
+        $this->added = $added;
+
+        return $this;
+    }
+
+    public function __destruct()
+    {
+        if (! $this->added) {
+            $this->add();
+        }
+    }
 }

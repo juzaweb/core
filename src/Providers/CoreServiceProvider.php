@@ -222,15 +222,14 @@ class CoreServiceProvider extends ServiceProvider
         $this->booted(
             function () {
                 Setting::make('title')
-                    ->default(config('app.name'))
-                    ->add();
+                    ->default(config('app.name'));
 
-                Setting::make('description')->add();
-                Setting::make('sitename')->add();
+                Setting::make('description');
+                Setting::make('sitename');
 
-                Setting::make('logo')->add();
-                Setting::make('favicon')->add();
-                Setting::make('banner')->add();
+                Setting::make('logo');
+                Setting::make('favicon');
+                Setting::make('banner');
 
                 Setting::make('user_registration')
                     ->default(true);
@@ -239,12 +238,9 @@ class CoreServiceProvider extends ServiceProvider
                     ->default(false);
 
                 // Social Login Settings
-                $drivers = collect(config('core.social_login.providers', []))->keys()
-                    ->mapWithKeys(function ($driver) {
-                        return [$driver => title_from_key($driver)];
-                    });
+                $drivers = array_keys(config('core.social_login.providers', []));
 
-                foreach ($drivers as $driver => $name) {
+                foreach ($drivers as $driver) {
                     Setting::make("{$driver}_login")
                         ->add();
 

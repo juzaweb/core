@@ -20,11 +20,11 @@ return [
 
     'social_login' => [
         'providers' => [
-            'facebook' => \Laravel\Socialite\Two\FacebookProvider::class,
-            'github' => \Laravel\Socialite\Two\GithubProvider::class,
             'google' => \Laravel\Socialite\Two\GoogleProvider::class,
+            'facebook' => \Laravel\Socialite\Two\FacebookProvider::class,
             'linkedin' => \Laravel\Socialite\Two\LinkedInProvider::class,
             'twitter' => \Laravel\Socialite\Two\TwitterProvider::class,
+            'github' => \Laravel\Socialite\Two\GithubProvider::class,
             'gitlab' => \Laravel\Socialite\Two\GitlabProvider::class,
             'bitbucket' => \Laravel\Socialite\Two\BitbucketProvider::class,
         ]

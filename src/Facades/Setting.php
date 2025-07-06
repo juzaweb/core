@@ -18,6 +18,7 @@ use Juzaweb\Core\Contracts\Setting as SettingContract;
  * @method static bool|null boolean(string $key, mixed $default = null)
  * @method static int|null integer(string $key, mixed $default = null)
  * @method static \Illuminate\Support\Collection settings()
+ * @see \Juzaweb\Core\Support\Entities\Setting
  */
 class Setting extends Facade
 {
