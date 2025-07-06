@@ -1,1 +1,1 @@
-<input type="checkbox" name="rows[]" class="jw-datatable-checkbox" value="{{ $model->id }}">
+<input type="checkbox" name="rows[]" class="jw-datatable-checkbox" value="{{ $model->{$rowId} }}">

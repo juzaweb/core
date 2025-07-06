@@ -82,7 +82,7 @@ abstract class DataTable extends BaseDataTable
             $builder->editColumn(
                 'checkbox',
                 function ($row) {
-                    return ColumnEditer::checkbox($row);
+                    return ColumnEditer::checkbox($row, $this->rowId);
                 }
             );
         }

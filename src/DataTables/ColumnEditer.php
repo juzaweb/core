@@ -45,14 +45,15 @@ class ColumnEditer
     /**
      * Create a column of checkboxes.
      *
-     * @param Model $model
+     * @param  Model  $model
+     * @param  string  $rowId
      * @return View
      */
-    public static function checkbox(Model $model): View
+    public static function checkbox(Model $model, string $rowId = 'id'): View
     {
         return view(
             'core::components.datatables.checkbox',
-            ['model' => $model]
+            ['model' => $model, 'rowId' => $rowId]
         );
     }
 }

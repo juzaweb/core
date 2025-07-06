@@ -16,5 +16,13 @@ class Language extends LanguageAlias
 {
     use HasAPI;
 
-    public string $cachePrefix = 'languages_';
+    protected $table = 'languages';
+
+    protected array $filterable = ['code', 'name'];
+
+    protected array $searchable = ['code', 'name'];
+
+    protected array $sortable = ['code', 'name'];
+
+    protected array $sortDefault = ['created_at' => 'desc'];
 }

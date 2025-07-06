@@ -8,9 +8,13 @@
  */
 
 use Illuminate\Support\Facades\Route;
+use Juzaweb\Core\Facades\RouteResource;
+use Juzaweb\Core\Http\Controllers\Admin\LanguageController;
 use Juzaweb\Core\Http\Controllers\Admin\SettingController;
 
 // RouteResource::admin('roles', UserController::class);
+
+RouteResource::admin('languages', LanguageController::class)->except(['edit', 'update', 'create']);
 
 Route::get('/settings/general', [SettingController::class, 'index']);
 

@@ -213,6 +213,9 @@ class CoreServiceProvider extends ServiceProvider
 
                 Menu::make('users', __('Users'))
                     ->parent('settings');
+
+                Menu::make('languages', __('Languages'))
+                    ->parent('settings');
             }
         );
     }
