@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Juzaweb\Core\Models\Users\User as Authenticatable;
+use Juzaweb\Core\Models\User as Authenticatable;
 
 class User extends Authenticatable
 {
