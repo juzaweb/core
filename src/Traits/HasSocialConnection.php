@@ -10,11 +10,12 @@
 namespace Juzaweb\Core\Traits;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Juzaweb\Core\Models\Users\UserSocialConnection;
 
 trait HasSocialConnection
 {
     public function socialConnections(): HasMany
     {
-        return $this->hasMany(config("auth.providers.{$this->getTable()}.social_connections"));
+        return $this->hasMany(UserSocialConnection::class, 'user_id', 'id');
     }
 }

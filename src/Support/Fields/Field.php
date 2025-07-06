@@ -60,6 +60,13 @@ abstract class Field implements Renderable, Stringable, Htmlable
         return $this;
     }
 
+    public function disabled(bool $disabled = true): static
+    {
+        $this->options['disabled'] = $disabled;
+
+        return $this;
+    }
+
     abstract public function render(): View|string;
 
     public function __toString(): string

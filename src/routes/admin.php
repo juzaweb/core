@@ -12,6 +12,9 @@ use Juzaweb\Core\Http\Controllers\Admin\SettingController;
 
 // RouteResource::admin('roles', UserController::class);
 
-Route::get('/settings', [SettingController::class, 'index']);
+Route::get('/settings/general', [SettingController::class, 'index']);
 
 Route::put('/settings', [SettingController::class, 'update']);
+
+Route::get('/settings/social-login', [SettingController::class, 'socialLogin'])
+    ->name('admin.settings.social-login');

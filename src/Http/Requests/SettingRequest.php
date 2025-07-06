@@ -29,7 +29,7 @@ class SettingRequest extends FormRequest
             ->mapWithKeys(
                 fn ($value, $key) => [
                     $key => $settings[$key]['rules'] ?: ['nullable', 'string']
-                ],
+                ]
             )
             ->filter()
             ->toArray();

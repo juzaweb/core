@@ -18,24 +18,30 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use App\Models\User;
+use Juzaweb\Core\Models\Enums\UserStatus;
+use Juzaweb\Core\Models\User;
 use Juzaweb\Core\Models\Users\UserSocialConnection;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\AbstractProvider;
+use Laravel\Socialite\Two\FacebookProvider;
+use Laravel\Socialite\Two\GithubProvider;
+use Laravel\Socialite\Two\GoogleProvider;
+use Laravel\Socialite\Two\LinkedInProvider;
+use Laravel\Socialite\Two\TwitterProvider;
 
 class SocialLoginController extends AdminController
 {
     public function redirect(string $driver)
     {
-        if (! in_array($driver, config('auth.providers.users.login_socials', []))) {
+        if (! setting()->boolean("{$driver}_login", false)) {
             return $this->error(__('Invalid provider :name', ['name' => Str::title($driver)]));
         }
 
         $redirectUrl = action([static::class, 'callback'], ['driver' => $driver]);
 
         try {
-            $socialite = Socialite::driver($driver)->redirectUrl($redirectUrl);
+            $socialite = $this->getProvider($driver)->redirectUrl($redirectUrl);
         } catch (InvalidArgumentException $e) {
             return $this->error($e->getMessage());
         } catch (ClientException $e) {
@@ -46,22 +52,22 @@ class SocialLoginController extends AdminController
         return $socialite->redirect();
     }
 
-    public function callback(string $driver): JsonResponse
+    public function callback(string $driver)
     {
-        if (! in_array($driver, config('auth.providers.users.login_socials'))) {
-            return $this->restFail(__('Invalid provider'));
+        if (! setting()->boolean("{$driver}_login", false)) {
+            return $this->error(__('Invalid provider :name', ['name' => Str::title($driver)]));
         }
 
-        $redirectUrl = $this->getDriverRedirectUrl($driver);
+        $redirectUrl = action([static::class, 'callback'], ['driver' => $driver]);
 
         try {
             /** @var SocialUser $socicalUser */
-            $socicalUser = Socialite::driver($driver)->redirectUrl($redirectUrl)->stateless()->user();
+            $socicalUser = $this->getProvider($driver)->redirectUrl($redirectUrl)->user();
         } catch (InvalidArgumentException $e) {
-            return $this->restFail($e->getMessage());
+            return $this->error($e->getMessage());
         } catch (ClientException $e) {
             report($e);
-            return $this->restFail($e->getMessage());
+            return $this->error($e->getMessage());
         }
 
         $userSocial = UserSocialConnection::findByProvider($driver, $socicalUser->getId());
@@ -69,11 +75,11 @@ class SocialLoginController extends AdminController
         if ($userSocial) {
             $user = $userSocial->user;
 
-            if ($user->status === User::STATUS_INACTIVE) {
-                return $this->restFail(__('Your account has been deactivated.'));
+            if ($userSocial->user->status === UserStatus::BANNED) {
+                return $this->error(__('Your account has been deactivated.'));
             }
 
-            return $this->loginAndResponseWithToken($user, $driver);
+            return $this->loginSuccess($user, $driver);
         }
 
         $user = DB::transaction(
@@ -111,12 +117,26 @@ class SocialLoginController extends AdminController
             }
         );
 
-        return $this->loginAndResponseWithToken($user, $driver);
+        return $this->loginSuccess($user, $driver);
     }
 
-    protected function getProvider(string $method): ?AbstractProvider
+    protected function loginSuccess($user, $driver)
     {
-        $config = $this->getConfig($method);
+        return $this->success(
+            [
+                'redirect' => route('home'),
+                'message' => __('Login successful.'),
+            ]
+        );
+    }
+
+    protected function getProvider(string $method): AbstractProvider
+    {
+        $config = [
+            'client_id' => setting("{$method}_client_id"),
+            'client_secret' => setting("{$method}_client_secret"),
+            'redirect' => action([static::class, 'callback'], ['driver' => $method]),
+        ];
 
         switch ($method) {
             case 'facebook':
@@ -137,7 +157,7 @@ class SocialLoginController extends AdminController
         }
 
         if (empty($provider)) {
-            return null;
+            abort(404, __('Page not found'));
         }
 
         return Socialite::buildProvider(

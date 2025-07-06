@@ -32,4 +32,5 @@ Route::get('auth/social/{driver}/redirect', [SocialLoginController::class, 'redi
     ->middleware(['guest'])
     ->name('auth.social.redirect');
 Route::get('auth/social/{driver}/callback', [SocialLoginController::class, 'callback'])
-    ->middleware(['guest']);
+    ->middleware(['guest'])
+    ->name('auth.social.callback');

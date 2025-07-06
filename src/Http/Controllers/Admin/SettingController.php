@@ -23,6 +23,22 @@ class SettingController extends AdminController
         return view('core::admin.setting.index');
     }
 
+    public function socialLogin()
+    {
+        Breadcrumb::add(__('Social Login Setting'));
+
+        $drivers = [
+            'facebook' => 'Facebook',
+            'google' => 'Google',
+            'github' => 'GitHub',
+            'twitter' => 'Twitter',
+            'linkedin' => 'LinkedIn',
+            // 'apple' => 'Apple',
+        ];
+
+        return view('core::admin.setting.social-login', compact('drivers'));
+    }
+
     public function update(SettingRequest $request)
     {
         app(Setting::class)->sets($request->safe()->all());

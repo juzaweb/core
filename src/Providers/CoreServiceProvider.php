@@ -201,11 +201,11 @@ class CoreServiceProvider extends ServiceProvider
                     ->priority(99);
 
                 Menu::make('general', __('General'))
-                    ->url('settings')
+                    ->url('settings/general')
                     ->parent('settings');
 
                 Menu::make('social-login', __('Social Login'))
-                    ->url('social-login')
+                    ->url('settings/social-login')
                     ->parent('settings');
 
                 // Menu::make('roles', __('Roles'))
@@ -228,18 +228,36 @@ class CoreServiceProvider extends ServiceProvider
                 Setting::make('description')->add();
                 Setting::make('sitename')->add();
 
-                // logo, favicon, banner, user_registration, user_verification
                 Setting::make('logo')->add();
                 Setting::make('favicon')->add();
                 Setting::make('banner')->add();
 
                 Setting::make('user_registration')
-                    ->default(true)
-                    ->add();
+                    ->default(true);
 
                 Setting::make('user_verification')
-                    ->default(false)
-                    ->add();
+                    ->default(false);
+
+                // Social Login Settings
+                $drivers = [
+                    'facebook' => 'Facebook',
+                    'google' => 'Google',
+                    'github' => 'GitHub',
+                    'twitter' => 'Twitter',
+                    'linkedin' => 'LinkedIn',
+                    // 'apple' => 'Apple',
+                ];
+
+                foreach ($drivers as $driver => $name) {
+                    Setting::make("{$driver}_login")
+                        ->add();
+
+                    Setting::make("{$driver}_client_id")
+                        ->add();
+
+                    Setting::make("{$driver}_client_secret")
+                        ->add();
+                }
             }
         );
     }
