@@ -1,6 +1,6 @@
 <div class="form-group">
     @php
-        $path = $value ?? null;
+        $path = $options['value'] ?? null;
     @endphp
     <label class="col-form-label">{{ $label ?? $name }}</label>
     <div class="form-image text-center @if($path) previewing @endif">
