@@ -27,14 +27,10 @@ class SettingController extends AdminController
     {
         Breadcrumb::add(__('Social Login Setting'));
 
-        $drivers = [
-            'facebook' => 'Facebook',
-            'google' => 'Google',
-            'github' => 'GitHub',
-            'twitter' => 'Twitter',
-            'linkedin' => 'LinkedIn',
-            // 'apple' => 'Apple',
-        ];
+        $drivers = collect(config('core.social_login.providers', []))->keys()
+            ->mapWithKeys(function ($driver) {
+                return [$driver => title_from_key($driver)];
+            });
 
         return view('core::admin.setting.social-login', compact('drivers'));
     }

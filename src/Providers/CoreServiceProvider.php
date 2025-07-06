@@ -239,14 +239,10 @@ class CoreServiceProvider extends ServiceProvider
                     ->default(false);
 
                 // Social Login Settings
-                $drivers = [
-                    'facebook' => 'Facebook',
-                    'google' => 'Google',
-                    'github' => 'GitHub',
-                    'twitter' => 'Twitter',
-                    'linkedin' => 'LinkedIn',
-                    // 'apple' => 'Apple',
-                ];
+                $drivers = collect(config('core.social_login.providers', []))->keys()
+                    ->mapWithKeys(function ($driver) {
+                        return [$driver => title_from_key($driver)];
+                    });
 
                 foreach ($drivers as $driver => $name) {
                     Setting::make("{$driver}_login")

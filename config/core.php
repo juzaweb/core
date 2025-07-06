@@ -18,6 +18,18 @@ return [
      */
     'auth_middleware' => ['auth'],
 
+    'social_login' => [
+        'providers' => [
+            'facebook' => \Laravel\Socialite\Two\FacebookProvider::class,
+            'github' => \Laravel\Socialite\Two\GithubProvider::class,
+            'google' => \Laravel\Socialite\Two\GoogleProvider::class,
+            'linkedin' => \Laravel\Socialite\Two\LinkedInProvider::class,
+            'twitter' => \Laravel\Socialite\Two\TwitterProvider::class,
+            'gitlab' => \Laravel\Socialite\Two\GitlabProvider::class,
+            'bitbucket' => \Laravel\Socialite\Two\BitbucketProvider::class,
+        ]
+    ],
+
     'query_cache' => [
         /**
          * Enable query cache

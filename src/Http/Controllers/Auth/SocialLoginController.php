@@ -13,7 +13,6 @@ namespace Juzaweb\Core\Http\Controllers\Auth;
 use Juzaweb\Core\Http\Controllers\AdminController;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,11 +23,6 @@ use Juzaweb\Core\Models\Users\UserSocialConnection;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\AbstractProvider;
-use Laravel\Socialite\Two\FacebookProvider;
-use Laravel\Socialite\Two\GithubProvider;
-use Laravel\Socialite\Two\GoogleProvider;
-use Laravel\Socialite\Two\LinkedInProvider;
-use Laravel\Socialite\Two\TwitterProvider;
 
 class SocialLoginController extends AdminController
 {
@@ -132,33 +126,17 @@ class SocialLoginController extends AdminController
 
     protected function getProvider(string $method): AbstractProvider
     {
+        $provider = config("core.social_login.providers.{$method}");
+
+        if (empty($provider)) {
+            abort(404, __('Page not found'));
+        }
+
         $config = [
             'client_id' => setting("{$method}_client_id"),
             'client_secret' => setting("{$method}_client_secret"),
             'redirect' => action([static::class, 'callback'], ['driver' => $method]),
         ];
-
-        switch ($method) {
-            case 'facebook':
-                $provider = FacebookProvider::class;
-                break;
-            case 'google':
-                $provider = GoogleProvider::class;
-                break;
-            case 'twitter':
-                $provider = TwitterProvider::class;
-                break;
-            case 'linkedin':
-                $provider = LinkedInProvider::class;
-                break;
-            case 'github':
-                $provider = GithubProvider::class;
-                break;
-        }
-
-        if (empty($provider)) {
-            abort(404, __('Page not found'));
-        }
 
         return Socialite::buildProvider(
             $provider,
