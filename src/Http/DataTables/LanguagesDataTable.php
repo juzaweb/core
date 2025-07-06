@@ -34,7 +34,7 @@ class LanguagesDataTable extends DataTable
     {
         return [
             Column::checkbox(),
-            Column::make('code'),
+            Column::make('code')->width('100px'),
             Column::make('name'),
             Column::createdAt(),
             Column::actions(),
