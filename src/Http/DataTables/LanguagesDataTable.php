@@ -49,7 +49,7 @@ class LanguagesDataTable extends DataTable
                 route('admin.languages.translations', [$model->code]),
                 'fas fa-language'
             ),
-            Action::delete(),
+            Action::delete()->disabled($model->code == config('app.fallback_locale')),
         ];
     }
 

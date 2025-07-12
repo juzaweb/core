@@ -13,6 +13,7 @@ namespace Juzaweb\Core\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Juzaweb\Core\Facades\Breadcrumb;
 use Juzaweb\Core\Http\Controllers\AdminController;
+use Juzaweb\Core\Http\Requests\TranslationRequest;
 use Juzaweb\Core\Models\Language;
 use Juzaweb\Translations\Contracts\Translation;
 use Juzaweb\Translations\Models\LanguageLine;
@@ -43,16 +44,18 @@ class TranslationController extends AdminController
         );
     }
 
-    public function update(Request $request, $locale)
+    public function update(TranslationRequest $request, string $locale)
     {
         $group = $request->post('group');
         $value = $request->post('value');
+        $namespace = $request->post('namespace');
+        $key = $request->post('key');
 
         $model = LanguageLine::firstOrNew(
             [
-                'namespace' => $request->post('namespace'),
+                'namespace' => $namespace,
                 'group' => $group,
-                'key' => $request->post('key'),
+                'key' => $key,
             ]
         );
 
@@ -65,24 +68,26 @@ class TranslationController extends AdminController
     public function getDataCollection(string $locale): \Illuminate\Http\JsonResponse
     {
         $collection = $this->translationManager->modules()->map(
-            function ($item, $key) use ($locale) {
-                return $this->translationManager->locale($key)->translationLines($locale);
+            function ($module, $key) {
+                return $this->translationManager->locale($key)
+                    ->translationLines('en')
+                    ->map(
+                        function ($item) use ($module) {
+                            $item['namespace'] = $module['namespace'] ?? '*';
+                            return $item;
+                        }
+                    );
             }
         )
-            ->filter(
-                function ($item) {
-                    return !empty($item);
-                }
-            )
+            ->filter(fn($item) => !empty($item))
             ->flatten(1);
 
-        $langs = LanguageLine::whereIn('key', $collection->pluck('key'))
-            ->get(['key', 'text'])
-            ->keyBy('key');
+        $langs = LanguageLine::get(['key', 'text'])->keyBy(fn ($item) => "{$item->namespace}-{$item->group}-{$item->key}");
 
         $items = $collection->map(
             function ($item) use ($langs, $locale) {
-                $item['trans'] = $langs->get($item['key'])->text[$locale] ?? $item['trans'];
+                $item['trans'] = $langs->get("{$item['namespace']}-{$item['group']}-{$item['key']}")
+                    ->text[$locale] ?? $item['trans'];
                 return $item;
             }
         );

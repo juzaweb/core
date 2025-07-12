@@ -21,7 +21,7 @@ Route::get('/languages/{language}/translations', [TranslationController::class, 
     ->name('admin.languages.translations');
 Route::get('/languages/{language}/translations/get-data', [TranslationController::class, 'getDataCollection'])
     ->name('admin.languages.translations.get-data');
-Route::put('/languages/{language}/translations/{locale}', [TranslationController::class, 'update'])
+Route::put('/languages/{language}/translations', [TranslationController::class, 'update'])
     ->name('admin.languages.translations.update');
 
 Route::get('/settings/general', [SettingController::class, 'index']);

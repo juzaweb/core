@@ -20,8 +20,6 @@ use Juzaweb\Core\Contracts\Setting;
 use Juzaweb\Core\Contracts\Theme as ThemeContract;
 use Juzaweb\Core\Themes\Exceptions\ThemeNotFoundException;
 use Juzaweb\Translations\Contracts\Translation;
-use Laravel\Folio\FolioManager;
-use Laravel\Folio\PendingRoute;
 
 class ThemeRepository implements ThemeContract
 {
@@ -37,11 +35,6 @@ class ThemeRepository implements ThemeContract
 
     protected ConfigContract $config;
 
-    /**
-     * @var FolioManager|PendingRoute $folio
-     */
-    protected FolioManager $folio;
-
     public function __construct(
         protected ApplicationContract $app,
         protected string $path
@@ -50,7 +43,6 @@ class ThemeRepository implements ThemeContract
         $this->viewFinder = $app['view']->getFinder();
         $this->translator = $app['translator'];
         $this->config = $this->app['config'];
-        $this->folio = $app[FolioManager::class];
     }
 
     /**
@@ -139,6 +131,18 @@ class ThemeRepository implements ThemeContract
             require ($theme->path($file));
         }
 
+        $lowerName = $theme->lowerName();
+        $langPublishPath = resource_path('lang/themes/' . $theme->name());
+
+        $this->app[Translation::class]->register("{$lowerName}_theme", [
+            'type' => 'theme',
+            'key' => $lowerName,
+            'namespace' => $lowerName,
+            'lang_path' => $theme->path('resources/lang'),
+            'src_path' => $theme->path(),
+            'publish_path' => $langPublishPath,
+        ]);
+
         return;
 
         $viewPath = $theme->path('views');
@@ -160,23 +164,7 @@ class ThemeRepository implements ThemeContract
             $this->translator->addNamespace($namespace, $langPublishPath);
         }
 
-        $this->folio->path("{$viewPath}/pages")
-            ->middleware([
-                '*' => [
-                    'web',
-                ],
-            ]);
-
         $lowerName = $theme->lowerName();
-
-        $this->app[Translation::class]->register("{$lowerName}_theme", [
-            'type' => 'theme',
-            'key' => $lowerName,
-            'namespace' => '*',
-            'lang_path' => $theme->path('/lang'),
-            'src_path' => $theme->path('/src'),
-            'publish_path' => $langPublishPath,
-        ]);
     }
 
     protected function scan(): Collection

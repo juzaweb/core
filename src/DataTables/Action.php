@@ -42,6 +42,16 @@ class Action
     protected ?string $action = null;
 
     /**
+     * @var bool
+     */
+    protected bool $disabled = false;
+
+    /**
+     * @var bool
+     */
+    protected bool $visible = true;
+
+    /**
      * Create a new Action instance.
      *
      * @param string $label
@@ -148,6 +158,56 @@ class Action
         $this->icon = $icon;
 
         return $this;
+    }
+
+    /**
+     * Set the disabled state of the action.
+     *
+     * @param bool $disabled
+     *      If true, the action will be disabled.
+     * @return static
+     */
+    public function disabled(bool $disabled = true): static
+    {
+        $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    /**
+     * Set the visibility of the action.
+     *
+     * @param bool $visible
+     *      If true, the action will be visible.
+     * @return static
+     */
+    public function visible(bool $visible = true): static
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Check if the action is disabled.
+     *
+     * @return bool
+     *      Returns true if the action is disabled, false otherwise.
+     */
+    public function isDisabled(): bool
+    {
+        return $this->disabled;
+    }
+
+    /**
+     * Check if the action is visible.
+     *
+     * @return bool
+     *      Returns true if the action is visible, false otherwise.
+     */
+    public function isVisible(): bool
+    {
+        return $this->visible;
     }
 
     /**
