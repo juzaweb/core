@@ -27,9 +27,13 @@
 </div>
 <!-- /.login-box -->
 
+@include('core::components.js-var')
+
 <script src="{{ mix('js/vendor.min.js', 'vendor/core') }}"></script>
 <script src="{{ asset('vendor/core/js/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ mix('js/admin.min.js', 'vendor/core') }}"></script>
+
+@yield('scripts')
 
 </body>
 </html>

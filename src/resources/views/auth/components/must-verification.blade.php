@@ -1,0 +1,1 @@
+<p class="login-box-msg">{{ __('Please verify your email address') }}</p>

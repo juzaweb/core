@@ -20,7 +20,7 @@
                 @endforeach
             @endif
 
-            <form action="{{ route('auth.login') }}" method="post">
+            <form action="{{ route('auth.login') }}" class="form-ajax" method="post">
                 @csrf
 
                 <div class="input-group mb-3">
@@ -56,22 +56,24 @@
                 </div>
             </form>
 
+            @if($socialLogins->isNotEmpty())
             <div class="social-auth-links text-center mb-3">
-                <p>- OR -</p>
-                <a href="{{ route('auth.social.redirect', ['facebook']) }}" class="btn btn-block btn-primary">
-                    <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-                </a>
-                <a href="{{ route('auth.social.redirect', ['google']) }}" class="btn btn-block btn-danger">
-                    <i class="fab fa-google-plus mr-2"></i> Sign in using Google
-                </a>
+                <p>- {{ __('OR') }} -</p>
+
+                @foreach($socialLogins as $key => $name)
+                    <a href="{{ route('auth.social.redirect', [$key]) }}" class="btn btn-block btn-primary">
+                        <i class="fab fa-{{ $key }} mr-2"></i> {{ __('Sign in using :name', ['name' => $name]) }}
+                    </a>
+                @endforeach
             </div>
             <!-- /.social-auth-links -->
+            @endif
 
             <p class="mb-1">
-                <a href="{{ url('auth/forgot-password') }}">{{ __('I forgot my password') }}</a>
+                <a href="{{ url('user/forgot-password') }}">{{ __('I forgot my password') }}</a>
             </p>
             <p class="mb-0">
-                <a href="{{ url('auth/register') }}" class="text-center">{{ __('Register a new account') }}</a>
+                <a href="{{ url('user/register') }}" class="text-center">{{ __('Register a new account') }}</a>
             </p>
         </div>
         <!-- /.login-card-body -->

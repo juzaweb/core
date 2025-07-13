@@ -113,23 +113,8 @@
     @endcomponent
 </script>
 
-<script type="text/javascript">
-    const juzaweb = {
-        adminPrefix: "{{ config('core.admin_prefix') }}",
-        documentBaseUrl: "{{ url('/storage') }}/",
-        lang: {
-            successfully: '{{ __('Successfully !!') }}',
-            error: '{{ __('Error !!') }}',
-            warning: '{{ __('Warning') }}',
-            confirm: '{{ __('Are you sure?') }}',
-            cancel: '{{ __('Cancel') }}',
-            ok: '{{ __('OK') }}',
-            yes: '{{ __('Yes') }}',
-            remove_question: '{{ __('Are you sure you want to remove?') }}',
-            please_wait: '{{ __('Please wait...') }}',
-        },
-    }
-</script>
+@include('core::components.js-var')
+
 <script src="{{ mix('js/vendor.min.js', 'vendor/core') }}"></script>
 <script src="{{ asset('vendor/core/js/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ mix('js/admin.min.js', 'vendor/core') }}"></script>
