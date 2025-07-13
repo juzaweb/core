@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-body login-card-body" id="register-form">
-            <p class="login-box-msg">{{ __('Sign in to start your session') }}</p>
+            <p class="login-box-msg">{{ __('Sign up new a account') }}</p>
 
             <div id="jquery-message"></div>
 

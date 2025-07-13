@@ -35,13 +35,13 @@ trait HasSessionResponses
             );
         }
 
+        $data['success'] = $success;
         // Return redirect response
         if (!empty($data['redirect'])) {
-            return redirect()->to($data['redirect']);
+            return redirect()->to($data['redirect'])->withInput()->with($data);
         }
 
         // Return back with message
-        $data['success'] = $success;
         $back = back()->withInput()->with($data);
 
         if (! $success) {

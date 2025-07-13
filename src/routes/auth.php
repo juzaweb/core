@@ -24,6 +24,19 @@ Route::post('user/register', [AuthController::class, 'doRegister'])
     ->name('auth.register')
     ->middleware(['throttle:5,1', 'guest']);
 
+Route::get('user/forgot-password', [AuthController::class, 'forgotPassword'])
+    ->name('auth.forgot-password')
+    ->middleware(['guest']);
+
+Route::post('user/forgot-password', [AuthController::class, 'doForgotPassword'])
+    ->middleware(['throttle:5,1', 'guest']);
+Route::get('user/reset-password/{email}/{token}', [AuthController::class, 'resetPassword'])
+    ->name('password.reset')
+    ->middleware(['guest']);
+
+Route::post('user/reset-password/{email}/{token}', [AuthController::class, 'doResetPassword'])
+    ->middleware(['guest']);
+
 Route::get('user/verification/{id}/{hash}', [AuthController::class, 'verification'])
     ->middleware(['signed'])
     ->name('verification.verify');

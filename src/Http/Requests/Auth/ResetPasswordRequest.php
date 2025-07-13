@@ -21,17 +21,16 @@ use OpenApi\Annotations as OA;
  *            mediaType="multipart/form-data",
  *            @OA\Schema(
  *                type="object",
- *                required={"email"},
- *                @OA\Property(
- *                    property="email",
- *                    type="string",
- *                    description="User email",
- *                    format="email"
- *                ),
+ *                required={"password", "password_confirmation"},
  *                @OA\Property(
  *                     property="password",
  *                     type="string"
  *                 ),
+ *              @OA\Property(
+ *                property="password_confirmation",
+ *                  type="string",
+ *                  description="Confirm password",
+ *              )
  *            )
  *      )
  *  )
@@ -41,7 +40,6 @@ class ResetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email:rfc', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
