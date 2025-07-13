@@ -10,11 +10,12 @@
 namespace Juzaweb\Core\Models;
 
 use Juzaweb\Core\Traits\HasAPI;
+use Juzaweb\QueryCache\QueryCacheable;
 use Juzaweb\Translations\Models\Language as LanguageAlias;
 
 class Language extends LanguageAlias
 {
-    use HasAPI;
+    use HasAPI, QueryCacheable;
 
     protected $table = 'languages';
 

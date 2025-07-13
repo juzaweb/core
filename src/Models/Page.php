@@ -23,6 +23,7 @@ class Page extends Model implements TranslatableAlias
         'title',
         'slug',
         'content',
+        'locale',
         'thumbnail',
     ];
 

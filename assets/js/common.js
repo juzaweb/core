@@ -133,6 +133,10 @@ $(function () {
             .val($(this).is(':checked') ? '1' : '0');
     });
 
+    $(document).on('change', '.select-language', function () {
+        window.location.href = '';
+    });
+
     initSelect2('body');
 
     initEditor('body');

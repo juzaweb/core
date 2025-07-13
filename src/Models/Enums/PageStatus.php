@@ -11,22 +11,14 @@ namespace Juzaweb\Core\Models\Enums;
 
 enum PageStatus: string
 {
-    case DRAFT = 'draft';
     case PUBLISHED = 'published';
-
-    public static function options(): array
-    {
-        return [
-            self::DRAFT->value => __('Draft'),
-            self::PUBLISHED->value => __('Published'),
-        ];
-    }
+    case DRAFT = 'draft';
 
     public static function all(): array
     {
         return [
-            self::DRAFT->value,
-            self::PUBLISHED->value,
+            self::PUBLISHED->value => __('Published'),
+            self::DRAFT->value => __('Draft'),
         ];
     }
 

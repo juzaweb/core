@@ -10,12 +10,14 @@
 use Illuminate\Support\Facades\Route;
 use Juzaweb\Core\Facades\RouteResource;
 use Juzaweb\Core\Http\Controllers\Admin\LanguageController;
+use Juzaweb\Core\Http\Controllers\Admin\PageController;
 use Juzaweb\Core\Http\Controllers\Admin\SettingController;
 use Juzaweb\Core\Http\Controllers\Admin\TranslationController;
 
 // RouteResource::admin('roles', UserController::class);
 
 RouteResource::admin('languages', LanguageController::class)->except(['edit', 'update', 'create']);
+RouteResource::admin('pages', PageController::class);
 
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations');
