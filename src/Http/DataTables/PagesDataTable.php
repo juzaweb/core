@@ -33,7 +33,11 @@ class PagesDataTable extends DataTable
         return [
             Column::checkbox(),
             Column::id(),
-            Column::make('title'),
+            Column::editLink(
+                'title',
+                admin_url("pages/{id}/edit"),
+                'Title'
+            ),
             Column::createdAt(),
             Column::actions(),
         ];

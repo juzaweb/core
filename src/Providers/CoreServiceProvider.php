@@ -197,7 +197,7 @@ class CoreServiceProvider extends ServiceProvider
                     ->icon('fa-tachometer-alt');
 
                 Menu::make('pages', __('Pages'))
-                    ->icon('fa-file-alt');
+                    ->icon('fa-file');
 
                 Menu::make('settings', __('Settings'))
                     ->icon('fa-cogs')

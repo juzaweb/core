@@ -102,8 +102,12 @@ abstract class DataTable extends BaseDataTable
         // Add edit link to the specified column if it exists
         if ($editColumn = $this->getColumn('edit')) {
             $builder->editColumn(
-                $editColumn->name,
-                fn (Model $model) => ColumnEditer::editLink($model, $this->getActionUrl(), $editColumn->name)
+                $editColumn->data,
+                fn (Model $model) => ColumnEditer::editLink(
+                    $model,
+                    $editColumn->url,
+                    $editColumn->data
+                )
             );
         }
 
