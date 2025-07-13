@@ -243,6 +243,8 @@ class CoreServiceProvider extends ServiceProvider
                 Setting::make('user_verification')
                     ->default(false);
 
+                Setting::make('multiple_language')->default(0);
+
                 // Social Login Settings
                 $drivers = array_keys(config('core.social_login.providers', []));
 
