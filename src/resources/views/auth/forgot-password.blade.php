@@ -40,9 +40,11 @@
                 <a href="{{ url('user/login') }}" class="text-center">{{ __('Login to account') }}</a>
             </p>
 
-            <p class="mb-0">
-                <a href="{{ url('user/register') }}" class="text-center">{{ __('Register a new account') }}</a>
-            </p>
+            @if(setting('user_registration'))
+                <p class="mb-0">
+                    <a href="{{ url('user/register') }}" class="text-center">{{ __('Register a new account') }}</a>
+                </p>
+            @endif
         </div>
         <!-- /.login-card-body -->
     </div>

@@ -72,9 +72,12 @@
             <p class="mb-1">
                 <a href="{{ url('user/forgot-password') }}">{{ __('I forgot my password') }}</a>
             </p>
+
+            @if(setting('user_registration'))
             <p class="mb-0">
                 <a href="{{ url('user/register') }}" class="text-center">{{ __('Register a new account') }}</a>
             </p>
+            @endif
         </div>
         <!-- /.login-card-body -->
     </div>

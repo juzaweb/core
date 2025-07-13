@@ -73,6 +73,8 @@ class AuthController extends AdminController
 
     public function register()
     {
+        abort_if(setting('user_registration') === false, 403, __('User registration is disabled.'));
+
         $socialLogins = $this->getSocialLoginProviders();
 
         return view('core::auth.register', [
@@ -83,6 +85,8 @@ class AuthController extends AdminController
 
     public function doRegister(RegisterRequest $request)
     {
+        abort_if(setting('user_registration') === false, 403, __('User registration is disabled.'));
+
         $user = DB::transaction(fn () => $request->register());
 
         $redirect = route('login');
