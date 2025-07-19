@@ -136,7 +136,7 @@ $(function () {
     $(document).on('change', '.select-language', function () {
         const locale = $(this).val();
         const currentUrl = new URL(window.location.href);
-        currentUrl.searchParams.set('language', locale);
+        currentUrl.searchParams.set('locale', locale);
         window.location.href = currentUrl.toString();
     });
 
