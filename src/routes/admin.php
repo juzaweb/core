@@ -20,7 +20,7 @@ use Juzaweb\Core\Http\Controllers\Admin\UserController;
 // RouteResource::admin('roles', UserController::class);
 Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 Route::get('/profile', [ProfileController::class, 'index'])->name('admin.profile');
-Route::get('/profile/notification', [ProfileController::class, 'notification'])
+Route::get('/profile/notifications', [ProfileController::class, 'notification'])
     ->name('admin.profile.notification');
 Route::post('/profile', [ProfileController::class, 'update']);
 
