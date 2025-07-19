@@ -43,6 +43,11 @@ class BulkAction
     protected ?string $action = null;
 
     /**
+     * @var bool
+     */
+    protected bool $visible = true;
+
+    /**
      * Create a new Action instance.
      *
      * @param string $label
@@ -136,6 +141,27 @@ class BulkAction
         return $this;
     }
 
+    /**
+     * Set the visibility of the bulk action.
+     *
+     * @param bool $visible
+     *      Whether the bulk action should be visible or not.
+     * @return static
+     */
+    public function visible(bool $visible): static
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    public function can(string $permission): static
+    {
+        // This method can be used to check permissions if needed.
+        // For now, it does nothing but can be extended later.
+        return $this->visible(auth()->user()->can($permission));
+    }
+
     public function getType(): string
     {
         return $this->type;
@@ -164,5 +190,10 @@ class BulkAction
     public function getLabel(): string
     {
         return $this->label;
+    }
+
+    public function isVisible(): bool
+    {
+        return $this->visible;
     }
 }

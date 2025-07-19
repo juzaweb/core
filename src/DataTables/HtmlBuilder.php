@@ -23,10 +23,12 @@ class HtmlBuilder extends Builder
     {
         $table = parent::table($attributes, $drawFooter, $drawSearch);
 
+        $bulkActions = array_filter($this->bulkActions, fn ($action) => $action->isVisible());
+
         $filters = $this->view->make(
             'core::components.datatables.bulk-actions',
             [
-                'bulkActions' => $this->bulkActions,
+                'bulkActions' => $bulkActions,
                 'tableId' => $this->getTableId(),
                 'searchable' => $this->attributes['searching'] ?? true,
                 'endpoint' => $this->actionUrl,

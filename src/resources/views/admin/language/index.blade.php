@@ -3,9 +3,11 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
+            @can('languages.create')
             <a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                 <i class="fas fa-plus"></i> {{ __('Add Language') }}
             </a>
+            @endcan
         </div>
     </div>
 
@@ -24,6 +26,7 @@
 @endsection
 
 @section('scripts')
+    @can('languages.create')
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
             <form action="" class="form-ajax" method="post" data-success="addLanguageSuccess">
@@ -50,6 +53,7 @@
             </form>
         </div>
     </div>
+    @endcan
 
     {{ $dataTable->scripts() }}
 

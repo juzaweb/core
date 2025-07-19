@@ -53,13 +53,15 @@ class PageController extends AdminController
     {
         $locale = $this->getFormLanguage();
 
-        $model = Page::withTranslation($locale)->find($id);
+        $model = Page::withTranslation($locale, ['media'])->find($id);
 
         abort_if($model === null, 404, __('video-sharing::translation.page_not_found'));
 
         Breadcrumb::add(__('Pages'), admin_url('pages'));
 
         Breadcrumb::add(__('Edit page :name', ['name' => $model->name]));
+
+        $model->setDefaultLocale($locale);
 
         $action = action([static::class, 'update'], ['id' => $model->id]);
 
@@ -88,7 +90,9 @@ class PageController extends AdminController
 
         $data = $request->safe()->all();
 
-        $model->update($data);
+        $locale = $this->getFormLanguage();
+
+        $model->setDefaultLocale($locale)->update($data);
 
         return $this->success(
             [

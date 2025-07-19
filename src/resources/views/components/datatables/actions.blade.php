@@ -1,6 +1,4 @@
 @foreach($actions as $action)
-    @continue(!$action->isVisible())
-
     <a href="{{ $action->getUrl() }}"
        class="btn btn-{{ $action->getColor() }} btn-sm datatables-row-action datatables-row-{{ $action->getType() }} @if($action->isDisabled()) disabled @endif"
        data-type="{{ $action->getType() }}"

@@ -31,7 +31,7 @@ class UsersDataTable extends DataTable
         return [
             Column::checkbox(),
             Column::id(),
-            Column::make('name'),
+            Column::editLink('name', admin_url('users/{id}/edit'), __('Name')),
             Column::make('email'),
             Column::createdAt(),
             Column::actions(),
@@ -41,15 +41,18 @@ class UsersDataTable extends DataTable
     public function bulkActions(): array
     {
         return [
-            BulkAction::delete(),
+            BulkAction::delete()->can('users.delete'),
         ];
     }
 
     public function actions(Model $model): array
     {
         return [
-            Action::edit(admin_url("users/{$model->id}/edit")),
-            Action::delete(),
+            Action::edit(admin_url("users/{$model->id}/edit"))
+                ->can('users.edit'),
+            Action::delete()
+                ->disabled($model->isSuperAdmin())
+                ->can('users.delete'),
         ];
     }
 }

@@ -9,12 +9,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Juzaweb\Core\Facades\RouteResource;
+use Juzaweb\Core\Http\Controllers\Admin\DashboardController;
 use Juzaweb\Core\Http\Controllers\Admin\LanguageController;
 use Juzaweb\Core\Http\Controllers\Admin\PageController;
 use Juzaweb\Core\Http\Controllers\Admin\SettingController;
 use Juzaweb\Core\Http\Controllers\Admin\TranslationController;
 use Juzaweb\Core\Http\Controllers\Admin\UserController;
-use Juzaweb\Themes\VideoSharing\Http\Controllers\DashboardController;
 
 // RouteResource::admin('roles', UserController::class);
 Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');

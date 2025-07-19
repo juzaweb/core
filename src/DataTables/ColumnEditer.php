@@ -24,6 +24,8 @@ class ColumnEditer
      */
     public static function actions(Model $model, array $actions, string $endpoint): View
     {
+        $actions = array_filter($actions, fn ($action) => $action->isVisible());
+
         return view(
             'core::components.datatables.actions',
             [

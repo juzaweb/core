@@ -210,6 +210,14 @@ class Action
         return $this->visible;
     }
 
+    public function can(string $permission): static
+    {
+        // This method can be used to check permissions for the action.
+        $this->visible = auth()->user()->can($permission);
+        // For now, it does nothing but can be extended in the future.
+        return $this;
+    }
+
     /**
      * Get the type of action.
      *
