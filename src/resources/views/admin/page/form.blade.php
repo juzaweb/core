@@ -35,6 +35,12 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
+                        {{ Field::language($model, 'locale', ['value' => $locale, 'label' => __('Language')]) }}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
                         {{ Field::select($model, 'status', ['label' => __('Status')])
                             ->dropDownList(
                                 \Juzaweb\Core\Models\Enums\PageStatus::all()
@@ -48,23 +54,7 @@
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-body">
-                        @php
-                            $languages = \Juzaweb\Core\Models\Language::languages();
-                        @endphp
-                        <div class="form-group">
-                            <label for="locale">{{ __('Language') }}</label>
-                            <select name="locale" id="locale" class="form-control select-language">
-                                @foreach($languages as $key => $language)
-                                    <option value="{{ $key }}" @selected($locale == $key)>
-                                        {{ $language->name }} ({{ $language->code }})
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </form>

@@ -54,4 +54,9 @@ class FieldFactory
 
         return new Fields\Text($label, $name, $options);
     }
+
+    public function language(string|Model|null $label, ?string $name, array $options = []): Fields\Language
+    {
+        return new Fields\Language($label, $name, $options);
+    }
 }
