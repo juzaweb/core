@@ -65,27 +65,28 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
+                <span class="badge badge-warning navbar-badge">
+                    {{ auth()->user()->unreadNotifications()->count() }}
+                </span>
             </a>
+
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">15 Notifications</span>
+                <span class="dropdown-item dropdown-header">
+                    {{ __(':num Notifications', ['num' => auth()->user()->notifications()->count()]) }}
+                </span>
+
+                @foreach(auth()->user()->notifications()->limit(5)->get() as $notification)
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-{{ $notification->data['icon'] ?? 'info' }} mr-2"></i> 4 new messages
+                        <span class="float-right text-muted text-sm">
+                            {{ $notification->created_at?->diffForHumans() }}
+                        </span>
+                    </a>
+                @endforeach
+
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                    <span class="float-right text-muted text-sm">3 mins</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-users mr-2"></i> 8 friend requests
-                    <span class="float-right text-muted text-sm">12 hours</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-file mr-2"></i> 3 new reports
-                    <span class="float-right text-muted text-sm">2 days</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                <a href="#" class="dropdown-item dropdown-footer">{{ __('See All Notifications') }}</a>
             </div>
         </li>
         <li class="nav-item dropdown">
@@ -97,20 +98,21 @@
                 >
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="/profile" class="dropdown-item">
-                    <i class="fas fa-user-cog mr-2"></i> Hồ sơ
+                <a href="{{ admin_url('/profile') }}" class="dropdown-item">
+                    <i class="fas fa-user-cog mr-2"></i> {{ __('Profile') }}
                 </a>
-                <a href="/settings" class="dropdown-item">
-                    <i class="fas fa-cog mr-2"></i> Cài đặt
+                <a href="{{ admin_url('/settings') }}" class="dropdown-item">
+                    <i class="fas fa-cog mr-2"></i> {{ __('Settings') }}
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="/logout" class="dropdown-item text-danger">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất
+                <a class="dropdown-item text-danger" href="javascript:void(0)"
+                   onclick="$('.form-logout').submit()">
+                    <i class="fas fa-sign-out-alt mr-2"></i> {{ __('Logout') }}
                 </a>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <a class="nav-link" data-widget="fullscreen" href="javascript:void(0)" role="button">
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>

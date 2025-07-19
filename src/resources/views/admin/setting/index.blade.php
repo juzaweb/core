@@ -4,7 +4,7 @@
     <form action="{{ admin_url('settings') }}" class="form-ajax" method="post">
         @method('PUT')
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-md-12">
                 <button class="btn btn-primary">
                     <i class="fas fa-save"></i> {{ __('Save Change') }}
@@ -14,7 +14,7 @@
 
         <div class="row">
             <div class="col-md-9">
-                <div class="card mt-3">
+                <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ __('General') }}</h3>
                     </div>
@@ -28,7 +28,7 @@
 
                         {{ Field::text(__('Site Name'), 'sitename', ['value' => setting('sitename'), 'placeholder' => __('Ex: Juzaweb')]) }}
 
-                        {{ Field::select(__('Language'), 'language', ['value' => config('language', 'en')])
+                        {{ Field::select(__('Default Language'), 'language', ['value' => config('language', 'en')])
                             ->dropDownList(collect(config('locales'))->pluck('name', 'code')->toArray()) }}
 
                         {{ Field::checkbox(__('User Registration'), 'user_registration', ['value' => setting('user_registration')]) }}
@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <div class="card mt-3">
+                <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ __('Multiple Language') }}</h3>
                     </div>
@@ -83,7 +83,13 @@
             </div>
 
             <div class="col-md-3">
-                <div class="card mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        {{ Field::language(__('Language'), 'locale', ['value' => $locale]) }}
+                    </div>
+                </div>
+
+                <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ __('Logo & Icon') }}</h3>
                     </div>

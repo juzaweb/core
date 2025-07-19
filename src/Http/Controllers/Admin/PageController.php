@@ -51,7 +51,7 @@ class PageController extends AdminController
 
     public function edit(Request $request, string $id)
     {
-        $locale = $request->get('locale', config('translatable.fallback_locale'));
+        $locale = $this->getFormLanguage();
 
         $model = Page::withTranslation($locale)->find($id);
 

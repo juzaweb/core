@@ -20,7 +20,9 @@ class SettingController extends AdminController
     {
         Breadcrumb::add(__('General Setting'));
 
-        return view('core::admin.setting.index');
+        $locale = $this->getFormLanguage();
+
+        return view('core::admin.setting.index', compact('locale'));
     }
 
     public function socialLogin()

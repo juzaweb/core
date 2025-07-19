@@ -104,6 +104,10 @@
 </div>
 <!-- ./wrapper -->
 
+<form action="{{ url('user/logout') }}" method="post" style="display: none" class="form-logout">
+    @csrf
+</form>
+
 <script type="text/html" id="form-images-template">
     @component('core::fields.components.image-item', [
         'name' => '{name}',
