@@ -10,6 +10,7 @@
 
 namespace Juzaweb\Core\Http\Controllers\Admin;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Juzaweb\Core\Facades\Breadcrumb;
 use Juzaweb\Core\Http\Controllers\AdminController;
@@ -65,7 +66,7 @@ class TranslationController extends AdminController
         return $this->success(__('Translation updated successfully'));
     }
 
-    public function getDataCollection(string $locale): \Illuminate\Http\JsonResponse
+    public function getDataCollection(string $locale): JsonResponse
     {
         $collection = $this->translationManager->modules()->map(
             function ($module, $key) {
@@ -82,7 +83,8 @@ class TranslationController extends AdminController
             ->filter(fn($item) => !empty($item))
             ->flatten(1);
 
-        $langs = LanguageLine::get(['key', 'text'])->keyBy(fn ($item) => "{$item->namespace}-{$item->group}-{$item->key}");
+        $langs = LanguageLine::get()
+            ->keyBy(fn ($item) => "{$item->namespace}-{$item->group}-{$item->key}");
 
         $items = $collection->map(
             function ($item) use ($langs, $locale) {

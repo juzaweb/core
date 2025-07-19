@@ -22,8 +22,14 @@ class ForceLocale
      */
     public function handle(Request $request, \Closure $next)
     {
-        if ($request->has('locale')) {
-            app()->setLocale($request->get('locale'));
+        if ($locale = $request->get('hl')) {
+            app()->setLocale($locale);
+
+            // Set the locale in the session if needed
+            session(['locale' => $locale]);
+        } elseif (session('locale')) {
+            // If the locale is set in the session, use it
+            app()->setLocale(session('locale'));
         }
 
         return $next($request);

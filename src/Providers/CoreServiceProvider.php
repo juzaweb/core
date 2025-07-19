@@ -26,6 +26,7 @@ use Juzaweb\Core\Rules\ModelExists;
 use Juzaweb\Core\Rules\ModelUnique;
 use Juzaweb\Core\Support;
 use Juzaweb\Hooks\Contracts\Hook;
+use Juzaweb\Translations\Contracts\Translation;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -35,7 +36,13 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->registerCommands();
 
-        $this->app['router']->aliasMiddleware('admin', Admin::class);
+        $this->app['router']->middlewareGroup(
+            'admin',
+            [
+                Admin::class,
+                \Juzaweb\Core\Http\Middleware\ForceLocale::class,
+            ]
+        );
         $this->app['router']->aliasMiddleware('signed', ValidateSignature::class);
 
         Carbon::macro('toUserTimezone', function () {
@@ -58,6 +65,18 @@ class CoreServiceProvider extends ServiceProvider
                     return false;
                 }
             }
+        );
+
+        $this->app[Translation::class]->register(
+            'core',
+            [
+                'type' => 'core',
+                'key' => 'core',
+                'namespace' => 'core',
+                'lang_path' => __DIR__ . '/../resources/lang',
+                'src_path' => __DIR__ . '/..',
+                'publish_path' => resource_path("lang/vendor/core"),
+            ]
         );
 
         $this->registerSettings();
@@ -118,7 +137,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'core');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'core');
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/core.php', 'core');
 
