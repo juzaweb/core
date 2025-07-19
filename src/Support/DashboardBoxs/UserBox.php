@@ -16,11 +16,6 @@ use Juzaweb\Core\Models\User;
 
 class UserBox implements DashboardBox
 {
-    public function __construct()
-    {
-        // Initialization code if needed
-    }
-
     public function render(): Htmlable
     {
         return view('core::components.dashboard.box', ['box' => $this]);
@@ -28,12 +23,12 @@ class UserBox implements DashboardBox
 
     public function getTitle(): string
     {
-        return 'Users';
+        return __('Total Users');
     }
 
     public function getIcon(): string
     {
-        return 'fa-users';
+        return 'users';
     }
 
     public function getBackground(): string
@@ -41,6 +36,16 @@ class UserBox implements DashboardBox
         return 'bg-warning';
     }
 
+    public function getOrder(): int
+    {
+        return 999;
+    }
+
+    /**
+     * Get the data for the dashboard box.
+     *
+     * @return int
+     */
     public function getData(): int
     {
         return User::active()->count();

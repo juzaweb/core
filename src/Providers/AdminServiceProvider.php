@@ -10,8 +10,10 @@
 
 namespace Juzaweb\Core\Providers;
 
+use Juzaweb\Core\Facades\Dashboard;
 use Juzaweb\Core\Facades\Menu;
 use Juzaweb\Core\Facades\Setting;
+use Juzaweb\Core\Support\DashboardBoxs\UserBox;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -97,6 +99,6 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerDashboardBoxes(): void
     {
-
+        Dashboard::box('users', new UserBox());
     }
 }

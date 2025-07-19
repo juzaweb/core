@@ -10,14 +10,16 @@
 
 namespace Juzaweb\Core\Contracts;
 
+use Illuminate\Contracts\Support\Htmlable;
+
 interface DashboardBox
 {
     /**
      * Render the dashboard box.
      *
-     * @return \Illuminate\Contracts\Support\Htmlable
+     * @return Htmlable
      */
-    public function render(): \Illuminate\Contracts\Support\Htmlable;
+    public function render(): Htmlable;
 
     /**
      * Get the title of the dashboard box.
@@ -39,4 +41,11 @@ interface DashboardBox
      * @return int
      */
     public function getData(): int;
+
+    /**
+     * Get the background class for the dashboard box.
+     *
+     * @return string
+     */
+    public function getBackground(): string;
 }
