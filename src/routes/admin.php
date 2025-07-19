@@ -13,8 +13,13 @@ use Juzaweb\Core\Http\Controllers\Admin\LanguageController;
 use Juzaweb\Core\Http\Controllers\Admin\PageController;
 use Juzaweb\Core\Http\Controllers\Admin\SettingController;
 use Juzaweb\Core\Http\Controllers\Admin\TranslationController;
+use Juzaweb\Core\Http\Controllers\Admin\UserController;
+use Juzaweb\Themes\VideoSharing\Http\Controllers\DashboardController;
 
 // RouteResource::admin('roles', UserController::class);
+Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+RouteResource::admin('users', UserController::class);
 
 RouteResource::admin('languages', LanguageController::class)->except(['edit', 'update', 'create']);
 RouteResource::admin('pages', PageController::class);
