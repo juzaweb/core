@@ -12,8 +12,7 @@ namespace Juzaweb\Core\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Juzaweb\Core\Contracts\Sitemapable;
-use Juzaweb\Modules\Backlink\Models\ServiceTranslation;
-use Juzaweb\Modules\Blog\Models\PostTranslation;
+use Juzaweb\Core\Models\Language;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
@@ -25,7 +24,7 @@ class SitemapGenerateCommand extends Command
 
     public function handle(): int
     {
-        $locales = config('translatable.locales');
+        $locales = Language::languages()->keys();
         $defaultLocale = config('app.locale');
 
         $sitemap = Sitemap::create()->add(Url::create('/')->setPriority(1));
