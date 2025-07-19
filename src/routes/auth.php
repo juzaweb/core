@@ -34,6 +34,10 @@ Route::get('user/reset-password/{email}/{token}', [AuthController::class, 'reset
     ->name('password.reset')
     ->middleware(['guest']);
 
+Route::get('user/verification', [AuthController::class, 'verificationNotice'])
+    ->name('verification.notice')
+    ->middleware(['verified']);
+
 Route::post('user/reset-password/{email}/{token}', [AuthController::class, 'doResetPassword'])
     ->middleware(['guest']);
 

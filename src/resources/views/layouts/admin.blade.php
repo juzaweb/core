@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
     <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'vendor/core') }}">
     <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'vendor/core') }}">
+
+    @yield('head')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->

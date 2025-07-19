@@ -122,14 +122,13 @@ class PageController extends AdminController
 
         switch ($action) {
             case 'delete':
-                Page::whereIn('id', $ids)->where('is_super_admin', '!=', true)->delete();
+                Page::whereIn('id', $ids)->delete();
                 return $this->success(__('video-sharing::translation.selected_pages_deleted_successfully'));
             case 'draft':
-                Page::whereIn('id', $ids)->where('is_super_admin', '!=', true)->update(['status' => PageStatus::DRAFT]);
+                Page::whereIn('id', $ids)->update(['status' => PageStatus::DRAFT]);
                 return $this->success(__('video-sharing::translation.selected_pages_activated_successfully'));
             case 'publish':
                 Page::whereIn('id', $ids)
-                    ->where('is_super_admin', '!=', true)
                     ->update(['status' => PageStatus::PUBLISHED]);
                 return $this->success(__('video-sharing::translation.selected_pages_deactivated_successfully'));
             default:

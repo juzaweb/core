@@ -110,6 +110,15 @@ class AuthController extends AdminController
         return redirect()->route('login');
     }
 
+    public function verificationNotice()
+    {
+        return view('core::auth.verification-notice',
+            [
+                'title' => __('Email Verification'),
+            ]
+        );
+    }
+
     public function verification(string $id, string $hash)
     {
         $user = User::find($id);
