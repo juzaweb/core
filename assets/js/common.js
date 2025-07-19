@@ -134,7 +134,10 @@ $(function () {
     });
 
     $(document).on('change', '.select-language', function () {
-        window.location.href = '';
+        const locale = $(this).val();
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('language', locale);
+        window.location.href = currentUrl.toString();
     });
 
     initSelect2('body');
