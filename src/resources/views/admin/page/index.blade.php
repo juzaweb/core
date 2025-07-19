@@ -3,9 +3,11 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <a href="{{ admin_url('pages/create') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> {{ __('Add Page') }}
-            </a>
+            @can('pages.create')
+                <a href="{{ admin_url('pages/create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> {{ __('Add Page') }}
+                </a>
+            @endcan
         </div>
     </div>
 

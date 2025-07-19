@@ -16,10 +16,10 @@ use Juzaweb\Core\Facades\Breadcrumb;
 use Juzaweb\Core\Http\Controllers\AdminController;
 use Juzaweb\Core\Http\DataTables\UsersDataTable;
 use Juzaweb\Core\Http\Requests\BulkActionsRequest;
+use Juzaweb\Core\Http\Requests\UserRequest;
 use Juzaweb\Core\Models\Enums\UserStatus;
 use Juzaweb\Core\Models\User;
 use Juzaweb\Permissions\Models\Role;
-use Juzaweb\Themes\VideoSharing\Http\Requests\UserRequest;
 
 class UserController extends AdminController
 {

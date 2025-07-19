@@ -29,10 +29,10 @@
 
                         {!! Field::text($model, 'email') !!}
 
-                        {{ Field::select($model, 'roles', [
+                        {{--{{ Field::select($model, 'roles', [
                             'label' => __('Roles'),
                             'placeholder' => __('Select a role'),
-                        ])->dropDownList($roles, 'id', 'name') }}
+                        ])->dropDownList($roles, 'id', 'name') }}--}}
 
                         <hr class="my-4">
 
