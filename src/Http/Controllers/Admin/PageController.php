@@ -41,7 +41,7 @@ class PageController extends AdminController
 
         $model = new Page();
         $action = action([static::class, 'store']);
-        $locale = $request->get('locale', config('translatable.fallback_locale'));
+        $locale = $this->getFormLanguage();
 
         return view(
             'core::admin.page.form',

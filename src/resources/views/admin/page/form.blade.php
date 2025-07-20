@@ -30,14 +30,12 @@
                         {{ Field::editor($model, "{$locale}[content]", ['label' => __('Content'), 'value' => $model->content]) }}
                     </div>
                 </div>
+
+                <x-seo-meta :model="$model" :locale="$locale" />
             </div>
 
             <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        {{ Field::language($model, 'locale', ['value' => $locale, 'label' => __('Language')]) }}
-                    </div>
-                </div>
+                <x-language-card :label="$model" :locale="$locale" />
 
                 <div class="card">
                     <div class="card-body">
@@ -53,7 +51,6 @@
                         {{ Field::image($model, "{$locale}[thumbnail]", ['label' => __('Thumbnail'), 'value' => $model->thumbnail]) }}
                     </div>
                 </div>
-
 
             </div>
         </div>

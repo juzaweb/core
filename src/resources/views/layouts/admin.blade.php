@@ -120,7 +120,7 @@
     @endcomponent
 </script>
 
-@include('core::components.js-var')
+<x-js-var />
 
 <script src="{{ mix('js/vendor.min.js', 'vendor/core') }}"></script>
 <script src="{{ asset('vendor/core/plugins/tinymce/tinymce.min.js') }}"></script>

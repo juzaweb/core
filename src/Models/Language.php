@@ -23,7 +23,6 @@ class Language extends LanguageAlias
     protected $fillable = [
         'code',
         'name',
-        'default',
     ];
 
     protected array $filterable = ['code', 'name'];
@@ -48,8 +47,6 @@ class Language extends LanguageAlias
 
     public static function default(): string
     {
-        $defaultLanguage = self::languages()->firstWhere('default', true);
-
-        return $defaultLanguage ? $defaultLanguage->code : config('translatable.fallback_locale');
+        return setting('language', config('translatable.fallback_locale'));
     }
 }
