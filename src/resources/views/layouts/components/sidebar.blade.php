@@ -14,7 +14,7 @@
             @php
                 $children = $menus->where('parent', $root['key'])->sortBy('priority');
                 $active = request()->is(ltrim($root['url'], '/'))
-                    || ($root['url'] != '/admin-cp' && request()->is(ltrim($root['url'], '/') . '/*'))
+                    || ($root['url'] != '/' . config('core.admin_prefix') && request()->is(ltrim($root['url'], '/') . '/*'))
                     || $children->filter(
                         fn ($child) => request()->is(ltrim($child['url'], '/'))
                             || request()->is(ltrim($child['url'], '/') . '/*')
