@@ -16,8 +16,6 @@ use Illuminate\Validation\Rule;
 use Juzaweb\Core\Commands;
 use Juzaweb\Core\Contracts;
 use Juzaweb\Core\DataTables\HtmlBuilder;
-use Juzaweb\Core\Facades\Menu;
-use Juzaweb\Core\Facades\Setting;
 use Juzaweb\Core\Http\Middleware\Admin;
 use Juzaweb\Core\Http\Middleware\ValidateSignature;
 use Juzaweb\Core\Models\User;
@@ -36,13 +34,6 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->registerCommands();
 
-        $this->app['router']->middlewareGroup(
-            'admin',
-            [
-                Admin::class,
-                \Juzaweb\Core\Http\Middleware\ForceLocale::class,
-            ]
-        );
         $this->app['router']->aliasMiddleware('signed', ValidateSignature::class);
 
         Carbon::macro('toUserTimezone', function () {
@@ -87,6 +78,25 @@ class CoreServiceProvider extends ServiceProvider
         $this->registerServices();
 
         $this->registerPublishes();
+
+        $this->app['router']->middlewareGroup(
+            'admin',
+            [
+                'web',
+                ...config('core.auth_middleware', []),
+                Admin::class,
+                \Juzaweb\Core\Http\Middleware\ForceLocale::class,
+            ]
+        );
+
+        $this->app['router']->middlewareGroup(
+            'theme',
+            [
+                'web',
+                \Juzaweb\Core\Http\Middleware\MultipleLanguage::class,
+                \Juzaweb\Core\Http\Middleware\Theme::class,
+            ]
+        );
     }
 
     protected function registerProviders(): void

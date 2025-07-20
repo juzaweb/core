@@ -5,13 +5,14 @@
  * @package    juzaweb/cms
  * @author     The Anh Dang
  * @link       https://cms.juzaweb.com
+ * @license    GNU V2
  */
 
 namespace Juzaweb\Core\Http\Middleware;
 
 use Illuminate\Http\Request;
 
-class ForceLocale
+class Theme
 {
     /**
      * Handle an incoming request.
@@ -22,16 +23,7 @@ class ForceLocale
      */
     public function handle(Request $request, \Closure $next): mixed
     {
-        if ($locale = $request->get('hl')) {
-            app()->setLocale($locale);
-
-            // Set the locale in the session if needed
-            session(['locale' => $locale]);
-        } elseif (session('locale')) {
-            // If the locale is set in the session, use it
-            app()->setLocale(session('locale'));
-        }
-
+        dump(app()->getLocale());
         return $next($request);
     }
 }

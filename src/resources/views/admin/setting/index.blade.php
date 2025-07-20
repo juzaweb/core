@@ -44,7 +44,7 @@
                     <div class="card-body">
                         <div class="form-group clearfix">
                             <div class="icheck-primary d-inline">
-                                <input type="radio" id="multiple_language" name="multiple_language" value="0" @checked(setting('multiple_language') == 0)>
+                                <input type="radio" id="multiple_language" name="multiple_language" value="none" @checked(setting('multiple_language') == 'none')>
                                 <label class="form-check-label" for="multiple_language">
                                     {{ __('Disable multiple language') }}
                                 </label>
