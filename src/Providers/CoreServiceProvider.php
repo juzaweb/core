@@ -152,7 +152,7 @@ class CoreServiceProvider extends ServiceProvider
             Contracts\Translator::class,
             function ($app) {
                 $driver = $app['config']->get('services.translate.driver', 'google');
-                
+
                 return new ($app['config']->get("services.translate.drivers.{$driver}")['class']);
             }
         );
