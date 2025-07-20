@@ -25,9 +25,9 @@
             const salesChartOptions = {
                 maintainAspectRatio: false,
                 responsive: true,
-                legend: {
-                    display: false
-                },
+                // legend: {
+                //     display: false
+                // },
                 scales: {
                     xAxes: [{
                         gridLines: {

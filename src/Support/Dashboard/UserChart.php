@@ -18,7 +18,7 @@ class UserChart implements LineChart
 {
     public function getTitle(): string
     {
-        return __('New Users This Year');
+        return __('Users This Year');
     }
 
     public function getIcon(): string
@@ -33,23 +33,45 @@ class UserChart implements LineChart
 
     public function getData(): array
     {
-        $data = User::cacheFor(3600)
+        $newUsers = User::cacheFor(3600)
             ->active()
             ->selectRaw('MONTH(created_at) as month, count(*) as total')
             ->whereBetween('created_at', [now()->startOfYear(), now()->endOfYear()])
             ->groupBy('month')
             ->pluck('total', 'month');
 
+        $activeUsers = User::cacheFor(3600)
+            ->active()
+            ->selectRaw('MONTH(updated_at) as month, count(*) as total')
+            ->whereBetween('updated_at', [now()->startOfYear(), now()->endOfYear()])
+            ->groupBy('month')
+            ->pluck('total', 'month');
+
         for ($month = 1; $month <= 12; $month++) {
-            if (!$data->has($month)) {
-                $data->put($month, 0);
+            if (! $newUsers->has($month)) {
+                $newUsers->put($month, 0);
+            }
+
+            if (! $activeUsers->has($month)) {
+                $activeUsers->put($month, 0);
             }
         }
 
         return [
             [
                 'label' => __('New Users'),
-                'data' => $data->sortKeys()->values()->toArray(),
+                'data' => $newUsers->sortKeys()->values()->toArray(),
+                'backgroundColor' => 'rgba(210, 214, 222, 1)',
+                'borderColor' => 'rgba(210, 214, 222, 1)',
+                'pointRadius' => false,
+                'pointColor' => 'rgba(210, 214, 222, 1)',
+                'pointStrokeColor' => '#c1c7d1',
+                'pointHighlightFill' => '#fff',
+                'pointHighlightStroke' => 'rgba(220,220,220,1)',
+            ],
+            [
+                'label' => __('Active Users'),
+                'data' => $activeUsers->sortKeys()->values()->toArray(),
                 'backgroundColor' => 'rgba(60,141,188,0.9)',
                 'borderColor' => 'rgba(60,141,188,0.8)',
                 'pointRadius' => false,
