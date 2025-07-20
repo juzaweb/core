@@ -4,6 +4,7 @@
         $menus = \Juzaweb\Core\Facades\Menu::get('admin-left');
         $roots = $menus->whereNull('parent')->sortBy('priority');
     @endphp
+
     <ul class="nav nav-pills nav-sidebar flex-column"
         data-widget="treeview"
         role="menu"
@@ -13,6 +14,7 @@
             @php
                 $children = $menus->where('parent', $root['key'])->sortBy('priority');
                 $active = request()->is(ltrim($root['url'], '/'))
+                    || ($root['url'] != '/admin-cp' && request()->is(ltrim($root['url'], '/') . '/*'))
                     || $children->filter(
                         fn ($child) => request()->is(ltrim($child['url'], '/'))
                             || request()->is(ltrim($child['url'], '/') . '/*')
