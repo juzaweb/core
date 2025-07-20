@@ -230,6 +230,7 @@ class CoreServiceProvider extends ServiceProvider
             Commands\MakeUserCommand::class,
             Commands\CacheSizeCommand::class,
             Commands\TestMailCommand::class,
+            Commands\TranslateCommand::class,
         ]);
     }
 }
