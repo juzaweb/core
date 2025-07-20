@@ -51,10 +51,17 @@ class ProfileController extends AdminController
             function () use ($request) {
                 $user = $request->user();
                 $user->fill($request->safe()->except(['password', 'password_confirmation']));
+
                 if ($request->filled('password')) {
                     $user->password = bcrypt($request->input('password'));
                 }
+
                 $user->save();
+
+                $user->logActivity()
+                    ->performedOn($user)
+                    ->event('change_profile')
+                    ->log('Updated profile information'. ($user->wasChanged('password') ? ' and password' : ''));
 
                 return $user;
             }

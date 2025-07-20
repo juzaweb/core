@@ -61,6 +61,11 @@ class AuthController extends AdminController
          */
         $user = Auth::user();
 
+        $user->logActivity()
+            ->performedOn($user)
+            ->event('logined')
+            ->log('Logged in to the system');
+
         do_action('login.success', $user);
 
         return $this->success(
@@ -77,10 +82,13 @@ class AuthController extends AdminController
 
         $socialLogins = $this->getSocialLoginProviders();
 
-        return view('core::auth.register', [
-            'title' => __('Register'),
-            ...compact('socialLogins'),
-        ]);
+        return view(
+            'core::auth.register',
+            [
+                'title' => __('Register'),
+                ...compact('socialLogins'),
+            ]
+        );
     }
 
     public function doRegister(RegisterRequest $request)
@@ -201,16 +209,17 @@ class AuthController extends AdminController
             $request->merge(['token' => $token, 'email' => $email])
                 ->only(['token', 'email', 'password', 'password_confirmation']),
             function ($user, $password) {
+                /** @var User $user */
                 $user->forceFill(['password' => Hash::make($password)]);
 
                 $user->save();
 
                 $user->passwordResets()->delete();
 
-                activity()->causedBy($user)
+                $user->logActivity()
                     ->performedOn($user)
                     ->event('change_password')
-                    ->log('You reset password');
+                    ->log('User changed password');
 
                 event(new PasswordReset($user));
             }

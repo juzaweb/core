@@ -43,7 +43,9 @@ class UserChart implements LineChart
         $activeUsers = User::cacheFor(3600)
             ->active()
             ->selectRaw('MONTH(updated_at) as month, count(*) as total')
-            ->whereBetween('updated_at', [now()->startOfYear(), now()->endOfYear()])
+            ->whereHas('actions', function ($query) {
+                $query->whereBetween('created_at', [now()->startOfYear(), now()->endOfYear()]);
+            })
             ->groupBy('month')
             ->pluck('total', 'month');
 
