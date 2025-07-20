@@ -40,6 +40,9 @@ Route::put('/languages/{language}/translations', [TranslationController::class, 
     ->name('admin.languages.translations.update')
     ->middleware(['permission:languages.edit']);
 
+Route::post('translations/translate-model', [TranslationController::class, 'translateModel'])
+    ->name('admin.translations.translate-model');
+
 Route::get('/settings/general', [SettingController::class, 'index'])
     ->name('admin.settings.general')
     ->middleware(['permission:settings.general.edit']);

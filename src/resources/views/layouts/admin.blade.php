@@ -126,6 +126,42 @@
 <script src="{{ asset('vendor/core/plugins/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ mix('js/admin.min.js', 'vendor/core') }}"></script>
 
+<script>
+    $(function () {
+        $(document).on('click', '.translate-model', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var id = $this.data('id');
+            var model = $this.data('model');
+            var locale = $this.data('locale');
+
+            if (id && model && locale) {
+                $.ajax({
+                    url: '{{ route('admin.translations.translate-model') }}',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        model: model,
+                        locale: locale,
+                    },
+                    beforeSubmit: function () {
+                        toggle_global_loading(true);
+                    },
+                    success: function (response) {
+                        show_notify(response.message);
+                        window.location.reload();
+                    },
+                    error: function (xhr) {
+                        show_notify(xhr);
+                    }
+                }).done(function () {
+                    toggle_global_loading(false);
+                });
+            }
+        });
+    });
+</script>
+
 @yield('scripts')
 </body>
 </html>

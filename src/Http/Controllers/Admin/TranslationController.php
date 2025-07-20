@@ -96,4 +96,25 @@ class TranslationController extends AdminController
 
         return DataTables::collection($items)->toJson();
     }
+
+    public function translateModel(Request $request): JsonResponse
+    {
+        abort_if(!config('services.translate.enabled'), 404, __('Translation feature is not enabled'));
+
+        $model = $request->post('model');
+        $id = $request->post('id');
+        $locale = $request->post('locale');
+
+        $translation = app($model)->find($id);
+
+        abort_if($translation === null, 404, __('Model not found'));
+
+        $translation->translateTo($locale);
+
+        return $this->success(
+            [
+                'message' => __('Translation for model has been created'),
+            ]
+        );
+    }
 }
