@@ -151,7 +151,9 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->bind(
             Contracts\Translator::class,
             function ($app) {
-                return $app['config']->get('services.translate.driver', 'google')['class'];
+                $driver = $app['config']->get('services.translate.driver', 'google');
+                
+                return new ($app['config']->get("services.translate.drivers.{$driver}")['class']);
             }
         );
     }

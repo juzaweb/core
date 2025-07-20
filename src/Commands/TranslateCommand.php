@@ -23,7 +23,8 @@ class TranslateCommand extends Command
         $target = $this->argument('target');
         $source = $this->argument('source');
 
-        Translation::where('locale', $source)->whereDoesntHave(
+        Translation::where('locale', $source)
+            ->whereDoesntHave(
             'sameKeyTranslations',
             fn ($q) => $q->where('locale', $target)
         )
