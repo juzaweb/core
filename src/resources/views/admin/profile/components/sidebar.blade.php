@@ -13,10 +13,10 @@
 
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name">
-                            <a href="{{ url('profile') }}"></a>
+                            <a href="{{ url('profile') }}">{{ auth()->user()->name }}</a>
                         </div>
                         <div class="profile-usertitle-job">
-                            {{ auth()->user()->name }}
+                            {{ __('Join at') }} {{ auth()->user()->created_at?->format('H:i d/m/Y') }}
                         </div>
                     </div>
 

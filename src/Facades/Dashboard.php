@@ -17,6 +17,7 @@ use Juzaweb\Core\Contracts\Dashboard as DashboardContract;
 /**
  * @method static void box(string $name, DashboardBox $box)
  * @method static array<DashboardBox> boxes()
+ * @method static void chart(string $name, \Juzaweb\Core\Contracts\LineChart $chart)
  */
 class Dashboard extends Facade
 {

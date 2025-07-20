@@ -12,6 +12,7 @@ namespace Juzaweb\Core\Support;
 
 use Juzaweb\Core\Contracts\Dashboard;
 use Juzaweb\Core\Contracts\DashboardBox;
+use Juzaweb\Core\Contracts\LineChart;
 
 class DashboardRepository implements Dashboard
 {
@@ -24,7 +25,7 @@ class DashboardRepository implements Dashboard
         $this->boxes[$name] = $box;
     }
 
-    public function chart(string $name, DashboardBox $box)
+    public function chart(string $name, LineChart $box): void
     {
         $this->charts[$name] = $box;
     }
@@ -37,5 +38,15 @@ class DashboardRepository implements Dashboard
     public function boxes(): array
     {
         return $this->boxes;
+    }
+
+    /**
+     * Get all dashboard charts.
+     *
+     * @return array<string, DashboardBox>
+     */
+    public function charts(): array
+    {
+        return $this->charts;
     }
 }

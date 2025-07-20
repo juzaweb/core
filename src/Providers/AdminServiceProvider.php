@@ -100,5 +100,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerDashboardBoxes(): void
     {
         Dashboard::box('users', new UserBox());
+
+        Dashboard::chart('users', new \Juzaweb\Core\Support\Dashboard\UserChart());
     }
 }

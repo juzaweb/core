@@ -12,6 +12,12 @@
     </div>
 
     @do_action('admin.dashboard.index')
+
+    <div class="row">
+        @foreach ($charts as $chart)
+            @include('core::components.dashboard.line-chart', ['chart' => $chart])
+        @endforeach
+    </div>
 @endsection
 
 @section('scripts')

@@ -202,17 +202,17 @@ if (! function_exists('date_range')) {
     /**
      * Returns an array of strings representing the dates in the given range.
      *
-     * @param Carbon $from
-     * @param Carbon $to
+     * @param  Carbon  $from
+     * @param  Carbon  $to
+     * @param  string  $format
      * @return array
      */
-    function date_range(Carbon $from, Carbon $to): array
+    function date_range(Carbon $from, Carbon $to, string $format = 'd/m/Y'): array
     {
         $result = [];
         $dates = CarbonPeriod::create($from, $to);
-
         foreach ($dates as $date) {
-            $result[] = $date->format('Y-m-d');
+            $result[] = $date->format($format);
         }
 
         return $result;
@@ -225,15 +225,22 @@ if (! function_exists('month_range')) {
      *
      * @param Carbon $from The start date of the range.
      * @param Carbon $to The end date of the range.
-     * @return array An array of strings in 'Y-m' format, representing each month in the range.
+     * @param string $format The format for the month strings (default is d/m).
+     * @return array An array of strings in d/m format, representing each month in the range.
      */
-    function month_range(Carbon $from, Carbon $to): array
+    function month_range(Carbon $from, Carbon $to, string $format = 'm/Y'): array
     {
         $result = [];
-        $dates = CarbonPeriod::create($from, $to);
 
-        foreach ($dates as $date) {
-            $result[] = $date->format('Y-m');
+        // Normalize start and end to beginning of month
+        $from = $from->copy()->startOfMonth();
+        $to = $to->copy()->startOfMonth();
+
+        // Create monthly period
+        $period = CarbonPeriod::create($from, '1 month', $to);
+
+        foreach ($period as $date) {
+            $result[] = $date->format($format);
         }
 
         return $result;

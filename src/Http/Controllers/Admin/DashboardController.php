@@ -17,12 +17,13 @@ class DashboardController extends AdminController
     public function index()
     {
         $boxes = Dashboard::boxes();
+        $charts = Dashboard::charts();
 
         return view(
             'core::admin.dashboard.index',
             [
                 'title' => __('video-sharing::translation.dashboard'),
-                ...compact('boxes')
+                ...compact('boxes', 'charts'),
             ]
         );
     }
