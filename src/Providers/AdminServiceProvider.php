@@ -13,7 +13,7 @@ namespace Juzaweb\Core\Providers;
 use Juzaweb\Core\Facades\Dashboard;
 use Juzaweb\Core\Facades\Menu;
 use Juzaweb\Core\Facades\Setting;
-use Juzaweb\Core\Support\DashboardBoxs\UserBox;
+use Juzaweb\Core\Support\Dashboard\UserBox;
 
 class AdminServiceProvider extends ServiceProvider
 {

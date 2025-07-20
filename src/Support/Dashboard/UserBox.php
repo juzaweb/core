@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Support\DashboardBoxs;
+namespace Juzaweb\Core\Support\Dashboard;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Juzaweb\Core\Contracts\DashboardBox;
@@ -48,6 +48,6 @@ class UserBox implements DashboardBox
      */
     public function getData(): int
     {
-        return User::active()->count();
+        return User::active()->cacheFor(3600)->count();
     }
 }

@@ -5,7 +5,6 @@ namespace Juzaweb\Core\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
@@ -19,12 +18,14 @@ use Juzaweb\Core\Traits\HasSocialConnection;
 use Juzaweb\FileManager\Models\Media;
 use Juzaweb\Permissions\Traits\HasPermissions;
 use Juzaweb\Permissions\Traits\HasRoles;
+use Juzaweb\QueryCache\QueryCacheable;
 use Juzaweb\Themes\VideoSharing\database\factories\UserFactory;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable,
+        QueryCacheable,
         HasApiTokens,
         HasPermissions,
         HasRoles,

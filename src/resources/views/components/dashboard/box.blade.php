@@ -8,7 +8,5 @@
             <span class="info-box-text">{{ $box->getTitle() }}</span>
             <span class="info-box-number">{{ number_human_format($box->getData()) }}</span>
         </div>
-        <!-- /.info-box-content -->
     </div>
-    <!-- /.info-box -->
 </div>

@@ -27,7 +27,7 @@
                                     <i class="fas fa-user"></i> {{ __('core::translation.profile') }}
                                 </a>
                             </li>
-                            <li class="nav-item {{ request()->is((config('core.admin_prefix') . 'profile/notifications')) ? 'active' : '' }}">
+                            <li class="nav-item {{ request()->is((config('core.admin_prefix') . '/profile/notifications')) ? 'active' : '' }}">
                                 <a class="nav-link"
                                    href="{{ admin_url('profile/notifications') }}">
                                     <i class="fas fa-bell"></i> {{ __('core::translation.notifications') }}

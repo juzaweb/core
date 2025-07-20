@@ -17,11 +17,23 @@ class DashboardRepository implements Dashboard
 {
     protected array $boxes = [];
 
+    protected array $charts = [];
+
     public function box(string $name, DashboardBox $box): void
     {
         $this->boxes[$name] = $box;
     }
 
+    public function chart(string $name, DashboardBox $box)
+    {
+        $this->charts[$name] = $box;
+    }
+
+    /**
+     * Get all dashboard boxes.
+     *
+     * @return array<string, DashboardBox>
+     */
     public function boxes(): array
     {
         return $this->boxes;
