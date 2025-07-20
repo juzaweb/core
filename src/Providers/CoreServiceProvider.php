@@ -147,6 +147,13 @@ class CoreServiceProvider extends ServiceProvider
             Contracts\Dashboard::class,
             fn ($app) => new Support\DashboardRepository()
         );
+
+        $this->app->bind(
+            Contracts\Translator::class,
+            function ($app) {
+                return $app['config']->get('services.translate.driver', 'google')['class'];
+            }
+        );
     }
 
     protected function registerPublishes(): void
