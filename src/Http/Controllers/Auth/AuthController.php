@@ -64,7 +64,7 @@ class AuthController extends AdminController
         $user->logActivity()
             ->performedOn($user)
             ->event('logined')
-            ->log('Logged in to the system');
+            ->log(__('Logged in to the system'));
 
         do_action('login.success', $user);
 
@@ -182,6 +182,11 @@ class AuthController extends AdminController
                 $token = $this->passwordBroker->createToken($user);
 
                 $user->sendPasswordResetNotification($token);
+
+                $user->logActivity()
+                    ->performedOn($user)
+                    ->event('forgot_password')
+                    ->log(__('Requested password reset'));
             }
         );
 
@@ -219,7 +224,7 @@ class AuthController extends AdminController
                 $user->logActivity()
                     ->performedOn($user)
                     ->event('change_password')
-                    ->log('User changed password');
+                    ->log(__('Reset password by email'));
 
                 event(new PasswordReset($user));
             }
