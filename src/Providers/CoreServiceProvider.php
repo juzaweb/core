@@ -97,6 +97,11 @@ class CoreServiceProvider extends ServiceProvider
                 \Juzaweb\Core\Http\Middleware\Theme::class,
             ]
         );
+
+        $this->app->singleton(
+            Contracts\Locale::class,
+            fn ($app) => new Support\LocaleRepository($app)
+        );
     }
 
     protected function registerProviders(): void

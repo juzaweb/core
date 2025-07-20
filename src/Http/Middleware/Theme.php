@@ -23,7 +23,6 @@ class Theme
      */
     public function handle(Request $request, \Closure $next): mixed
     {
-        dump(app()->getLocale());
         return $next($request);
     }
 }
