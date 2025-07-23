@@ -10,6 +10,7 @@
 
 namespace Juzaweb\Core\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Juzaweb\Core\Facades\Dashboard;
 use Juzaweb\Core\Facades\Menu;
 use Juzaweb\Core\Facades\Setting;
@@ -22,6 +23,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerSettings();
         $this->registerMenus();
         $this->registerDashboardBoxes();
+        $this->registerComponents();
     }
 
     protected function registerMenus(): void
@@ -102,5 +104,28 @@ class AdminServiceProvider extends ServiceProvider
         Dashboard::box('users', new UserBox());
 
         Dashboard::chart('users', new \Juzaweb\Core\Support\Dashboard\UserChart());
+    }
+
+    protected function registerComponents(): void
+    {
+        Blade::component(
+            'js-var',
+            \Juzaweb\Core\View\Components\JsVar::class
+        );
+
+        Blade::component(
+            'seo-meta',
+            \Juzaweb\Core\View\Components\SeoMeta::class
+        );
+
+        Blade::component(
+            'card',
+            \Juzaweb\Core\View\Components\Card::class
+        );
+
+        Blade::component(
+            'language-card',
+            \Juzaweb\Core\View\Components\LanguageCard::class
+        );
     }
 }
