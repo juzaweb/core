@@ -1,6 +1,6 @@
 {
     "name": "$VENDOR$/$LOWER_NAME$",
-    "type": "larabiz-theme",
+    "type": "juzaweb-theme",
     "description": "$STUDLY_NAME$ Theme",
     "authors": [
         {

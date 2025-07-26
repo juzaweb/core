@@ -3,6 +3,5 @@
     "title": "[TITLE]",
     "description": "[DESCRIPTION]",
     "author": "[AUTHOR]",
-    "version": "[VERSION]",
-    "parent": "[PARENT]"
+    "version": "[VERSION]"
 }

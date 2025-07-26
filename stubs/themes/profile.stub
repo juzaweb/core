@@ -1,4 +1,4 @@
-@extends('theme::layouts.main')
+@extends('[NAME]::layouts.main')
 
 @section('content')
 

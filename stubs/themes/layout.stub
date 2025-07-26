@@ -1,5 +1,28 @@
-@extends('core::layouts.theme')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ setting('favicon') ? upload_url(setting('favicon')) : '/favicon.ico' }}" />
 
-@section('content')
-    @yield('content')
-@endsection
+    <title>@yield('title')</title>
+
+    @yield('head')
+
+    <x-js-var />
+</head>
+
+<body class="juzaweb-theme @yield('body-classes')">
+
+    <main id="content">
+        @yield('content')
+    </main>
+
+    <form action="{{ url('user/logout') }}" method="post" style="display: none" class="form-logout">
+        @csrf
+    </form>
+
+    @yield('scripts')
+</body>
+</html>

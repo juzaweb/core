@@ -33,7 +33,7 @@ class UploaderTest extends TestCase
 
     public function testUploadByUrl()
     {
-        $url = 'https://via.placeholder.com/150';
+        $url = 'https://placehold.co/150';
 
         $upload = MediaUploader::make($url)->upload();
 
@@ -44,7 +44,7 @@ class UploaderTest extends TestCase
 
     public function testUploadByUrlWithCustomName()
     {
-        $url = 'https://via.placeholder.com/150';
+        $url = 'https://placehold.co/150';
 
         $upload = MediaUploader::make($url)->name('custom-name.jpg')->upload();
 

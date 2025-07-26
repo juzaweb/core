@@ -18,6 +18,11 @@ return [
             'layout' => 'resources/views/layouts/main.blade.php',
             'search' => 'resources/views/search.blade.php',
             'profile' => 'resources/views/profile/index.blade.php',
+            'ThemeServiceProvider' => 'Providers/ThemeServiceProvider.php',
+            'RouteServiceProvider' => 'Providers/RouteServiceProvider.php',
+            'lang' => 'resources/lang/en/translation.php',
+            'admin' => 'routes/admin.php',
+            'web' => 'routes/web.php',
         ],
         'folders' => [
             'assets/js' => 'resources/assets/js',

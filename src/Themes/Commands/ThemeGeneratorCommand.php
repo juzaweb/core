@@ -105,7 +105,6 @@ class ThemeGeneratorCommand extends Command
             ?? Str::ucfirst($this->theme['name']).' description';
         $this->theme['author'] = $this->option('author');
         $this->theme['version'] = $this->option('ver');
-        $this->theme['parent'] = '';
     }
 
     /**
@@ -185,18 +184,23 @@ class ThemeGeneratorCommand extends Command
             '[TITLE]',
             '[DESCRIPTION]',
             '[AUTHOR]',
-            '[PARENT]',
             '[VERSION]',
             '[CSSNAME]',
             '[JSNAME]',
+            '[NAMESPACE]',
+            '[NAMESPACE_SHORT]',
         ];
+
         $replaceString = [
-            $this->theme['name'],
+            Str::slug($this->theme['name'], '-'),
             $this->theme['title'],
             $this->theme['description'],
             $this->theme['author'],
-            $this->theme['parent'],
             $this->theme['version'],
+            $this->theme['css'] ?? 'assets/css/theme.css',
+            $this->theme['js'] ?? 'assets/js/theme.js',
+            'Juzaweb\\Themes\\'.Str::studly($this->theme['name']),
+            Str::studly($this->theme['name']),
         ];
 
         return str_replace($mainString, $replaceString, $contents);
