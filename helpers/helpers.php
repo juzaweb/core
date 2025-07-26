@@ -538,6 +538,20 @@ if (!function_exists('convert_linux_path')) {
     }
 }
 
+if (!function_exists('remove_zero_width_space_string')) {
+    /**
+     * Remove zero width space string
+     *
+     * @param string $string
+     * @return string
+     */
+    function remove_zero_width_space_string(string $string): string
+    {
+        $string = preg_replace('/[\x{200B}-\x{200D}\x{FEFF}]/u', '', $string);
+        return preg_replace('/\xc2\xa0/', '', $string);
+    }
+}
+
 if (!function_exists('seo_string')) {
     /**
      * Generate a SEO-friendly string from the given input.
@@ -554,7 +568,7 @@ if (!function_exists('seo_string')) {
     {
         $string = strip_tags($string);
         $string = str_replace(["\n", "\t"], ' ', $string);
-        $string = html_entity_decode($string, ENT_HTML5);
+        $string = remove_zero_width_space_string(html_entity_decode($string, ENT_HTML5));
         return sub_char($string, $chars);
     }
 }

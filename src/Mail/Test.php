@@ -14,7 +14,7 @@ class Test extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Juzawen Test Mail',
+            subject: 'Juzaweb Test Mail',
         );
     }
 

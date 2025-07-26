@@ -7,13 +7,13 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Seos\Traits;
+namespace Juzaweb\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Juzaweb\Core\Models\Model;
 use Juzaweb\Core\Models\SeoMeta;
-use Juzaweb\Core\Seos\Observes\HasSeoMetaObserve;
+use Juzaweb\Core\Observes\HasSeoMetaObserve;
 
 /**
  * @property SeoMeta $seoMeta
@@ -43,7 +43,9 @@ trait HasSeoMeta
 
     public function scopeWithSeoMeta(Builder $builder, ?string $locale = null): Builder
     {
-        return $builder->with(['seoMeta.translations' => fn ($q) => $q->where('locale', $locale ?? app()->getLocale())]);
+        return $builder->with(
+            ['seoMeta' => fn ($q) => $q->withTranslation($locale ?? $this->getDefaultLocale() ?? app()->getLocale())]
+        );
     }
 
     /**

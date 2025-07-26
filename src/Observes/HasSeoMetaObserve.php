@@ -7,17 +7,26 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Seos\Observes;
+namespace Juzaweb\Core\Observes;
 
 use Illuminate\Database\Eloquent\Model;
+use Juzaweb\Core\Traits\HasSeoMeta;
 
 class HasSeoMetaObserve
 {
+    /**
+     * @param  Model|HasSeoMeta  $model
+     * @return void
+     */
     public function saving(Model $model)
     {
-        $model->seoMeta()->createOrUpdate([], $model->seoMetaFill());
+        $model->seoMeta()->updateOrCreate([], $model->seoMetaFill());
     }
 
+    /**
+     * @param  Model|HasSeoMeta  $model
+     * @return void
+     */
     public function deleting(Model $model)
     {
         $model->seoMeta()->delete();

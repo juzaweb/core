@@ -5,12 +5,13 @@ namespace Juzaweb\Core\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Juzaweb\Core\Models\Enums\PageStatus;
 use Juzaweb\Core\Traits\HasAPI;
+use Juzaweb\Core\Traits\HasSeoMeta;
 use Juzaweb\Translations\Contracts\Translatable as TranslatableAlias;
 use Juzaweb\Translations\Traits\Translatable;
 
 class Page extends Model implements TranslatableAlias
 {
-    use HasAPI, HasUuids, Translatable;
+    use HasAPI, HasUuids, Translatable, HasSeoMeta;
 
     protected $table = 'pages';
 
@@ -33,4 +34,14 @@ class Page extends Model implements TranslatableAlias
     protected $casts = [
         'status' => PageStatus::class,
     ];
+
+    public function seoMetaFill(): array
+    {
+        return [
+            $this->defaultLocale => [
+                'title' => $this->title,
+                'description' => seo_string($this->content, 240),
+            ]
+        ];
+    }
 }
