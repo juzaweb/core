@@ -10,7 +10,7 @@
         "doctrine/dbal": "^4.2",
         "hassankhan/config": "^2.2",
         "juzaweb/file-manager": "^2.0",
-        "juzaweb/hooks": "^2.0",
+        "juzaweb/hooks": "^2.0.1",
         "juzaweb/html-dom": "^1.0",
         "juzaweb/laravel-permissions": "^1.0",
         "juzaweb/laravel-query-cache": "^1.0",
