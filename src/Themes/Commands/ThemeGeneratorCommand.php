@@ -70,10 +70,11 @@ class ThemeGeneratorCommand extends Command
      */
     protected function init(): void
     {
-        $createdThemePath = $this->themePath .'/'. ucfirst($this->theme['name']);
+        $createdThemePath = $this->themePath .'/'. Str::studly($this->theme['name']);
+        $force = $this->option('force');
 
-        if (File::isDirectory($createdThemePath)) {
-            $this->error('Sorry Boss '.ucfirst($this->theme['name']).' Theme Folder Already Exist !!!');
+        if (!$force && File::isDirectory($createdThemePath)) {
+            $this->error('Sorry, '. Str::studly($this->theme['name']).' Theme Folder Already Exist !!!');
             exit();
         }
 
@@ -225,6 +226,7 @@ class ThemeGeneratorCommand extends Command
             ['description', null, InputOption::VALUE_OPTIONAL, 'Theme Description'],
             ['author', null, InputOption::VALUE_OPTIONAL, 'Theme Author', 'Author Name'],
             ['ver', null, InputOption::VALUE_OPTIONAL, 'Theme Version', '1.0'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Force to overwrite existing theme'],
         ];
     }
 }

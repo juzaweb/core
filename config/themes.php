@@ -20,9 +20,10 @@ return [
             'profile' => 'resources/views/profile/index.blade.php',
             'ThemeServiceProvider' => 'Providers/ThemeServiceProvider.php',
             'RouteServiceProvider' => 'Providers/RouteServiceProvider.php',
+            'HomeController' => 'Http/Controllers/HomeController.php',
             'lang' => 'resources/lang/en/translation.php',
-            'admin' => 'routes/admin.php',
-            'web' => 'routes/web.php',
+            'routes/admin' => 'routes/admin.php',
+            'routes/web' => 'routes/web.php',
         ],
         'folders' => [
             'assets/js' => 'resources/assets/js',

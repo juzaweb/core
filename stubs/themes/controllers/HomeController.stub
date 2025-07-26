@@ -1,0 +1,22 @@
+<?php
+/**
+ * JUZAWEB CMS - Laravel CMS for Your Project
+ *
+ * @package    juzaweb/cms
+ * @author     The Anh Dang
+ * @link       https://cms.juzaweb.com
+ * @license    GNU V2
+ */
+
+namespace Juzaweb\Themes\[NAMESPACE_SHORT]\Http\Controllers;
+
+use Juzaweb\Core\Http\Controllers\ThemeController;
+use Juzaweb\Themes\[NAMESPACE_SHORT]\Models\Video;
+
+class HomeController extends ThemeController
+{
+    public function index()
+    {
+        return view('[name]::index');
+    }
+}
