@@ -26,6 +26,10 @@ class Page extends Model implements TranslatableAlias
         'thumbnail',
     ];
 
+    protected $translatedAttributeFormats = [
+        'content' => 'html',
+    ];
+
     protected $casts = [
         'status' => PageStatus::class,
     ];
