@@ -29,6 +29,8 @@ class RedirectLanguage
         }
 
         $locale = null;
+        $locales = Language::languages()->keys()->toArray();
+
         if ($config == 'ip') {
             $ip = client_ip();
             $countryCode = strtolower(IP2Location::countryCode($ip));
@@ -40,19 +42,23 @@ class RedirectLanguage
             $locale = explode('_', $browserLocale ?? '')[0];
         }
 
-        if ($locale
-            && $locale != app()->getLocale()
-            && in_array($locale, Language::languages()->keys()->toArray())
-        ) {
-            if ($multipleLanguage == 'prefix' && $request->is('/')) {
-                return redirect()->to("/{$locale}");
+        if (! $locale || !in_array($locale, $locales)) {
+            return $next($request);
+        }
+
+        if ($multipleLanguage == 'prefix' && $request->is('/')) {
+            return redirect()->to("/{$locale}");
+        }
+
+        if ($multipleLanguage == 'subdomain') {
+            $subdomain = explode('.', $request->getHost())[0];
+            if ($subdomain == $locale && in_array($subdomain, $locales)) {
+                return $next($request);
             }
 
-            if ($multipleLanguage == 'subdomain') {
-                $host = $request->getHost();
-                $newHost = "{$locale}.{$host}";
-                return redirect()->to($request->getScheme() . '://' . $newHost . $request->getRequestUri());
-            }
+            $host = $request->getHost();
+            $newHost = "{$locale}.{$host}";
+            return redirect()->to($request->getScheme() . '://' . $newHost . $request->getRequestUri());
         }
 
         return $next($request);
