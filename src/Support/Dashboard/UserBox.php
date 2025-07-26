@@ -28,7 +28,7 @@ class UserBox implements DashboardBox
 
     public function getIcon(): string
     {
-        return 'users';
+        return 'fas fa-users';
     }
 
     public function getBackground(): string
