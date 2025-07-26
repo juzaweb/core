@@ -14,12 +14,16 @@
 </head>
 
 <body class="juzaweb-theme @yield('body-classes')">
-
     <main id="content">
         @yield('content')
     </main>
 
-    <form action="{{ url('user/logout') }}" method="post" style="display: none" class="form-logout">
+    <form
+        action="{{ url('user/logout') }}"
+        method="post"
+        style="display: none"
+        class="form-logout"
+    >
         @csrf
     </form>
 
