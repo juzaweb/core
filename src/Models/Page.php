@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Juzaweb\Core\Models\Enums\PageStatus;
 use Juzaweb\Core\Traits\HasAPI;
 use Juzaweb\Core\Traits\HasSeoMeta;
-use Juzaweb\Translations\Contracts\Translatable as TranslatableAlias;
+use Juzaweb\Translations\Contracts\Translatable as TranslatableContract;
 use Juzaweb\Translations\Traits\Translatable;
 
-class Page extends Model implements TranslatableAlias
+class Page extends Model implements TranslatableContract
 {
     use HasAPI, HasUuids, Translatable, HasSeoMeta;
 
