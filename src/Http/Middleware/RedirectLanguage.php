@@ -23,7 +23,7 @@ class RedirectLanguage
             return $next($request);
         }
 
-        $config = setting('redirect_language', 'ip');
+        $config = setting('redirect_language', 'none');
         if ($config == 'none') {
             return $next($request);
         }
@@ -37,26 +37,21 @@ class RedirectLanguage
 
         if ($config == 'browser') {
             $browserLocale = $request->getPreferredLanguage();
-            if ($browserLocale) {
-                $locale = explode('_', $browserLocale)[0];
-            }
+            $locale = explode('_', $browserLocale ?? '')[0];
         }
 
         if ($locale
             && $locale != app()->getLocale()
             && in_array($locale, Language::languages()->keys()->toArray())
         ) {
-            if ($multipleLanguage == 'prefix') {
-                $path = $request->getPathInfo();
-                $segments = explode('/', trim($path, '/'));
-                if (count($segments) > 0 && $segments[0] != $locale) {
-                    return redirect()->to("/{$locale}/" . implode('/', $segments));
-                }
-            } elseif ($multipleLanguage == 'subdomain') {
+            if ($multipleLanguage == 'prefix' && $request->is('/')) {
+                return redirect()->to("/{$locale}");
+            }
+
+            if ($multipleLanguage == 'subdomain') {
                 $host = $request->getHost();
                 $newHost = "{$locale}.{$host}";
-                return redirect()->to($request->getSchemeAndHttpHost() . '/' . $request->getPathInfo(), 301, [], true)
-                    ->withHeaders(['Host' => $newHost]);
+                return redirect()->to($request->getScheme() . '://' . $newHost . $request->getRequestUri());
             }
         }
 
