@@ -31,13 +31,13 @@ class AdminServiceProvider extends ServiceProvider
         $this->booted(
             function () {
                 Menu::make('dashboard', __('Dashboard'))
-                    ->icon('fa-tachometer-alt');
+                    ->icon('fas fa-tachometer-alt');
 
                 Menu::make('pages', __('Pages'))
-                    ->icon('fa-file');
+                    ->icon('fas fa-file');
 
                 Menu::make('settings', __('Settings'))
-                    ->icon('fa-cogs')
+                    ->icon('fas fa-cogs')
                     ->priority(99);
 
                 Menu::make('general', __('General'))

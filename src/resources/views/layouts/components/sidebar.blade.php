@@ -25,7 +25,7 @@
                    target="{{ $root['target'] }}"
                    class="nav-link @if($active) active @endif"
                 >
-                    <i class="nav-icon fas {{ $root['icon'] }}"></i>
+                    <i class="nav-icon {{ $root['icon'] }}"></i>
                     <p>
                         {{ $root['title'] }}
                         @if($children->isNotEmpty())

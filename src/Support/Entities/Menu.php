@@ -142,7 +142,7 @@ class Menu extends Customizer
         return [
             'key' => $this->key,
             'title' => $this->getTitle(),
-            'icon' => Str::snake($this->icon),
+            'icon' => $this->icon,
             'external' => $this->external,
             'disabled' => $this->disabled,
             'parent' => $this->parent,
