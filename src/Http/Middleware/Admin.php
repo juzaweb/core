@@ -11,7 +11,9 @@
 namespace Juzaweb\Core\Http\Middleware;
 
 use Closure;
+use IP2Location\Database;
 use Juzaweb\Core\Support\Actions;
+use Juzaweb\Translations\Facades\IP2Location;
 
 class Admin
 {

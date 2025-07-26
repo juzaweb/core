@@ -38,7 +38,12 @@ class MultipleLanguage
 
         // Check for 'hl' parameter in the request
         if ($config == 'session') {
-            return $request->get('hl', session('locale', $defaultLocale));
+            if ($hl = $request->get('hl')) {
+                // session()->put('locale', $hl);
+                return $hl;
+            }
+
+            return session('locale', $defaultLocale);
         }
 
         if ($config == 'prefix') {

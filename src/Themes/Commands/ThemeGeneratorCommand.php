@@ -57,7 +57,7 @@ class ThemeGeneratorCommand extends Command
     {
         $this->themePath = config('themes.path');
         $this->themeFolders = config('themes.stubs.folders');
-        $this->theme['name'] = strtolower($this->argument('name'));
+        $this->theme['name'] = $this->argument('name');
         $this->themeStubPath = $this->getThemeStubPath();
         $this->init();
     }
@@ -70,7 +70,7 @@ class ThemeGeneratorCommand extends Command
      */
     protected function init(): void
     {
-        $createdThemePath = $this->themePath.'/'.$this->theme['name'];
+        $createdThemePath = $this->themePath .'/'. ucfirst($this->theme['name']);
 
         if (File::isDirectory($createdThemePath)) {
             $this->error('Sorry Boss '.ucfirst($this->theme['name']).' Theme Folder Already Exist !!!');
