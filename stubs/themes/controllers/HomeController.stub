@@ -11,12 +11,11 @@
 namespace Juzaweb\Themes\[NAMESPACE_SHORT]\Http\Controllers;
 
 use Juzaweb\Core\Http\Controllers\ThemeController;
-use Juzaweb\Themes\[NAMESPACE_SHORT]\Models\Video;
 
 class HomeController extends ThemeController
 {
     public function index()
     {
-        return view('[name]::index');
+        return view('[NAME]::index');
     }
 }

@@ -3,5 +3,8 @@
     "title": "[TITLE]",
     "description": "[DESCRIPTION]",
     "author": "[AUTHOR]",
-    "version": "[VERSION]"
+    "version": "[VERSION]",
+    "providers": [
+        "Juzaweb\\Themes\\[NAMESPACE_SHORT]\\Providers\\ThemeServiceProvider"
+    ]
 }
