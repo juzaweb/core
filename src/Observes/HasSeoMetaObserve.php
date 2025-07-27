@@ -18,7 +18,7 @@ class HasSeoMetaObserve
      * @param  Model|HasSeoMeta  $model
      * @return void
      */
-    public function saving(Model $model)
+    public function saved(Model $model)
     {
         $model->seoMeta()->updateOrCreate([], $model->seoMetaFill());
     }
