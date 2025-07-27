@@ -91,7 +91,11 @@ class ThemeGeneratorCommand extends Command
 
         $this->createStubs($themeStubFiles, $createdThemePath);
 
-        $this->info(ucfirst($this->theme['name']).' Theme Folder Successfully Generated !!!');
+        $this->info(ucfirst($this->theme['name']) . ' Theme Folder Successfully Generated !!!');
+
+        if ($this->confirm('Are you want to activate this theme?', true)) {
+            $this->call('theme:active', ['theme' => $this->theme['name']]);
+        }
     }
 
     /**
