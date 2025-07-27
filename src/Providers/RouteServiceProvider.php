@@ -24,11 +24,7 @@ class RouteServiceProvider extends ServiceProvider
 
             $adminPrefix = $this->app['config']->get('core.admin_prefix');
 
-            Route::middleware([
-                'web',
-                ...config('core.auth_middleware', []),
-                'admin',
-            ])
+            Route::middleware(['admin'])
                 ->prefix($adminPrefix)
                 ->group(__DIR__ . '/../routes/admin.php');
 

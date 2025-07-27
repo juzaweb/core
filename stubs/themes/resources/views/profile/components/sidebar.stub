@@ -12,7 +12,7 @@
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
                 <div class="profile-usertitle-name">
-                    <a href="{{ url('profile') }}"></a>
+                    <a href="{{ home_url('profile') }}"></a>
                 </div>
                 <div class="profile-usertitle-job">
                     subscriber
@@ -26,12 +26,12 @@
             <div class="profile-usermenu">
                 <ul class="nav flex-column">
                     <li class="nav-item {{ request()->is('profile') ? 'active' : '' }}">
-                        <a href="{{ url('profile') }}">
+                        <a href="{{ home_url('profile') }}">
                             <i class="fas fa-user"></i> {{ __('video-sharing::translation.profile') }}
                         </a>
                     </li>
                     <li class="nav-item {{ request()->is('profile/notification') ? 'active' : '' }}">
-                        <a href="{{ url('profile') }}/notification">
+                        <a href="{{ home_url('profile') }}/notification">
                             <i class="fas fa-bell"></i> {{ __('video-sharing::translation.notification') }}</a>
                     </li>
                     <li class="nav-item">

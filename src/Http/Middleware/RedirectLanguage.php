@@ -23,7 +23,7 @@ class RedirectLanguage
             return $next($request);
         }
 
-        $config = setting('redirect_language', 'none');
+        $config = setting('redirect_language', 'browser');
         if ($config == 'none') {
             return $next($request);
         }

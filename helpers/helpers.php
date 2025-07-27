@@ -112,6 +112,20 @@ if (! function_exists('key_from_string')) {
     }
 }
 
+if (! function_exists('home_url')) {
+    /**
+     * Generate a home URL from the given URI.
+     *
+     * @param string|null $uri The URI to generate a URL for.
+     *
+     * @return string The generated URL.
+     */
+    function home_url(?string $uri = null): string
+    {
+        return route('home'). ($uri ? '/' . ltrim($uri, '/') : '');
+    }
+}
+
 if (! function_exists('admin_url')) {
     /**
      * Generate an admin URL from the given URI.
@@ -135,10 +149,10 @@ if (! function_exists('format_size_units')) {
      * Convert a size in bytes to a human-readable string representation using appropriate units.
      *
      * @param int $bytes The size in bytes to be converted.
-     * @param int $decimals The number of decimal places to use in the formatted output. Default is 2.
+     * @param  int  $decimals The number of decimal places to use in the formatted output. Default is 2.
      * @return string A human-readable string representing the size in bytes using appropriate units (GB, MB, KB, bytes).
      */
-    function format_size_units($bytes, $decimals = 2): string
+    function format_size_units($bytes, int $decimals = 2): string
     {
         if ($bytes >= 1073741824) {
             $bytes = number_format($bytes / 1073741824, $decimals) . ' GB';

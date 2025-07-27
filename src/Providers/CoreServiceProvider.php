@@ -94,6 +94,7 @@ class CoreServiceProvider extends ServiceProvider
             [
                 'web',
                 \Juzaweb\Core\Http\Middleware\ForceLocale::class,
+                \Juzaweb\Core\Http\Middleware\RedirectLanguage::class,
                 \Juzaweb\Core\Http\Middleware\MultipleLanguage::class,
                 \Juzaweb\Core\Http\Middleware\Theme::class,
             ]
