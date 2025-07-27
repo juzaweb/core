@@ -19,12 +19,8 @@ class RedirectLanguage
     public function handle(Request $request, \Closure $next): mixed
     {
         $multipleLanguage = setting('multiple_language', 'none');
-        if (in_array($multipleLanguage, ['none', 'session'])) {
-            return $next($request);
-        }
-
         $config = setting('redirect_language', 'browser');
-        if ($config == 'none') {
+        if ($multipleLanguage == 'none' || $config == 'none') {
             return $next($request);
         }
 
@@ -42,7 +38,13 @@ class RedirectLanguage
             $locale = explode('_', $browserLocale ?? '')[0];
         }
 
-        if (! $locale || !in_array($locale, $locales)) {
+        if (! $locale || !in_array($locale, $locales) || $locale == app()->getLocale()) {
+            return $next($request);
+        }
+
+        if ($multipleLanguage == 'session' && ! session()->has('locale')) {
+            session(['locale' => $locale]);
+            app()->setLocale($locale);
             return $next($request);
         }
 
@@ -50,7 +52,7 @@ class RedirectLanguage
             return redirect()->to("/{$locale}");
         }
 
-        if ($multipleLanguage == 'subdomain') {
+        if ($multipleLanguage == 'subdomain' && $request->is('/')) {
             $subdomain = explode('.', $request->getHost())[0];
             if ($subdomain == $locale && in_array($subdomain, $locales)) {
                 return $next($request);
