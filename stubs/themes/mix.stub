@@ -1,0 +1,15 @@
+const mix = require('laravel-mix');
+
+mix.setPublicPath(`themes/[NAMESPACE_SHORT]/resources/assets/public`);
+
+mix.styles([
+    'themes/[NAMESPACE_SHORT]/resources/assets/css/profile.css',
+], 'themes/[NAMESPACE_SHORT]/resources/assets/public/css/profile.min.css');
+
+mix.styles([
+    //
+], 'themes/[NAMESPACE_SHORT]/resources/assets/public/css/main.min.css');
+
+mix.combine([
+    //
+], 'themes/[NAMESPACE_SHORT]/resources/assets/public/js/main.min.js');
