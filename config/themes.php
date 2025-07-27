@@ -25,7 +25,8 @@ return [
             'resources/views/profile/components/sidebar' => 'resources/views/profile/components/sidebar.blade.php',
             'ThemeServiceProvider' => 'Providers/ThemeServiceProvider.php',
             'RouteServiceProvider' => 'Providers/RouteServiceProvider.php',
-            'HomeController' => 'Http/Controllers/HomeController.php',
+            'controllers/HomeController' => 'Http/Controllers/HomeController.php',
+            'controllers/ProfileController' => 'Http/Controllers/ProfileController.php',
             'lang' => 'resources/lang/en/translation.php',
             'routes/admin' => 'routes/admin.php',
             'routes/web' => 'routes/web.php',
@@ -33,6 +34,7 @@ return [
         'folders' => [
             'assets/js' => 'resources/assets/js',
             'assets/css' => 'resources/assets/css',
+            'assets/plugins' => 'resources/assets/plugins',
             'assets/public' => 'resources/assets/public',
             'lang' => 'resources/lang/en',
             'views' => 'resources/views/layouts',

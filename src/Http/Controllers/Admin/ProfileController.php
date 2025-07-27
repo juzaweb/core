@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Juzaweb\Core\Facades\Breadcrumb;
 use Juzaweb\Core\Http\Controllers\AdminController;
 use Juzaweb\Core\Http\DataTables\NotificationsDataTable;
-use Juzaweb\Themes\VideoSharing\Http\Requests\ProfileUpdateRequest;
+use Juzaweb\Core\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends AdminController
 {

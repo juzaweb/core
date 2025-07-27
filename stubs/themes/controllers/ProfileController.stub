@@ -8,13 +8,13 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Themes\VideoSharing\Http\Controllers;
+namespace Juzaweb\Themes\[NAMESPACE_SHORT]\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Juzaweb\Core\Http\Controllers\ThemeController;
 use Juzaweb\Core\Http\DataTables\NotificationsDataTable;
-use Juzaweb\Themes\VideoSharing\Http\Requests\ProfileUpdateRequest;
+use Juzaweb\Core\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends ThemeController
 {
