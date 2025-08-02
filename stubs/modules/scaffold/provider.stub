@@ -7,26 +7,13 @@ use Juzaweb\Core\Providers\ServiceProvider;
 class $CLASS$ extends ServiceProvider
 {
     /**
-     * @var string $moduleName
-     */
-    protected $moduleName = '$MODULE$';
-
-    /**
-     * @var string $moduleNameLower
-     */
-    protected $moduleNameLower = '$LOWER_NAME$';
-
-    /**
      * Boot the application events.
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->registerTranslations();
-        $this->registerConfig();
-        $this->registerViews();
-        $this->loadMigrationsFrom(module_path($this->moduleName, '$MIGRATIONS_PATH$'));
+        //
     }
 
     /**
@@ -34,8 +21,12 @@ class $CLASS$ extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
+        $this->registerTranslations();
+        $this->registerConfig();
+        $this->registerViews();
+        $this->loadMigrationsFrom(__DIR__ . '/../$MIGRATIONS_PATH$');
         $this->app->register(RouteServiceProvider::class);
     }
 
@@ -47,29 +38,9 @@ class $CLASS$ extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, '$PATH_CONFIG$/config.php') => config_path($this->moduleNameLower . '.php'),
+            __DIR__ . '/../$PATH_CONFIG$/config.php' => config_path('$LOWER_NAME$.php'),
         ], 'config');
-        $this->mergeConfigFrom(
-            module_path($this->moduleName, '$PATH_CONFIG$/config.php'), $this->moduleNameLower
-        );
-    }
-
-    /**
-     * Register views.
-     *
-     * @return void
-     */
-    public function registerViews()
-    {
-        $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
-
-        $sourcePath = module_path($this->moduleName, '$PATH_VIEWS$');
-
-        $this->publishes([
-            $sourcePath => $viewPath
-        ], ['views', $this->moduleNameLower . '-module-views']);
-
-        $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
+        $this->mergeConfigFrom(__DIR__ . '/../$PATH_CONFIG$/config.php', '$LOWER_NAME$');
     }
 
     /**
@@ -79,35 +50,25 @@ class $CLASS$ extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
-            $this->loadJsonTranslationsFrom($langPath, $this->moduleNameLower);
-        } else {
-            $this->loadTranslationsFrom(module_path($this->moduleName, '$PATH_LANG$'), $this->moduleNameLower);
-            $this->loadJsonTranslationsFrom(module_path($this->moduleName, '$PATH_LANG$'), $this->moduleNameLower);
-        }
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', '$LOWER_NAME$');
+        $this->loadJsonTranslationsFrom(__DIR__ . '/../resources/lang', '$LOWER_NAME$');
     }
 
     /**
-     * Get the services provided by the provider.
+     * Register views.
      *
-     * @return array
+     * @return void
      */
-    public function provides()
+    protected function registerViews()
     {
-        return [];
-    }
+        $viewPath = resource_path('views/modules/$LOWER_NAME$');
 
-    private function getPublishableViewPaths(): array
-    {
-        $paths = [];
-        foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
-                $paths[] = $path . '/modules/' . $this->moduleNameLower;
-            }
-        }
-        return $paths;
+        $sourcePath = __DIR__ . '/../$PATH_VIEWS$';
+
+        $this->publishes([
+            $sourcePath => $viewPath
+        ], ['views', '$LOWER_NAME$-module-views']);
+
+        $this->loadViewsFrom($sourcePath, '$LOWER_NAME$');
     }
 }

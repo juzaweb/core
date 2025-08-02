@@ -4,6 +4,7 @@ namespace $NAMESPACE$;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Juzaweb\Core\Facades\Locale;
 
 class $CLASS$ extends ServiceProvider
 {
@@ -12,36 +13,22 @@ class $CLASS$ extends ServiceProvider
      *
      * @return void
      */
-    public function map()
+    public function boot(): void
     {
-        $this->mapApiRoutes();
+        $this->routes(function () {
+            // Route::middleware('api')
+            //     ->prefix('api/v1')
+            //     ->group(__DIR__ . '/../routes/api.php');
 
-        $this->mapWebRoutes();
-    }
+            $adminPrefix = $this->app['config']->get('core.admin_prefix');
 
-    /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapWebRoutes()
-    {
-        Route::middleware('web')->group(__DIR__ . '/../routes/web.php');
-    }
+            Route::middleware(['admin'])
+                ->prefix($adminPrefix)
+                ->group(__DIR__ . '/../routes/admin.php');
 
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::prefix('api/v1')
-            ->middleware('api')
-            ->group(__DIR__ . '/../routes/api.php');
+            Route::middleware(['theme'])
+                ->prefix(Locale::setLocale())
+                ->group(__DIR__ . '/../routes/web.php');
+        });
     }
 }
