@@ -35,7 +35,7 @@ class $CLASS$ extends ServiceProvider
      *
      * @return void
      */
-    protected function registerConfig()
+    protected function registerConfig(): void
     {
         $this->publishes([
             __DIR__ . '/../$PATH_CONFIG$/config.php' => config_path('$LOWER_NAME$.php'),
@@ -48,7 +48,7 @@ class $CLASS$ extends ServiceProvider
      *
      * @return void
      */
-    public function registerTranslations()
+    protected function registerTranslations(): void
     {
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', '$LOWER_NAME$');
         $this->loadJsonTranslationsFrom(__DIR__ . '/../resources/lang', '$LOWER_NAME$');
@@ -59,7 +59,7 @@ class $CLASS$ extends ServiceProvider
      *
      * @return void
      */
-    protected function registerViews()
+    protected function registerViews(): void
     {
         $viewPath = resource_path('views/modules/$LOWER_NAME$');
 
