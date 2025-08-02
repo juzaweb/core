@@ -28,6 +28,7 @@ return [
         'enabled' => true,
         'path' => base_path('vendor/juzaweb/core/stubs/modules/'),
         'files' => [
+            'routes/admin' => 'routes/admin.php',
             'routes/web' => 'routes/web.php',
             'routes/api' => 'routes/api.php',
             'views/index' => 'resources/views/index.blade.php',
@@ -91,7 +92,7 @@ return [
         |
         */
 
-        'migration' => base_path('database/migrations'),
+        'migration' => base_path('Database/migrations'),
 
         /*
         |--------------------------------------------------------------------------
@@ -103,9 +104,9 @@ return [
         'generator' => [
             'config' => ['path' => 'config', 'generate' => true],
             'command' => ['path' => 'Commands', 'generate' => true, 'namespace' => 'Commands'],
-            'migration' => ['path' => 'database/migrations', 'generate' => true],
-            'seeder' => ['path' => 'database/seeders', 'generate' => true, 'namespace' => 'Database/Seeders'],
-            'factory' => ['path' => 'database/factories', 'generate' => true, 'namespace' => 'Database/Factories'],
+            'migration' => ['path' => 'Database/migrations', 'generate' => true],
+            'seeder' => ['path' => 'Database/seeders', 'generate' => true, 'namespace' => 'Database/Seeders'],
+            'factory' => ['path' => 'Database/factories', 'generate' => true, 'namespace' => 'Database/Factories'],
             'model' => ['path' => 'Models', 'generate' => true, 'namespace' => 'Models'],
             'routes' => ['path' => 'routes', 'generate' => true],
             'controller' => ['path' => 'Http/Controllers', 'generate' => true, 'namespace' => 'Http/Controllers'],
@@ -201,7 +202,7 @@ return [
     'cache' => [
         'enabled' => false,
         'driver' => 'file',
-        'key' => 'larabiz-modules',
+        'key' => 'juzaweb-modules',
         'lifetime' => 60,
     ],
     /*
