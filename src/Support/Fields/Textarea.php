@@ -9,14 +9,12 @@
 
 namespace Juzaweb\Core\Support\Fields;
 
+use Illuminate\Contracts\View\View;
+
 class Textarea extends Field
 {
-    public function render(): \Illuminate\Contracts\View\View|string
+    public function render(): View|string
     {
-        return view('core::fields.textarea', [
-            'label' => $this->label,
-            'name' => $this->name,
-            'options' => $this->options,
-        ]);
+        return view('core::fields.textarea', $this->renderParams());
     }
 }
