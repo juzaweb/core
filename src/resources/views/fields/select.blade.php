@@ -4,7 +4,8 @@
             name="{{ $name }}"
             id="{{ $options['id'] ?? $name }}"
             class="form-control {{ Arr::get($options, 'autocomplete', true) ? 'select2' : '' }} {{ isset($options['classes']) ? implode(' ', $options['classes']) : '' }}"
-            @foreach(Arr::except($options, ['classes', 'id', 'options']) as $key => $value) {{ $key }}="{{ $value }}" @endforeach
+            @if(isset($options['disabled']) && $options['disabled']) disabled @endif
+            @foreach(Arr::except($options, ['classes', 'id', 'options', 'disabled']) as $key => $value) {{ $key }}="{{ $value }}" @endforeach
     >
         @foreach($options['options'] ?? [] as $key => $val)
 

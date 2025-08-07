@@ -36,11 +36,6 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->app['router']->aliasMiddleware('signed', ValidateSignature::class);
 
-        Carbon::macro('toUserTimezone', function () {
-            $tz = auth()->user()?->timezone ?? config('app.timezone');
-            return $this->copy()->setTimezone($tz);
-        });
-
         $this->app->bind('datatables.html', fn () => $this->app->make(HtmlBuilder::class));
 
         // Before check user permission
@@ -79,27 +74,6 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->registerPublishes();
 
-        $this->app['router']->middlewareGroup(
-            'admin',
-            [
-                'web',
-                ...config('core.auth_middleware', []),
-                Admin::class,
-                \Juzaweb\Core\Http\Middleware\ForceLocale::class,
-            ]
-        );
-
-        $this->app['router']->middlewareGroup(
-            'theme',
-            [
-                'web',
-                \Juzaweb\Core\Http\Middleware\ForceLocale::class,
-                \Juzaweb\Core\Http\Middleware\RedirectLanguage::class,
-                \Juzaweb\Core\Http\Middleware\MultipleLanguage::class,
-                \Juzaweb\Core\Http\Middleware\Theme::class,
-            ]
-        );
-
         $this->app->singleton(
             Contracts\Locale::class,
             fn ($app) => new Support\LocaleRepository($app)
@@ -109,6 +83,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerProviders(): void
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(HelperServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemeServiceProvider::class);
         $this->app->register(AdminServiceProvider::class);
