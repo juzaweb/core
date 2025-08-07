@@ -11,6 +11,7 @@
 namespace Juzaweb\Core\Providers;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class HelperServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,13 @@ class HelperServiceProvider extends ServiceProvider
             function () {
                 $tz = auth()->user()?->timezone ?? config('app.timezone');
                 return $this->copy()->setTimezone($tz);
+            }
+        );
+
+        Request::macro(
+            'getFormLanguage',
+            function () {
+                return $this->get('locale', config('translatable.fallback_locale'));
             }
         );
     }
