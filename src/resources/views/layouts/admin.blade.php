@@ -84,6 +84,12 @@
             <div class="container-fluid">
                 <div id="jquery-message"></div>
 
+                @if(session()->has('message'))
+                    <div class="alert alert-{{ session()->get('status') }} jw-message">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+
                 @yield('content')
             </div>
         </section>

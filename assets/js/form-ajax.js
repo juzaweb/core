@@ -56,9 +56,9 @@ $(function () {
             success: function (response) {
                 sendMessageByResponse(response, notify);
 
-                if (response.redirect) {
+                if (response.redirect || response.redirect_url) {
                     setTimeout(function () {
-                        window.location = response.redirect;
+                        window.location = response.redirect || response.redirect_url;
                     }, 1000);
                     return false;
                 }

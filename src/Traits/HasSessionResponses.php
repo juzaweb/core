@@ -14,7 +14,7 @@ trait HasSessionResponses
      * @param bool $success
      * @return JsonResponse|RedirectResponse
      */
-    protected function response(array|string $data, bool $success = true): JsonResponse|RedirectResponse
+    protected function response(array|string $data, string $status = 'success'): JsonResponse|RedirectResponse
     {
         if (! is_array($data)) {
             $data = ['message' => $data];
@@ -28,14 +28,15 @@ trait HasSessionResponses
             // Return json response
             return response()->json(
                 [
-                    'success' => $success,
+                    'success' => $status === 'success',
                     ...$data,
                 ],
-                $success ? 200 : 422
+                $status === 'success' ? 200 : 422
             );
         }
 
-        $data['success'] = $success;
+        $data['success'] = $status === 'success';
+        $data['status'] = $status;
         // Return redirect response
         if (!empty($data['redirect'])) {
             return redirect()->to($data['redirect'])->withInput()->with($data);
@@ -44,7 +45,7 @@ trait HasSessionResponses
         // Return back with message
         $back = back()->withInput()->with($data);
 
-        if (! $success) {
+        if ($status !== 'success') {
             // Return back with errors
             $back->withErrors([$data['message']]);
         }
@@ -79,6 +80,15 @@ trait HasSessionResponses
             $message = ['message' => $message];
         }
 
-        return $this->response($message, false);
+        return $this->response($message, 'error');
+    }
+
+    protected function warning(string|array $message): JsonResponse|RedirectResponse
+    {
+        if (is_string($message)) {
+            $message = ['message' => $message];
+        }
+
+        return $this->response($message, 'warning');
     }
 }
