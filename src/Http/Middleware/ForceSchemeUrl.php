@@ -17,6 +17,8 @@ class ForceSchemeUrl
     {
         if (($proto = $request->headers->get('X-Forwarded-Proto')) && ! $request->secure()) {
             URL::forceScheme($proto);
+
+            $request->server->set('HTTPS', true);
         }
 
         return $next($request);
