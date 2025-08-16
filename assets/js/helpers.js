@@ -31,6 +31,10 @@ function confirm_message(question, callback, title = '', type = 'warning') {
 
 function get_message_response(response) {
     if (response.success === true) {
+        if (! response.message) {
+            return null;
+        }
+
         return {
             success: true,
             message: response.message
@@ -64,7 +68,7 @@ function get_message_response(response) {
     if (response.message) {
         return {
             success: false,
-            message: response.message.message,
+            message: response.message,
         };
     }
 

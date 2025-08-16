@@ -48,6 +48,11 @@ abstract class DataTable extends BaseDataTable
             ->bulkActions($this->bulkActions());
     }
 
+    public function renderColumns(EloquentDataTable $builder): EloquentDataTable
+    {
+        return $builder;
+    }
+
     /**
      * Create and configure an EloquentDataTable instance.
      *
@@ -111,7 +116,8 @@ abstract class DataTable extends BaseDataTable
             );
         }
 
-        return $builder;
+        // Render any additional columns
+        return $this->renderColumns($builder);
     }
 
     /**
