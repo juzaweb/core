@@ -23,7 +23,7 @@ class UsersDataTable extends DataTable
 
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->filter(request()->all());
+        return $model->newQuery()->where(['is_super_admin' => false])->filter(request()->all());
     }
 
     public function getColumns(): array
