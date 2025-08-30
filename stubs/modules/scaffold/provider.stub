@@ -26,7 +26,7 @@ class $CLASS$ extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->loadMigrationsFrom(__DIR__ . '/../$MIGRATIONS_PATH$');
+        $this->loadMigrationsFrom(__DIR__ . '/../../$MIGRATIONS_PATH$');
         $this->app->register(RouteServiceProvider::class);
     }
 
@@ -38,9 +38,9 @@ class $CLASS$ extends ServiceProvider
     protected function registerConfig(): void
     {
         $this->publishes([
-            __DIR__ . '/../$PATH_CONFIG$/config.php' => config_path('$LOWER_NAME$.php'),
+            __DIR__ . '/../../$PATH_CONFIG$/config.php' => config_path('$LOWER_NAME$.php'),
         ], 'config');
-        $this->mergeConfigFrom(__DIR__ . '/../$PATH_CONFIG$/config.php', '$LOWER_NAME$');
+        $this->mergeConfigFrom(__DIR__ . '/../../$PATH_CONFIG$/config.php', '$LOWER_NAME$');
     }
 
     /**

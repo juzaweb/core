@@ -303,7 +303,7 @@ class FileRepository implements RepositoryInterface, Countable
      */
     public function getPath(): string
     {
-        return $this->path ?: $this->config('paths.modules', base_path('Modules'));
+        return $this->path ?: $this->config('paths.modules', base_path('modules'));
     }
 
     /**

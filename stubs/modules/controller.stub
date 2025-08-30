@@ -4,9 +4,9 @@ namespace $CLASS_NAMESPACE$;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Juzaweb\Core\Http\Controllers\AdminController;
 
-class $CLASS$ extends Controller
+class $CLASS$ extends AdminController
 {
     /**
      * Display a listing of the resource.
