@@ -85,7 +85,7 @@
                 <div id="jquery-message"></div>
 
                 @if(session()->has('message'))
-                    <div class="alert alert-{{ session()->get('status') != 'error' ?: 'danger' }} jw-message">
+                    <div class="alert alert-{{ session()->get('status') != 'error' ? session()->get('status') : 'danger' }} jw-message">
                         {{ session()->get('message') }}
 
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

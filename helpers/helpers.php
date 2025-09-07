@@ -413,8 +413,12 @@ if (! function_exists('upload_url')) {
      * @param string $path The path to the uploaded file.
      * @return string The URL of the uploaded file.
      */
-    function upload_url(string $path): string
+    function upload_url(?string $path = null): ?string
     {
+        if ($path === null) {
+            return $path;
+        }
+
         return asset('storage/' . $path);
     }
 }

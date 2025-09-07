@@ -99,6 +99,8 @@ class Column extends BaseColumn
         $column = static::make($data, 'edit');
         $column->title($title);
         $column->offsetSet('url', $editUrl);
+        $column->searchable(false);
+        $column->orderable(false);
         return $column;
     }
 

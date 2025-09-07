@@ -164,9 +164,16 @@ abstract class DataTable extends BaseDataTable
 
     public function getActionUrl(): string
     {
-        return Str::contains($this->actionUrl, 'http')
+        return Str::start($this->actionUrl, 'http://') || Str::start($this->actionUrl, 'https://')
             ? $this->actionUrl
             : admin_url($this->actionUrl);
+    }
+
+    public function setActionUrl(string $url): static
+    {
+        $this->actionUrl = $url;
+
+        return $this;
     }
 
     /**
