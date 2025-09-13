@@ -61,6 +61,7 @@ class ConsoleServiceProvider extends ServiceProvider
         Commands\RepositoryEloquentMakeCommand::class,
         Commands\DatatableMakeCommand::class,
         Commands\FormMakeCommand::class,
+        Commands\LinkCommand::class,
     ];
 
     public function register(): void

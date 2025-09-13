@@ -162,6 +162,15 @@ class Module
         return $this;
     }
 
+    public function path(?string $path = null): string
+    {
+        if ($path) {
+            return $this->getPath() . '/' . $path;
+        }
+
+        return $this->getPath();
+    }
+
     /**
      * Bootstrap the application events.
      */

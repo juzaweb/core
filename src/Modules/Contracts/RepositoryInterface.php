@@ -92,7 +92,7 @@ interface RepositoryInterface
      *
      * @param $name
      *
-     * @return mixed
+     * @return Module
      */
     public function findOrFail(string $name);
 
