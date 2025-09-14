@@ -67,6 +67,13 @@ abstract class Field implements Renderable, Stringable, Htmlable
         return $this;
     }
 
+    public function help(string $help): static
+    {
+        $this->options['help'] = $help;
+
+        return $this;
+    }
+
     abstract public function render(): View|string;
 
     public function __toString(): string

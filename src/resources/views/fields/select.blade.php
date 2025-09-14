@@ -19,4 +19,7 @@
             </option>
         @endforeach
     </select>
+    @if(isset($options['help']))
+        <small class="form-text text-muted">{{ $options['help'] }}</small>
+    @endif
 </div>

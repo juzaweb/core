@@ -6,4 +6,7 @@
            class="form-control {{ isset($options['classes']) ? implode(' ', $options['classes']) : '' }}"
            @foreach(Arr::except($options, ['classes', 'id', 'value']) as $key => $value) {{ $key }}="{{ $value }}" @endforeach
     >{{ $options['value'] ?? '' }}</textarea>
+    @if(isset($options['help']))
+        <small class="form-text text-muted">{{ $options['help'] }}</small>
+    @endif
 </div>
