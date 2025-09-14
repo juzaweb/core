@@ -420,6 +420,10 @@ if (! function_exists('upload_url')) {
             return $path;
         }
 
+        if (is_url($path)) {
+            return $path;
+        }
+
         return asset('storage/' . $path);
     }
 }

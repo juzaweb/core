@@ -1,6 +1,7 @@
 <div class="form-group">
     @php
         $path = $options['value'] ?? null;
+        $path = is_url($path) ? ltrim(str_replace(upload_url('/'), '', $path), '/') : $path;
     @endphp
     <label class="col-form-label">{{ $label ?? $name }}</label>
     <div class="form-image text-center @if($path) previewing @endif">
