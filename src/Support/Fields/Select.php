@@ -29,16 +29,23 @@ class Select extends Field
         return $this;
     }
 
-    public function selected(string|int|null $value): static
+    public function selected(string|int|array|null $value): static
     {
         $this->options['value'] = $value;
 
         return $this;
     }
 
-    public function autocomplete(bool $autocomplete): static
+    public function autocomplete(bool $autocomplete = true): static
     {
         $this->options['autocomplete'] = $autocomplete;
+
+        return $this;
+    }
+
+    public function multiple(bool $multiple = true): static
+    {
+        $this->options['multiple'] = $multiple;
 
         return $this;
     }

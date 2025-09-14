@@ -6,21 +6,17 @@ use Juzaweb\Core\Providers\ServiceProvider;
 
 class $CLASS$ extends ServiceProvider
 {
-    /**
-     * Boot the application events.
-     *
-     * @return void
-     */
     public function boot(): void
     {
         //
+
+        $this->booted(
+            function () {
+                $this->registerMenus();
+            }
+        );
     }
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
     public function register(): void
     {
         $this->registerTranslations();
@@ -30,11 +26,11 @@ class $CLASS$ extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
     }
 
-    /**
-     * Register config.
-     *
-     * @return void
-     */
+    protected function registerMenus(): void
+    {
+        //
+    }
+
     protected function registerConfig(): void
     {
         $this->publishes([
@@ -43,22 +39,12 @@ class $CLASS$ extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../../$PATH_CONFIG$/config.php', '$LOWER_NAME$');
     }
 
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
     protected function registerTranslations(): void
     {
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', '$LOWER_NAME$');
         $this->loadJsonTranslationsFrom(__DIR__ . '/../resources/lang');
     }
 
-    /**
-     * Register views.
-     *
-     * @return void
-     */
     protected function registerViews(): void
     {
         $viewPath = resource_path('views/modules/$LOWER_NAME$');

@@ -24,7 +24,7 @@ class PagesDataTable extends DataTable
     public function query(Page $model): QueryBuilder
     {
         return $model->newQuery()
-            ->withTranslation(with: ['media'])
+            ->withTranslation(null, ['media'])
             ->filter($this->request()->all());
     }
 

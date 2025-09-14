@@ -13,6 +13,7 @@ use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Juzaweb\Core\Contracts\Setting;
+use Juzaweb\Core\Facades\Theme;
 use Juzaweb\Core\Models\User;
 use Juzaweb\Translations\Models\Language;
 
@@ -322,7 +323,7 @@ if (!function_exists('get_error_by_exception')) {
     /**
      * Extracts error information from the given exception.
      *
-     * @param \Throwable $e The exception to extract information from.
+     * @param  Throwable  $e The exception to extract information from.
      * @return array An associative array containing the error information.
      *               The keys in the array are:
      *               - message: The error message.
@@ -331,7 +332,7 @@ if (!function_exists('get_error_by_exception')) {
      *               - code: The error code.
      *               - exception: The class name of the exception.
      */
-    function get_error_by_exception(\Throwable $e): array
+    function get_error_by_exception(Throwable $e): array
     {
         return [
             'message' => $e->getMessage(),
@@ -442,7 +443,7 @@ if (! function_exists('map_params')) {
             '/\{(\w+)\}/',
             function ($matches) use ($params) {
                 if (! isset($params[$matches[1]])) {
-                    throw new \RuntimeException("Param {$matches[1]} not found");
+                    throw new RuntimeException("Param {$matches[1]} not found");
                 }
 
                 // Return the replacement value if it exists
@@ -462,6 +463,20 @@ if (! function_exists('theme_path')) {
     function theme_path(?string $path = null): string
     {
         return config('themes.path') . ($path ? '/' . ltrim($path, '/') : '');
+    }
+}
+
+if (! function_exists('theme_asset')) {
+    /**
+     * Get the path to the theme directory.
+     *
+     * @return string The path to the theme directory.
+     */
+    function theme_asset(string $path, ?string $theme = null): string
+    {
+        $theme = $theme ?? Theme::current()->name();
+
+        return asset("themes/{$theme}/" . ($path ? ltrim($path, '/') : ''));
     }
 }
 
