@@ -7,5 +7,10 @@
             "name": "$AUTHOR_NAME$",
             "email": "$AUTHOR_EMAIL$"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Juzaweb\\Modules\\$STUDLY_NAME$\\": "src/"
+        }
+    }
 }
