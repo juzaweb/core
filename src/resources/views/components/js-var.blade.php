@@ -12,6 +12,7 @@
             yes: '{{ __('Yes') }}',
             remove_question: '{{ __('Are you sure you want to remove?') }}',
             please_wait: '{{ __('Please wait...') }}',
+            close: '{{ __('Close') }}',
         },
     }
 </script>

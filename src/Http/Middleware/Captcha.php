@@ -19,23 +19,21 @@ class Captcha
 
     public function handle($request, Closure $next)
     {
-        if (config('services.recaptcha.key')) {
-            $client = new Client();
+        if (setting('recaptcha2_site_key')) {
+            $client = new Client(['connect_timeout' => 10, 'timeout' => 10]);
             $response = $client->post(
                 'https://www.google.com/recaptcha/api/siteverify',
                 [
                     'form_params' => [
-                        'secret' => config('services.recaptcha.secret'),
-                        'response' => $request->input('captcha'),
+                        'secret' => setting('recaptcha2_secret_key'),
+                        'response' => $request->input('g-recaptcha-response'),
                     ],
                 ]
             );
 
             $body = json_decode((string)$response->getBody(), false, 512, JSON_THROW_ON_ERROR);
 
-            if (!$body->success) {
-                return $this->restFail(__('Captcha validation failed'));
-            }
+            abort_if(!$body->success, 400, __('Captcha validation failed'));
         }
 
         return $next($request);
