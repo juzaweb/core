@@ -39,6 +39,17 @@
 
                 <div class="card">
                     <div class="card-header">
+                        <h3 class="card-title">{{ __('Recaptcha v2') }}</h3>
+                    </div>
+                    <div class="card-body">
+                        {{ Field::text(__('Site Key'), 'recaptcha2_site_key', ['value' => setting('recaptcha2_site_key')]) }}
+
+                        {{ Field::text(__('Secret'), 'recaptcha2_secret_key', ['value' => setting('recaptcha2_secret_key')]) }}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
                         <h3 class="card-title">{{ __('Multiple Language') }}</h3>
                     </div>
                     <div class="card-body">

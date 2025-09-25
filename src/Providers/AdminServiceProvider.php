@@ -64,8 +64,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->booted(
             function () {
-                Setting::make('title')
-                    ->default(config('app.name'));
+                Setting::make('title')->default(config('app.name'));
 
                 Setting::make('description');
                 Setting::make('sitename');
@@ -74,11 +73,12 @@ class AdminServiceProvider extends ServiceProvider
                 Setting::make('favicon');
                 Setting::make('banner');
 
-                Setting::make('user_registration')
-                    ->default(true);
+                Setting::make('recaptcha2_site_key');
+                Setting::make('recaptcha2_secret_key');
 
-                Setting::make('user_verification')
-                    ->default(false);
+                Setting::make('user_registration')->default(true);
+
+                Setting::make('user_verification')->default(false);
 
                 Setting::make('multiple_language')->default('none');
 
