@@ -86,8 +86,10 @@ $(function () {
                     let hasShowInput = 0;
                     if (typeof response.errors !== 'undefined') {
                         $.each(response.errors, function (key, value) {
-                            form.find('.error-' + key).html(value[0]);
-                            hasShowInput += 1;
+                            if (form.find('.error-' + key).length) {
+                                form.find('.error-' + key).html(value[0]);
+                                hasShowInput += 1;
+                            }
                         });
                     }
 
