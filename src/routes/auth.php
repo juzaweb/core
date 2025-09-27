@@ -15,7 +15,7 @@ Route::get('user/login', [AuthController::class, 'login'])
     ->middleware(['guest']);
 Route::post('user/login', [AuthController::class, 'doLogin'])
     ->name('auth.login')
-    ->middleware(['throttle:5,1', 'guest']);
+    ->middleware(['throttle:5,1', 'guest', 'captcha']);
 
 Route::get('user/register', [AuthController::class, 'register'])
     ->name('admin.register')

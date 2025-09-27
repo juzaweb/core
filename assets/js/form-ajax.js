@@ -25,14 +25,14 @@ $(function () {
         }
     });
 
-    function sendMessageByResponse(response, notify = true) {
+    function sendMessageByResponse(response, notify = true, elResult = null) {
         if (notify) {
             if (typeof show_notify !== 'undefined' && typeof show_notify === 'function') {
                 show_notify(response);
             }
         } else {
             if (typeof show_message !== 'undefined' && typeof show_message === 'function') {
-                show_message(response);
+                show_message(response, false, elResult);
             }
         }
     }
@@ -40,6 +40,7 @@ $(function () {
     function sendRequestFormAjax(form, data, btnsubmit, currentText, currentIcon, captchaToken = null) {
         let submitSuccess = form.data('success');
         let notify = form.data('notify') ?? true;
+        let elResult = form.find('.jquery-message') ?? null;
 
         if (captchaToken) {
             data.append('g-recaptcha-response', captchaToken);
@@ -54,7 +55,7 @@ $(function () {
             contentType: false,
             processData: false,
             success: function (response) {
-                sendMessageByResponse(response, notify);
+                sendMessageByResponse(response, notify, elResult);
 
                 if (response.redirect || response.redirect_url) {
                     setTimeout(function () {
@@ -91,9 +92,9 @@ $(function () {
                         });
                     }
 
-                    sendMessageByResponse(jqxhr, notify);
+                    sendMessageByResponse(jqxhr, notify, elResult);
                 } else {
-                    sendMessageByResponse(jqxhr, notify);
+                    sendMessageByResponse(jqxhr, notify, elResult);
                 }
 
                 btnsubmit.find('i').attr('class', currentIcon);

@@ -51,7 +51,7 @@ class AuthController extends AdminController
 
             return $this->error(
                 [
-                    'message' => trans('Login failed'),
+                    'message' => trans('auth.failed'),
                 ]
             );
         }
