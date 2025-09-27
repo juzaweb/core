@@ -83,16 +83,17 @@ $(function () {
                 let response = jqxhr.responseJSON;
 
                 if (jqxhr.status === 422) {
+                    let hasShowInput = 0;
                     if (typeof response.errors !== 'undefined') {
-                        let hasShowInput = 0;
-
                         $.each(response.errors, function (key, value) {
                             form.find('.error-' + key).html(value[0]);
                             hasShowInput += 1;
                         });
                     }
 
-                    sendMessageByResponse(jqxhr, notify, elResult);
+                    if (hasShowInput === 0) {
+                        sendMessageByResponse(jqxhr, notify, elResult);
+                    }
                 } else {
                     sendMessageByResponse(jqxhr, notify, elResult);
                 }
