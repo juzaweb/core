@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Fields;
+namespace Juzaweb\Modules\Core\Support\Fields;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -50,8 +50,22 @@ class Select extends Field
         return $this;
     }
 
+    public function dataUrl(string $url): static
+    {
+        $this->options['data_url'] = $url;
+
+        return $this;
+    }
+
+    public function loadDataModel(string $model, string $field = 'name'): static
+    {
+        $this->options['data_url'] = load_data_url($model, $field);
+
+        return $this;
+    }
+
     public function render(): View|string
     {
-        return view('core::fields.select', $this->renderParams());
+        return view('admin::fields.select', $this->renderParams());
     }
 }

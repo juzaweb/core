@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\DataTables;
+namespace Juzaweb\Modules\Core\DataTables;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
@@ -174,6 +174,11 @@ abstract class DataTable extends BaseDataTable
         $this->actionUrl = $url;
 
         return $this;
+    }
+
+    public function getAttribute(string $key, $default = null)
+    {
+        return $this->attributes[$key] ?? $default;
     }
 
     /**

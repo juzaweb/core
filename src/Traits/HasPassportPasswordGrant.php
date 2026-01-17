@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use Laravel\Passport\Http\Controllers\ConvertsPsrResponses;
 use League\OAuth2\Server\AuthorizationServer;

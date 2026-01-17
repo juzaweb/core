@@ -1,41 +1,46 @@
-@extends('core::layouts.auth')
+@extends('admin::layouts.auth')
+
+@section('title', __('admin::translation.email_verification'))
+
+@section('head')
+    <link rel="stylesheet" href="{{ mix('css/auth.min.css', 'themes/main') }}">
+@endsection
 
 @section('content')
-    <div class="card">
-        <div class="card-body login-card-body">
-            <p class="login-box-msg">{{ __('Please verify your email address') }}</p>
-
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
-                </div>
-            @endif
-
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{ $error }}
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="auth-container text-center">
+                    <!-- Icon -->
+                    <div class="verification-icon mb-4">
+                        <i class="fas fa-envelope-open-text fa-4x text-theme-primary"></i>
                     </div>
-                @endforeach
-            @endif
+                    <!-- End Icon -->
 
-            <form action="{{ route('auth.login') }}" class="form-ajax" method="post">
-                @csrf
-
-                <div class="row">
-                    <!-- /.col -->
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block">{{ __('Re-send Email') }}</button>
+                    <!-- Title -->
+                    <div class="mb-4">
+                        <h2 class="auth-title">{{ __('admin::translation.verify_your_email_address') }}</h2>
+                        <p class="auth-subtitle">{{ __('admin::translation.before_proceeding_please_check_your_email_for_a_verification_link') }}</p>
                     </div>
-                    <!-- /.col -->
-                </div>
-            </form>
+                    <!-- End Title -->
 
-            <p class="mt-1">
-                <a href="{{ url('user/login') }}" class="text-center">{{ __('Login to account') }}</a>
-            </p>
+                    <p class="mb-4">
+                        {{ __('admin::translation.if_you_did_not_receive_the_email') }},
+                    </p>
+
+                    <form method="post" action="{{ route('verification.resend') }}" class="d-inline form-ajax" data-notify="false" data-jw-token="true">
+                        <div class="jquery-message mb-2"></div>
+
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('admin::translation.click_here_to_request_another') }}
+                        </button>
+                    </form>
+
+                    <div class="text-center auth-footer mt-4">
+                        <p><a href="{{ url('user/login') }}" class="auth-link-bold">{{ __('main::translation.back_to_login') }}</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.login-card-body -->
     </div>
 @endsection

@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;

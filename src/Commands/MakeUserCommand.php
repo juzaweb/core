@@ -8,13 +8,13 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Commands;
+namespace Juzaweb\Modules\Core\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Juzaweb\Core\Models\User;
+use Juzaweb\Modules\Admin\Models\User;
 use Symfony\Component\Console\Input\InputOption;
 
 class MakeUserCommand extends Command
@@ -38,9 +38,9 @@ class MakeUserCommand extends Command
             ],
             [],
             [
-                'name' => trans('Name'),
-                'email' => trans('Email'),
-                'password' => trans('Password'),
+                'name' => trans('admin::translation.name'),
+                'email' => trans('admin::translation.email'),
+                'password' => trans('admin::translation.password'),
             ]
         );
 

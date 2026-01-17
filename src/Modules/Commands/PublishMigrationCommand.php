@@ -1,10 +1,10 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Commands;
+namespace Juzaweb\Modules\Core\Modules\Commands;
 
 use Illuminate\Console\Command;
-use Juzaweb\Core\Modules\Migrations\Migrator;
-use Juzaweb\Core\Modules\Publishing\MigrationPublisher;
+use Juzaweb\Modules\Core\Modules\Migrations\Migrator;
+use Juzaweb\Modules\Core\Modules\Publishing\MigrationPublisher;
 use Symfony\Component\Console\Input\InputArgument;
 
 class PublishMigrationCommand extends Command
@@ -48,7 +48,7 @@ class PublishMigrationCommand extends Command
     /**
      * Publish migration for the specified module.
      *
-     * @param \Juzaweb\Core\Modules\Module $module
+     * @param \Juzaweb\Modules\Core\Modules\Module $module
      */
     public function publish($module)
     {

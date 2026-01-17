@@ -8,12 +8,12 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Support\Entities;
+namespace Juzaweb\Modules\Core\Support\Entities;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Juzaweb\Core\Contracts\GlobalData;
-use Juzaweb\Core\Support\Traits\HasRules;
-use Juzaweb\Core\Traits\Whenable;
+use Juzaweb\Modules\Core\Contracts\GlobalData;
+use Juzaweb\Modules\Core\Support\Traits\HasRules;
+use Juzaweb\Modules\Core\Traits\Whenable;
 
 class Setting implements Arrayable
 {
@@ -28,6 +28,8 @@ class Setting implements Arrayable
     protected bool $showApi = true;
 
     protected bool $added = false;
+
+    protected bool $translatable = false;
 
     public function __construct(
         protected GlobalData $globalData,
@@ -59,6 +61,13 @@ class Setting implements Arrayable
     public function disableShowApi(): static
     {
         $this->showApi(false);
+
+        return $this;
+    }
+
+    public function translatable(bool $translatable = true): static
+    {
+        $this->translatable = $translatable;
 
         return $this;
     }

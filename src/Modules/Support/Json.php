@@ -1,9 +1,9 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Support;
+namespace Juzaweb\Modules\Core\Modules\Support;
 
 use Illuminate\Filesystem\Filesystem;
-use Juzaweb\Core\Modules\Exceptions\InvalidJsonException;
+use Juzaweb\Modules\Core\Modules\Exceptions\InvalidJsonException;
 
 class Json
 {

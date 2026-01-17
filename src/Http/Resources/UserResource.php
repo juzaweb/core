@@ -7,11 +7,11 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Http\Resources;
+namespace Juzaweb\Modules\Core\Http\Resources;
 
 use Illuminate\Http\Request;
-use Juzaweb\Core\Models\User;
-use Juzaweb\Core\Support\Resources\ModelResource;
+use Juzaweb\Modules\Admin\Models\User;
+use Juzaweb\Modules\Core\Support\Resources\ModelResource;
 use OpenApi\Annotations as OA;
 
 /**

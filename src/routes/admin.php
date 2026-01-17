@@ -8,27 +8,42 @@
  */
 
 use Illuminate\Support\Facades\Route;
-use Juzaweb\Core\Facades\RouteResource;
-use Juzaweb\Core\Http\Controllers\Admin\DashboardController;
-use Juzaweb\Core\Http\Controllers\Admin\LanguageController;
-use Juzaweb\Core\Http\Controllers\Admin\PageController;
-use Juzaweb\Core\Http\Controllers\Admin\ProfileController;
-use Juzaweb\Core\Http\Controllers\Admin\SettingController;
-use Juzaweb\Core\Http\Controllers\Admin\TranslationController;
-use Juzaweb\Core\Http\Controllers\Admin\UserController;
+use Juzaweb\Modules\Admin\Http\Controllers\DashboardController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\ChartController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\CommentController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\LanguageController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\LoadDataController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\PageController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\ProfileController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\SettingController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\SetupController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\TranslationController;
 
-// RouteResource::admin('roles', UserController::class);
+require __DIR__ . '/components/media.php';
+require __DIR__ . '/components/theme.php';
+
 Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/setup', [SetupController::class, 'index'])->name('admin.setup');
+Route::post('/setup', [SetupController::class, 'setup'])->name('admin.setup.process');
+Route::get('/dashboard/online', [DashboardController::class, 'online'])
+    ->name('admin.dashboard.online-count');
+
+Route::get('load-data', [LoadDataController::class, 'load'])
+    ->name('admin.load-data');
+Route::get('load-box', [LoadDataController::class, 'loadForMenu'])
+    ->name('admin.load-box');
+
+Route::get('charts/{chart}', [ChartController::class, 'chart'])
+    ->name('admin.charts.data');
+
 Route::get('/profile', [ProfileController::class, 'index'])->name('admin.profile');
 Route::get('/profile/notifications', [ProfileController::class, 'notification'])
     ->name('admin.profile.notification');
 Route::post('/profile', [ProfileController::class, 'update']);
 
-RouteResource::admin('users', UserController::class);
-
-RouteResource::admin('languages', LanguageController::class)
+Route::admin('languages', LanguageController::class)
     ->except(['edit', 'update', 'create']);
-RouteResource::admin('pages', PageController::class);
+Route::admin('pages', PageController::class);
 
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations')
@@ -43,13 +58,26 @@ Route::put('/languages/{language}/translations', [TranslationController::class, 
 Route::post('translations/translate-model', [TranslationController::class, 'translateModel'])
     ->name('admin.translations.translate-model');
 
+Route::post('translations/translate-status', [TranslationController::class, 'translateStatus'])->name('admin.translations.translate-status');
+
 Route::get('/settings/general', [SettingController::class, 'index'])
     ->name('admin.settings.general')
     ->middleware(['permission:settings.general.edit']);
 
 Route::put('/settings', [SettingController::class, 'update'])
+    ->name('admin.settings.update')
     ->middleware(['permission:settings.general.edit']);
 
 Route::get('/settings/social-login', [SettingController::class, 'socialLogin'])
     ->name('admin.settings.social-login')
     ->middleware(['permission:settings.social-login.index']);
+
+Route::get('/settings/email', [SettingController::class, 'email'])
+    ->name('admin.settings.email')
+    ->middleware(['permission:settings.email.index']);
+Route::post('/settings/test-email', [SettingController::class, 'testEmail'])
+    ->name('admin.settings.test-email')
+    ->middleware(['permission:settings.email.index', 'throttle:5,1']);
+
+Route::admin('comments', CommentController::class)
+    ->except(['create', 'edit', 'store', 'update']);

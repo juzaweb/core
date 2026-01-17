@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Routes\Resources;
+namespace Juzaweb\Modules\Core\Support\Routes\Resources;
 
 class APIResource extends Resource
 {

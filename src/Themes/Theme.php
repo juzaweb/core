@@ -7,15 +7,16 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Themes;
+namespace Juzaweb\Modules\Core\Themes;
 
+use Illuminate\Contracts\Config\Repository as ConfigContract;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
-use Juzaweb\Core\Contracts\Setting;
-use Juzaweb\Core\Contracts\Theme as ThemeContract;
-use Illuminate\Contracts\Config\Repository as ConfigContract;
+use Illuminate\Support\Str;
+use Juzaweb\Modules\Core\Contracts\Setting;
+use Juzaweb\Modules\Core\Contracts\Theme as ThemeContract;
 
 class Theme implements Arrayable
 {
@@ -40,6 +41,21 @@ class Theme implements Arrayable
     public function name(): string
     {
         return $this->get('name');
+    }
+
+    /**
+     * Get name in studly case.
+     *
+     * @return string
+     */
+    public function studlyName(): string
+    {
+        return Str::studly($this->name());
+    }
+
+    public function title()
+    {
+        return $this->get('title');
     }
 
     public function lowerName(): string
@@ -69,12 +85,19 @@ class Theme implements Arrayable
 
     public function activate(): bool
     {
-        File::put(
-            $this->config->get('themes.path') . '/statuses.json',
-            json_encode(['name' => $this->name()], JSON_THROW_ON_ERROR)
-        );
+        $this->setting->set('theme', $this->name());
 
         return true;
+    }
+
+    /**
+     * Get required modules from theme.json
+     *
+     * @return array
+     */
+    public function getRequiredModules(): array
+    {
+        return $this->get('require', []);
     }
 
     /**
@@ -99,7 +122,7 @@ class Theme implements Arrayable
      * @return Collection
      * @throws \Exception
      */
-    public function json(string $file = null): Collection
+    public function json(string|null $file = null): Collection
     {
         if ($file === null) {
             $file = 'theme.json';

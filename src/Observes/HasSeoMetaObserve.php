@@ -7,10 +7,10 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Observes;
+namespace Juzaweb\Modules\Core\Observes;
 
 use Illuminate\Database\Eloquent\Model;
-use Juzaweb\Core\Traits\HasSeoMeta;
+use Juzaweb\Modules\Core\Traits\HasSeoMeta;
 
 class HasSeoMetaObserve
 {

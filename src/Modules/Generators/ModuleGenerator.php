@@ -1,15 +1,15 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Generators;
+namespace Juzaweb\Modules\Core\Modules\Generators;
 
 use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command as Console;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-use Juzaweb\Core\Modules\Contracts\ActivatorInterface;
-use Juzaweb\Core\Modules\Support\Config\GenerateConfigReader;
-use Juzaweb\Core\Modules\Support\FileRepository;
-use Juzaweb\Core\Modules\Support\Stub;
+use Juzaweb\Modules\Core\Modules\Contracts\ActivatorInterface;
+use Juzaweb\Modules\Core\Modules\FileRepository;
+use Juzaweb\Modules\Core\Modules\Support\Config\GenerateConfigReader;
+use Juzaweb\Modules\Core\Modules\Support\Stub;
 
 class ModuleGenerator extends Generator
 {
@@ -59,7 +59,7 @@ class ModuleGenerator extends Generator
     /**
      * The module instance.
      *
-     * @var \Juzaweb\Core\Modules\Module
+     * @var \Juzaweb\Modules\Core\Modules\Module
      */
     protected $module;
 
@@ -144,6 +144,16 @@ class ModuleGenerator extends Generator
     public function getName()
     {
         return Str::studly($this->name);
+    }
+
+    public function getKebabName()
+    {
+        return Str::kebab($this->name);
+    }
+
+    public function getKebabSingularName()
+    {
+        return Str::singular(Str::kebab($this->name));
     }
 
     /**
@@ -252,7 +262,7 @@ class ModuleGenerator extends Generator
     /**
      * Get the module instance.
      *
-     * @return \Juzaweb\Core\Modules\Module
+     * @return \Juzaweb\Modules\Core\Modules\Module
      */
     public function getModule()
     {
@@ -338,7 +348,7 @@ class ModuleGenerator extends Generator
             $this->cleanModuleJsonFile();
         }
 
-        $this->activator->setActiveByName($name, $this->isActive);
+        // $this->activator->setActiveByName($name, $this->isActive);
 
         $this->console->newLine(1);
 
@@ -420,13 +430,13 @@ class ModuleGenerator extends Generator
             ]);
         }
 
-        if (GenerateConfigReader::read('controller')->generate() === true) {
-            $options = $this->type=='api' ? ['--api'=>true] : [];
-            $this->console->call('module:make-controller', [
-                'controller' => $this->getName() . 'Controller',
-                'module' => $this->getName(),
-            ]+$options);
-        }
+        // if (GenerateConfigReader::read('controller')->generate() === true) {
+        //     $options = $this->type=='api' ? ['--api'=>true] : [];
+        //     $this->console->call('module:make-controller', [
+        //         'controller' => $this->getName() . 'Controller',
+        //         'module' => $this->getName(),
+        //     ]+$options);
+        // }
     }
 
     /**
@@ -586,5 +596,10 @@ class ModuleGenerator extends Generator
     protected function getProviderNamespaceReplacement(): string
     {
         return str_replace('\\', '\\\\', GenerateConfigReader::read('provider')->getNamespace());
+    }
+
+    protected function getKebabSingularTitleReplacement(): string
+    {
+        return Str::singular(Str::kebab($this->getName()));
     }
 }

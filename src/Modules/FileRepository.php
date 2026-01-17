@@ -1,23 +1,24 @@
 <?php
 
-namespace Juzaweb\Core\Modules;
+namespace Juzaweb\Modules\Core\Modules;
 
 use Countable;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
-use Juzaweb\Core\Modules\Contracts\RepositoryInterface;
-use Juzaweb\Core\Modules\Exceptions\InvalidAssetPath;
-use Juzaweb\Core\Modules\Exceptions\ModuleNotFoundException;
-use Juzaweb\Core\Modules\Process\Installer;
-use Juzaweb\Core\Modules\Process\Updater;
-use Juzaweb\Core\Modules\Support\Collection;
-use Juzaweb\Core\Modules\Support\Json;
+use Juzaweb\Modules\Admin\Modules\Application;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\Exceptions\InvalidAssetPath;
+use Juzaweb\Modules\Core\Modules\Exceptions\ModuleNotFoundException;
+use Juzaweb\Modules\Core\Modules\Process\Installer;
+use Juzaweb\Modules\Core\Modules\Process\Updater;
+use Juzaweb\Modules\Core\Modules\Support\Collection;
+use Juzaweb\Modules\Core\Modules\Support\Json;
+use Juzaweb\Modules\Core\Translations\Contracts\Translation;
 use Symfony\Component\Process\Process;
 
 class FileRepository implements RepositoryInterface, Countable
@@ -146,7 +147,19 @@ class FileRepository implements RepositoryInterface, Countable
             foreach ($manifests as $manifest) {
                 $name = Json::make($manifest)->get('name');
 
-                $modules[$name] = $this->createModule($this->app, $name, dirname($manifest));
+                $module = $this->createModule($this->app, $name, dirname($manifest));
+                $modules[$name] = $module;
+
+                $namespace = $module->getAliasName();
+
+                $this->app[Translation::class]->register($namespace, [
+                    'type' => 'module',
+                    'key' => $namespace,
+                    'namespace' => $namespace,
+                    'lang_path' => $module->getPath(). '/resources/lang',
+                    'src_path' => $module->getPath('/'),
+                    'publish_path' => resource_path("lang/vendor/{$namespace}"),
+                ]);
             }
         }
 

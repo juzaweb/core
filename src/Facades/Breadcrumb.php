@@ -7,9 +7,10 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Facades;
+namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\BreadcrumbFactory;
 
 /**
  * @method static void add(string $label, ?string $url = null)
@@ -27,6 +28,6 @@ class Breadcrumb extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return \Juzaweb\Core\Contracts\Breadcrumb::class;
+        return \Juzaweb\Modules\Core\Contracts\Breadcrumb::class;
     }
 }

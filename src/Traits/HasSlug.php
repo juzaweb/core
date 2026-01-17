@@ -1,8 +1,9 @@
 <?php
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Support\Str;
+use function Juzaweb\Modules\Admin\Traits\website_id;
 
 trait HasSlug
 {
@@ -93,6 +94,7 @@ trait HasSlug
         do {
             $row = self::where('id', '!=', $this->id)
                 ->where('slug', '=', $slug)
+                ->where('website_id', '=', website_id())
                 ->orderBy('slug', 'DESC')
                 ->first(['slug']);
 

@@ -1,9 +1,10 @@
 <?php
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 
 trait HasSessionResponses
 {
@@ -90,5 +91,16 @@ trait HasSessionResponses
         }
 
         return $this->response($message, 'warning');
+    }
+
+    protected function validateError(string|array $fields, ?string $message = null): void
+    {
+        if ($message) {
+            throw ValidationException::withMessages([
+                $fields => [$message],
+            ]);
+        }
+
+        throw ValidationException::withMessages($fields);
     }
 }

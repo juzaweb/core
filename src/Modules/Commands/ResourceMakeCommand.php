@@ -1,13 +1,13 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Commands;
+namespace Juzaweb\Modules\Core\Modules\Commands;
 
 use Illuminate\Support\Str;
-use Juzaweb\Core\Models\Model;
-use Juzaweb\Core\Modules\Contracts\RepositoryInterface;
-use Juzaweb\Core\Modules\Support\Config\GenerateConfigReader;
-use Juzaweb\Core\Modules\Support\Stub;
-use Juzaweb\Core\Modules\Traits\UseFromModel;
+use Juzaweb\Modules\Core\Models\Model;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\Support\Config\GenerateConfigReader;
+use Juzaweb\Modules\Core\Modules\Support\Stub;
+use Juzaweb\Modules\Core\Modules\Traits\UseFromModel;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 

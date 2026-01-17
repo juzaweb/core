@@ -1,10 +1,10 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Commands;
+namespace Juzaweb\Modules\Core\Modules\Commands;
 
 use Illuminate\Console\Command;
-use Juzaweb\Core\Modules\Module;
-use Juzaweb\Core\Modules\Traits\ModuleCommandTrait;
+use Juzaweb\Modules\Core\Modules\Module;
+use Juzaweb\Modules\Core\Modules\Traits\ModuleCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 
 class UpdateCommand extends Command
@@ -46,7 +46,7 @@ class UpdateCommand extends Command
 
     protected function updateAllModule()
     {
-        /** @var \Juzaweb\Core\Modules\Module $module */
+        /** @var \Juzaweb\Modules\Core\Modules\Module $module */
         $modules = $this->laravel['modules']->getOrdered();
 
         foreach ($modules as $module) {

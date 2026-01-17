@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Http\Controllers;
+namespace Juzaweb\Modules\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 

@@ -8,31 +8,39 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Providers;
+namespace Juzaweb\Modules\Core\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
-use Juzaweb\Core\Http\Middleware\Admin;
+use Juzaweb\Modules\Core\Facades\RouteResource;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
+        Route::macro('admin', function (string $name, string $controller) {
+            return RouteResource::admin($name, $controller);
+        });
+
+        Route::macro('api', function (string $name, string $controller) {
+            return RouteResource::api($name, $controller);
+        });
+
         $this->routes(function () {
             // Route::middleware('api')
             //     ->prefix('api/v1')
             //     ->group(__DIR__ . '/../routes/api.php');
 
-            $adminPrefix = $this->app['config']->get('core.admin_prefix');
+            $adminPrefix = $this->app['config']->get('app.admin_prefix');
+            Route::group([], function () {
+                require __DIR__ . '/../routes/statics.php';
+            });
 
             Route::middleware(['admin'])
-                ->prefix($adminPrefix)
+                ->prefix("{$adminPrefix}/{websiteId}")
                 ->group(__DIR__ . '/../routes/admin.php');
 
-            Route::middleware(['web'])
-                ->group(__DIR__ . '/../routes/auth.php');
-
-            Route::middleware(['web'])
+            Route::middleware(['theme'])
                 ->group(__DIR__ . '/../routes/web.php');
         });
     }
@@ -45,9 +53,16 @@ class RouteServiceProvider extends ServiceProvider
             'admin',
             [
                 'web',
-                ...config('core.auth_middleware', []),
-                Admin::class,
-                \Juzaweb\Core\Http\Middleware\ForceLocale::class,
+                \Juzaweb\Modules\Core\Http\Middleware\XFrameHeadersPolicy::class,
+                \Juzaweb\Modules\Core\Http\Middleware\ContentSecurityPolicy::class,
+                ...config('app.auth_middleware', []),
+                'verified',
+                \Juzaweb\Modules\Core\Http\Middleware\OnlyMainSite::class,
+                \Juzaweb\Modules\Core\Http\Middleware\Admin::class,
+                \Juzaweb\Modules\Core\Http\Middleware\CheckWebsiteSetup::class,
+                \Juzaweb\Modules\Core\Http\Middleware\ForceLocale::class,
+                \Juzaweb\Modules\Core\Http\Middleware\BlockDemoWebsiteActions::class,
+                \Juzaweb\Modules\Core\Http\Middleware\TrackWebsiteLastAccess::class,
             ]
         );
 
@@ -55,10 +70,12 @@ class RouteServiceProvider extends ServiceProvider
             'theme',
             [
                 'web',
-                \Juzaweb\Core\Http\Middleware\ForceLocale::class,
-                \Juzaweb\Core\Http\Middleware\RedirectLanguage::class,
-                \Juzaweb\Core\Http\Middleware\MultipleLanguage::class,
-                \Juzaweb\Core\Http\Middleware\Theme::class,
+                \Juzaweb\Modules\Core\Http\Middleware\XFrameHeadersPolicy::class,
+                \Juzaweb\Modules\Core\Http\Middleware\RedirectSubdomainToCustomDomain::class,
+                // \Juzaweb\Modules\Admin\Http\Middleware\ForceLocale::class,
+                \Juzaweb\Modules\Core\Http\Middleware\RedirectLanguage::class,
+                \Juzaweb\Modules\Core\Http\Middleware\MultipleLanguage::class,
+                \Juzaweb\Modules\Core\Http\Middleware\Theme::class,
             ]
         );
     }

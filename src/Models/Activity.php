@@ -7,9 +7,9 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Models;
+namespace Juzaweb\Modules\Core\Models;
 
-use Juzaweb\Core\Traits\HasAPI;
+use Juzaweb\Modules\Core\Traits\HasAPI;
 
 class Activity extends \Spatie\Activitylog\Models\Activity
 {

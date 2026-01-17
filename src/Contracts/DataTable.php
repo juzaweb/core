@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Contracts;
+namespace Juzaweb\Modules\Core\Contracts;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Responsable;

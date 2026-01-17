@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Traits;
+namespace Juzaweb\Modules\Core\Support\Traits;
 
 trait HasPermission
 {

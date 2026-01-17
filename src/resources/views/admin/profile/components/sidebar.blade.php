@@ -16,21 +16,21 @@
                             <a href="{{ url('profile') }}">{{ auth()->user()->name }}</a>
                         </div>
                         <div class="profile-usertitle-job">
-                            {{ __('Join at') }} {{ auth()->user()->created_at?->format('H:i d/m/Y') }}
+                            {{ __('admin::translation.join_at') }} {{ auth()->user()->created_at?->format('H:i d/m/Y') }}
                         </div>
                     </div>
 
                     <div class="profile-usermenu">
                         <ul class="nav flex-column">
-                            <li class="nav-item {{ request()->is(config('core.admin_prefix') . '/profile') ? 'active' : '' }}">
+                            <li class="nav-item {{ request()->is(config('app.admin_prefix') . '/profile') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ admin_url('profile') }}">
-                                    <i class="fas fa-user"></i> {{ __('core::translation.profile') }}
+                                    <i class="fas fa-user"></i> {{ __('admin::translation.profile') }}
                                 </a>
                             </li>
-                            <li class="nav-item {{ request()->is((config('core.admin_prefix') . '/profile/notifications')) ? 'active' : '' }}">
+                            <li class="nav-item {{ request()->is((config('app.admin_prefix') . '/profile/notifications')) ? 'active' : '' }}">
                                 <a class="nav-link"
                                    href="{{ admin_url('profile/notifications') }}">
-                                    <i class="fas fa-bell"></i> {{ __('core::translation.notifications') }}
+                                    <i class="fas fa-bell"></i> {{ __('admin::translation.notifications') }}
                                 </a>
                             </li>
                         </ul>

@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Support\Traits;
+namespace Juzaweb\Modules\Core\Support\Traits;
 
 trait HasRules
 {

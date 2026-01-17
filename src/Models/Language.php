@@ -7,16 +7,15 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Models;
+namespace Juzaweb\Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Juzaweb\Core\Traits\HasAPI;
-use Juzaweb\QueryCache\QueryCacheable;
-use Juzaweb\Translations\Models\Language as LanguageAlias;
+use Juzaweb\Modules\Core\Traits\HasAPI;
+use Juzaweb\Modules\Core\Translations\Models\Language as LanguageAlias;
 
 class Language extends LanguageAlias
 {
-    use HasAPI, QueryCacheable;
+    use HasAPI;
 
     protected $table = 'languages';
 
@@ -35,7 +34,7 @@ class Language extends LanguageAlias
 
     public static function languages(): Collection
     {
-        return self::cacheFor(config('core.query_cache.lifetime'))
+        return self::cacheFor(config('app.query_cache.lifetime'))
             ->get()
             ->map(function ($item) {
                 $item->regional = config("locales.{$item->code}.regional");
@@ -48,5 +47,60 @@ class Language extends LanguageAlias
     public static function default(): string
     {
         return setting('language', config('translatable.fallback_locale'));
+    }
+
+    public static function codes(): array
+    {
+        return static::languages()->keys()->toArray();
+    }
+
+    public static function codesWithoutFallback(): array
+    {
+        return static::languages()->keys()->filter(
+            fn ($locale) => $locale !== config('translatable.fallback_locale')
+        )->toArray();
+    }
+
+    public static function existsCode(string $code): bool
+    {
+        return self::whereCode($code)->exists();
+    }
+
+    public function getChangeUrl($languages = null): string
+    {
+        $languages = $languages ?? self::languages();
+        $multipleLanguageConfig = setting('multiple_language', 'none');
+        $languageCodes = $languages->keys()->toArray();
+        $code = $this->code;
+        $url = request()->url();
+        if ($multipleLanguageConfig === 'session') {
+            $url = request()->fullUrlWithQuery(['hl' => $code]);
+        } elseif ($multipleLanguageConfig === 'prefix') {
+            // $segments = request()->segments();
+            // if (in_array($segments[0] ?? '', $languageCodes)) {
+            //     array_shift($segments);
+            // }
+
+            // $path = $code . (count($segments) > 0 ? '/' . implode('/', $segments) : '');
+            // $url = url($path) . (request()->getQueryString() ? '?' . request()->getQueryString() : '');
+
+            if ($code === static::default()) {
+                $url = url('/?hl=' . $code);
+            } else {
+                $url = url($code . '/?hl=' . $code);
+            }
+        } elseif ($multipleLanguageConfig === 'subdomain') {
+            $host = request()->getHost();
+            $hostParts = explode('.', $host);
+            if (in_array($hostParts[0] ?? '', $languageCodes)) {
+                $hostParts[0] = $code;
+            } else {
+                array_unshift($hostParts, $code);
+            }
+            $newHost = implode('.', $hostParts);
+            $url = request()->getScheme() . '://' . $newHost; // . request()->getRequestUri();
+        }
+
+        return $url;
     }
 }

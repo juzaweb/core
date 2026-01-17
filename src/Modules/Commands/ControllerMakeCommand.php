@@ -1,11 +1,12 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Commands;
+namespace Juzaweb\Modules\Core\Modules\Commands;
 
 use Illuminate\Support\Str;
-use Juzaweb\Core\Modules\Support\Config\GenerateConfigReader;
-use Juzaweb\Core\Modules\Support\Stub;
-use Juzaweb\Core\Modules\Traits\ModuleCommandTrait;
+use Juzaweb\Modules\Core\Modules\FileRepository;
+use Juzaweb\Modules\Core\Modules\Support\Config\GenerateConfigReader;
+use Juzaweb\Modules\Core\Modules\Support\Stub;
+use Juzaweb\Modules\Core\Modules\Traits\ModuleCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -39,9 +40,9 @@ class ControllerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    public function getDestinationFilePath()
+    public function getDestinationFilePath(): string
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = \Juzaweb\Modules\Core\Facades\Module::getModulePath($this->getModuleName());
 
         $controllerPath = GenerateConfigReader::read('controller');
 
@@ -53,7 +54,7 @@ class ControllerMakeCommand extends GeneratorCommand
      */
     protected function getTemplateContents(): string
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $module = \Juzaweb\Modules\Core\Facades\Module::findOrFail($this->getModuleName());
 
         return (new Stub($this->getStubName(), [
             'MODULENAME'        => $module->getStudlyName(),
@@ -65,7 +66,7 @@ class ControllerMakeCommand extends GeneratorCommand
             'MODULE'            => $this->getModuleName(),
             'NAME'              => $this->getModuleName(),
             'STUDLY_NAME'       => $module->getStudlyName(),
-            'MODULE_NAMESPACE'  => $this->laravel['modules']->config('namespace'),
+            'MODULE_NAMESPACE'  => \Juzaweb\Modules\Core\Facades\Module::config('namespace'),
         ]))->render();
     }
 
@@ -106,7 +107,7 @@ class ControllerMakeCommand extends GeneratorCommand
 
     public function getDefaultNamespace(): string
     {
-        $module = $this->laravel['modules'];
+        $module = app(FileRepository::class);
 
         return $module->config('paths.generator.controller.namespace')
             ?: $module->config('paths.generator.controller.path', 'Http/Controllers');

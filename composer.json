@@ -6,35 +6,36 @@
     "homepage": "https://juzaweb.com",
     "require": {
         "php": "^8.2",
+        "astrotomic/laravel-translatable": "^11.13",
         "darkaonline/l5-swagger": "^8.6",
         "doctrine/dbal": "^4.2",
         "hassankhan/config": "^2.2",
-        "juzaweb/file-manager": "^2.0",
-        "juzaweb/hooks": "^2.0.1",
+        "intervention/image": "^3.11",
+        "ip2location/ip2location-php": "^9.7",
+        "juzaweb/hooks": "^2.0.3",
         "juzaweb/html-dom": "^1.0",
-        "juzaweb/laravel-permissions": "^1.0",
         "juzaweb/laravel-query-cache": "^1.0",
-        "juzaweb/laravel-translations": "^2.0",
-        "laravel/framework": "^11.0",
-        "laravel/passport": "^12.2",
+        "juzaweb/laravel-translation-loader": "^2.0",
+        "laravel/slack-notification-channel": "^3.7",
         "laravel/socialite": "^5.5",
         "maatwebsite/excel": "^3.1",
+        "opcodesio/log-viewer": "^3.21",
+        "pion/laravel-chunk-upload": "^1.5",
         "spatie/image-optimizer": "^1.4",
         "spatie/laravel-activitylog": "^4.10",
-        "spatie/laravel-analytics": "^5.4",
+        "spatie/laravel-analytics": "^5.6",
         "spatie/laravel-sitemap": "^7.3",
         "yajra/laravel-datatables": "^11.0"
     },
     "require-dev": {
-        "juzaweb/laravel-download-template": "dev-master",
         "orchestra/testbench": "^9.14",
         "phpunit/phpunit": "^11.0.1"
     },
     "autoload": {
         "psr-4": {
-            "Juzaweb\\Core\\Tests\\": "tests/",
-            "Juzaweb\\Core\\": "src/",
-            "Juzaweb\\Core\\Database\\Factories\\": "database/factories/"
+            "Juzaweb\\Modules\\Core\\Tests\\": "tests/",
+            "Juzaweb\\Modules\\Core\\": "src/",
+            "Juzaweb\\Modules\\Core\\Database\\Factories\\": "database/factories/"
         },
         "files": [
             "helpers/helpers.php"
@@ -43,10 +44,17 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Juzaweb\\Core\\Providers\\CoreServiceProvider"
+                "Juzaweb\\Modules\\Core\\Providers\\CoreServiceProvider"
             ],
             "aliases": {
-                "Field": "Juzaweb\\Core\\Facades\\Field"
+                "Field": "Juzaweb\\Modules\\Core\\Facades\\Field",
+                "Module": "Juzaweb\\Modules\\Core\\Facades\\Module",
+                "Theme": "Juzaweb\\Modules\\Core\\Facades\\Theme",
+                "Widget": "Juzaweb\\Modules\\Core\\Facades\\Widget",
+                "Sidebar": "Juzaweb\\Modules\\Core\\Facades\\Sidebar",
+                "PageTemplate": "Juzaweb\\Modules\\Core\\Facades\\PageTemplate",
+                "PageBlock": "Juzaweb\\Modules\\Core\\Facades\\PageBlock",
+                "Chart": "Juzaweb\\Modules\\Core\\Facades\\Chart"
             }
         }
     },

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -8,10 +9,11 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Providers;
+namespace Juzaweb\Modules\Core\Providers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Juzaweb\Modules\Admin\Providers\Network;
 
 class HelperServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,7 @@ class HelperServiceProvider extends ServiceProvider
             'toUserTimezone',
             function () {
                 $tz = auth()->user()?->timezone ?? config('app.timezone');
+
                 return $this->copy()->setTimezone($tz);
             }
         );
@@ -29,6 +32,13 @@ class HelperServiceProvider extends ServiceProvider
             'getFormLanguage',
             function () {
                 return $this->get('locale', config('translatable.fallback_locale'));
+            }
+        );
+
+        Request::macro(
+            'currentActor',
+            function () {
+                return current_actor();
             }
         );
     }

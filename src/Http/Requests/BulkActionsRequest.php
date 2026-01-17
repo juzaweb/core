@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Requests;
+namespace Juzaweb\Modules\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

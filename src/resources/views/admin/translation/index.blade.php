@@ -1,18 +1,18 @@
-@extends('core::layouts.admin')
+@extends('admin::layouts.admin')
 
 @section('content')
     <div class="row mt-3">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('Users') }}</h3>
+                    <h3 class="card-title">{{ __('admin::translation.users') }}</h3>
                 </div>
                 <div class="card-body">
                     <table id="translations-table" class="table table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr>
-                                <th style="width: 30%;">{{ __('Master Value') }}</th>
-                                <th>{{ __('Phrase text') }}</th>
+                                <th style="width: 30%;">{{ __('admin::translation.master_value') }}</th>
+                                <th>{{ __('admin::translation.phrase_text') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -23,12 +23,12 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
         $(function () {
             $('#translations-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('admin.languages.translations.get-data', [$locale]) }}',
+                ajax: '{{ route('admin.languages.translations.get-data', [$websiteId, $locale]) }}',
                 columns: [
                     {data: 'value', name: 'value'},
                     {
@@ -53,7 +53,7 @@
                 let value = $this.val();
 
                 $.ajax({
-                    url: '{{ route('admin.languages.translations.update', [$locale]) }}',
+                    url: '{{ route('admin.languages.translations.update', [$websiteId, $locale]) }}',
                     type: 'PUT',
                     data: {
                         key: key,
@@ -65,7 +65,7 @@
                         // Check if the response is successful
                     },
                     error: function () {
-                        toastr.error('{{ __('An error occurred while updating the translation.') }}');
+                        toastr.error('{{ __('admin::translation.an_error_occurred_while_updating_the_translation') }}');
                     }
                 });
             });

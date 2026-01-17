@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Notifications;
+namespace Juzaweb\Modules\Core\Notifications;
 
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Fcm\FcmChannel;

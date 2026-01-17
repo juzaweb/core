@@ -7,10 +7,10 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Http\Resources;
+namespace Juzaweb\Modules\Core\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Juzaweb\Permissions\Models\Role;
+use Juzaweb\Modules\Core\Permissions\Models\Role;
 
 /**
  * @property-read Role $resource

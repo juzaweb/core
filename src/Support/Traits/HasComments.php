@@ -8,9 +8,9 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Support\Traits;
+namespace Juzaweb\Modules\Core\Support\Traits;
 
-use Juzaweb\Core\Models\Comment;
+use Juzaweb\Modules\Core\Models\Comment;
 
 /**
  * @mixin \Illuminate\Database\Eloquent\Model
@@ -22,9 +22,9 @@ trait HasComments
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function comments()
+    public function comments(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany(Comment::class, 'commented');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     /**
@@ -32,7 +32,7 @@ trait HasComments
      *
      * @return int
      */
-    public function getTotalComments()
+    public function getTotalComments(): int
     {
         return $this->comments()->count();
     }

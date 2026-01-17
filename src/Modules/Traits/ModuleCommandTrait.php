@@ -1,8 +1,8 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Traits;
+namespace Juzaweb\Modules\Core\Modules\Traits;
 
-use Juzaweb\Core\Modules\Module;
+use Juzaweb\Modules\Core\Modules\Module;
 
 trait ModuleCommandTrait
 {

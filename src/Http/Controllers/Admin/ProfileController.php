@@ -8,14 +8,14 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Controllers\Admin;
+namespace Juzaweb\Modules\Core\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Juzaweb\Core\Facades\Breadcrumb;
-use Juzaweb\Core\Http\Controllers\AdminController;
-use Juzaweb\Core\Http\DataTables\NotificationsDataTable;
-use Juzaweb\Core\Http\Requests\ProfileUpdateRequest;
+use Juzaweb\Modules\Core\Facades\Breadcrumb;
+use Juzaweb\Modules\Core\Http\Controllers\AdminController;
+use Juzaweb\Modules\Core\Http\DataTables\NotificationsDataTable;
+use Juzaweb\Modules\Core\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends AdminController
 {
@@ -23,24 +23,24 @@ class ProfileController extends AdminController
     {
         $user = $request->user();
 
-        Breadcrumb::add(__('Profile'));
+        Breadcrumb::add(__('admin::translation.profile'));
 
         return view(
-            'core::admin.profile.index',
+            'admin::admin.profile.index',
             compact('user')
         );
     }
 
-    public function notification(Request $request, NotificationsDataTable $dataTable)
+    public function notification(Request $request, NotificationsDataTable $dataTable, string $websiteId)
     {
         $user = $request->user();
 
-        Breadcrumb::add(__('Profile'), route('admin.profile'));
+        Breadcrumb::add(__('admin::translation.profile'), route('admin.profile', [$websiteId]));
 
-        Breadcrumb::add(__('Notifications'));
+        Breadcrumb::add(__('admin::translation.notifications'));
 
         return $dataTable->render(
-            'core::admin.profile.notification',
+            'admin::admin.profile.notification',
             compact('user')
         );
     }
@@ -68,7 +68,7 @@ class ProfileController extends AdminController
         );
 
         return $this->success(
-            __('core::translation.profile_updated_successfully'),
+            __('admin::translation.profile_updated_successfully'),
         );
     }
 }

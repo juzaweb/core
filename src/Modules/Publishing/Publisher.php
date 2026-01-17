@@ -1,11 +1,11 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Publishing;
+namespace Juzaweb\Modules\Core\Modules\Publishing;
 
 use Illuminate\Console\Command;
-use Juzaweb\Core\Modules\Contracts\PublisherInterface;
-use Juzaweb\Core\Modules\Contracts\RepositoryInterface;
-use Juzaweb\Core\Modules\Module;
+use Juzaweb\Modules\Core\Modules\Contracts\PublisherInterface;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\Module;
 
 abstract class Publisher implements PublisherInterface
 {
@@ -87,7 +87,7 @@ abstract class Publisher implements PublisherInterface
     /**
      * Get module instance.
      *
-     * @return \Juzaweb\Core\Modules\Module
+     * @return \Juzaweb\Modules\Core\Modules\Module
      */
     public function getModule()
     {

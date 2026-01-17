@@ -7,10 +7,10 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Juzaweb\Core\Models\Users\UserSocialConnection;
+use Juzaweb\Modules\Core\Models\UserSocialConnection;
 
 trait HasSocialConnection
 {

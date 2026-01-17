@@ -8,17 +8,36 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
+use Juzaweb\Modules\Core\FileManager\Traits\HasMedia;
+use Juzaweb\Modules\Core\Models\Media;
+use Juzaweb\Modules\Core\Models\Model;
+
+/**
+ * @mixin HasMedia|Model
+ */
 trait HasThumbnail
 {
-    public function getThumbnailAttribute(): ?string
+    protected static ?string $defaultThumbnail = null;
+
+    public function initializeHasThumbnail()
     {
-        return $this->getFirstMediaUrl('thumbnail');
+        $this->appends[] = 'thumbnail';
     }
 
-    public function setThumbnailAttribute($value): void
+    public static function defaultThumbnail(string $url): void
     {
-        $this->mediaAttributes['thumbnail'] = $value;
+        self::$defaultThumbnail = $url;
+    }
+
+    public function getThumbnailAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('thumbnail') ?? self::$defaultThumbnail;
+    }
+
+    public function setThumbnail(Media|string|null $thumbnail): void
+    {
+        $this->attachOrUpdateMedia($thumbnail, 'thumbnail');
     }
 }

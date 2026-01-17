@@ -1,8 +1,8 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Publishing;
+namespace Juzaweb\Modules\Core\Modules\Publishing;
 
-use Juzaweb\Core\Modules\Support\Config\GenerateConfigReader;
+use Juzaweb\Modules\Core\Modules\Support\Config\GenerateConfigReader;
 
 class AssetPublisher extends Publisher
 {

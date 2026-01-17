@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\DataTables;
+namespace Juzaweb\Modules\Core\DataTables;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
@@ -27,7 +27,7 @@ class ColumnEditer
         $actions = array_filter($actions, fn ($action) => $action->isVisible());
 
         return view(
-            'core::components.datatables.actions',
+            'admin::components.datatables.actions',
             [
                 'model' => $model,
                 'actions' => $actions,
@@ -39,7 +39,7 @@ class ColumnEditer
     public static function editLink(Model $model, string $editUrl, string $data = 'name'): View
     {
         return view(
-            'core::components.datatables.edit-link',
+            'admin::components.datatables.edit-link',
             compact('model', 'editUrl', 'data')
         );
     }
@@ -54,7 +54,7 @@ class ColumnEditer
     public static function checkbox(Model $model, string $rowId = 'id'): View
     {
         return view(
-            'core::components.datatables.checkbox',
+            'admin::components.datatables.checkbox',
             ['model' => $model, 'rowId' => $rowId]
         );
     }

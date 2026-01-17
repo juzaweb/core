@@ -8,28 +8,29 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Controllers\Auth;
+namespace Juzaweb\Modules\Core\Http\Controllers\Auth;
 
-use Juzaweb\Core\Http\Controllers\AdminController;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Juzaweb\Core\Models\Enums\UserStatus;
-use Juzaweb\Core\Models\User;
-use Juzaweb\Core\Models\Users\UserSocialConnection;
+use Juzaweb\Modules\Admin\Enums\UserStatus;
+use Juzaweb\Modules\Admin\Models\User;
+use Juzaweb\Modules\Core\Http\Controllers\AdminController;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\AbstractProvider;
+use function Juzaweb\Modules\Admin\Http\Controllers\Auth\website;
 
 class SocialLoginController extends AdminController
 {
     public function redirect(string $driver)
     {
         if (! setting()->boolean("{$driver}_login", false)) {
-            return $this->error(__('Invalid provider :name', ['name' => Str::title($driver)]));
+            return $this->error(__('admin::translation.invalid_provider_name', ['name' => Str::title($driver)]));
         }
 
         $redirectUrl = action([static::class, 'callback'], ['driver' => $driver]);
@@ -40,7 +41,7 @@ class SocialLoginController extends AdminController
             return $this->error($e->getMessage());
         } catch (ClientException $e) {
             report($e);
-            return $this->error(__('Invalid credentials provided.'));
+            return $this->error(__('admin::translation.invalid_credentials_provided'));
         }
 
         return $socialite->redirect();
@@ -49,7 +50,7 @@ class SocialLoginController extends AdminController
     public function callback(string $driver)
     {
         if (! setting()->boolean("{$driver}_login", false)) {
-            return $this->error(__('Invalid provider :name', ['name' => Str::title($driver)]));
+            return $this->error(__('admin::translation.invalid_provider_name', ['name' => Str::title($driver)]));
         }
 
         $redirectUrl = action([static::class, 'callback'], ['driver' => $driver]);
@@ -58,30 +59,47 @@ class SocialLoginController extends AdminController
             /** @var SocialUser $socicalUser */
             $socicalUser = $this->getProvider($driver)->redirectUrl($redirectUrl)->user();
         } catch (InvalidArgumentException $e) {
-            return $this->error($e->getMessage());
+            return $this->error(
+                [
+                    'message' => $e->getMessage(),
+                    'redirect' => route('login'),
+                ]
+            );
         } catch (ClientException $e) {
             report($e);
-            return $this->error($e->getMessage());
+            return $this->error(
+                [
+                    'message' => __('admin::translation.invalid_credentials_provided'),
+                    'redirect' => route('login'),
+                ]
+            );
         }
 
-        $userSocial = UserSocialConnection::findByProvider($driver, $socicalUser->getId());
+        $guard = website()->useUserAuth() ? 'web' : 'member';
+        $provider = config("auth.guards.{$guard}.provider");
+        $model = config('auth.providers.' . $provider . '.model');
+        $connectionModel = config('auth.providers.' . $provider . '.social_connection_model');
+        $userSocial = $connectionModel::findByProvider($driver, $socicalUser->getId());
 
-        if ($userSocial) {
-            $user = $userSocial->user;
-
+        if ($userSocial && ($user = $userSocial->user)) {
             if ($userSocial->user->status === UserStatus::BANNED) {
-                return $this->error(__('Your account has been deactivated.'));
+                return $this->error(
+                    [
+                        'message' => __('admin::translation.your_account_has_been_deactivated'),
+                        'redirect' => route('login'),
+                    ]
+                );
             }
 
             return $this->loginSuccess($user, $driver);
         }
 
         $user = DB::transaction(
-            function () use ($socicalUser, $driver) {
+            function () use ($socicalUser, $driver, $model) {
                 $password = Str::random(15);
 
                 /** @var User $user */
-                $user = User::firstOrCreate([
+                $user = $model::firstOrCreate([
                     'email' => $socicalUser->getEmail(),
                 ], [
                     'name' => $socicalUser->getName(),
@@ -116,20 +134,22 @@ class SocialLoginController extends AdminController
 
     protected function loginSuccess($user, $driver)
     {
+        Auth::login($user, true);
+
         return $this->success(
             [
-                'redirect' => route('home'),
-                'message' => __('Login successful.'),
+                'redirect' => website()->loginRedirectUrl($user),
+                'message' => __('admin::translation.login_successful'),
             ]
         );
     }
 
     protected function getProvider(string $method): AbstractProvider
     {
-        $provider = config("core.social_login.providers.{$method}");
+        $provider = config("app.social_login.providers.{$method}");
 
         if (empty($provider)) {
-            abort(404, __('Page not found'));
+            abort(404, __('admin::translation.page_not_found'));
         }
 
         $config = [

@@ -1,0 +1,468 @@
+/*
+Form file management Modal
+--------------------
+*/
+.form-image-modal {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 22px;
+    color: #777;
+    background-color: #FFF;
+    background-image: none;
+    text-align: center;
+    border: 1px solid #E5E5E5;
+    -webkit-transition: border-color .15s linear;
+    transition: border-color .15s linear;
+}
+
+.form-image-modal:hover {
+    background-size: 30px 30px;
+    background-image: -webkit-linear-gradient(135deg, #F6F6F6 25%, transparent 25%, transparent 50%, #F6F6F6 50%, #F6F6F6 75%, transparent 75%, transparent);
+    -webkit-animation: stripes 2s linear infinite;
+    animation: stripes 2s linear infinite;
+    background-image: linear-gradient(-45deg, #f2f4f8 25%, transparent 25%, transparent 50%, #f2f4f8 50%, #f2f4f8 75%, transparent 75%, transparent);
+}
+
+.form-image-modal .image-clear {
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 4px 8px;
+    font-weight: 700;
+    -webkit-transition: all .15s linear;
+    transition: all .15s linear;
+    color: #8e8b8b;
+    z-index: 9;
+    display: none;
+}
+
+.previewing:hover .image-clear {
+    display: block;
+}
+
+.form-image-modal {
+    cursor: pointer;
+}
+
+.form-image-modal .icon-choose {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.form-image-modal .icon-choose i {
+    font-size: 50px;
+    color: #CCC;
+}
+
+.form-image-modal .dropify-preview {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #FFF;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.form-image-modal .dropify-preview .dropify-render img {
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    background-color: #FFF;
+    -webkit-transition: border-color .15s linear;
+    transition: border-color .15s linear;
+    object-fit: cover;
+}
+
+.form-image-modal .dropify-preview .dropify-infos {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    background: rgba(0, 0, 0, .7);
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+}
+
+.form-image-modal .dropify-preview .dropify-infos .dropify-infos-inner {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(0, -40%);
+    transform: translate(0, -40%);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    width: 100%;
+    padding: 0 20px;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+.form-image-modal .dropify-preview .dropify-infos .dropify-infos-inner p.dropify-filename span.file-icon {
+    margin-right: 2px;
+}
+
+.form-image-modal .dropify-preview .dropify-infos .dropify-infos-inner p {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #FFF;
+    text-align: center;
+    line-height: 25px;
+    font-weight: 700;
+}
+
+/* Modal Media Items */
+#jw-media-modal {
+    z-index: 9999;
+}
+
+#jw-media-modal .media-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -5px;
+}
+
+#jw-media-modal .media-item {
+    width: 12.5%;
+    padding: 5px;
+    position: relative;
+    float: left;
+}
+
+@media (max-width: 1400px) {
+    #jw-media-modal .media-item {
+        width: 14.285714%;
+    }
+}
+
+@media (max-width: 1200px) {
+    #jw-media-modal .media-item {
+        width: 16.666667%;
+    }
+}
+
+@media (max-width: 992px) {
+    #jw-media-modal .media-item {
+        width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    #jw-media-modal .media-item {
+        width: 33.333333%;
+    }
+}
+
+#jw-media-modal .media-item .media-item-info {
+    display: block;
+    background: #f4f6f9;
+    border: 2px solid #dce1e7;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #333;
+    /*height: 100%;*/
+}
+
+#jw-media-modal .media-item .media-item-info:hover {
+    border-color: #177bdf;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#jw-media-modal .media-item .attachment-preview {
+    position: relative;
+    /* padding-bottom: 100%; */
+    overflow: hidden;
+}
+
+#jw-media-modal .media-item .attachment-preview .thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#jw-media-modal .media-item .attachment-preview .thumbnail .centered {
+    width: 100%;
+    height: 100%;
+    transform: unset;
+}
+
+#jw-media-modal .media-item .attachment-preview img {
+    width: 100%;
+    height: 100%;
+    max-height: 150px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Also apply to admin media page */
+.media-list .media-item .attachment-preview img {
+    width: 100%;
+    height: 100%;
+    max-height: 150px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    object-position: center;
+}
+
+.media-list .media-item .attachment-preview {
+    position: relative;
+    /* height: 150px; */
+    overflow: hidden;
+}
+
+#jw-media-modal .media-item .media-name {
+    padding: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    border-top: 1px solid #eee;
+    background: #fff;
+}
+
+/* Tab Navigation */
+#jw-media-modal .modal-header .nav-tabs {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+#jw-media-modal .modal-header .nav-tabs .nav-link {
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #6c757d;
+    padding: 8px 16px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+#jw-media-modal .modal-header .nav-tabs .nav-link:hover {
+    color: #177bdf;
+    border-bottom-color: #177bdf;
+}
+
+#jw-media-modal .modal-header .nav-tabs .nav-link.active {
+    color: #177bdf;
+    border-bottom-color: #177bdf;
+    background: transparent;
+}
+
+#jw-media-modal .modal-header .nav-tabs .nav-link i {
+    margin-right: 5px;
+}
+
+/* Upload Tab Styles */
+#jw-media-modal .upload-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#jw-media-modal .dropzone {
+    border: 2px dashed #cbd5e0;
+    border-radius: 8px;
+    background: #f7fafc;
+    transition: all 0.3s;
+    min-height: 300px;
+}
+
+#jw-media-modal .dropzone:hover {
+    border-color: #177bdf;
+    background: #edf2f7;
+}
+
+#jw-media-modal .dropzone.dz-drag-hover {
+    border-color: #177bdf;
+    background: #e6f2ff;
+    border-style: solid;
+}
+
+#jw-media-modal .dropzone .dz-message {
+    margin: 0;
+}
+
+#jw-media-modal .dropzone .dz-preview {
+    margin: 10px;
+}
+
+#jw-media-modal .dropzone .dz-preview .dz-image {
+    border-radius: 8px;
+}
+
+#jw-media-modal .dropzone .dz-preview .dz-progress {
+    height: 8px;
+    border-radius: 4px;
+}
+
+#jw-media-modal .upload-info {
+    border-radius: 8px;
+}
+
+/* Admin Media Upload Modal Styles */
+#upload-modal .modal-header .nav-tabs {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+#upload-modal .modal-header .nav-tabs .nav-link {
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #6c757d;
+    padding: 8px 16px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+#upload-modal .modal-header .nav-tabs .nav-link:hover {
+    color: #177bdf;
+    border-bottom-color: #177bdf;
+}
+
+#upload-modal .modal-header .nav-tabs .nav-link.active {
+    color: #177bdf;
+    border-bottom-color: #177bdf;
+    background: transparent;
+}
+
+#upload-modal .modal-header .nav-tabs .nav-link i {
+    margin-right: 5px;
+}
+
+#upload-modal .upload-container {
+    max-width: 100%;
+}
+
+#upload-modal .dropzone {
+    border: 2px dashed #cbd5e0;
+    border-radius: 8px;
+    background: #f7fafc;
+    transition: all 0.3s;
+}
+
+#upload-modal .dropzone:hover {
+    border-color: #177bdf;
+    background: #edf2f7;
+}
+
+#upload-modal .dropzone.dz-drag-hover {
+    border-color: #177bdf;
+    background: #e6f2ff;
+    border-style: solid;
+}
+
+#upload-modal .dropzone .dz-message {
+    margin: 0;
+}
+
+#upload-modal .dropzone .dz-preview {
+    margin: 10px;
+}
+
+#upload-modal .dropzone .dz-preview .dz-image {
+    border-radius: 8px;
+}
+
+#upload-modal .dropzone .dz-preview .dz-progress {
+    height: 8px;
+    border-radius: 4px;
+}
+
+/* File Icon Wrapper for Non-Image Files */
+.file-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 4px;
+}
+
+.file-icon-wrapper i {
+    opacity: 0.8;
+}
+
+.file-icon-wrapper p {
+    font-weight: 600;
+    color: #6c757d;
+}
+
+/* Add Images Container */
+.add-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* min-height: 200px; */
+}
+
+.add-image-container .btn {
+    padding: 20px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Selection Checkmark for Multiple Selection */
+.selection-checkmark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    background: white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.selection-checkmark i {
+    color: #28a745;
+    font-size: 24px;
+}
+
+.media-file-item.selected .media-item-info {
+    border-color: #28a745;
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.3);
+}

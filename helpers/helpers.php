@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -12,12 +13,22 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
-use Juzaweb\Core\Contracts\Setting;
-use Juzaweb\Core\Facades\Theme;
-use Juzaweb\Core\Models\User;
-use Juzaweb\Translations\Models\Language;
+use Juzaweb\Modules\Admin\Models\Guest;
+use Juzaweb\Modules\Admin\Models\User;
+use Juzaweb\Modules\Core\Contracts\Setting;
+use Juzaweb\Modules\Core\Facades\Theme;
+use Juzaweb\Modules\Core\Models\Authenticatable;
+use Juzaweb\Modules\Core\Models\Language;
+use Juzaweb\Modules\Core\Translations\Contracts\Translatable;
+use Juzaweb\Modules\Core\Translations\Enums\TranslateHistoryStatus;
+use Juzaweb\Modules\Core\Translations\Jobs\ModelTranslateJob;
+use Juzaweb\Modules\Core\Translations\Models\TranslateHistory;
 
-require __DIR__ .'/modules.php';
+require __DIR__ . '/media.php';
+require __DIR__ . '/modules.php';
+require __DIR__ . '/permission.php';
+require __DIR__ . '/functions.php';
+require __DIR__ . '/themes.php';
 
 if (! function_exists('client_ip')) {
     /**
@@ -74,7 +85,7 @@ if (! function_exists('setting')) {
 if (! function_exists('cache_prefix')) {
     function cache_prefix(string $key): string
     {
-        return "larabiz_{$key}";
+        return "juzaweb_{$key}";
     }
 }
 
@@ -121,9 +132,22 @@ if (! function_exists('home_url')) {
      *
      * @return string The generated URL.
      */
-    function home_url(?string $uri = null): string
+    function home_url(?string $uri = null, ?string $locale = null): string
     {
-        return route('home'). ($uri ? '/' . ltrim($uri, '/') : '');
+        $locale = $locale ?? app()->getLocale();
+        $multipleLanguage = setting('multiple_language', 'none');
+        $language = setting('language', 'en');
+        $url = url('/');
+
+        if ($multipleLanguage === 'prefix') {
+            if ($language === $locale) {
+                return $url . ($uri ? '/' . trim($uri, '/') : '');
+            }
+
+            return rtrim($url . '/' . $locale, '/') . ($uri ? '/' . trim($uri, '/') : '');
+        }
+
+        return $url . ($uri ? '/' . trim($uri, '/') : '');
     }
 }
 
@@ -135,41 +159,34 @@ if (! function_exists('admin_url')) {
      *
      * @return string the generated URL
      */
-    function admin_url(?string $uri = null): string
+    function admin_url(?string $uri = null, ?string $websiteId = null): string
     {
+        $websiteId = $websiteId ?? website_id();
+
         return url(rtrim(
-            '/' . config('core.admin_prefix') . '/'
-            . ltrim($uri, '/'),
+            '/' . config('app.admin_prefix')
+                . '/' . $websiteId
+                . '/' . ltrim($uri, '/'),
             '/'
         ));
     }
 }
 
-if (! function_exists('format_size_units')) {
+if (! function_exists('network_url')) {
     /**
-     * Convert a size in bytes to a human-readable string representation using appropriate units.
+     * Generate an admin URL from the given URI.
      *
-     * @param int $bytes The size in bytes to be converted.
-     * @param  int  $decimals The number of decimal places to use in the formatted output. Default is 2.
-     * @return string A human-readable string representing the size in bytes using appropriate units (GB, MB, KB, bytes).
+     * @param string $uri the URI to generate a URL for
+     *
+     * @return string the generated URL
      */
-    function format_size_units($bytes, int $decimals = 2): string
+    function network_url(?string $uri = null): string
     {
-        if ($bytes >= 1073741824) {
-            $bytes = number_format($bytes / 1073741824, $decimals) . ' GB';
-        } elseif ($bytes >= 1048576) {
-            $bytes = number_format($bytes / 1048576, $decimals) . ' MB';
-        } elseif ($bytes >= 1024) {
-            $bytes = number_format($bytes / 1024, $decimals) . ' KB';
-        } elseif ($bytes > 1) {
-            $bytes .= ' bytes';
-        } elseif ($bytes == 1) {
-            $bytes .= ' byte';
-        } else {
-            $bytes = '0 bytes';
-        }
-
-        return $bytes;
+        return url(rtrim(
+            '/network/'
+                . ltrim($uri, '/'),
+            '/'
+        ));
     }
 }
 
@@ -315,7 +332,7 @@ if (!function_exists('is_admin_page')) {
     {
         // Check if the current page is an admin page by checking if the
         // current URL matches the prefix defined in the config.
-        return request()->is(config('core.admin_prefix') . '*');
+        return request()->is(config('app.admin_prefix') . '*');
     }
 }
 
@@ -424,8 +441,36 @@ if (! function_exists('upload_url')) {
             return $path;
         }
 
-        return asset('storage/' . $path);
+        $path = ltrim($path, '/');
+        // If it does not exist in storage, return cloud url
+        // if (config('media.cloud_upload_enabled') && !Storage::disk('public')->exists($path)) {
+        //     // if (in_array(
+        //     //     pathinfo($path, PATHINFO_EXTENSION),
+        //     //     config('media.extensions.image'))
+        //     // ) {
+        //     //     return proxy_image(Storage::disk('cloud')->url($path));
+        //     // }
+
+        //     return Storage::disk('cloud')->url($path);
+        // }
+
+        return Storage::disk('public')->url($path);
     }
+}
+
+function upload_path_format(?string $path): ?string
+{
+    if ($path === null) {
+        return null;
+    }
+
+    $path = str_replace(Storage::disk('cloud')->url('/'), '', $path);
+
+    if ($proxyUrl = config('filesystems.disks.cloud.proxy_url')) {
+        $path = str_replace($proxyUrl, '', $path);
+    }
+
+    return ltrim(str_replace(upload_url('/'), '', $path), '/');
 }
 
 if (! function_exists('map_params')) {
@@ -526,12 +571,11 @@ if (!function_exists('get_vimeo_id')) {
         $id = '';
         if (preg_match(
             '%^https?:\/\/(?:www\.|player\.)?vimeo.com\/'
-            . '(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)'
-            . '(\d+)(?:$|\/|\?)(?:[?]?.*)$%im',
+                . '(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)'
+                . '(\d+)(?:$|\/|\?)(?:[?]?.*)$%im',
             $url,
             $regs
-        )
-        ) {
+        )) {
             $id = $regs[3];
         }
 
@@ -601,8 +645,12 @@ if (!function_exists('seo_string')) {
      * @param  int  $chars The maximum length of the resulting string (default is 70).
      * @return string The processed SEO-friendly string.
      */
-    function seo_string(string $string, int $chars = 70): string
+    function seo_string(?string $string, int $chars = 70): string
     {
+        if ($string === null) {
+            return '';
+        }
+
         $string = strip_tags($string);
         $string = str_replace(["\n", "\t"], ' ', $string);
         $string = remove_zero_width_space_string(html_entity_decode($string, ENT_HTML5));
@@ -645,4 +693,194 @@ if (!function_exists('str_slug')) {
     {
         return Str::slug($string);
     }
+}
+
+if (!function_exists('back_form_url')) {
+    function back_form_url(): string
+    {
+        $path = request()->path();
+        $cleanUrl = preg_replace('/\/[a-z0-9-]+\/edit$/i', '', $path);
+        $cleanUrl = str_replace('/create', '', $cleanUrl);
+        return url($cleanUrl);
+    }
+}
+
+if (!function_exists('load_data_url')) {
+    function load_data_url(string $model, string $field = 'name', array $params = []): string
+    {
+        return route(
+            'admin.load-data',
+            [
+                'websiteId' => website_id(),
+                'token' => encrypt([
+                    'model' => $model,
+                    'field' => $field,
+                ]),
+                ...$params,
+            ]
+        );
+    }
+}
+
+if (!function_exists('custom_var_export')) {
+    /**
+     * Custom implementation of var_export for better readability.
+     *
+     * This function formats the output of var_export to use square brackets
+     * for arrays and adds indentation for better readability.
+     *
+     * @param mixed $expression  The variable to be exported.
+     * @return string The formatted string representation of the variable.
+     */
+
+    function custom_var_export($expression): string
+    {
+        $export = var_export($expression, true);
+        $export = preg_replace("/^([ ]*)(.*)/m", '$1$1$2', $export);
+        $array = preg_split("/\r\n|\n|\r/", $export);
+        $array = preg_replace(
+            ["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"],
+            [null, ']$1', ' => ['],
+            $array
+        );
+        return implode(PHP_EOL, array_filter(["["] + $array));
+    }
+}
+
+if (!function_exists('img_proxy')) {
+    function proxy_image(?string $url, ?int $width = null, ?int $height = null, bool $crop = false): string
+    {
+        if ($url === null) {
+            return '';
+        }
+
+        $hash = encrypt_deterministic($url, config('services.imgproxy.key'));
+        $baseUrl = rtrim(config('services.imgproxy.base_url'), '/');
+        $filename = basename($url);
+        $method = $crop ? 'crop' : 'cover';
+
+        if ($width > 0 || $height > 0) {
+            $size = ($width ?? 'auto') . 'x' . ($height ?? 'auto');
+            return "{$baseUrl}/{$method}:{$size}/{$hash}/{$filename}";
+        }
+
+        return "{$baseUrl}/original/{$hash}/{$filename}";
+    }
+}
+
+if (! function_exists('csp_script_nonce')) {
+    function csp_script_nonce(): ?string
+    {
+        return request()->attributes->get('cspNonce');
+    }
+}
+
+function is_bound(string $classOrAlias): bool
+{
+    return app()->bound($classOrAlias);
+}
+
+function base64url_encode(string $data): string
+{
+    return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+}
+
+function base64url_decode(string $data): string
+{
+    $pad = 4 - (strlen($data) % 4);
+    if ($pad !== 4) {
+        $data .= str_repeat('=', $pad);
+    }
+    return base64_decode(strtr($data, '-_', '+/'));
+}
+
+function encrypt_deterministic(string $plaintext, string $key): string
+{
+    $method = 'aes-256-cbc';
+    $key = hash('sha256', $key, true);
+    $iv = substr(hash('sha256', $plaintext . $key, true), 0, 16);
+    $cipher = openssl_encrypt($plaintext, $method, $key, OPENSSL_RAW_DATA, $iv);
+    return base64url_encode($iv . $cipher);
+}
+
+function decrypt_deterministic(string $token, string $key): ?string
+{
+    $method = 'aes-256-cbc';
+    $key = hash('sha256', $key, true);
+    $data = base64url_decode($token);
+    if (strlen($data) < 16) {
+        return null;
+    }
+    $iv = substr($data, 0, 16);
+    $cipher = substr($data, 16);
+    $plain = openssl_decrypt($cipher, $method, $key, OPENSSL_RAW_DATA, $iv);
+    return $plain === false ? null : $plain;
+}
+
+function ip_in_range(string $ip, string $range)
+{
+    [$subnet, $bits] = explode('/', $range);
+    $ip = ip2long($ip);
+    $subnet = ip2long($subnet);
+    $mask = -1 << (32 - $bits);
+    $subnet &= $mask;  // subnet mask
+    return ($ip & $mask) === $subnet;
+}
+
+function generate_site_name_from_host(string $host): string
+{
+    // Remove common prefixes
+    $clean = preg_replace('/^(www\.)/i', '', $host);
+
+    // Remove TLD (.com, .net, .org, ...)
+    $parts = explode('.', $clean);
+    $base = $parts[0] ?? $clean;
+
+    // Convert to readable name
+    $name = str_replace(['-', '_'], ' ', $base);
+
+    // Capitalize each word
+    return ucwords($name);
+}
+
+function user(?string $guard = null): ?Authenticatable
+{
+    return auth()->guard($guard)->user();
+}
+
+function current_actor(?string $guard = null): Guest|Authenticatable
+{
+    if ($user = user($guard)) {
+        return $user;
+    }
+
+    return Guest::firstOrCreate(
+        [
+            'ipv4' => client_ip(),
+        ],
+        [
+            'user_agent' => request()->userAgent(),
+        ]
+    );
+}
+
+function model_translate(Translatable $model, string $sourceLocale, string $targetLocale): TranslateHistory
+{
+    if ($sourceLocale === $targetLocale) {
+        throw new InvalidArgumentException('Source locale and target locale must be different');
+    }
+
+    $history = $model->translateHistories()->updateOrCreate(
+        [
+            'locale' => $targetLocale,
+        ],
+        [
+            'status' => TranslateHistoryStatus::PENDING,
+            'error' => null,
+        ]
+    );
+
+    ModelTranslateJob::dispatch(website(), $model, $sourceLocale, $targetLocale);
+
+    return $history;
 }

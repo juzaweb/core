@@ -1,6 +1,7 @@
 <?php
 
-use Juzaweb\Core\Modules\Activators\FileActivator;
+use Juzaweb\Modules\Core\Modules\Activators\DatabaseActivator;
+use Juzaweb\Modules\Core\Modules\Activators\FileActivator;
 
 return [
 
@@ -26,25 +27,22 @@ return [
 
     'stubs' => [
         'enabled' => true,
-        'path' => base_path('vendor/juzaweb/core/stubs/modules/'),
+        'path' => resource_path('stubs/modules/'),
         'files' => [
-            'routes/admin' => 'src/routes/admin.php',
-            'routes/web' => 'src/routes/web.php',
-            'routes/api' => 'src/routes/api.php',
-            'views/index' => 'src/resources/views/index.blade.php',
+            'routes/admin' => 'routes/admin.php',
+            'routes/web' => 'routes/web.php',
+            'routes/api' => 'routes/api.php',
+            // 'views/index' => 'resources/views/index.blade.php',
             // 'views/master' => 'resources/views/layouts/master.blade.php',
             'scaffold/config' => 'config/config.php',
-            'composer' => 'composer.json',
-            // 'assets/js/app' => 'Resources/js/app.js',
-            // 'assets/sass/app' => 'Resources/sass/app.scss',
-            // 'vite' => 'vite.config.js',
-            // 'package' => 'package.json',
+            // 'composer' => 'composer.json',
+            'assets/mix' => 'assets/mix.js',
         ],
         'replacements' => [
             'routes/web' => ['LOWER_NAME', 'STUDLY_NAME'],
             'routes/api' => ['LOWER_NAME'],
             'vite' => ['LOWER_NAME'],
-            'json' => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE', 'PROVIDER_NAMESPACE'],
+            'json' => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE', 'PROVIDER_NAMESPACE', 'KEBAB_SINGULAR_TITLE'],
             'views/index' => ['LOWER_NAME'],
             'views/master' => ['LOWER_NAME', 'STUDLY_NAME'],
             'scaffold/config' => ['STUDLY_NAME'],
@@ -92,7 +90,7 @@ return [
         |
         */
 
-        'migration' => base_path('Database/migrations'),
+        'migration' => base_path('database/migrations'),
 
         /*
         |--------------------------------------------------------------------------
@@ -102,37 +100,38 @@ return [
         | Set the generate key too false to not generate that folder
         */
         'generator' => [
-            'config' => ['path' => 'config', 'generate' => true],
-            'command' => ['path' => 'src/Commands', 'generate' => true, 'namespace' => 'Commands'],
-            'migration' => ['path' => 'database/migrations', 'generate' => true],
-            'seeder' => ['path' => 'database/seeders', 'generate' => true, 'namespace' => 'Database/Seeders'],
-            'factory' => ['path' => 'database/factories', 'generate' => true, 'namespace' => 'Database/Factories'],
-            'model' => ['path' => 'src/Models', 'generate' => true, 'namespace' => 'Models'],
-            'routes' => ['path' => 'src/routes', 'generate' => true],
-            'controller' => ['path' => 'src/Http/Controllers', 'generate' => true, 'namespace' => 'Http/Controllers'],
-            'filter' => ['path' => 'src/Http/Middleware', 'generate' => true, 'namespace' => 'Http/Middleware'],
-            'request' => ['path' => 'src/Http/Requests', 'generate' => true, 'namespace' => 'Http/Requests'],
-            'provider' => ['path' => 'src/Providers', 'generate' => true, 'namespace' => 'Providers'],
-            'assets' => ['path' => 'assets/public', 'generate' => true],
+            'config' => ['path' => 'config', 'generate' => false],
+            'command' => ['path' => 'Commands', 'generate' => true, 'namespace' => 'Commands'],
+            'migration' => ['path' => 'Database/migrations', 'generate' => true],
+            'seeder' => ['path' => 'Database/Seeders', 'generate' => false, 'namespace' => 'Database/Seeders'],
+            'factory' => ['path' => 'Database/Factories', 'generate' => true, 'namespace' => 'Database/Factories'],
+            'model' => ['path' => 'Models', 'generate' => true, 'namespace' => 'Models'],
+            'routes' => ['path' => 'routes', 'generate' => true],
+            'controller' => ['path' => 'Http/Controllers', 'generate' => true, 'namespace' => 'Http/Controllers'],
+            'filter' => ['path' => 'Http/Middleware', 'generate' => true, 'namespace' => 'Http/Middleware'],
+            'request' => ['path' => 'Http/Requests', 'generate' => true, 'namespace' => 'Http/Requests'],
+            'provider' => ['path' => 'Providers', 'generate' => true, 'namespace' => 'Providers'],
+            'assets' => ['path' => 'assets/public', 'generate' => false],
             'assets-js' => ['path' => 'assets/js', 'generate' => true],
             'assets-css' => ['path' => 'assets/css', 'generate' => true],
-            'lang' => ['path' => 'src/resources/lang', 'generate' => true],
-            'views' => ['path' => 'src/resources/views', 'generate' => true],
-            'test' => ['path' => 'tests/Unit', 'generate' => true, 'namespace' => 'Tests\\Unit'],
-            'test-feature' => ['path' => 'tests/Feature', 'generate' => true, 'namespace' => 'Tests\\Feature'],
-            'repository' => ['path' => 'src/Repositories', 'generate' => false, 'namespace' => 'Repositories'],
-            'event' => ['path' => 'src/Events', 'generate' => false, 'namespace' => 'Events'],
-            'listener' => ['path' => 'src/Listeners', 'generate' => false, 'namespace' => 'Listeners'],
-            'policies' => ['path' => 'src/Policies', 'generate' => false, 'namespace' => 'Policies'],
-            'rules' => ['path' => 'src/Rules', 'generate' => false, 'namespace' => 'Rules'],
-            'jobs' => ['path' => 'src/Jobs', 'generate' => false, 'namespace' => 'Jobs'],
-            'emails' => ['path' => 'src/Emails', 'generate' => false, 'namespace' => 'Emails'],
-            'notifications' => ['path' => 'src/Notifications', 'generate' => false, 'namespace' => 'Notifications'],
-            'resource' => ['path' => 'src/Http/Resources', 'generate' => false, 'namespace' => 'Http/Resources'],
-            'component-view' => ['path' => 'src/resources/views/components', 'generate' => false],
-            'component-class' => ['path' => 'src/View/Components', 'generate' => false, 'namespace' => 'View/Components'],
+            'lang' => ['path' => 'resources/lang', 'generate' => true],
+            'views' => ['path' => 'resources/views', 'generate' => true],
+            'test' => ['path' => 'Tests/Unit', 'generate' => true, 'namespace' => 'Tests\\Unit'],
+            'test-feature' => ['path' => 'Tests/Feature', 'generate' => true, 'namespace' => 'Tests\\Feature'],
+            'repository' => ['path' => 'Repositories', 'generate' => false, 'namespace' => 'Repositories'],
+            'event' => ['path' => 'Events', 'generate' => false, 'namespace' => 'Events'],
+            'listener' => ['path' => 'Listeners', 'generate' => false, 'namespace' => 'Listeners'],
+            'policies' => ['path' => 'Policies', 'generate' => false, 'namespace' => 'Policies'],
+            'rules' => ['path' => 'Rules', 'generate' => false, 'namespace' => 'Rules'],
+            'jobs' => ['path' => 'Jobs', 'generate' => false, 'namespace' => 'Jobs'],
+            'emails' => ['path' => 'Emails', 'generate' => false, 'namespace' => 'Emails'],
+            'notifications' => ['path' => 'Notifications', 'generate' => false, 'namespace' => 'Notifications'],
+            'resource' => ['path' => 'Http/Resources', 'generate' => false, 'namespace' => 'Http/Resources'],
+            'component-view' => ['path' => 'resources/views/components', 'generate' => false],
+            'component-class' => ['path' => 'View/Components', 'generate' => false, 'namespace' => 'View/Components'],
+            'facades' => ['path' => 'Facades', 'generate' => true, 'namespace' => 'Facades'],
             'datatable' => [
-                'path' => 'src/Http/DataTables',
+                'path' => 'Http/DataTables',
                 'generate' => false,
                 'namespace' => 'Http/DataTables',
                 // Column has link to edit
@@ -242,7 +241,13 @@ return [
             'cache-key' => 'activator.installed',
             'cache-lifetime' => 604800,
         ],
+
+        'database' => [
+            'class' => DatabaseActivator::class,
+            'cache-key' => 'activator.installed',
+            'cache-lifetime' => 604800,
+        ],
     ],
 
-    'activator' => 'file',
+    'activator' => 'database',
 ];

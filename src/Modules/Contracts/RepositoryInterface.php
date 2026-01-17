@@ -1,16 +1,16 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Contracts;
+namespace Juzaweb\Modules\Core\Modules\Contracts;
 
-use Juzaweb\Core\Modules\Exceptions\ModuleNotFoundException;
-use Juzaweb\Core\Modules\Module;
+use Juzaweb\Modules\Core\Modules\Exceptions\ModuleNotFoundException;
+use Juzaweb\Modules\Core\Modules\Module;
 
 interface RepositoryInterface
 {
     /**
      * Get all modules.
      *
-     * @return mixed
+     * @return \Juzaweb\Modules\Core\Modules\Module[]
      */
     public function all();
 
@@ -31,7 +31,7 @@ interface RepositoryInterface
     /**
      * Get modules as modules collection instance.
      *
-     * @return \Juzaweb\Core\Modules\Support\Collection
+     * @return \Juzaweb\Modules\Core\Modules\Support\Collection
      */
     public function toCollection();
 
@@ -141,7 +141,7 @@ interface RepositoryInterface
      * Delete a specific module.
      * @param string $module
      * @return bool
-     * @throws \Juzaweb\Core\Modules\Exceptions\ModuleNotFoundException
+     * @throws \Juzaweb\Modules\Core\Modules\Exceptions\ModuleNotFoundException
      */
     public function delete(string $module): bool;
 

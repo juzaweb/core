@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\View\Components;
+namespace Juzaweb\Modules\Core\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -21,6 +21,6 @@ class JsVar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('core::components.js-var');
+        return view('admin::components.js-var');
     }
 }

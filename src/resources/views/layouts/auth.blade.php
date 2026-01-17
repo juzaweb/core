@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title }} | Juzaweb</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'vendor/core') }}">
-    <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'vendor/core') }}">
+    @include('admin::components.theme-head')
+
+    <title>{{ $title }}{{ setting('sitename') ? ' - ' . setting('sitename') : '' }}</title>
+
+    <link rel="stylesheet" href="{{ mix('css/main.min.css', 'themes/main') }}">
+    <link rel="stylesheet" href="{{ mix('css/home.min.css', 'themes/main') }}">
+
+    <script src="{{ mix('js/vendor.min.js', 'themes/main') }}"></script>
+
+    <x-theme-js-var />
+
+    @yield('head')
 </head>
-<body class="hold-transition login-page">
-<div id="admin-overlay">
-    <div class="cv-spinner">
-        <span class="spinner"></span>
+
+<body class="juzaweb-theme homepage1-body @yield('body-classes')">
+    <!--===== PRELOADER STARTS =======-->
+    <div class="preloader">
+        <div class="loading-container">
+            <div class="loading"></div>
+            <div id="loading-icon">
+                <img src="{{ asset('assets/images/logo.png?v=2') }}" alt="">
+            </div>
+        </div>
     </div>
-</div>
-<div class="login-box">
-    <div class="login-logo">
-        <a href="/"><b>Juza</b>web</a>
+    <!--===== PRELOADER ENDS =======-->
+
+    <!--===== PROGRESS STARTS=======-->
+    <div class="paginacontainer">
+        <div class="progress-wrap">
+            <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+            </svg>
+        </div>
     </div>
-    <!-- /.login-logo -->
+    <!--===== PROGRESS ENDS=======-->
 
     @yield('content')
-</div>
-<!-- /.login-box -->
 
-<x-js-var />
+    {{-- Auth Modals --}}
+    {{-- @include('main::components.auth-modals') --}}
 
-<script src="{{ mix('js/vendor.min.js', 'vendor/core') }}"></script>
-<script src="{{ asset('vendor/core/js/tinymce/tinymce.min.js') }}"></script>
-<script src="{{ mix('js/admin.min.js', 'vendor/core') }}"></script>
+    <x-theme-init />
 
-@yield('scripts')
+    <script src="{{ mix('js/main.min.js', 'themes/main') }}"></script>
 
+    @yield('scripts')
+
+    @if(setting('custom_footer_script'))
+        {!! setting('custom_footer_script') !!}
+    @endif
 </body>
+
 </html>

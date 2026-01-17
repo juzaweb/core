@@ -8,10 +8,10 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Requests;
+namespace Juzaweb\Modules\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Juzaweb\Core\Contracts\Setting;
+use Juzaweb\Modules\Core\Contracts\Setting;
 
 class SettingRequest extends FormRequest
 {

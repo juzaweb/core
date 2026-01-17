@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -8,36 +9,38 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Controllers\Admin;
+namespace Juzaweb\Modules\Core\Http\Controllers\Admin;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Juzaweb\Core\Facades\Breadcrumb;
-use Juzaweb\Core\Http\Controllers\AdminController;
-use Juzaweb\Core\Http\Requests\TranslationRequest;
-use Juzaweb\Core\Models\Language;
-use Juzaweb\Translations\Contracts\Translation;
-use Juzaweb\Translations\Models\LanguageLine;
+use Illuminate\Support\Facades\DB;
+use Juzaweb\Modules\Core\Facades\Breadcrumb;
+use Juzaweb\Modules\Core\Facades\Module;
+use Juzaweb\Modules\Core\Facades\Theme;
+use Juzaweb\Modules\Core\Http\Controllers\AdminController;
+use Juzaweb\Modules\Core\Http\Requests\TranslateModelRequest;
+use Juzaweb\Modules\Core\Http\Requests\TranslationRequest;
+use Juzaweb\Modules\Core\Models\Language;
+use Juzaweb\Modules\Core\Translations\Contracts\Translation;
+use Juzaweb\Modules\Core\Translations\Models\LanguageLine;
 use Yajra\DataTables\Facades\DataTables;
 
 class TranslationController extends AdminController
 {
-    public function __construct(protected Translation $translationManager)
-    {
-    }
+    public function __construct(protected Translation $translationManager) {}
 
-    public function index(string $locale)
+    public function index(string $websiteId, string $locale)
     {
         $language = Language::find($locale);
 
-        abort_if($language === null, 404, __('Language not found'));
+        abort_if($language === null, 404, __('admin::translation.language_not_found'));
 
-        Breadcrumb::add(__('Languages'), action([LanguageController::class, 'index']));
+        Breadcrumb::add(__('admin::translation.languages'), action([LanguageController::class, 'index'], [$websiteId]));
 
-        Breadcrumb::add(__('Phrases: :language', ['language' => $language->name]));
+        Breadcrumb::add(__('admin::translation.phrases_language', ['language' => $language->name]));
 
         return view(
-            'core::admin.translation.index',
+            'admin::admin.translation.index',
             [
                 'title' => $language,
                 'locale' => $locale,
@@ -45,7 +48,7 @@ class TranslationController extends AdminController
         );
     }
 
-    public function update(TranslationRequest $request, string $locale)
+    public function update(TranslationRequest $request, string $websiteId, string $locale)
     {
         $group = $request->post('group');
         $value = $request->post('value');
@@ -63,28 +66,45 @@ class TranslationController extends AdminController
         $model->setTranslation($locale, $value);
         $model->save();
 
-        return $this->success(__('Translation updated successfully'));
+        return $this->success(__('admin::translation.translation_updated_successfully'));
     }
 
-    public function getDataCollection(string $locale): JsonResponse
+    public function getDataCollection(string $websiteId, string $locale): JsonResponse
     {
-        $collection = $this->translationManager->modules()->map(
-            function ($module, $key) {
-                return $this->translationManager->locale($key)
-                    ->translationLines('en')
-                    ->map(
-                        function ($item) use ($module) {
-                            $item['namespace'] = $module['namespace'] ?? '*';
-                            return $item;
-                        }
-                    );
-            }
-        )
+        $modules = collect(Module::allEnabled())->map(fn($item) => $item->getAliasName())->toArray();
+        $theme = Theme::current();
+
+        $collection = $this->translationManager->modules()
+            ->filter(
+                function ($module, $key) use ($modules, $theme) {
+                    // if ($module['type'] == 'module') {
+                    //     return $key == 'admin' || in_array($key, $modules);
+                    // }
+
+                    if ($module['type'] === 'theme') {
+                        return $key === $theme->lowerName();
+                    }
+
+                    return true;
+                }
+            )
+            ->map(
+                function ($module, $key) {
+                    return $this->translationManager->locale($key)
+                        ->translationLines('en')
+                        ->map(
+                            function ($item) use ($module) {
+                                $item['namespace'] = $module['namespace'] ?? '*';
+                                return $item;
+                            }
+                        );
+                }
+            )
             ->filter(fn($item) => !empty($item))
             ->flatten(1);
 
         $langs = LanguageLine::get()
-            ->keyBy(fn ($item) => "{$item->namespace}-{$item->group}-{$item->key}");
+            ->keyBy(fn($item) => "{$item->namespace}-{$item->group}-{$item->key}");
 
         $items = $collection->map(
             function ($item) use ($langs, $locale) {
@@ -97,24 +117,86 @@ class TranslationController extends AdminController
         return DataTables::collection($items)->toJson();
     }
 
-    public function translateModel(Request $request): JsonResponse
+    public function translateModel(TranslateModelRequest $request): JsonResponse
     {
-        abort_if(!config('services.translate.enabled'), 404, __('Translation feature is not enabled'));
+        abort_if(!config('network.translate_enabled'), 404, __('admin::translation.translation_feature_is_not_enabled'));
 
-        $model = $request->post('model');
-        $id = $request->post('id');
+        $model = decrypt($request->post('model'));
+        $ids = $request->post('ids');
         $locale = $request->post('locale');
+        $source = $request->post('source', app()->getLocale());
 
-        $translation = app($model)->find($id);
+        if ($locale === $source) {
+            return $this->error(
+                __('admin::translation.source_and_target_language_must_be_different')
+            );
+        }
 
-        abort_if($translation === null, 404, __('Model not found'));
+        if (! is_array($ids)) {
+            $ids = [$ids];
+        }
 
-        $translation->translateTo($locale);
+        $historyIds = [];
+
+        DB::transaction(
+            function () use ($model, $ids, $locale, $source, $request, &$historyIds) {
+                $posts = $model::with([
+                    'translations' => fn ($q) => $q->whereIn('locale', [$locale, $source])
+                ])
+                    ->whereIn('id', $ids)
+                    ->get();
+
+                $canUsing = $request->website()->checkFeatureLimit(
+                    'network',
+                    'translate_posts_per_day',
+                    $posts->count()
+                );
+
+                if (! $canUsing) {
+                    throw new \Exception(
+                        __('admin::translation.feature_limit_exceeded')
+                    );
+                }
+
+                foreach ($posts as $post) {
+                    $history = model_translate($post, $source, $locale);
+                    $historyIds[] = $history->id;
+                }
+            }
+        );
 
         return $this->success(
             [
-                'message' => __('Translation for model has been created'),
+                'message' => __('admin::translation.translation_for_model_has_been_created'),
+                'history_ids' => $historyIds,
             ]
         );
+    }
+
+    public function translateStatus(Request $request, string $websiteId): JsonResponse
+    {
+        $historyIds = $request->post('history_ids', []);
+
+        if (empty($historyIds)) {
+            return response()->json(['error' => 'No history IDs provided'], 400);
+        }
+
+        $histories = \Juzaweb\Modules\Core\Translations\Models\TranslateHistory::whereIn('id', $historyIds)
+            ->get(['id', 'status', 'error']);
+
+        $pending = $histories->filter(fn($h) => $h->status->isPending())->count();
+        $success = $histories->filter(fn($h) => $h->status->isSuccess())->count();
+        $failed = $histories->filter(fn($h) => $h->status->isFailed())->count();
+
+        $allCompleted = $pending === 0;
+
+        return response()->json([
+            'completed' => $allCompleted,
+            'total' => $histories->count(),
+            'pending' => $pending,
+            'success' => $success,
+            'failed' => $failed,
+            'status' => $allCompleted ? 'completed' : 'processing',
+        ]);
     }
 }

@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     @php
-        $breadcrumbs = \Juzaweb\Core\Facades\Breadcrumb::getItems();
-        $title = $breadcrumbs ? last($breadcrumbs)['title'] : __('Dashboard');
+        $breadcrumbs = \Juzaweb\Modules\Core\Facades\Breadcrumb::getItems();
+        $title = $breadcrumbs ? last($breadcrumbs)['title'] : __('admin::translation.dashboard');
     @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} | Juzaweb</title>
 
+    <link href="//dnjs.cloudflare.com" rel="dns-prefetch"/>
+    <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
+    <link href="//fonts.googleapis.com" rel="dns-prefetch"/>
+    <link href="//cdn.juzaweb.com" rel="dns-prefetch"/>
+    <link href="//img2.juzaweb.com" rel="dns-prefetch"/>
+    <link href="//img2.juzaweb.com" rel="dns-prefetch"/>
+    <link href="//pagead2.googlesyndication.com" rel="dns-prefetch"/>
+    <link href="//www.googletagmanager.com" rel="dns-prefetch"/>
+    <link href="//www.google-analytics.com" rel="dns-prefetch"/>
+
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="shortcut icon" href="{{ setting('favicon') ? upload_url(setting('favicon')) : '/favicon.ico' }}" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
-    <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'vendor/core') }}">
-    <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'vendor/core') }}">
+    <link rel="stylesheet" href="{{ mix('/assets/css/vendor.min.css') }}">
+    <link rel="stylesheet" href="{{ mix('/assets/css/admin.min.css') }}">
 
     @yield('head')
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -28,19 +41,20 @@
         </div>
     </div>
 
-    @include('core::layouts.components.navbar')
+    @include('admin::layouts.components.navbar')
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{ admin_url('/') }}" class="brand-link">
-            <img src="https://cdn.juzaweb.com/jw-styles/themes/juzaweb/assets/images/logo.png" alt="Juzaweb Logo" style="opacity: .8" height="57"/>
-            {{--<span class="brand-text font-weight-light">Juzaweb</span>--}}
+            <img src="{{ asset('assets/images/logo-white.png?v=2') }}" alt="Juzaweb Logo" style="opacity: .8"
+                 height="45"/>
+            {{-- <span class="brand-text font-weight-light">Juzaweb</span> --}}
         </a>
 
         <!-- Sidebar -->
         <div class="sidebar">
-            @include('core::layouts.components.sidebar')
+            @include('admin::layouts.components.sidebar', ['menu' => 'admin-left'])
         </div>
         <!-- /.sidebar -->
     </aside>
@@ -58,14 +72,14 @@
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            @if($breadcrumbs)
-                            <li class="breadcrumb-item">
-                                <a href="{{ admin_url() }}">{{ __('Dashboard') }}</a>
-                            </li>
+                            @if ($breadcrumbs)
+                                <li class="breadcrumb-item">
+                                    <a href="{{ admin_url() }}">{{ __('admin::translation.dashboard') }}</a>
+                                </li>
                             @endif
 
-                            @foreach($breadcrumbs as $breadcrumb)
-                                @if($breadcrumb['url'])
+                            @foreach ($breadcrumbs as $breadcrumb)
+                                @if ($breadcrumb['url'])
                                     <li class="breadcrumb-item">
                                         <a href="{{ $breadcrumb['url'] }}">{{ $breadcrumb['title'] }}</a>
                                     </li>
@@ -84,8 +98,9 @@
             <div class="container-fluid">
                 <div id="jquery-message"></div>
 
-                @if(session()->has('message'))
-                    <div class="alert alert-{{ session()->get('status') != 'error' ? session()->get('status') : 'danger' }} jw-message">
+                @if (session()->has('message'))
+                    <div
+                            class="alert alert-{{ session()->get('status') != 'error' ? session()->get('status') : 'danger' }} jw-message">
                         {{ session()->get('message') }}
 
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -121,7 +136,7 @@
 </form>
 
 <script type="text/html" id="form-images-template">
-    @component('core::fields.components.image-item', [
+    @component('admin::fields.components.image-item', [
         'name' => '{name}',
         'path' => '{path}',
         'url' => '{url}',
@@ -130,48 +145,55 @@
     @endcomponent
 </script>
 
-<x-js-var />
+<x-js-var/>
 
-<script src="{{ mix('js/vendor.min.js', 'vendor/core') }}"></script>
-<script src="{{ asset('vendor/core/plugins/tinymce/tinymce.min.js') }}"></script>
-<script src="{{ mix('js/admin.min.js', 'vendor/core') }}"></script>
+@if(isset($translateModel))
+    @component('admin::components.translate-modal', [
+        'translateModel' => $translateModel,
+    ])
+    @endcomponent
+@endif
 
-<script>
+<div class="modal fade" id="translate-progress-modal" tabindex="-1" role="dialog" data-backdrop="static"
+     data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ __('admin::translation.translation_in_progress') }}</h5>
+            </div>
+            <div class="modal-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-spinner fa-spin fa-3x text-primary"></i>
+                </div>
+                <p id="translate-progress-status">{{ __('admin::translation.translation_processing') }}</p>
+                <div class="progress mt-3" style="height: 25px;">
+                    <div id="translate-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
+                         role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        0%
+                    </div>
+                </div>
+                <p class="mt-2 text-muted">
+                    <small id="translate-progress-detail"></small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ mix('assets/js/vendor.min.js') }}"></script>
+<script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ mix('assets/js/admin.min.js') }}"></script>
+
+<script type="text/javascript" nonce="{{ csp_script_nonce() }}">
     $(function () {
-        $(document).on('click', '.translate-model', function (e) {
+        $(document).on('click', '.logout-link', function (e) {
             e.preventDefault();
-            var $this = $(this);
-            var id = $this.data('id');
-            var model = $this.data('model');
-            var locale = $this.data('locale');
-
-            if (id && model && locale) {
-                $.ajax({
-                    url: '{{ route('admin.translations.translate-model') }}',
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        model: model,
-                        locale: locale,
-                    },
-                    beforeSubmit: function () {
-                        toggle_global_loading(true);
-                    },
-                    success: function (response) {
-                        show_notify(response.message);
-                        window.location.reload();
-                    },
-                    error: function (xhr) {
-                        show_notify(xhr);
-                    }
-                }).done(function () {
-                    toggle_global_loading(false);
-                });
-            }
+            $('.form-logout').submit();
         });
     });
 </script>
 
 @yield('scripts')
 </body>
+
 </html>

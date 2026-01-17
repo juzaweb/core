@@ -1,9 +1,9 @@
 <?php
 
-namespace Juzaweb\Core\Themes\Commands;
+namespace Juzaweb\Modules\Core\Themes\Commands;
 
 use Illuminate\Console\Command;
-use Juzaweb\Core\Contracts\Theme;
+use Juzaweb\Modules\Core\Contracts\Theme;
 
 class ThemeListCommand extends Command
 {

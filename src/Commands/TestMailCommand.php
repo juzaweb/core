@@ -7,11 +7,11 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Commands;
+namespace Juzaweb\Modules\Core\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Juzaweb\Core\Mail\Test;
+use Juzaweb\Modules\Core\Mail\Test;
 use Symfony\Component\Console\Input\InputOption;
 
 class TestMailCommand extends Command

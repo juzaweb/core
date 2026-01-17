@@ -5,26 +5,26 @@
 
     <div class="card-body">
         @php
-            $paths = $value ?? [];
+            $paths = $options['value'] ?? [];
         @endphp
 
         <div class="form-images">
             <input type="hidden" class="input-name" value="{{ $name }}[]">
             <div class="images-list">
-                @foreach($paths as $path)
-                    @component('core::fields.components.image-item', [
+                @foreach ($paths as $path)
+                    @component('admin::fields.components.image-item', [
                         'name' => "{$name}[]",
                         'path' => $path,
                         'url' => upload_url($path),
                     ])
-
                     @endcomponent
                 @endforeach
 
-                <div class="image-item border">
-                    <a href="javascript:void(0)" class="text-secondary add-image-images">
-                        <i class="fa fa-plus fa-5x"></i>
-                    </a>
+                <div class="image-item add-image-container">
+                    <button type="button" class="btn btn-info btn-block add-image-images-modal" data-type="image">
+                        <i class="fa fa-images fa-2x mb-2"></i>
+                        <div>{{ __('admin::translation.add_images') }}</div>
+                    </button>
                 </div>
             </div>
         </div>

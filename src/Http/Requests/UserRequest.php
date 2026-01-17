@@ -8,11 +8,11 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Requests;
+namespace Juzaweb\Modules\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Juzaweb\Core\Rules\AllExist;
+use Juzaweb\Modules\Core\Rules\AllExist;
 
 class UserRequest extends FormRequest
 {

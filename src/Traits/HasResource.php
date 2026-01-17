@@ -1,11 +1,11 @@
 <?php
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Juzaweb\Core\Support\Resources\ModelCollectionResource;
-use Juzaweb\Core\Support\Resources\ModelResource;
+use Juzaweb\Modules\Core\Support\Resources\ModelCollectionResource;
+use Juzaweb\Modules\Core\Support\Resources\ModelResource;
 
 trait HasResource
 {

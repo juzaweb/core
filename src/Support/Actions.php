@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support;
+namespace Juzaweb\Modules\Core\Support;
 
 class Actions
 {

@@ -7,9 +7,9 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Http\Controllers;
+namespace Juzaweb\Modules\Core\Http\Controllers;
 
-use Juzaweb\Core\Traits\HasRestResponses;
+use Juzaweb\Modules\Core\Traits\HasRestResponses;
 
 abstract class APIController extends Controller
 {

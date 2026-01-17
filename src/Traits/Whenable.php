@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 trait Whenable
 {

@@ -7,10 +7,10 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Models;
+namespace Juzaweb\Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Juzaweb\Core\Models\User;
+use Juzaweb\Modules\Admin\Models\User;
 
 class PasswordReset extends Model
 {

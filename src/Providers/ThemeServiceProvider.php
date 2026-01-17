@@ -7,11 +7,10 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Providers;
+namespace Juzaweb\Modules\Core\Providers;
 
-use Juzaweb\Core\Contracts\Theme;
-use Juzaweb\Core\Themes\Commands;
-use Juzaweb\Core\Themes\ThemeRepository;
+use Juzaweb\Modules\Core\Contracts\Theme;
+use Juzaweb\Modules\Core\Themes\ThemeRepository;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -19,14 +18,19 @@ class ThemeServiceProvider extends ServiceProvider
     {
         $this->commands(
             [
-                Commands\ThemeListCommand::class,
-                Commands\ThemeActiveCommand::class,
-                Commands\ThemePublishCommand::class,
-                Commands\ThemeGeneratorCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\ThemeListCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\ThemeActiveCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\ThemePublishCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\ThemeGeneratorCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\MakePageBlockCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\MakeTemplateCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\MakeViewCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\MakeControllerCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\DownloadStyleCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\DownloadTemplateCommand::class,
+                \Juzaweb\Modules\Core\Themes\Commands\ThemeSeedCommand::class,
             ]
         );
-
-        $this->app[Theme::class]->init();
     }
 
     public function register(): void

@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Fields;
+namespace Juzaweb\Modules\Core\Support\Fields;
 
 use Illuminate\Contracts\View\View;
 
@@ -16,7 +16,7 @@ class Images extends Field
     public function render(): View|string
     {
         return view(
-            'core::fields.images',
+            'admin::fields.images',
             $this->renderParams()
         );
     }

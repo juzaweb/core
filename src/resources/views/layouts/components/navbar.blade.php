@@ -1,3 +1,12 @@
+@php
+    $websites = \Juzaweb\Modules\Admin\Models\Website::where(
+        'status',
+        \Juzaweb\Modules\Admin\Enums\WebsiteStatus::ACTIVE,
+    )
+        ->cacheTags(['websites', 'website_users:' . auth()->id()])
+        ->whereHas('users', fn($q) => $q->where('user_id', auth()->id()))
+        ->get();
+@endphp
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -7,18 +16,40 @@
                 <i class="fas fa-bars"></i>
             </a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="/" class="nav-link text-primary" target="_blank">{{ __('View Website') }}</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-primary font-weight-bold" href="#" id="websitesDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-globe mr-1"></i> {{ __('admin::translation.my_websites') }}
+            </a>
+            <div class="dropdown-menu shadow animated--fade-in" aria-labelledby="websitesDropdown"
+                style="min-width: 220px;">
+                @if (auth()->user()->isSuperAdmin())
+                    <a class="dropdown-item d-flex align-items-center" href="{{ network_url('/') }}">
+                        <i class="fas fa-globe text-secondary mr-2"></i>
+                        <span>{{ __('admin::translation.network') }}</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                @endif
+
+                @foreach ($websites as $website)
+                    <a class="dropdown-item d-flex align-items-center" href="{{ $website->admin_url }}">
+                        <i class="fas fa-link text-secondary mr-2"></i>
+                        <span>{{ sub_char($website->title, 25) }}</span>
+                    </a>
+                @endforeach
+            </div>
         </li>
-        {{--<li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
-        </li>--}}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ website()->url }}" class="nav-link text-primary"
+                target="_blank">{{ __('admin::translation.view_website') }}</a>
+        </li>
+
     </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
-        {{--<li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                 <i class="fas fa-search"></i>
             </a>
@@ -37,7 +68,19 @@
                     </div>
                 </form>
             </div>
-        </li>--}}
+        </li> --}}
+
+        @if (!website()->isMainWebsite())
+            <li class="nav-item d-flex align-items-center ml-2">
+                <a href="{{ admin_url('/upgrade') }}" class="btn btn-warning btn-sm rounded-pill font-weight-bold px-3">
+                    @if (($plan = website()->currentPlan('network')) && !$plan->is_free)
+                        <i class="fas fa-star mr-1"></i> {{ $plan->name }} {{ __('admin::translation.plan') }}
+                    @else
+                        <i class="fas fa-rocket mr-1"></i> {{ __('admin::translation.upgrade_to_pro') }}
+                    @endif
+                </a>
+            </li>
+        @endif
 
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
@@ -49,8 +92,30 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
-                @foreach(\Juzaweb\Core\Models\Language::languages() as $locale => $language)
-                    @if(! $loop->first)
+                @php
+                    $languages = collect(config('app.languages', []))
+                        ->map(function ($code) {
+                            $localeConfig = config("locales.{$code}");
+                            if (!$localeConfig) {
+                                return null;
+                            }
+
+                            $regional = $localeConfig['regional'] ?? '';
+                            $country = explode('_', strtolower($regional))[1] ?? null;
+
+                            return (object) [
+                                'code' => $code,
+                                'name' => $localeConfig['name'] ?? $code,
+                                'country' => $country,
+                                'regional' => $regional,
+                            ];
+                        })
+                        ->filter()
+                        ->keyBy('code');
+                @endphp
+
+                @foreach ($languages as $locale => $language)
+                    @if (!$loop->first)
                         <div class="dropdown-divider"></div>
                     @endif
 
@@ -72,10 +137,10 @@
 
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">
-                    {{ __(':num Notifications', ['num' => auth()->user()->notifications()->count()]) }}
+                    {{ __('admin::translation.num_notifications', ['num' => auth()->user()->notifications()->count()]) }}
                 </span>
 
-                @foreach(auth()->user()->notifications()->limit(5)->get() as $notification)
+                @foreach (auth()->user()->notifications()->limit(5)->get() as $notification)
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                         <i class="fas fa-{{ $notification->data['icon'] ?? 'info' }} mr-2"></i> 4 new messages
@@ -87,26 +152,30 @@
 
                 <div class="dropdown-divider"></div>
                 <a href="{{ admin_url('/profile/notifications') }}"
-                   class="dropdown-item dropdown-footer">{{ __('See All Notifications') }}</a>
+                    class="dropdown-item dropdown-footer">{{ __('admin::translation.see_all_notifications') }}</a>
             </div>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
-                <img
-                    src="https://1.gravatar.com/avatar/7162c5aa667c497c4d1b90b36c60eaea?s=32&d=mm&r=g"
-                    alt="User Avatar"
-                    class="img-size-32 img-circle"
-                >
+                <img src="https://1.gravatar.com/avatar/7162c5aa667c497c4d1b90b36c60eaea?s=32&d=mm&r=g"
+                    alt="User Avatar" class="img-size-32 img-circle">
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="{{ admin_url('/profile') }}" class="dropdown-item">
-                    <i class="fas fa-user-cog mr-2"></i> {{ __('Profile') }}
+                    <i class="fas fa-user-cog mr-2"></i> {{ __('admin::translation.profile') }}
+                </a>
+
+                <a href="{{ admin_url('my-support-tickets') }}" class="dropdown-item">
+                    <i class="fas fa-ticket-alt mr-2"></i> {{ __('admin::translation.support_tickets') }}
+                </a>
+
+                <a href="{{ admin_url('my-referrals') }}" class="dropdown-item">
+                    <i class="fas fa-user-friends mr-2"></i> {{ __('admin::translation.my_referrals') }}
                 </a>
 
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="javascript:void(0)"
-                   onclick="$('.form-logout').submit()">
-                    <i class="fas fa-sign-out-alt mr-2"></i> {{ __('Logout') }}
+                <a class="dropdown-item text-danger logout-link" href="javascript:void(0)">
+                    <i class="fas fa-sign-out-alt mr-2"></i> {{ __('admin::translation.logout') }}
                 </a>
             </div>
         </li>
@@ -119,7 +188,7 @@
              <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                  <i class="fas fa-th-large"></i>
              </a>
-         </li>--}}
+         </li> --}}
     </ul>
 </nav>
 <!-- /.navbar -->

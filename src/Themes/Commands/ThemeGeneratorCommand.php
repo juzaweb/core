@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Themes\Commands;
+namespace Juzaweb\Modules\Core\Themes\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -93,9 +93,9 @@ class ThemeGeneratorCommand extends Command
 
         $this->info(ucfirst($this->theme['name']) . ' Theme Folder Successfully Generated !!!');
 
-        if ($this->confirm('Are you want to activate this theme?', true)) {
-            $this->call('theme:active', ['theme' => $this->theme['name']]);
-        }
+        // if ($this->confirm('Are you want to activate this theme?', true)) {
+        //     $this->call('theme:active', ['theme' => $this->theme['name']]);
+        // }
     }
 
     /**

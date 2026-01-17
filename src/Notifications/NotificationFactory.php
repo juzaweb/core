@@ -7,9 +7,9 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Notifications;
+namespace Juzaweb\Modules\Core\Notifications;
 
-use Juzaweb\Core\Notifications\Contracts\Notification;
+use Juzaweb\Modules\Admin\Notifications\Contracts\Notification;
 
 class NotificationFactory implements Notification
 {

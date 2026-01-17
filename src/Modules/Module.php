@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Modules;
+namespace Juzaweb\Modules\Core\Modules;
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Container\Container;
@@ -11,9 +11,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Translation\Translator;
-use Juzaweb\Core\Modules\Contracts\ActivatorInterface;
-use Juzaweb\Core\Modules\Support\Json;
-use Juzaweb\Translations\Contracts\Translation;
+use Juzaweb\Modules\Core\Modules\Contracts\ActivatorInterface;
+use Juzaweb\Modules\Core\Modules\Support\Json;
 
 class Module
 {
@@ -98,6 +97,11 @@ class Module
         return strtolower($this->name);
     }
 
+    public function getAliasName(): string
+    {
+        return $this->get('alias');
+    }
+
     /**
      * Get name in studly case.
      *
@@ -116,6 +120,16 @@ class Module
     public function getSnakeName(): string
     {
         return Str::snake($this->name);
+    }
+
+    /**
+     * Get name in kebab case.
+     *
+     * @return string
+     */
+    public function getKebabName(): string
+    {
+        return strtolower(Str::kebab($this->name));
     }
 
     /**
@@ -138,6 +152,11 @@ class Module
         return $this->get('priority');
     }
 
+    public function getResourceNamespace(): string|null
+    {
+        return $this->get('alias');
+    }
+
     /**
      * Get path.
      *
@@ -155,7 +174,7 @@ class Module
      *
      * @return $this
      */
-    public function setPath($path): \Juzaweb\Core\Modules\Module
+    public function setPath($path): static
     {
         $this->path = $path;
 
@@ -184,17 +203,6 @@ class Module
             $this->registerFiles();
         }
 
-        $lowerName = $this->getLowerName();
-
-        $this->app[Translation::class]->register("{$lowerName}_module", [
-            'type' => 'module',
-            'key' => $this->getLowerName(),
-            'namespace' => $lowerName,
-            'lang_path' => $this->getPath(). '/src/Resources/lang',
-            'src_path' => $this->getPath('/'),
-            'publish_path' => resource_path("lang/vendor/{$lowerName}"),
-        ]);
-
         $this->fireEvent('boot');
     }
 
@@ -221,7 +229,7 @@ class Module
      *
      * @return Json
      */
-    public function json(string $file = null): Json
+    public function json(?string $file = null): Json
     {
         if ($file === null) {
             $file = 'module.json';
@@ -263,12 +271,16 @@ class Module
      */
     public function register(): void
     {
-        $this->registerAliases();
+        try {
+            $this->registerAliases();
 
-        $this->registerProviders();
+            $this->registerProviders();
 
-        if ($this->isLoadFilesOnBoot() === false) {
-            $this->registerFiles();
+            if ($this->isLoadFilesOnBoot() === false) {
+                $this->registerFiles();
+            }
+        } catch (\Exception $e) {
+            report($e);
         }
 
         $this->fireEvent('register');

@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Http\Requests\Auth;
+namespace Juzaweb\Modules\Core\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use OpenApi\Annotations as OA;

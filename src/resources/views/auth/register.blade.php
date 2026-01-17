@@ -1,120 +1,111 @@
-@extends('core::layouts.auth')
+@extends('admin::layouts.auth')
+
+@section('title', __('admin::translation.register'))
+
+@section('head')
+    <link rel="stylesheet" href="{{ mix('css/auth.min.css', 'themes/main') }}">
+@endsection
 
 @section('content')
-    <div class="card">
-        <div class="card-body login-card-body" id="register-form">
-            <p class="login-box-msg">{{ __('Sign up new a account') }}</p>
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="auth-container" id="register-form">
+                    <!-- Title -->
+                    <div class="text-center mb-4">
+                        <img src="{{ logo_url() }}"
+                             alt="Logo"
+                             class="img-fluid mb-3"
+                             style="max-height: 50px;">
 
-            <div id="jquery-message"></div>
-
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
-                </div>
-            @endif
-
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{ $error }}
+                        <h2 class="auth-title">{{ __('admin::translation.register') }}</h2>
+                        <p class="auth-subtitle">{{ __('admin::translation.create_your_account') }}</p>
                     </div>
-                @endforeach
-            @endif
+                    <!-- End Title -->
 
-            <form action="{{ route('auth.register') }}" class="form-ajax" method="post" data-success="handleRegisterSuccess">
-                @csrf
+                    <div id="jquery-message"></div>
 
-                <div class="input-group mb-3">
-                    <input type="text" name="name" class="form-control" placeholder="{{ __('Your name') }}" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
+                    <form method="post" action="" class="form-ajax" data-success="handleRegisterSuccess" data-notify="false" data-jw-token="true">
+
+                        <!-- Input Group -->
+                        <div class="form-group">
+                            <label for="registerName">{{ __('admin::translation.name') }}</label>
+                            <input type="text" name="name" id="registerName" class="form-control"
+                                   placeholder="{{ __('admin::translation.your_name') }}" required>
+                            <span class="error-name text-danger"></span>
                         </div>
-                    </div>
-                </div>
+                        <!-- End Input Group -->
 
-                <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="{{ __('Email') }}">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
+                        <!-- Input Group -->
+                        <div class="form-group">
+                            <label for="registerEmail">{{ __('admin::translation.email') }}</label>
+                            <input type="email" name="email" id="registerEmail" class="form-control"
+                                   placeholder="{{ __('admin::translation.email') }}" required>
+                            <span class="error-email text-danger"></span>
                         </div>
-                    </div>
-                </div>
+                        <!-- End Input Group -->
 
-                <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="{{ __('Password') }}">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                        <!-- Input Group -->
+                        <div class="form-group">
+                            <label for="registerPassword">{{ __('admin::translation.password') }}</label>
+                            <input type="password" name="password" id="registerPassword" class="form-control"
+                                   placeholder="{{ __('admin::translation.password') }}" required>
+                            <small class="form-text text-muted">{{ __('admin::translation.minimum_8_characters') }}</small>
+                            <span class="error-password text-danger"></span>
                         </div>
-                    </div>
-                </div>
+                        <!-- End Input Group -->
 
-                <div class="input-group mb-3">
-                    <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('Confirm Password') }}">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                        <!-- Input Group -->
+                        <div class="form-group">
+                            <label for="registerConfirmPassword">{{ __('admin::translation.confirm_password') }}</label>
+                            <input type="password" name="password_confirmation" id="registerConfirmPassword" class="form-control"
+                                   placeholder="{{ __('admin::translation.confirm_password') }}" required>
+                            <span class="error-password_confirmation text-danger"></span>
                         </div>
-                    </div>
-                </div>
+                        <!-- End Input Group -->
 
-                <div class="row">
-                    <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember" name="remember" checked value="1" required>
-                            <label for="remember">
-                                {{ __('') }}
-                            </label>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block" data-loading-text="{{ __('admin::translation.registering') }}">
+                                {{ __('admin::translation.register') }}
+                            </button>
                         </div>
+                    </form>
+
+                    @if($socialLogins->isNotEmpty())
+                    <div class="social-auth-separator">
+                        <span>{{ __('admin::translation.or_continue_with') }}</span>
                     </div>
-                    <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">
-                            {{ __('Sign up') }}
-                        </button>
+
+                    <div class="social-auth-links">
+                        @foreach($socialLogins as $key => $name)
+                            <a href="{{ route('auth.social.redirect', [$key]) }}" class="btn btn-social btn-{{ $key }}">
+                                <i class="fab fa-{{ $key }}"></i> {{ $name }}
+                            </a>
+                        @endforeach
                     </div>
-                    <!-- /.col -->
+                    @endif
+
+                    <div class="text-center auth-footer">
+                        <p>{{ __('admin::translation.already_have_an_account') }} <a href="{{ home_url('user/login') }}" class="auth-link-bold">{{ __('admin::translation.login') }}</a></p>
+                    </div>
                 </div>
-            </form>
-
-            @if($socialLogins->isNotEmpty())
-                <div class="social-auth-links text-center mb-3">
-                    <p>- {{ __('OR') }} -</p>
-
-                    @foreach($socialLogins as $key => $name)
-                        <a href="{{ route('auth.social.redirect', [$key]) }}" class="btn btn-block btn-primary">
-                            <i class="fab fa-{{ $key }} mr-2"></i> {{ __('Sign in using :name', ['name' => $name]) }}
-                        </a>
-                    @endforeach
-                </div>
-                <!-- /.social-auth-links -->
-            @endif
-
-            <p class="mb-1">
-                <a href="{{ url('user/forgot-password') }}">{{ __('I forgot my password') }}</a>
-            </p>
-            <p class="mb-0">
-                <a href="{{ url('user/login') }}" class="text-center">{{ __('Login to account') }}</a>
-            </p>
+            </div>
         </div>
-        <!-- /.login-card-body -->
     </div>
 @endsection
 
 @section('scripts')
     <script type="text/html" id="must-verification-template">
-        @component('core::auth.components.must-verification')
-
-        @endcomponent
+        <p class="login-box-msg">
+            {{ __('admin::translation.your_account_has_been_created_successfully') }}<br />
+            {{ __('admin::translation.please_click_link_email_activate_account') }}<br />
+            <em>{{ __('admin::translation.check_box_mail_spam') }}</em>
+        </p>
     </script>
 
-    <script>
+    <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
         function handleRegisterSuccess(form, response) {
             let temp = document.getElementById('must-verification-template').innerHTML;
-
             $('#register-form').html(temp);
         }
     </script>

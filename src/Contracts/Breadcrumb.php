@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Contracts;
+namespace Juzaweb\Modules\Core\Contracts;
 
 interface Breadcrumb
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Providers;
+namespace Juzaweb\Modules\Core\Modules\Providers;
 
-use Juzaweb\Core\Modules\Contracts\ActivatorInterface;
-use Juzaweb\Core\Modules\Contracts\RepositoryInterface;
-use Juzaweb\Core\Modules\Exceptions\InvalidActivatorClass;
-use Juzaweb\Core\Modules\FileRepository;
-use Juzaweb\Core\Modules\Support\Stub;
-use Juzaweb\Core\Providers\RouteServiceProvider;
-use Juzaweb\Core\Providers\ServiceProvider;
+use Juzaweb\Modules\Core\Modules\Contracts\ActivatorInterface;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\Exceptions\InvalidActivatorClass;
+use Juzaweb\Modules\Core\Modules\FileRepository;
+use Juzaweb\Modules\Core\Modules\Support\Stub;
+use Juzaweb\Modules\Core\Providers\RouteServiceProvider;
+use Juzaweb\Modules\Core\Providers\ServiceProvider;
 
 class ModulesServiceProvider extends ServiceProvider
 {
@@ -63,7 +63,7 @@ class ModulesServiceProvider extends ServiceProvider
      */
     protected function registerNamespaces()
     {
-        $stubsPath = dirname(__DIR__) . '/src/Commands/stubs';
+        $stubsPath = dirname(__DIR__) . '/Commands/stubs';
 
         $this->publishes([
             $stubsPath => base_path('stubs/nwidart-stubs'),

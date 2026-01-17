@@ -7,18 +7,20 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Facades;
+namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Juzaweb\Core\Contracts\Setting as SettingContract;
+use Juzaweb\Modules\Core\Contracts\Setting as SettingContract;
 
 /**
- * @method static \Juzaweb\Core\Support\Entities\Setting make(string $key)
+ * @method static \Juzaweb\Modules\Core\Support\Entities\Setting make(string $key)
  * @method static mixed get(string $key, mixed $default = null)
+ * @method static void set(string $key, mixed $value)
+ * @method static void sets(array $settings)
  * @method static bool|null boolean(string $key, mixed $default = null)
  * @method static int|null integer(string $key, mixed $default = null)
  * @method static \Illuminate\Support\Collection settings()
- * @see \Juzaweb\Core\Support\Entities\Setting
+ * @see \Juzaweb\Modules\Core\Support\Entities\Setting
  */
 class Setting extends Facade
 {

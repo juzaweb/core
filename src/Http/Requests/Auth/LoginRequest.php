@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Http\Requests\Auth;
+namespace Juzaweb\Modules\Core\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use OpenApi\Annotations as OA;
@@ -30,7 +30,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email:rfc,dns'],
+            'email' => ['required', 'email:rfc'],
             'password' => ['required', 'string'],
             'remember' => ['nullable', 'boolean'],
         ];

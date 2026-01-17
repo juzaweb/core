@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Models;
+namespace Juzaweb\Modules\Core\Models;
 
 use Illuminate\Auth\Authenticatable as IlluminateAuthenticatable;
 use Illuminate\Auth\MustVerifyEmail;
@@ -18,7 +18,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\Access\Authorizable as AccessAuthorizable;
 
 /**
- * Juzaweb\Core\Models\Authenticatable
+ * App\Models\Authenticatable
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Authenticatable newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Authenticatable newQuery()
@@ -30,5 +30,8 @@ class Authenticatable extends Model implements
     AuthorizableContract,
     CanResetPasswordContract
 {
-    use IlluminateAuthenticatable, AccessAuthorizable, CanResetPassword, MustVerifyEmail;
+    use IlluminateAuthenticatable,
+        AccessAuthorizable,
+        CanResetPassword,
+        MustVerifyEmail;
 }

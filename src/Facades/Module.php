@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Facades;
+namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -15,6 +15,6 @@ class Module extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \Juzaweb\Core\Modules\Contracts\RepositoryInterface::class;
+        return \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface::class;
     }
 }

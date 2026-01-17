@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use App\GlobalSearch;
 use App\Observers\GlobalSearchObserver;

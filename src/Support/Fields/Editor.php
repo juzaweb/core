@@ -7,14 +7,14 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Fields;
+namespace Juzaweb\Modules\Core\Support\Fields;
 
 class Editor extends Field
 {
     public function render(): \Illuminate\Contracts\View\View|string
     {
         return view(
-            'core::fields.editor',
+            'admin::fields.editor',
             $this->renderParams()
         );
     }

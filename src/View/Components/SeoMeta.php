@@ -1,11 +1,11 @@
 <?php
 
-namespace Juzaweb\Core\View\Components;
+namespace Juzaweb\Modules\Core\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Juzaweb\Core\Models\Model;
+use Juzaweb\Modules\Core\Models\Model;
 
 class SeoMeta extends Component
 {
@@ -25,7 +25,7 @@ class SeoMeta extends Component
     public function render(): View|Closure|string
     {
         return view(
-            'core::components.seo-meta',
+            'admin::components.seo-meta',
             [
                 'model' => $this->model,
                 'locale' => $this->locale ?? config('translatable.fallback_locale'),

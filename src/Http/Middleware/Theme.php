@@ -8,9 +8,12 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Middleware;
+namespace Juzaweb\Modules\Core\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+use Juzaweb\Modules\Admin\Networks\Facades\Network;
+use Juzaweb\Modules\Core\Facades\Thumbnail;
 
 class Theme
 {
@@ -23,6 +26,22 @@ class Theme
      */
     public function handle(Request $request, \Closure $next): mixed
     {
+        $website = Network::website();
+
+        View::composer('*', function ($view) use ($website) {
+            $view->with('websiteId', $website->id);
+        });
+
+        // if (! $website->isMainWebsite()) {
+        //     Auth::shouldUse('member');
+        // }
+
+        $defaultThubnails = Thumbnail::getDefaults();
+
+        foreach ($defaultThubnails as $class => $defaultThubnail) {
+            $class::defaultThumbnail($defaultThubnail);
+        }
+
         return $next($request);
     }
 }

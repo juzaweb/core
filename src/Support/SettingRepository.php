@@ -8,17 +8,20 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Support;
+namespace Juzaweb\Modules\Core\Support;
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Collection;
-use Juzaweb\Core\Contracts\GlobalData;
-use Juzaweb\Core\Contracts\Setting as SettingContract;
-use Juzaweb\Core\Models\Setting as SettingModel;
-use Juzaweb\Core\Support\Entities\Setting;
+use Juzaweb\Modules\Core\Contracts\GlobalData;
+use Juzaweb\Modules\Core\Contracts\Setting as SettingContract;
+use Juzaweb\Modules\Core\Models\Model;
+use Juzaweb\Modules\Core\Models\Setting as SettingModel;
+use Juzaweb\Modules\Core\Support\Entities\Setting;
 
 class SettingRepository implements SettingContract
 {
+    protected ?string $locale = null;
+
     public function __construct(
         protected CacheManager $cache,
         protected GlobalData $globalData
@@ -78,14 +81,23 @@ class SettingRepository implements SettingContract
      */
     public function set(string $key, mixed $value = null): SettingModel
     {
-        return SettingModel::updateOrCreate(
-            [
-                'code' => $key,
-            ],
-            [
-                'value' => $value,
-            ]
+        $model = Model::withoutEvents(
+            function () use ($key, $value) {
+                return SettingModel::withoutGlobalScope('website_id')
+                    ->updateOrCreate(
+                        [
+                            'code' => $key,
+                        ],
+                        [
+                            'value' => $value,
+                        ]
+                    );
+            }
         );
+
+        SettingModel::flushQueryCache();
+
+        return $model;
     }
 
     public function sets(array $keys): Collection
@@ -132,11 +144,20 @@ class SettingRepository implements SettingContract
 
     public function configs(): Collection
     {
-        return SettingModel::cacheForever()->get(
-            [
-                'code',
-                'value',
-            ]
-        )->pluck('value', 'code');
+        return SettingModel::with(['translations' => fn ($q) => $q->cacheFor(3600)])
+            ->cacheFor(3600)
+            ->get()
+            ->mapWithKeys(
+                function ($item) {
+                    /** @var SettingModel $item */
+                    if ($this->locale) {
+                        $item->setDefaultLocale($this->locale);
+                    }
+
+                    return [
+                        $item->code => $item->value,
+                    ];
+                }
+            );
     }
 }

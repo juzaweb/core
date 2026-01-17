@@ -7,18 +7,21 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Entities;
+namespace Juzaweb\Modules\Core\Support\Entities;
 
 use Illuminate\Support\Str;
-use Juzaweb\Core\Contracts\GlobalData;
-use Juzaweb\Core\Support\Abstracts\Customizer;
-use Juzaweb\Core\Support\Actions;
-use Juzaweb\Core\Support\Traits\HasPermission;
-use Juzaweb\Core\Support\Traits\HasTitle;
-use Juzaweb\Core\Traits\Fillable;
-use Juzaweb\Core\Traits\Whenable;
 use Juzaweb\Hooks\Contracts\Hook;
+use Juzaweb\Modules\Core\Contracts\GlobalData;
+use Juzaweb\Modules\Core\Support\Abstracts\Customizer;
+use Juzaweb\Modules\Core\Support\Actions;
+use Juzaweb\Modules\Core\Support\Traits\HasPermission;
+use Juzaweb\Modules\Core\Support\Traits\HasTitle;
+use Juzaweb\Modules\Core\Traits\Fillable;
+use Juzaweb\Modules\Core\Traits\Whenable;
 
+/**
+ * @deprecated
+ */
 class Menu extends Customizer
 {
     use Fillable, HasPermission, Whenable, HasTitle;
@@ -37,7 +40,7 @@ class Menu extends Customizer
 
     protected string $target = '_self';
 
-    protected string $prefix = 'admin-cp';
+    protected string $prefix = 'admin';
 
     protected ?string $slug = null;
 
@@ -103,9 +106,16 @@ class Menu extends Customizer
         return $this;
     }
 
+    public function prefix(string $prefix): static
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+
     public function forClient(bool $forClient = true): static
     {
-        $this->prefix = $forClient ? 'client' : 'admin-cp';
+        $this->prefix = $forClient ? 'client' : 'admin';
 
         return $this->noPermission();
     }
@@ -137,7 +147,12 @@ class Menu extends Customizer
             $slug = '';
         }
 
-        $url = rtrim($this->url ? "/{$this->prefix}/{$this->url}" : "/{$this->prefix}/{$slug}", '/');
+        $prefix = $this->prefix;
+        if ($websiteId = request()->route('websiteId')) {
+            $prefix .= "/{$websiteId}";
+        }
+
+        $url = rtrim($this->url ? "/{$prefix}/{$this->url}" : "/{$prefix}/{$slug}", '/');
 
         return [
             'key' => $this->key,

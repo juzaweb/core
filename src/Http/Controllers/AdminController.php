@@ -7,9 +7,9 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Http\Controllers;
+namespace Juzaweb\Modules\Core\Http\Controllers;
 
-use Juzaweb\Core\Traits\HasSessionResponses;
+use Juzaweb\Modules\Core\Traits\HasSessionResponses;
 
 abstract class AdminController extends Controller
 {

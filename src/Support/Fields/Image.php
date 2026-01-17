@@ -7,14 +7,14 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Fields;
+namespace Juzaweb\Modules\Core\Support\Fields;
 
 class Image extends Field
 {
     public function render(): \Illuminate\Contracts\View\View|string
     {
         return view(
-            'core::fields.image',
+            'admin::fields.image',
             $this->renderParams()
         );
     }

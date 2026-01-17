@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Http\Middleware;
+namespace Juzaweb\Modules\Core\Http\Middleware;
 
 use Illuminate\Http\Request;
 

@@ -8,13 +8,14 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Facades;
+namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Juzaweb\Core\Contracts\Locale as LocaleContract;
+use Juzaweb\Modules\Core\Contracts\Locale as LocaleContract;
 
 /**
  * @method static string setLocale()
+ * @see \Juzaweb\Modules\Core\Support\LocaleRepository
  */
 class Locale extends Facade
 {

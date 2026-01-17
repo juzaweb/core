@@ -9,7 +9,7 @@
                         aria-expanded="false"
                         disabled
                 >
-                    {{ __('Bulk Actions') }}
+                    {{ __('admin::translation.bulk_actions') }}
                 </button>
                 <div class="dropdown-menu">
                     @foreach($bulkActions as $action)
@@ -33,7 +33,7 @@
     @if($searchable)
     <div class="col-sm-12 col-md-4">
         <div id="jw-datatable_filter" class="jw-datatable_filter">
-            <label>{{ __('Search') }}: <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="jw-datatable"></label>
+            <label>{{ __('admin::translation.search') }}: <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="jw-datatable"></label>
         </div>
     </div>
     @endif

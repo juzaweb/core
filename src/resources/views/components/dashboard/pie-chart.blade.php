@@ -1,50 +1,50 @@
-<div class="col-md-{{ $chart->getColumnSize() }}">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-chart-pie mr-1"></i>
-                {{ $chart->getTitle() }}
-            </h3>
-        </div><!-- /.card-header -->
-        <div class="card-body">
-            <div class="tab-content p-0">
-                <canvas id="sales-chart-canvas_{{ Str::slug($chart->getTitle()) }}" height="300" style="height: 300px;"></canvas>
-            </div>
-        </div><!-- /.card-body -->
-    </div>
-</div>
+<x-card :title="$chart->getTitle()" :icon="$chart->getIcon()">
+    <canvas id="pie-chart-canvas_{{ $chart->id }}" height="300" style="height: 300px;"></canvas>
+</x-card>
 
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{ csp_script_nonce() }}">
     document.addEventListener('DOMContentLoaded', function () {
-        // Donut Chart
-        const pieChartCanvas = $('#sales-chart-canvas_{{ Str::slug($chart->getTitle()) }}').get(0).getContext('2d')
-        const pieData = {
-            labels: [
-                'Instore Sales',
-                'Download Sales',
-                'Mail-Order Sales'
-            ],
-            datasets: [
-                {
-                    data: [30, 12, 20],
-                    backgroundColor: ['#f56954', '#00a65a', '#f39c12']
-                }
-            ]
-        }
-        const pieOptions = {
-            legend: {
-                display: false
+        const {{ ' ' . Str::camel($chart->id) }}Canvas = document.getElementById('pie-chart-canvas_{{ $chart->id }}').getContext('2d');
+
+        const {{ ' ' . Str::camel($chart->id) }}Chart = new Chart({{ Str::camel($chart->id) }}Canvas, {
+            type: 'pie',
+            data: {
+                labels: [],
+                datasets: [],
             },
-            maintainAspectRatio: false,
-            responsive: true
-        }
-        // Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        // eslint-disable-next-line no-unused-vars
-        const pieChart = new Chart(pieChartCanvas, { // lgtm[js/unused-local-variable]
-            type: 'doughnut',
-            data: pieData,
-            options: pieOptions
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: '{{ $chart->getTitle() }}' }
+                },
+                legend: {
+                    position: 'right',
+                    align: 'center'
+                }
+            }
+        });
+
+        $.ajax({
+            url: '{{ route('admin.charts.data', [$websiteId, $chart->id]) }}',
+            method: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                {{ Str::camel($chart->id) }}Chart.data.labels = res.labels;
+                {{ Str::camel($chart->id) }}Chart.data.datasets = res.datasets.map(
+                    dataset => ({
+                        ...dataset,
+                        backgroundColor: res.labels.map((_, i) =>
+                            `hsl(${i * 36}, 70%, 60%)`
+                        ),
+                    }),
+                );
+
+                {{ Str::camel($chart->id) }}Chart.update();
+            },
+            error: function (xhr) {
+                console.error('Failed to load chart data:', xhr.responseText);
+            }
         });
     });
 </script>

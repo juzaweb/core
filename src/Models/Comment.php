@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -8,14 +9,18 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Models;
+namespace Juzaweb\Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Juzaweb\Core\Models\Enums\CommentStatus;
+use Juzaweb\Modules\Core\Enums\CommentStatus;
+use Juzaweb\Modules\Core\Traits\HasAPI;
 
 class Comment extends Model
 {
+    use HasAPI, HasUuids;
+
     protected $table = 'comments';
 
     /**
@@ -35,14 +40,6 @@ class Comment extends Model
     ];
 
     /**
-     * Get the user who made the comment.
-     */
-    public function commentable(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    /**
      * Get the object that was commented on.
      *
      * This method returns the model that the comment is associated with,
@@ -50,20 +47,44 @@ class Comment extends Model
      *
      * @return MorphTo
      */
-    public function commented(): MorphTo
+    public function commentable(): MorphTo
     {
         return $this->morphTo();
     }
 
     /**
+     * Get the user who made the comment.
+     */
+    public function commented(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(__CLASS__, 'parent_id', 'id');
+    }
+
+    /**
      * Scope a query to only include approved comments.
      *
-     * @param Builder $builder
+     * @param  Builder  $builder
      * @return Builder
      */
-    public function scopeFrontend(Builder $builder): Builder
+    public function scopeWhereFrontend(Builder $builder): Builder
     {
-        return $builder->where('status', CommentStatus::APPROVED);
+        return $builder
+            ->cacheFor(3600)
+            ->where("{$this->table}.status", CommentStatus::APPROVED);
+    }
+
+    public function getNameAttribute()
+    {
+        if ($this->commented && isset($this->commented->name)) {
+            return $this->commented->name;
+        }
+
+        return __('admin::translation.guest');
     }
 
     /**

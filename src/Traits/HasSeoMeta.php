@@ -7,13 +7,13 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Juzaweb\Core\Models\Model;
-use Juzaweb\Core\Models\SeoMeta;
-use Juzaweb\Core\Observes\HasSeoMetaObserve;
+use Juzaweb\Modules\Core\Models\Model;
+use Juzaweb\Modules\Core\Models\SeoMeta;
+use Juzaweb\Modules\Core\Observes\HasSeoMetaObserve;
 
 /**
  * @property SeoMeta $seoMeta

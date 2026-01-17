@@ -1,10 +1,12 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Commands;
+namespace Juzaweb\Modules\Core\Modules\Commands;
 
 use Illuminate\Console\Command;
-use Juzaweb\Core\Modules\Module;
-use Nwidart\Modules\Commands\Modules;
+use Juzaweb\Modules\Admin\Models\Website;
+use Juzaweb\Modules\Admin\Networks\Facades\Network;
+use Juzaweb\Modules\Core\Facades\Module as ModuleFacade;
+use Juzaweb\Modules\Core\Modules\Module;
 use Symfony\Component\Console\Input\InputArgument;
 
 class EnableCommand extends Command
@@ -28,8 +30,12 @@ class EnableCommand extends Command
      */
     public function handle(): int
     {
-
         $this->components->info('Enabling module ...');
+        if ($website = $this->argument('website')) {
+            Network::init($website);
+        } else {
+            Network::init(Website::find(config('network.main_website_id')));
+        }
 
         if ($name = $this->argument('module') ) {
             $this->enable($name);
@@ -49,8 +55,8 @@ class EnableCommand extends Command
      */
     public function enableAll()
     {
-        /** @var Modules $modules */
-        $modules = $this->laravel['modules']->all();
+        /** @var Module[] $modules */
+        $modules = ModuleFacade::all();
 
         foreach ($modules as $module) {
             $this->enable($module);
@@ -60,7 +66,7 @@ class EnableCommand extends Command
     /**
      * enable
      *
-     * @param string $name
+     * @param string|Module $name
      * @return void
      */
     public function enable($name)
@@ -68,7 +74,7 @@ class EnableCommand extends Command
         if ($name instanceof Module) {
             $module = $name;
         }else {
-            $module = $this->laravel['modules']->findOrFail($name);
+            $module = ModuleFacade::findOrFail($name);
         }
 
         if ($module->isDisabled()) {
@@ -86,10 +92,11 @@ class EnableCommand extends Command
      *
      * @return array
      */
-    protected function getArguments()
+    protected function getArguments(): array
     {
         return [
             ['module', InputArgument::OPTIONAL, 'Module name.'],
+            ['website', InputArgument::OPTIONAL, 'Website ID.']
         ];
     }
 }

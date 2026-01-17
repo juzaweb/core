@@ -1,0 +1,23 @@
+<?php
+/**
+ * JUZAWEB CMS - Laravel CMS for Your Project
+ *
+ * @package    juzaweb/cms
+ * @author     The Anh Dang
+ * @link       https://cms.juzaweb.com
+ * @license    GNU V2
+ */
+
+use Juzaweb\Modules\Core\Http\Controllers\Frontend\AddonController;
+
+if (config('filesystems.disks.cloud.url')) {
+    $cloudDomain = parse_url(config('filesystems.disks.cloud.url'), PHP_URL_HOST);
+
+    Route::domain($cloudDomain)->group(
+        function () {
+            Route::get('/media/{path}', [AddonController::class, 'showFromCloud'])
+                ->where('path', '.*')
+                ->name('media.cloud.show');
+        }
+    );
+}

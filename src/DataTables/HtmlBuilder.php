@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\DataTables;
+namespace Juzaweb\Modules\Core\DataTables;
 
 use Illuminate\Support\HtmlString;
 use Yajra\DataTables\Html\Builder;
@@ -26,7 +26,7 @@ class HtmlBuilder extends Builder
         $bulkActions = array_filter($this->bulkActions, fn ($action) => $action->isVisible());
 
         $filters = $this->view->make(
-            'core::components.datatables.bulk-actions',
+            'admin::components.datatables.bulk-actions',
             [
                 'bulkActions' => $bulkActions,
                 'tableId' => $this->getTableId(),

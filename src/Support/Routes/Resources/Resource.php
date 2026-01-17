@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Routes\Resources;
+namespace Juzaweb\Modules\Core\Support\Routes\Resources;
 
 use Illuminate\Contracts\Routing\Registrar;
 
@@ -25,8 +25,17 @@ abstract class Resource
 
     protected bool $withoutPermission = false;
 
+    protected ?string $routeName = null;
+
     public function __construct(protected Registrar $registrar, protected string $name, protected string $controller)
     {
+    }
+
+    public function name(string $name): static
+    {
+        $this->routeName = $name;
+
+        return $this;
     }
 
     public function permissionName(string $name): static
@@ -106,6 +115,11 @@ abstract class Resource
         };
 
         return [$this->getPermissionName().".{$permission}"];
+    }
+
+    public function getRouteName(): string
+    {
+        return $this->routeName ?? "admin.{$this->name}";
     }
 
     abstract public function register(): void;

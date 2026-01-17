@@ -7,10 +7,10 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support;
+namespace Juzaweb\Modules\Core\Support;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Juzaweb\Core\Contracts\Breadcrumb;
+use Juzaweb\Modules\Core\Contracts\Breadcrumb;
 
 class BreadcrumbFactory implements Breadcrumb, Arrayable
 {

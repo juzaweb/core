@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core;
+namespace Juzaweb\Modules\Core;
 
 use Illuminate\Foundation\Application as BaseApplication;
 

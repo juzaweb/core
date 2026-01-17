@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -7,56 +8,108 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support;
+namespace Juzaweb\Modules\Core\Support;
 
 use Illuminate\Database\Eloquent\Model;
+use Juzaweb\Modules\Core\Contracts\Field;
+use Juzaweb\Modules\Core\Support\Fields\Checkbox;
+use Juzaweb\Modules\Core\Support\Fields\Currency;
+use Juzaweb\Modules\Core\Support\Fields\Date;
+use Juzaweb\Modules\Core\Support\Fields\Editor;
+use Juzaweb\Modules\Core\Support\Fields\Image;
+use Juzaweb\Modules\Core\Support\Fields\Images;
+use Juzaweb\Modules\Core\Support\Fields\Language;
+use Juzaweb\Modules\Core\Support\Fields\Security;
+use Juzaweb\Modules\Core\Support\Fields\Select;
+use Juzaweb\Modules\Core\Support\Fields\Slug;
+use Juzaweb\Modules\Core\Support\Fields\Tags;
+use Juzaweb\Modules\Core\Support\Fields\Text;
+use Juzaweb\Modules\Core\Support\Fields\Textarea;
+use Juzaweb\Modules\Core\Support\Fields\UploadUrl;
 
-class FieldFactory
+class FieldFactory implements Field
 {
-    public function text(string|Model $label, string $name, array $options = []): Fields\Text
+    public function text(string|Model $label, string $name, array $options = []): Text
     {
-        return new Fields\Text($label, $name, $options);
+        return new Text($label, $name, $options);
     }
 
-    public function textarea(string|Model $label, string $name, array $options = []): Fields\Textarea
+    public function textarea(string|Model $label, string $name, array $options = []): Textarea
     {
-        return new Fields\Textarea($label, $name, $options);
+        return new Textarea($label, $name, $options);
     }
 
-    public function select(string|Model $label, string $name, array $options = []): Fields\Select
+    public function select(string|Model $label, string $name, array $options = []): Select
     {
-        return new Fields\Select($label, $name, $options);
+        return new Select($label, $name, $options);
     }
 
-    public function image(string|Model $label, string $name, array $options = []): Fields\Image
+    public function slug(string|Model $label, string $name, array $options = []): Slug
     {
-        return new Fields\Image($label, $name, $options);
+        return new Slug($label, $name, $options);
     }
 
-    public function images(string|Model $label, string $name, array $options = []): Fields\Images
+    public function image(string|Model $label, string $name, array $options = []): Image
     {
-        return new Fields\Images($label, $name, $options);
+        return new Image($label, $name, $options);
     }
 
-    public function checkbox(string|Model $label, string $name, array $options = []): Fields\Checkbox
+    public function images(string|Model $label, string $name, array $options = []): Images
     {
-        return new Fields\Checkbox($label, $name, $options);
+        return new Images($label, $name, $options);
     }
 
-    public function editor(string|Model $label, string $name, array $options = []): Fields\Editor
+    public function checkbox(string|Model $label, string $name, array $options = []): Checkbox
     {
-        return new Fields\Editor($label, $name, $options);
+        return new Checkbox($label, $name, $options);
     }
 
-    public function password(string|Model $label, string $name, array $options = []): Fields\Text
+    public function editor(string|Model $label, string $name, array $options = []): Editor
+    {
+        return new Editor($label, $name, $options);
+    }
+
+    public function password(string|Model $label, string $name, array $options = []): Text
     {
         $options['type'] = 'password';
 
-        return new Fields\Text($label, $name, $options);
+        return new Text($label, $name, $options);
     }
 
-    public function language(string|Model|null $label, ?string $name, array $options = []): Fields\Language
+    public function uploadUrl(string|Model $label, string $name, array $options = []): UploadUrl
     {
-        return new Fields\Language($label, $name, $options);
+        return new UploadUrl($label, $name, $options);
+    }
+
+    public function language(string|Model|null $label, ?string $name, array $options = []): Language
+    {
+        return new Language($label, $name, $options);
+    }
+
+    public function tags(string|Model $label, string $name, array $options = []): Tags
+    {
+        return new Tags($label, $name, $options);
+    }
+
+    public function number(string|Model $label, string $name, array $options = []): Text
+    {
+        $options['type'] = 'number';
+
+        return new Text($label, $name, $options);
+    }
+
+    public function date(string|Model $label, string $name, array $options = []): Date
+    {
+        return new Date($label, $name, $options);
+    }
+
+    public function security(string|Model $label, string $name, array $options = [])
+    {
+        return new Security($label, $name, $options);
+    }
+
+    public function currency(string|Model $label, string $name, array $options = []): Currency
+    {
+        return new Currency($label, $name, $options);
     }
 }

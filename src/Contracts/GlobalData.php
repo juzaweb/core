@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Contracts;
+namespace Juzaweb\Modules\Core\Contracts;
 
 use Illuminate\Support\Collection;
 

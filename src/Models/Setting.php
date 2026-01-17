@@ -1,43 +1,41 @@
 <?php
 
-namespace Juzaweb\Core\Models;
+namespace Juzaweb\Modules\Core\Models;
 
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
+use Juzaweb\Modules\Core\Traits\Translatable;
 
-/**
- * Juzaweb\Core\Models\Setting
- *
- * @property string $code
- * @property array|string|null $value
- * @property string|null $network_website_id
- * @method static Builder|Setting newModelQuery()
- * @method static Builder|Setting newQuery()
- * @method static Builder|Setting query()
- * @method static Builder|Setting whereCode($value)
- * @method static Builder|Setting whereNetworkWebsiteId($value)
- * @method static Builder|Setting whereValue($value)
- * @mixin Eloquent
- */
 class Setting extends Model
 {
+    use Translatable;
+
     public const BOOLEAN_VALUES = ['1', 'true', 'false', '0', 0, 1, true, false];
 
     public $timestamps = false;
-
-    protected $keyType = 'string';
-
-    protected $primaryKey = 'code';
 
     protected $table = 'settings';
 
     protected $fillable = [
         'code',
         'value',
+        'translatable',
+        'website_id',
+    ];
+
+    public $translatedAttributes = [
+        'lang_value',
+        'locale',
+    ];
+
+    protected $casts = [
+        'translatable' => 'boolean',
     ];
 
     public function getValueAttribute(): null|string|array
     {
+        if ($this->translatable) {
+            return $this->getTranslation()?->lang_value;
+        }
+
         if (is_json($this->attributes['value'])) {
             return json_decode($this->attributes['value'], true, 512, JSON_THROW_ON_ERROR);
         }

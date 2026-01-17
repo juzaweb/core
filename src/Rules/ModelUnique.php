@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Rules;
+namespace Juzaweb\Modules\Core\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
@@ -44,8 +44,7 @@ class ModelUnique implements Rule
     {
         $this->modelClass = $modelClass;
         $this->modelAttribute = $modelAttribute;
-        $this->closure = $closure ?? function () {
-        };
+        $this->closure = $closure ?? function () {};
     }
 
     public function passes($attribute, $value)
@@ -69,8 +68,7 @@ class ModelUnique implements Rule
 
     public function message()
     {
-        return trans(
-            'validation.model_unique',
+        return trans('admin::translation.validationmodel_unique',
             [
                 'attribute' => $this->attribute,
                 'value' => $this->value,

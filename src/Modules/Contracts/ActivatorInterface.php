@@ -1,8 +1,8 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Contracts;
+namespace Juzaweb\Modules\Core\Modules\Contracts;
 
-use Juzaweb\Core\Modules\Module;
+use Juzaweb\Modules\Core\Modules\Module;
 
 interface ActivatorInterface
 {

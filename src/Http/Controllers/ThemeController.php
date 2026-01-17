@@ -8,11 +8,11 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Controllers;
+namespace Juzaweb\Modules\Core\Http\Controllers;
 
-use Juzaweb\Core\Traits\HasSessionResponses;
+use Juzaweb\Modules\Core\Traits\HasSessionResponses;
 
-class ThemeController extends Controller
+abstract class ThemeController extends Controller
 {
     use HasSessionResponses;
 }

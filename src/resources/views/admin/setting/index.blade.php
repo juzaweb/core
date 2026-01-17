@@ -1,13 +1,13 @@
-@extends('core::layouts.admin')
+@extends('admin::layouts.admin')
 
 @section('content')
-    <form action="{{ admin_url('settings') }}" class="form-ajax" method="post">
+    <form action="{{ route('admin.settings.update', [$websiteId]) }}" class="form-ajax" method="post">
         @method('PUT')
 
         <div class="row mb-3">
             <div class="col-md-12">
-                <button class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ __('Save Change') }}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ __('admin::translation.save_change') }}
                 </button>
             </div>
         </div>
@@ -16,48 +16,34 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ __('General') }}</h3>
+                        <h3 class="card-title">{{ __('admin::translation.general') }}</h3>
                     </div>
                     <div class="card-body">
-                        {{ Field::text(__('Site Title'), 'title', ['placeholder' => __('Site Title'), 'value' => setting('title')]) }}
+                        {{ Field::text(__('admin::translation.site_title'), 'title', ['placeholder' => __('admin::translation.site_title'), 'value' => setting('title')]) }}
 
-                        {{ Field::textarea(__('Site Description'), 'description', [
-                            'placeholder' => __('Site Description'),
+                        {{ Field::textarea(__('admin::translation.site_description'), 'description', [
+                            'placeholder' => __('admin::translation.site_description'),
                             'value' => setting('description'),
                         ]) }}
 
-                        {{ Field::text(__('Site Name'), 'sitename', ['value' => setting('sitename'), 'placeholder' => __('Ex: Juzaweb')]) }}
+                        {{ Field::text(__('admin::translation.site_name'), 'sitename', ['value' => setting('sitename'), 'placeholder' => __('admin::translation.ex_juzaweb')]) }}
 
-                        {{ Field::select(__('Default Language'), 'language', ['value' => config('language', 'en')])
-                            ->dropDownList(collect(config('locales'))->pluck('name', 'code')->toArray()) }}
+                        {{ Field::checkbox(__('admin::translation.user_registration'), 'user_registration', ['value' => setting('user_registration')]) }}
 
-                        {{ Field::checkbox(__('User Registration'), 'user_registration', ['value' => setting('user_registration')]) }}
-
-                        {{ Field::checkbox(__('User Verification'), 'user_verification', ['value' => setting('user_verification')]) }}
+                        {{ Field::checkbox(__('admin::translation.user_verification'), 'user_verification', ['value' => setting('user_verification')]) }}
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ __('Recaptcha v2') }}</h3>
-                    </div>
-                    <div class="card-body">
-                        {{ Field::text(__('Site Key'), 'recaptcha2_site_key', ['value' => setting('recaptcha2_site_key')]) }}
-
-                        {{ Field::text(__('Secret'), 'recaptcha2_secret_key', ['value' => setting('recaptcha2_secret_key')]) }}
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ __('Multiple Language') }}</h3>
+                        <h3 class="card-title">{{ __('admin::translation.multiple_language') }}</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group clearfix">
                             <div class="icheck-primary d-inline">
                                 <input type="radio" id="multiple_language" name="multiple_language" value="none" @checked(setting('multiple_language') == 'none')>
                                 <label class="form-check-label" for="multiple_language">
-                                    {{ __('Disable multiple language') }}
+                                    {{ __('admin::translation.disable_multiple_language') }}
                                 </label>
                             </div>
                         </div>
@@ -66,7 +52,7 @@
                             <div class="icheck-primary d-inline">
                                 <input type="radio" id="multiple_language_session" name="multiple_language" value="session" @checked(setting('multiple_language') == 'session')>
                                 <label class="form-check-label" for="multiple_language_session">
-                                    {{ __('Use session to store language') }}
+                                    {{ __('admin::translation.use_session_to_store_language') }}
                                 </label>
                             </div>
                         </div>
@@ -75,7 +61,7 @@
                             <div class="icheck-primary d-inline">
                                 <input type="radio" id="multiple_language_prefix" name="multiple_language" value="prefix" @checked(setting('multiple_language') == 'prefix')>
                                 <label class="form-check-label" for="multiple_language_prefix">
-                                    {{ __('Use prefix in slug (Ex: /vi/about-us)') }}
+                                    {{ __('admin::translation.use_prefix_in_slug_ex_viabout_us') }}
                                 </label>
                             </div>
                         </div>
@@ -84,11 +70,50 @@
                             <div class="icheck-primary d-inline">
                                 <input type="radio" id="multiple_language_subdomain" name="multiple_language" value="subdomain" @checked(setting('multiple_language') == 'subdomain')>
                                 <label class="form-check-label" for="multiple_language_subdomain">
-                                    {{ __('Use Subdomain for each language (Ex: vi.example.com)') }}
+                                    {{ __('admin::translation.use_subdomain_for_each_language_ex_viexamplecom') }}
                                 </label>
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ __('admin::translation.custom_scripts') }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            {{ __('admin::translation.warning_these_scripts_will_be_injected_directly_into_your_website_only_trusted_administrators_should_have_access_to_these_settings') }}
+                        </div>
+
+                        {{ Field::textarea(__('admin::translation.custom_header_script'), 'custom_header_script', [
+                            'placeholder' => __('admin::translation.htmljavascript_code_to_inject_in_head_section'),
+                            'value' => setting('custom_header_script'),
+                            'rows' => 5,
+                        ]) }}
+
+                        {{ Field::textarea(__('admin::translation.custom_footer_script'), 'custom_footer_script', [
+                            'placeholder' => __('admin::translation.htmljavascript_code_to_inject_before_body_tag'),
+                            'value' => setting('custom_footer_script'),
+                            'rows' => 5,
+                        ]) }}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ __('admin::translation.cookie_consent') }}</h3>
+                    </div>
+                    <div class="card-body">
+                        {{ Field::checkbox(__('admin::translation.cookie_consent_enabled'), 'cookie_consent_enabled', ['value' => setting('cookie_consent_enabled')]) }}
+
+                        {{ Field::textarea(__('admin::translation.cookie_consent_message'), 'cookie_consent_message', [
+                            'placeholder' => __('admin::translation.cookie_consent_message_default'),
+                            'value' => setting('cookie_consent_message'),
+                            'rows' => 3,
+                        ]) }}
                     </div>
                 </div>
             </div>
@@ -96,29 +121,36 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        {{ Field::language(__('Language'), 'locale', ['value' => $locale]) }}
+                        {{ Field::language(__('admin::translation.language'), 'locale', ['value' => $locale]) }}
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ __('Logo & Icon') }}</h3>
+                        <h3 class="card-title">{{ __('admin::translation.logo_icon') }}</h3>
                     </div>
                     <div class="card-body">
-                        {{ Field::image(__('Logo'), 'logo', ['value' => setting('logo')]) }}
+                        {{ Field::image(__('admin::translation.logo'), 'logo', ['value' => setting('logo')]) }}
 
-                        {{ Field::image(__('Favicon'), 'favicon', ['value' => setting('favicon')]) }}
+                        {{ Field::image(__('admin::translation.favicon'), 'favicon', ['value' => setting('favicon')]) }}
 
-                        {{ Field::image(__('Banner (for social)'), 'banner', ['value' => setting('banner')]) }}
+                        {{ Field::image(__('admin::translation.banner_for_social'), 'banner', ['value' => setting('banner')]) }}
                     </div>
                 </div>
+
+                <x-card title="{{ __('admin::translation.analytics') }}">
+                    {{ Field::text(__('admin::translation.google_analytics'), 'google_analytics_id', [
+                        'placeholder' => __('admin::translation.eg_ua_xxxxx_y'),
+                        'value' => setting('google_analytics_id'),
+                    ]) }}
+                </x-card>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ __('Save Change') }}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ __('admin::translation.save_change') }}
                 </button>
             </div>
         </div>

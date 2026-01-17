@@ -1,16 +1,16 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Commands;
+namespace Juzaweb\Modules\Core\Modules\Commands;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Str;
-use Juzaweb\Core\Models\Model;
-use Juzaweb\Core\Modules\Contracts\RepositoryInterface;
-use Juzaweb\Core\Modules\Module;
-use Juzaweb\Core\Modules\Support\Config\GenerateConfigReader;
-use Juzaweb\Core\Modules\Support\Config\GeneratorPath;
-use Juzaweb\Core\Modules\Support\Stub;
-use Juzaweb\Core\Modules\Traits\UseFromModel;
+use Juzaweb\Modules\Core\Models\Model;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\Module;
+use Juzaweb\Modules\Core\Modules\Support\Config\GenerateConfigReader;
+use Juzaweb\Modules\Core\Modules\Support\Config\GeneratorPath;
+use Juzaweb\Modules\Core\Modules\Support\Stub;
+use Juzaweb\Modules\Core\Modules\Traits\UseFromModel;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -64,7 +64,7 @@ class DatatableMakeCommand extends GeneratorCommand
 
         $this->mapColumnsFromModel($model, $config);
 
-        $this->mapActionsFromRepository($module, $config);
+        // $this->mapActionsFromRepository($module, $config);
 
         return true;
     }
@@ -95,10 +95,16 @@ class DatatableMakeCommand extends GeneratorCommand
 
         $makeColumns = array_diff($makeColumns, $config->get('excludeColumns', []));
 
+        $this->columns[] = "Column::checkbox()";
+        $this->columns[] = "Column::id()";
+        $this->columns[] = "Column::actions()";
+
         $hasTitle = false;
         foreach ($makeColumns as $item) {
             if (! $hasTitle && in_array($item, $config->get('titleColumns'))) {
-                $this->columns[] = "Column::make('{$item}')->linkToEdit()";
+                $label = Str::title(str_replace('_', ' ', $item));
+                $prefix = $this->getUrlPrefix();
+                $this->columns[] = "Column::editLink('{$item}', admin_url('{$prefix}/{id}/edit'), __('admin::translation.label'))";
                 $hasTitle = true;
                 continue;
             }
@@ -107,28 +113,28 @@ class DatatableMakeCommand extends GeneratorCommand
         }
 
         if ($model->usesTimestamps()) {
-            $this->columns[] = "Column::make('{$model->getCreatedAtColumn()}')"
-                ."->format(Column::FORMAT_DATETIME)";
+            $this->columns[] = "Column::createdAt()";
         }
     }
 
     protected function getTemplateContents(): string
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $module = \Juzaweb\Modules\Core\Facades\Module::findOrFail($this->getModuleName());
 
         return (new Stub($this->getStubName(), [
-            'MODULENAME'        => $module->getStudlyName(),
-            'NAMESPACE'         => $module->getStudlyName(),
-            'CLASS_NAMESPACE'   => $this->getClassNamespace($module),
-            'CLASS'             => $this->getDatatableNameWithoutNamespace(),
-            'LOWER_NAME'        => $module->getLowerName(),
-            'MODULE'            => $this->getModuleName(),
-            'NAME'              => $this->getModuleName(),
-            'STUDLY_NAME'       => $module->getStudlyName(),
-            'MODULE_NAMESPACE'  => $this->laravel['modules']->config('namespace'),
-            'URL_PREFIX'        => $this->getUrlPrefix(),
-            'COLUMNS'           => $this->getColumns(),
-            'BULK_ACTIONS'      => $this->getBulkActions(),
+            'MODULENAME' => $module->getStudlyName(),
+            'NAMESPACE' => $module->getStudlyName(),
+            'CLASS_NAMESPACE' => $this->getClassNamespace($module),
+            'CLASS' => $this->getDatatableNameWithoutNamespace(),
+            'LOWER_NAME' => $module->getLowerName(),
+            'MODULE' => $this->getModuleName(),
+            'NAME' => $this->getModuleName(),
+            'STUDLY_NAME' => $module->getStudlyName(),
+            'MODULE_NAMESPACE' => \Juzaweb\Modules\Core\Facades\Module::config('namespace'),
+            'URL_PREFIX' => $this->getUrlPrefix(),
+            'COLUMNS' => $this->getColumns(),
+            'BULK_ACTIONS' => $this->getBulkActions(),
+            'MODEL_NAME' => $this->getModelName(),
         ]))->render();
     }
 
@@ -144,12 +150,16 @@ class DatatableMakeCommand extends GeneratorCommand
 
     protected function getUrlPrefix(): string
     {
-        return Str::plural(Str::slug($this->argument('datatable')));
+        $datatable = Str::snake($this->argument('datatable'));
+
+        $datatable = str_replace('_', ' ', $datatable);
+
+        return Str::plural(Str::slug($datatable));
     }
 
     protected function getDestinationFilePath(): string
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = \Juzaweb\Modules\Core\Facades\Module::getModulePath($this->getModuleName());
 
         $datatablePath = GenerateConfigReader::read('datatable');
 
@@ -158,10 +168,10 @@ class DatatableMakeCommand extends GeneratorCommand
 
     protected function getDatatableName(): string
     {
-        $datatable = Str::studly($this->argument('datatable'));
+        $datatable = Str::plural(Str::studly($this->argument('datatable')));
 
         if (Str::contains(strtolower($datatable), 'datatable') === false) {
-            $datatable .= 'Datatable';
+            $datatable .= 'DataTable';
         }
 
         return $datatable;
@@ -169,9 +179,7 @@ class DatatableMakeCommand extends GeneratorCommand
 
     public function getDefaultNamespace(): string
     {
-        $module = $this->laravel['modules'];
-
-        return $module->config('paths.generator.datatable.namespace', 'Http/DataTables');
+        return \Juzaweb\Modules\Core\Facades\Module::config('paths.generator.datatable.namespace', 'Http/DataTables');
     }
 
     /**

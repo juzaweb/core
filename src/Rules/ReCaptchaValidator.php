@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Rules;
+namespace Juzaweb\Modules\Core\Rules;
 
 use GuzzleHttp\Client;
 

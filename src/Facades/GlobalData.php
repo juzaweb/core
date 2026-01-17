@@ -8,18 +8,18 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Facades;
+namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
-use Juzaweb\Core\Contracts\GlobalData as GlobalDataContract;
+use Juzaweb\Modules\Core\Contracts\GlobalData as GlobalDataContract;
 
 /**
  * @method static void set($key, $value)
  * @method static void push($key, $value)
  * @method static mixed get(string $key, array $default = [])
  * @method static Collection collect(string $key, array $default = [])
- * @see \Juzaweb\Core\Support\GlobalDataRepository
+ * @see \Juzaweb\Modules\Core\Support\GlobalDataRepository
  */
 class GlobalData extends Facade
 {

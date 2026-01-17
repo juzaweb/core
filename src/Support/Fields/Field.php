@@ -7,14 +7,14 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Fields;
+namespace Juzaweb\Modules\Core\Support\Fields;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
-use Juzaweb\Core\Support\Traits\HasRules;
-use Juzaweb\Core\Traits\Whenable;
+use Juzaweb\Modules\Core\Support\Traits\HasRules;
+use Juzaweb\Modules\Core\Traits\Whenable;
 use Stringable;
 
 abstract class Field implements Renderable, Stringable, Htmlable
@@ -42,7 +42,7 @@ abstract class Field implements Renderable, Stringable, Htmlable
         return $this;
     }
 
-    public function value(string $value): static
+    public function value(?string $value): static
     {
         $this->options['value'] = $value;
 

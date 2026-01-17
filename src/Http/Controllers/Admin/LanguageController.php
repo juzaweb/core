@@ -8,26 +8,26 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Controllers\Admin;
+namespace Juzaweb\Modules\Core\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\DB;
-use Juzaweb\Core\Facades\Breadcrumb;
-use Juzaweb\Core\Http\Controllers\AdminController;
-use Juzaweb\Core\Http\DataTables\LanguagesDataTable;
-use Juzaweb\Core\Http\Requests\BulkActionsRequest;
-use Juzaweb\Core\Http\Requests\LanguageRequest;
-use Juzaweb\Core\Models\Language;
+use Juzaweb\Modules\Core\Facades\Breadcrumb;
+use Juzaweb\Modules\Core\Http\Controllers\AdminController;
+use Juzaweb\Modules\Core\Http\DataTables\LanguagesDataTable;
+use Juzaweb\Modules\Core\Http\Requests\BulkActionsRequest;
+use Juzaweb\Modules\Core\Http\Requests\LanguageRequest;
+use Juzaweb\Modules\Core\Models\Language;
 
 class LanguageController extends AdminController
 {
-    public function index()
+    public function index(LanguagesDataTable $dataTable, string $websiteId)
     {
-        $dataTable = new LanguagesDataTable();
+        $dataTable->withWebsiteId($websiteId);
 
-        Breadcrumb::add(__('Languages'));
+        Breadcrumb::add(__('admin::translation.languages'));
 
         return $dataTable->render(
-            'core::admin.language.index'
+            'admin::admin.language.index'
         );
     }
 
@@ -45,34 +45,55 @@ class LanguageController extends AdminController
         );
 
         return $this->success(
-            __('Language created successfully.')
+            __('admin::translation.language_created_successfully')
         );
     }
 
     public function destroy(string $code)
     {
+        $defaultLanguage = Language::default();
+
         $language = Language::where('code', $code)
             ->where('code', '!=', config('translatable.fallback_locale'))
+            ->where('code', '!=', $defaultLanguage)
             ->firstOrFail();
 
         $language->delete();
 
         return $this->success(
-            __('Language deleted successfully.')
+            __('admin::translation.language_deleted_successfully')
         );
     }
 
     public function bulk(BulkActionsRequest $request)
     {
         $ids = $request->input('ids', []);
+        $action = $request->input('action');
+        $defaultLanguage = Language::default();
 
-        Language::whereIn('code', $ids)
+        if ($action === 'set-default') {
+            if (count($ids) !== 1) {
+                return $this->error(__('admin::translation.please_select_exactly_one_language_to_set_as_default'));
+            }
+
+            $code = $ids[0];
+
+            // Validate that the language exists before setting it as default
+            $language = Language::where('code', $code)->firstOrFail();
+
+            setting()->set('language', $code);
+            return $this->success(__('admin::translation.default_language_set_successfully'));
+        }
+
+        $languages = Language::whereIn('code', $ids)
             ->where('code', '!=', config('translatable.fallback_locale'))
-            ->get()
-            ->each(fn (Language $language) => $language->delete());
+            ->where('code', '!=', $defaultLanguage)
+            ->get();
+
+        $languages->each(fn (Language $language) => $language->delete());
 
         return $this->success(
-            __('Languages deleted successfully.')
+            __('admin::translation.languages_deleted_successfully')
         );
     }
 }

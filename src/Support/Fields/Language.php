@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Support\Fields;
+namespace Juzaweb\Modules\Core\Support\Fields;
 
 use Illuminate\Contracts\View\View;
 
@@ -17,7 +17,7 @@ class Language extends Field
     public function render(): View|string
     {
         return view(
-            'core::fields.language',
+            'admin::fields.language',
             $this->renderParams()
         );
     }

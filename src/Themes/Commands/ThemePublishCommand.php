@@ -1,12 +1,12 @@
 <?php
 
-namespace Juzaweb\Core\Themes\Commands;
+namespace Juzaweb\Modules\Core\Themes\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Juzaweb\Core\Facades\Theme;
+use Juzaweb\Modules\Core\Facades\Theme;
+use Juzaweb\Modules\Core\Themes\Theme as ThemeEntity;
 use Symfony\Component\Console\Input\InputArgument;
-use Juzaweb\Core\Themes\Theme as ThemeEntity;
 
 class ThemePublishCommand extends Command
 {

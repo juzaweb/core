@@ -1,0 +1,75 @@
+@extends('admin::layouts.admin')
+
+@section('content')
+    <div class="row" id="module-list">
+        @foreach($modules as $module)
+            <div class="col-md-4 col-lg-3 p-2 module-list-item">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $module->get('title', $module->getStudlyName()) }}</h5>
+                        <p class="card-text">{{ $module->getDescription() }}</p>
+                        <p class="card-text"><small class="text-muted">Version: {{ $module->get('version') }}</small></p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge badge-{{ $module->isEnabled() ? 'success' : 'secondary' }}">
+                                {{ $module->isEnabled() ? __('admin::translation.active') : __('admin::translation.inactive') }}
+                            </span>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input toggle-module"
+                                       id="module-toggle-{{ $module->getLowerName() }}"
+                                       data-module="{{ $module->getLowerName() }}"
+                                       {{ $module->isEnabled() ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="module-toggle-{{ $module->getLowerName() }}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+@endsection
+
+@section('scripts')
+    <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
+        $(function () {
+            $('.toggle-module').on('change', function () {
+                let checkbox = $(this);
+                let module = checkbox.data('module');
+                let status = checkbox.is(':checked') ? 1 : 0;
+
+                checkbox.prop('disabled', true);
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('admin.modules.toggle') }}",
+                    dataType: 'json',
+                    data: {
+                        module: module,
+                        status: status
+                    }
+                }).done(function (response) {
+                    checkbox.prop('disabled', false);
+
+                    if (response.status === false) {
+                        show_message(response.data.message);
+                        checkbox.prop('checked', !status); // Revert status
+                        return false;
+                    }
+
+                    show_message(response.data.message);
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1000);
+
+                }).fail(function (response) {
+                    checkbox.prop('disabled', false);
+                    checkbox.prop('checked', !status); // Revert status
+                    show_message(response);
+                    return false;
+                });
+            });
+        });
+    </script>
+@endsection

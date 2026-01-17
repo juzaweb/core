@@ -8,56 +8,194 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Providers;
+namespace Juzaweb\Modules\Core\Providers;
 
 use Illuminate\Support\Facades\Blade;
-use Juzaweb\Core\Facades\Dashboard;
-use Juzaweb\Core\Facades\Menu;
-use Juzaweb\Core\Facades\Setting;
-use Juzaweb\Core\Support\Dashboard\UserBox;
+use Juzaweb\Modules\Blog\Models\Category;
+use Juzaweb\Modules\Core\Contracts\Sitemap;
+use Juzaweb\Modules\Core\Facades\Chart;
+use Juzaweb\Modules\Core\Facades\Menu;
+use Juzaweb\Modules\Core\Facades\MenuBox;
+use Juzaweb\Modules\Core\Facades\PageBlock;
+use Juzaweb\Modules\Core\Facades\Setting;
+use Juzaweb\Modules\Core\Facades\Widget;
+use Juzaweb\Modules\Core\Models\Pages\Page;
+use Juzaweb\Modules\Core\Models\Pages\PageTranslation;
+use Juzaweb\Modules\Core\Support\Dashboard\UsersChart;
+use Juzaweb\Modules\Core\Support\Dashboard\SessionDurationChart;
+use Juzaweb\Modules\Core\Support\Dashboard\SessionsByDeviceChart;
+use Juzaweb\Modules\Core\Support\Dashboard\TopPagesChart;
+use Juzaweb\Modules\Core\Support\Dashboard\TrafficSourcesChart;
+use Juzaweb\Modules\Core\Support\Dashboard\UsersByCountryChart;
 
-class AdminServiceProvider extends ServiceProvider
+abstract class AdminServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
         $this->registerSettings();
+        $this->registerCharts();
+        $this->registerGlobalPageBlocks();
+        $this->registerGlobalWidgets();
+
+        $this->app[Sitemap::class]->register('pages', PageTranslation::class);
+
         $this->registerMenus();
-        $this->registerDashboardBoxes();
-        $this->registerComponents();
+
+        $this->registerMenuBoxs();
+    }
+
+    public function register(): void
+    {
+        //
     }
 
     protected function registerMenus(): void
     {
-        $this->booted(
-            function () {
-                Menu::make('dashboard', __('Dashboard'))
-                    ->icon('fas fa-tachometer-alt');
+        Menu::make('dashboard', function () {
+            return [
+                'title' => __('admin::translation.dashboard'),
+                'icon' => 'fas fa-tachometer-alt',
+            ];
+        });
 
-                Menu::make('pages', __('Pages'))
-                    ->icon('fas fa-file');
+        Menu::make('media', function () {
+            return [
+                'title' => __('admin::translation.media'),
+                'icon' => 'fas fa-photo-video',
+            ];
+        });
 
-                Menu::make('settings', __('Settings'))
-                    ->icon('fas fa-cogs')
-                    ->priority(99);
+        Menu::make('pages', function () {
+            return [
+                'title' => __('admin::translation.pages'),
+                'icon' => 'fas fa-layer-group',
+            ];
+        });
 
-                Menu::make('general', __('General'))
-                    ->url('settings/general')
-                    ->parent('settings');
+        Menu::make('blog', function () {
+            return [
+                'title' => __('admin::translation.blog'),
+                'icon' => 'fas fa-newspaper',
+            ];
+        });
 
-                Menu::make('social-login', __('Social Login'))
-                    ->url('settings/social-login')
-                    ->parent('settings');
+        Menu::make('posts', function () {
+            return [
+                'title' => __('admin::translation.posts'),
+                'parent' => 'blog',
+            ];
+        });
 
-                // Menu::make('roles', __('Roles'))
-                //     ->parent('settings');
+        Menu::make('post-categories', function () {
+            return [
+                'title' => __('admin::translation.categories'),
+                'parent' => 'blog',
+            ];
+        });
 
-                Menu::make('users', __('Users'))
-                    ->parent('settings');
+        Menu::make('comments', function () {
+            return [
+                'title' => __('admin::translation.comments'),
+                'parent' => 'blog',
+            ];
+        });
 
-                Menu::make('languages', __('Languages'))
-                    ->parent('settings');
-            }
-        );
+        Menu::make('appearance', function () {
+            return [
+                'title' => __('admin::translation.appearance'),
+                'icon' => 'fas fa-paint-roller',
+                'priority' => 98,
+            ];
+        });
+
+        Menu::make('widgets', function () {
+            return [
+                'title' => __('admin::translation.widgets'),
+                'parent' => 'appearance',
+            ];
+        });
+
+        Menu::make('menus', function () {
+            return [
+                'title' => __('admin::translation.menus'),
+                'parent' => 'appearance',
+            ];
+        });
+
+        Menu::make('settings', function () {
+            return [
+                'title' => __('admin::translation.settings'),
+                'icon' => 'fas fa-cogs',
+                'priority' => 99,
+            ];
+        });
+
+        Menu::make('general', function () {
+            return [
+                'title' => __('admin::translation.general'),
+                'url' => 'settings/general',
+                'parent' => 'settings',
+            ];
+        });
+
+        Menu::make('domain', function () {
+            return [
+                'title' => __('admin::translation.custom_domain'),
+                'url' => 'settings/domain',
+                'parent' => 'settings',
+            ];
+        });
+
+        Menu::make('social-login', function () {
+            return [
+                'title' => __('admin::translation.social_login'),
+                'url' => 'settings/social-login',
+                'parent' => 'settings',
+            ];
+        });
+
+        Menu::make('email', function () {
+            return [
+                'title' => __('admin::translation.email'),
+                'url' => 'settings/email',
+                'parent' => 'settings',
+            ];
+        });
+
+        Menu::make('members', function () {
+            return [
+                'title' => __('admin::translation.members'),
+                'parent' => 'settings',
+            ];
+        });
+
+        Menu::make('languages', function () {
+            return [
+                'title' => __('admin::translation.languages'),
+                'parent' => 'settings',
+            ];
+        });
+    }
+
+    protected function registerMenuBoxs(): void
+    {
+        MenuBox::make('pages', Page::class, function () {
+            return [
+                'label' => __('admin::translation.pages'),
+                'icon' => 'fas fa-layer-group',
+                'priority' => 1,
+                'field' => 'title',
+            ];
+        });
+
+        MenuBox::make('post-categories', Category::class, function () {
+            return [
+                'label' => __('admin::translation.categories'),
+                'icon' => 'fas fa-newspaper',
+                'priority' => 1,
+                'field' => 'name',
+            ];
+        });
     }
 
     protected function registerSettings(): void
@@ -73,17 +211,15 @@ class AdminServiceProvider extends ServiceProvider
                 Setting::make('favicon');
                 Setting::make('banner');
 
-                Setting::make('recaptcha2_site_key');
-                Setting::make('recaptcha2_secret_key');
-
                 Setting::make('user_registration')->default(true);
 
                 Setting::make('user_verification')->default(false);
 
                 Setting::make('multiple_language')->default('none');
+                Setting::make('language')->default('en');
 
                 // Social Login Settings
-                $drivers = array_keys(config('core.social_login.providers', []));
+                $drivers = array_keys(config('app.social_login.providers', []));
 
                 foreach ($drivers as $driver) {
                     Setting::make("{$driver}_login")
@@ -95,37 +231,64 @@ class AdminServiceProvider extends ServiceProvider
                     Setting::make("{$driver}_client_secret")
                         ->add();
                 }
+
+                Setting::make('mail_host')->rules(['nullable', 'string']);
+                Setting::make('mail_port')->rules(['nullable', 'integer', 'min:1', 'max:65535']);
+                Setting::make('mail_username')->rules(['nullable', 'string']);
+                Setting::make('mail_password')->rules(['nullable', 'string']);
+                Setting::make('mail_encryption')->rules(['nullable', 'string', 'in:tls,ssl']);
+                Setting::make('mail_from_address')->rules(['nullable', 'email']);
+                Setting::make('mail_from_name')->rules(['nullable', 'string']);
+
+                // Custom Scripts Settings
+                Setting::make('custom_header_script')->rules(['nullable', 'string']);
+                Setting::make('custom_footer_script')->rules(['nullable', 'string']);
+
+                Setting::make('google_analytics_id')->rules(['nullable', 'string']);
+
+                // Cookie Consent Settings
+                Setting::make('cookie_consent_enabled')->default(false);
+                Setting::make('cookie_consent_message')->rules(['nullable', 'string']);
             }
         );
     }
 
-    protected function registerDashboardBoxes(): void
+    protected function registerCharts(): void
     {
-        Dashboard::box('users', new UserBox());
-
-        Dashboard::chart('users', new \Juzaweb\Core\Support\Dashboard\UserChart());
+        Chart::chart('users', UsersChart::class);
+        Chart::chart('users-by-country', UsersByCountryChart::class);
+        Chart::chart('sessions-by-device', SessionsByDeviceChart::class);
+        Chart::chart('top-pages', TopPagesChart::class);
+        Chart::chart('session-duration', SessionDurationChart::class);
+        Chart::chart('traffic-sources', TrafficSourcesChart::class);
     }
 
-    protected function registerComponents(): void
+    protected function registerGlobalPageBlocks(): void
     {
-        Blade::component(
-            'js-var',
-            \Juzaweb\Core\View\Components\JsVar::class
+        PageBlock::make(
+            'html',
+            function () {
+                return [
+                    'label' => __('admin::translation.html_block'),
+                    'form' => 'admin::global.blocks.html.form',
+                    'view' => 'admin::global.blocks.html.view',
+                ];
+            }
         );
+    }
 
-        Blade::component(
-            'seo-meta',
-            \Juzaweb\Core\View\Components\SeoMeta::class
-        );
-
-        Blade::component(
-            'card',
-            \Juzaweb\Core\View\Components\Card::class
-        );
-
-        Blade::component(
-            'language-card',
-            \Juzaweb\Core\View\Components\LanguageCard::class
+    protected function registerGlobalWidgets(): void
+    {
+        Widget::make(
+            'html',
+            function () {
+                return [
+                    'label' => __('admin::translation.html_widget'),
+                    'description' => __('admin::translation.display_custom_html_content'),
+                    'form' => 'admin::global.widgets.html.form',
+                    'view' => 'admin::global.widgets.html.show',
+                ];
+            }
         );
     }
 }

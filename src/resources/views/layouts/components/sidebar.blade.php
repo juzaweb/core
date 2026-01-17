@@ -1,47 +1,50 @@
 <!-- Sidebar Menu -->
 <nav class="mt-2">
     @php
-        $menus = \Juzaweb\Core\Facades\Menu::get('admin-left');
+        $menus = \Juzaweb\Modules\Core\Facades\Menu::getByPosition($menu);
         $roots = $menus->whereNull('parent')->sortBy('priority');
+        $dashboardPath = request()->is('network/*') ? '/network' : parse_url(admin_url(), PHP_URL_PATH);
     @endphp
 
-    <ul class="nav nav-pills nav-sidebar flex-column"
-        data-widget="treeview"
-        role="menu"
-        data-accordion="false"
-    >
-        @foreach($roots as $root)
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        @foreach ($roots as $root)
             @php
                 $children = $menus->where('parent', $root['key'])->sortBy('priority');
-                $active = request()->is(ltrim($root['url'], '/'))
-                    || ($root['url'] != '/' . config('core.admin_prefix') && request()->is(ltrim($root['url'], '/') . '/*'))
-                    || $children->filter(
-                        fn ($child) => request()->is(ltrim($child['url'], '/'))
-                            || request()->is(ltrim($child['url'], '/') . '/*')
-                    )->isNotEmpty();
+
+                // Extract path from URL for comparison
+                $rootPath = ltrim(parse_url($root['url'], PHP_URL_PATH) ?: '', '/');
+
+                $active =
+                    request()->is($rootPath) ||
+                    ($rootPath && $rootPath != ltrim($dashboardPath, '/') && request()->is($rootPath . '/*')) ||
+                    $children
+                        ->filter(function ($child) {
+                            $childPath = ltrim(parse_url($child['url'], PHP_URL_PATH) ?: '', '/');
+                            return request()->is($childPath) || ($childPath && request()->is($childPath . '/*'));
+                        })
+                        ->isNotEmpty();
             @endphp
-            <li class="nav-item @if($active) menu-is-opening menu-open @endif">
-                <a href="{{ $root['url'] }}"
-                   target="{{ $root['target'] }}"
-                   class="nav-link @if($active) active @endif"
-                >
+            <li class="nav-item @if ($active) menu-is-opening menu-open @endif">
+                <a href="{{ $root['url'] }}" target="{{ $root['target'] }}"
+                   class="nav-link @if ($active) active @endif">
                     <i class="nav-icon {{ $root['icon'] }}"></i>
                     <p>
                         {{ $root['title'] }}
-                        @if($children->isNotEmpty())
+                        @if ($children->isNotEmpty())
                             <i class="right fas fa-angle-left"></i>
                         @endif
                     </p>
                 </a>
-                @if($children->isNotEmpty())
+                @if ($children->isNotEmpty())
                     <ul class="nav nav-treeview">
-                        @foreach($children as $child)
+                        @foreach ($children as $child)
                             @php
-                            $active = request()->is(ltrim($child['url'], '/'))
-                                || request()->is(ltrim($child['url'], '/') . '/*');
+                                $childPath = ltrim(parse_url($child['url'], PHP_URL_PATH) ?: '', '/');
+                                $active = request()->is($childPath) || ($childPath && request()->is($childPath . '/*'));
                             @endphp
                             <li class="nav-item">
-                                <a href="{{ $child['url'] }}" class="nav-link @if($active) active @endif">
+                                <a href="{{ $child['url'] }}"
+                                   class="nav-link @if ($active) active @endif">
                                     <i class="nav-icon far {{ $child['icon'] ?? 'fa-circle' }}"></i>
                                     <p>{{ $child['title'] }}</p>
                                 </a>

@@ -1,0 +1,35 @@
+<?php
+/**
+ * JUZAWEB CMS - Laravel CMS for Your Project
+ *
+ * @package    juzaweb/cms
+ * @author     The Anh Dang
+ * @link       https://cms.juzaweb.com
+ * @license    GNU V2
+ */
+
+namespace Juzaweb\Modules\Core\Traits;
+
+trait HasContent
+{
+    public function renderContent()
+    {
+        if ($this->content === null) {
+            return '';
+        }
+
+        $html = str_get_html($this->content);
+
+        if ($html === false) {
+            return $this->content;
+        }
+
+        foreach ($html->find('img') as $item) {
+            if (!empty($item->src) && !str_starts_with($item->src, 'http')) {
+                $item->src = upload_url($item->src);
+            }
+        }
+
+        return remove_zero_width_space_string($html->save());
+    }
+}

@@ -1,45 +1,23 @@
 <?php
 
-namespace Juzaweb\Core\Models;
+namespace Juzaweb\Modules\Core\Models;
 
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
 
-/**
- * \Juzaweb\Core\Models\NotifySubscription
- *
- * @property int $id
- * @property string $channel
- * @property string $notifiable_type
- * @property int $notifiable_id
- * @property array|null $data
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Model|Eloquent $notifiable
- * @method static Builder|NotificationSubscription newModelQuery()
- * @method static Builder|NotificationSubscription newQuery()
- * @method static Builder|NotificationSubscription query()
- * @method static Builder|NotificationSubscription whereChannel($value)
- * @method static Builder|NotificationSubscription whereCreatedAt($value)
- * @method static Builder|NotificationSubscription whereData($value)
- * @method static Builder|NotificationSubscription whereId($value)
- * @method static Builder|NotificationSubscription whereNotifiableId($value)
- * @method static Builder|NotificationSubscription whereNotifiableType($value)
- * @method static Builder|NotificationSubscription whereUpdatedAt($value)
- * @mixin Eloquent
- */
 class NotificationSubscription extends Model
 {
+    use HasUuids;
+
     protected $table = 'notification_subscriptions';
 
     protected $fillable = [
         'channel',
         'notifiable_type',
         'notifiable_id',
+        'website_id',
         'data',
     ];
 

@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\DataTables;
+namespace Juzaweb\Modules\Core\DataTables;
 
 class Action
 {
@@ -52,6 +52,11 @@ class Action
     protected bool $visible = true;
 
     /**
+     * @var ?string
+     */
+    protected string $target = '_self';
+
+    /**
      * Create a new Action instance.
      *
      * @param string $label
@@ -66,7 +71,7 @@ class Action
 
     public static function edit(string $url): static
     {
-        return static::link(__('Edit'), $url, 'fas fa-edit');
+        return static::link(__('admin::translation.edit'), $url, 'fas fa-edit');
     }
 
     public static function link(string $label, string $url, string $icon = 'fas fa-link'): static
@@ -81,7 +86,7 @@ class Action
      */
     public static function delete(): static
     {
-        return static::make(__('Delete'), null, 'fas fa-trash')
+        return static::make(__('admin::translation.delete'), null, 'fas fa-trash')
             ->type('action')
             ->action('delete')
             ->color('danger');
@@ -99,6 +104,34 @@ class Action
         $this->icon = $icon;
         $this->url = $url;
         $this->label = $label;
+    }
+
+    /**
+     * Set the label of the action.
+     *
+     * @param string $label
+     *      The label used to represent the action.
+     * @return static
+     */
+    public function label(string $label): static
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * Set the URL of the action.
+     *
+     * @param string $url
+     *      The URL used to link the action.
+     * @return static
+     */
+    public function url(string $url): static
+    {
+        $this->url = $url;
+
+        return $this;
     }
 
     /**
@@ -219,6 +252,20 @@ class Action
     }
 
     /**
+     * Set the target attribute for the link.
+     *
+     * @param string $target
+     *      The target attribute (e.g., '_blank', '_self').
+     * @return static
+     */
+    public function target(string $target): static
+    {
+        $this->target = $target;
+
+        return $this;
+    }
+
+    /**
      * Get the type of action.
      *
      * @return string
@@ -252,5 +299,10 @@ class Action
     public function getLabel(): string
     {
         return $this->label;
+    }
+
+    public function getTarget(): ?string
+    {
+        return $this->target;
     }
 }

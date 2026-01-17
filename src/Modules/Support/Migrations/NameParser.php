@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Support\Migrations;
+namespace Juzaweb\Modules\Core\Modules\Support\Migrations;
 
 class NameParser
 {

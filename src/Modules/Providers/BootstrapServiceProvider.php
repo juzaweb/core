@@ -1,9 +1,9 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Providers;
+namespace Juzaweb\Modules\Core\Modules\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Juzaweb\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
 
 class BootstrapServiceProvider extends ServiceProvider
 {

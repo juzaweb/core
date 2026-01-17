@@ -7,10 +7,10 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Contracts;
+namespace Juzaweb\Modules\Core\Contracts;
 
-use Juzaweb\Core\Support\Routes\Resources\AdminResource;
-use Juzaweb\Core\Support\Routes\Resources\APIResource;
+use Juzaweb\Modules\Core\Support\Routes\Resources\AdminResource;
+use Juzaweb\Modules\Core\Support\Routes\Resources\APIResource;
 
 interface RouteResource
 {

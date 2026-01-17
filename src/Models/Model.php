@@ -8,14 +8,19 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Models;
+namespace Juzaweb\Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Model as ModelAlias;
-use Juzaweb\QueryCache\QueryCacheable;
+use Juzaweb\Modules\Core\Traits\QueryCacheable;
 
 class Model extends ModelAlias
 {
     use QueryCacheable;
+
+    public function cachePrefixValue(): string
+    {
+        return cache_prefix($this->getTable());
+    }
 
     public static function getTableName(): string
     {

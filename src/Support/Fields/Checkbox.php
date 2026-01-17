@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Fields;
+namespace Juzaweb\Modules\Core\Support\Fields;
 
 use Illuminate\Contracts\View\View;
 
@@ -16,7 +16,7 @@ class Checkbox extends Field
     public function render(): View|string
     {
         return view(
-            'core::fields.checkbox',
+            'admin::fields.checkbox',
             $this->renderParams()
         );
     }

@@ -8,10 +8,10 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Middleware;
+namespace Juzaweb\Modules\Core\Http\Middleware;
 
 use Illuminate\Http\Request;
-use Juzaweb\Core\Models\Language;
+use Juzaweb\Modules\Core\Models\Language;
 
 class MultipleLanguage
 {
@@ -25,7 +25,7 @@ class MultipleLanguage
     public function handle(Request $request, \Closure $next): mixed
     {
         if ($locale = $this->getLocaleFromRequest($request)) {
-            app()->setLocale($locale);
+            $this->setLocale($locale);
         }
 
         return $next($request);
@@ -70,5 +70,12 @@ class MultipleLanguage
         }
 
         return null;
+    }
+
+    protected function setLocale(string $locale)
+    {
+        app()->setLocale($locale);
+        config(['app.locale' => $locale]);
+        config(['translatable.locale' => $locale]);
     }
 }

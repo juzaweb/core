@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Rules;
+namespace Juzaweb\Modules\Core\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
@@ -69,8 +69,7 @@ class ModelExists implements Rule
 
     public function message(): string
     {
-        return trans(
-            'validation.model_exists',
+        return trans('admin::translation.validationmodel_exists',
             [
                 'attribute' => $this->attribute,
                 'value' => $this->value,

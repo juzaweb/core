@@ -1,9 +1,9 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Commands\Databases;
+namespace Juzaweb\Modules\Core\Modules\Commands\Databases;
 
 use Illuminate\Console\Command;
-use Juzaweb\Core\Modules\Traits\ModuleCommandTrait;
+use Juzaweb\Modules\Core\Modules\Traits\ModuleCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 

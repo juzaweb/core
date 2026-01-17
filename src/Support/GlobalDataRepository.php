@@ -1,10 +1,10 @@
 <?php
 
-namespace Juzaweb\Core\Support;
+namespace Juzaweb\Modules\Core\Support;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Juzaweb\Core\Contracts\GlobalData as GlobalDataContract;
+use Juzaweb\Modules\Core\Contracts\GlobalData as GlobalDataContract;
 
 class GlobalDataRepository implements GlobalDataContract
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Juzaweb\Core\Http\Resources;
+namespace Juzaweb\Modules\Core\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Juzaweb\Core\Models\Notification;
+use Juzaweb\Modules\Core\Models\Notification;
 use OpenApi\Annotations as OA;
 
 /**

@@ -8,7 +8,7 @@
  * @license    MIT
  */
 
-namespace Juzaweb\Core\Commands;
+namespace Juzaweb\Modules\Core\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;

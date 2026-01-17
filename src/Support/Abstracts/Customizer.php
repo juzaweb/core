@@ -7,9 +7,9 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Abstracts;
+namespace Juzaweb\Modules\Core\Support\Abstracts;
 
-use Juzaweb\Core\Traits\Whenable;
+use Juzaweb\Modules\Core\Traits\Whenable;
 
 abstract class Customizer
 {

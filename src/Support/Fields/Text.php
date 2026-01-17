@@ -7,16 +7,26 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support\Fields;
+namespace Juzaweb\Modules\Core\Support\Fields;
 
 use Illuminate\Contracts\View\View;
 
 class Text extends Field
 {
+    public function slugSource()
+    {
+        $this->options['classes'] = array_merge(
+            $this->options['classes'] ?? [],
+            ['slug-source']
+        );
+
+        return $this;
+    }
+
     public function render(): View|string
     {
         return view(
-            'core::fields.text',
+            'admin::fields.text',
             $this->renderParams()
         );
     }

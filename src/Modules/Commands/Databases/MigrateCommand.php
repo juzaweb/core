@@ -1,10 +1,10 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Commands\Databases;
+namespace Juzaweb\Modules\Core\Modules\Commands\Databases;
 
 use Illuminate\Console\Command;
-use Juzaweb\Core\Modules\Migrations\Migrator;
-use Juzaweb\Core\Modules\Module;
+use Juzaweb\Modules\Core\Modules\Migrations\Migrator;
+use Juzaweb\Modules\Core\Modules\Module;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -25,7 +25,7 @@ class MigrateCommand extends Command
     protected $description = 'Migrate the migrations from the specified module or from all modules.';
 
     /**
-     * @var \Juzaweb\Core\Modules\Contracts\RepositoryInterface
+     * @var \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface
      */
     protected $module;
 

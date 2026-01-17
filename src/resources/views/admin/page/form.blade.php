@@ -1,4 +1,4 @@
-@extends('core::layouts.admin')
+@extends('admin::layouts.admin')
 
 @section('content')
     <form action="{{ $action }}" class="form-ajax" method="post">
@@ -9,11 +9,11 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="{{ admin_url('pages') }}" class="btn btn-warning">
-                    <i class="fas fa-arrow-left"></i> {{ __('Back') }}
+                    <i class="fas fa-arrow-left"></i> {{ __('admin::translation.back') }}
                 </a>
 
-                <button class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ __('Save') }}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ __('admin::translation.save') }}
                 </button>
             </div>
         </div>
@@ -22,33 +22,55 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ __('Pages') }}</h3>
+                        <h3 class="card-title">{{ __('admin::translation.pages') }}</h3>
                     </div>
                     <div class="card-body">
-                        {{ Field::text($model, "{$locale}[title]", ['label' => __('Title'), 'value' => $model->title]) }}
+                        {{ Field::text($model, "title", ['label' => __('admin::translation.title'), 'value' => $model->title]) }}
 
-                        {{ Field::editor($model, "{$locale}[content]", ['label' => __('Content'), 'value' => $model->content]) }}
+                        @if(!isset($template) || !$template->blocks)
+                            {{ Field::editor($model, "content", ['label' => __('admin::translation.content'), 'value' => $model->content]) }}
+                        @endif
                     </div>
                 </div>
 
-                <x-seo-meta :model="$model" :locale="$locale" />
+                @if($template && $template->blocks)
+                    @include('admin::admin.page.components.blocks.block')
+                @endif
+
+                {{--<x-seo-meta :model="$model" :locale="$locale"/>--}}
             </div>
 
             <div class="col-md-3">
-                <x-language-card :label="$model" :locale="$locale" />
+                <x-language-card :label="$model" :locale="$locale"/>
 
                 <div class="card">
                     <div class="card-body">
-                        {{ Field::select($model, 'status', ['label' => __('Status')])
+                        {{ Field::select($model, 'status', ['label' => __('admin::translation.status')])
                             ->dropDownList(
-                                \Juzaweb\Core\Models\Enums\PageStatus::all()
+                                \Juzaweb\Modules\Core\Enums\PageStatus::all()
                             ) }}
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-body">
-                        {{ Field::image($model, "{$locale}[thumbnail]", ['label' => __('Thumbnail'), 'value' => $model->thumbnail]) }}
+                        {{ Field::select($model, 'template', ['label' => __('admin::translation.template')])
+                            ->dropDownList(
+                                [
+                                    '' => __('admin::translation.select_template'),
+                                    ...$templates,
+                                ]
+                            ) }}
+
+                        {{ Field::checkbox(__('admin::translation.set_as_home_page'), 'is_home', [
+                            'value' => (theme_setting('home_page') && theme_setting('home_page') == $model->id) ? 1 : 0,
+                        ]) }}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        {{ Field::image($model, "thumbnail", ['label' => __('admin::translation.thumbnail'), 'value' => $model->thumbnail]) }}
                     </div>
                 </div>
 
@@ -58,5 +80,5 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('assets/js/page.js') }}?v={{ time() }}"></script>
 @endsection

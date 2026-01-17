@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Contracts;
+namespace Juzaweb\Modules\Core\Contracts;
 
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -27,13 +27,6 @@ interface LineChart
      * @return string
      */
     public function getIcon(): string;
-
-    /**
-     * Get the labels for the chart.
-     *
-     * @return array
-     */
-    public function getLabels(): array;
 
     /**
      * Get the data for the chart.

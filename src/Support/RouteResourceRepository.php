@@ -7,12 +7,12 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support;
+namespace Juzaweb\Modules\Core\Support;
 
 use Illuminate\Contracts\Routing\Registrar;
-use Juzaweb\Core\Contracts\RouteResource;
-use Juzaweb\Core\Support\Routes\Resources\AdminResource;
-use Juzaweb\Core\Support\Routes\Resources\APIResource;
+use Juzaweb\Modules\Core\Contracts\RouteResource;
+use Juzaweb\Modules\Core\Support\Routes\Resources\AdminResource;
+use Juzaweb\Modules\Core\Support\Routes\Resources\APIResource;
 
 class RouteResourceRepository implements RouteResource
 {

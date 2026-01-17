@@ -1,53 +1,43 @@
-<div class="col-md-{{ $chart->getColumnSize() }}">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-{{ $chart->getIcon() }} mr-1"></i>
-                {{ $chart->getTitle() }}
-            </h3>
-        </div>
-        <div class="card-body">
-            <canvas id="revenue-chart-canvas_{{ Str::slug($chart->getTitle()) }}" height="300" style="height: 300px;"></canvas>
-        </div>
-    </div>
-</div>
+<x-card :title="$chart->getTitle()" :icon="$chart->getIcon()">
+    <canvas id="line-chart-canvas_{{ $chart->id }}" height="300" style="height: 300px;"></canvas>
+</x-card>
 
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{ csp_script_nonce() }}">
     document.addEventListener('DOMContentLoaded', function () {
-        const salesChartCanvas = document.getElementById(
-            'revenue-chart-canvas_{{ Str::slug($chart->getTitle()) }}'
-        ).getContext('2d');
+        const chartCanvas = document.getElementById('line-chart-canvas_{{ $chart->id }}').getContext('2d');
 
-        const salesChartData = {
-            labels: @json($chart->getLabels(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT),
-            datasets: @json($chart->getData(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT),
-        }
-
-        const salesChartOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-            // legend: {
-            //     display: false
-            // },
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        display: false
-                    }
-                }],
-                yAxes: [{
-                    gridLines: {
-                        display: false
-                    }
-                }]
-            }
-        }
-
-        // This will get the first returned node in the jQuery collection.
-        const salesChart = new Chart(salesChartCanvas, {
+        const salesChart = new Chart(chartCanvas, {
             type: 'line',
-            data: salesChartData,
-            options: salesChartOptions
-        })
+            data: {
+                labels: [],
+                datasets: [],
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        gridLines: {display: false}
+                    }],
+                    yAxes: [{
+                        gridLines: {display: false}
+                    }]
+                }
+            }
+        });
+
+        $.ajax({
+            url: '{{ route('admin.charts.data', [$websiteId, $chart->id]) }}',
+            method: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                salesChart.data.labels = res.labels;
+                salesChart.data.datasets = res.datasets;
+                salesChart.update();
+            },
+            error: function (xhr) {
+                console.error('Failed to load chart data:', xhr.responseText);
+            }
+        });
     });
 </script>

@@ -8,25 +8,31 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Requests;
+namespace Juzaweb\Modules\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Juzaweb\Core\Models\Enums\PageStatus;
-use Juzaweb\Core\Models\Language;
+use Juzaweb\Modules\Core\Enums\PageStatus;
+use Juzaweb\Modules\Core\Models\Language;
 
 class PageRequest extends FormRequest
 {
     public function rules(): array
     {
-        $locale = $this->input('locale', config('translatable.fallback_locale'));
+        $templates = collect(\Juzaweb\Modules\Core\Facades\PageTemplate::all())
+            ->map(fn ($item) => $item->key)
+            ->values()
+            ->toArray();
 
         return [
             'locale' => ['required', 'string', Rule::in(Language::languages()->keys())],
             'status' => ['required', 'string', Rule::in(array_keys(PageStatus::all()))],
-            "{$locale}.title" => ['required', 'string', 'max:255'],
-            "{$locale}.content" => ['required', 'string'],
-            "{$locale}.thumbnail" => ['nullable', 'string'],
+            'blocks' => ['nullable', 'array'],
+            'template' => ['nullable', Rule::in($templates)],
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['nullable', 'string', 'max:50000'],
+            'thumbnail' => ['nullable', 'string'],
+            'is_home' => ['nullable', 'boolean'],
         ];
     }
 }

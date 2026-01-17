@@ -8,13 +8,13 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 
 trait Translatable
 {
-    use \Juzaweb\Translations\Traits\Translatable;
+    use \Juzaweb\Modules\Core\Translations\Traits\Translatable;
 
     public function scopeWithTranslationAndMedia(Builder $query, ?string $locale = null, ?array $with = null): Builder
     {

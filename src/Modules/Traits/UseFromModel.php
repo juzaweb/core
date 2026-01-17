@@ -7,13 +7,13 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Modules\Traits;
+namespace Juzaweb\Modules\Core\Modules\Traits;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Str;
-use Juzaweb\Core\Models\Model;
-use Juzaweb\Core\Modules\Module;
-use Juzaweb\Translations\Contracts\Translatable;
+use Juzaweb\Modules\Core\Models\Model;
+use Juzaweb\Modules\Core\Modules\Module;
+use Juzaweb\Modules\Core\Translations\Contracts\Translatable;
 use Symfony\Component\Console\Input\InputOption;
 
 trait UseFromModel
@@ -36,7 +36,7 @@ trait UseFromModel
                 return false;
             }
 
-            return true;
+            return false;
         }
 
         return $model;
@@ -105,7 +105,11 @@ trait UseFromModel
 
     protected function getTableName(Module $module): string
     {
-        return $this->makeModel($module)->getTable();
+        if ($model = $this->makeModel($module)) {
+            return $model->getTable();
+        }
+
+        return '';
     }
 
     protected function getRepositoryClass(Module $module): string

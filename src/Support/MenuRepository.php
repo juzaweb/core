@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -7,29 +8,83 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Support;
+namespace Juzaweb\Modules\Core\Support;
 
 use Illuminate\Support\Collection;
-use Juzaweb\Core\Contracts\GlobalData;
-use Juzaweb\Core\Contracts\Menu as MenuContract;
-use Juzaweb\Core\Support\Entities\Menu;
-use Juzaweb\Hooks\Contracts\Hook;
+use Juzaweb\Modules\Core\Contracts\Menu as MenuContract;
 
 class MenuRepository implements MenuContract
 {
-    public function __construct(
-        protected GlobalData $globalData,
-        protected Hook $hook,
-    ) {
+    protected array $menus = [];
+
+    public function make(string $key, callable $callback): void
+    {
+        $this->menus[$key] = $callback;
     }
 
-    public function make(string $key, ?string $title = null): Menu
+    public function get(string $key): ?array
     {
-        return new Menu($this->globalData, $this->hook, $key, $title);
+        if ($template = data_get($this->menus, $key)) {
+            return $template();
+        }
+
+        return null;
     }
 
-    public function get(string $position): Collection
+    public function getByPosition(string $position): Collection
     {
-        return new Collection($this->globalData->get("menus.{$position}"));
+        $menus = collect($this->menus)->map(
+            function ($callback, $key) {
+                $data = $callback();
+
+                if (!$data) {
+                    return null;
+                }
+
+                // Merge key vào data
+                $data['key'] = $key;
+                $prefix = $data['prefix'] ?? 'admin';
+                if ($websiteId = request()->route('websiteId')) {
+                    $prefix .= "/{$websiteId}";
+                }
+
+                // Build URL nếu chưa có
+                if (!isset($data['url'])) {
+                    if ($key === 'dashboard') {
+                        $data['url'] = url($prefix ?: '');
+                    } else {
+                        $data['url'] = url($prefix ? "{$prefix}/{$key}" : $key);
+                    }
+                } else {
+                    $data['url'] = isset($data['prefix']) ? url($data['prefix'] .'/'. ltrim($data['url'], '/')) : admin_url($data['url']);
+                }
+
+                // Set default values
+                $data['target'] = $data['target'] ?? '_self';
+                $data['icon'] = $data['icon'] ?? 'fa fa-circle';
+                $data['priority'] = $data['priority'] ?? 20;
+                $data['parent'] = $data['parent'] ?? null;
+                $data['position'] = $data['position'] ?? null;
+
+                return $data;
+            }
+        )
+            ->filter()
+            ->filter(
+                function ($menu) use ($position) {
+                    return ($menu['position'] ?? 'admin-left') === $position;
+                }
+            );
+
+        return $menus->values();
+    }
+
+    public function all(): Collection
+    {
+        return collect($this->menus)->map(
+            function ($callback, $key) {
+                return $callback();
+            }
+        );
     }
 }

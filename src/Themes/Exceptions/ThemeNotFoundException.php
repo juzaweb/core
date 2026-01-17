@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Themes\Exceptions;
+namespace Juzaweb\Modules\Core\Themes\Exceptions;
 
 class ThemeNotFoundException extends \Exception
 {

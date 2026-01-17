@@ -1,18 +1,20 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Middleware;
+namespace Juzaweb\Modules\Core\Http\Middleware;
 
 use Illuminate\Http\Request;
-use Juzaweb\Core\Models\Language;
-use Juzaweb\Translations\Facades\IP2Location;
+use Juzaweb\Modules\Core\Models\Language;
+use Juzaweb\Modules\Core\Translations\Facades\IP2Location;
 
 class RedirectLanguage
 {
@@ -21,6 +23,30 @@ class RedirectLanguage
         $multipleLanguage = setting('multiple_language', 'none');
         $config = setting('redirect_language', 'browser');
         if ($multipleLanguage == 'none' || $config == 'none') {
+            return $next($request);
+        }
+
+        if ($locale = $request->get('hl')) {
+            app()->setLocale($locale);
+
+            // Set the locale in the session if needed
+            session(['locale' => $locale]);
+        }
+
+        if ($multipleLanguage == 'session') {
+            if (session('locale')) {
+                // If the locale is set in the session, use it
+                app()->setLocale(session('locale'));
+            }
+
+            return $next($request);
+        }
+
+        // Case force set locale in session
+        if ($multipleLanguage == 'prefix'
+            && session()->has('locale')
+            && session('locale') == app()->getLocale()
+        ) {
             return $next($request);
         }
 
@@ -35,16 +61,10 @@ class RedirectLanguage
 
         if ($config == 'browser') {
             $browserLocale = $request->getPreferredLanguage();
-            $locale = explode('_', $browserLocale ?? '')[0];
+            $locale = explode('_', str_replace('-', '_', $browserLocale ?? ''))[0];
         }
 
-        if (! $locale || !in_array($locale, $locales) || $locale == app()->getLocale()) {
-            return $next($request);
-        }
-
-        if ($multipleLanguage == 'session' && ! session()->has('locale')) {
-            session(['locale' => $locale]);
-            app()->setLocale($locale);
+        if (! $locale || ! in_array($locale, $locales) || $locale == app()->getLocale()) {
             return $next($request);
         }
 
@@ -53,14 +73,22 @@ class RedirectLanguage
         }
 
         if ($multipleLanguage == 'subdomain' && $request->is('/')) {
-            $subdomain = explode('.', $request->getHost())[0];
-            if ($subdomain == $locale && in_array($subdomain, $locales)) {
-                return $next($request);
+            $host = $request->getHost();
+            $parts = explode('.', $host);
+            $subdomain = $parts[0];
+
+            if (in_array($subdomain, $locales)) {
+                if ($subdomain == $locale) {
+                    return $next($request);
+                }
+
+                $parts[0] = $locale;
+                $newHost = implode('.', $parts);
+            } else {
+                $newHost = "{$locale}.{$host}";
             }
 
-            $host = $request->getHost();
-            $newHost = "{$locale}.{$host}";
-            return redirect()->to($request->getScheme() . '://' . $newHost . $request->getRequestUri());
+            return redirect()->to($request->getScheme().'://'.$newHost.$request->getRequestUri());
         }
 
         return $next($request);

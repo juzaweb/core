@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Traits;
+namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
@@ -39,15 +39,21 @@ trait HasAPI
                 fn (Builder $query) => $query->inApiGuest($params)
             )
             ->when(
-                $keyword = Arr::get($params, 'q'),
-                fn (Builder $query) => $query->search($keyword)
-            )
-            ->when(
                 property_exists($this, 'cacheForApi') && $this->cacheForApi,
                 fn (Builder $query) => $query->cacheFor($this->getCacheForApiTime())
             )
-            ->filter($params)
+            ->searchAndFilter($params)
             ->sort($params);
+    }
+
+    public function scopeSearchAndFilter(Builder $builder, array $params = [])
+    {
+        return $builder
+            ->when(
+                $keyword = Arr::get($params, 'q'),
+                fn (Builder $query) => $query->search($keyword)
+            )
+            ->filter($params);
     }
 
     /**

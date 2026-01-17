@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Contracts;
+namespace Juzaweb\Modules\Core\Modules\Contracts;
 
 interface RunableInterface
 {

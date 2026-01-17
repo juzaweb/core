@@ -1,8 +1,8 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Process;
+namespace Juzaweb\Modules\Core\Modules\Process;
 
-use Juzaweb\Core\Modules\Module;
+use Juzaweb\Modules\Core\Modules\Module;
 
 class Updater extends Runner
 {

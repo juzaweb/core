@@ -8,15 +8,15 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\DataTables;
+namespace Juzaweb\Modules\Core\Http\DataTables;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
-use Juzaweb\Core\DataTables\Action;
-use Juzaweb\Core\DataTables\BulkAction;
-use Juzaweb\Core\DataTables\Column;
-use Juzaweb\Core\DataTables\DataTable;
-use Juzaweb\Core\Models\Notification;
+use Juzaweb\Modules\Core\DataTables\Action;
+use Juzaweb\Modules\Core\DataTables\BulkAction;
+use Juzaweb\Modules\Core\DataTables\Column;
+use Juzaweb\Modules\Core\DataTables\DataTable;
+use Juzaweb\Modules\Core\Models\Notification;
 
 class NotificationsDataTable extends DataTable
 {

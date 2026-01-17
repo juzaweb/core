@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\DataTables;
+namespace Juzaweb\Modules\Core\DataTables;
 
 use Yajra\DataTables\Html\Column as BaseColumn;
 
@@ -26,9 +26,10 @@ class Column extends BaseColumn
     {
         /** @var Column $column */
         $column = static::computed('actions');
-        $column->title(__('Actions'));
+        $column->title(__('admin::translation.actions'));
         $column->addClass('text-center');
-        $column->width('200px');
+        $column->width('80px');
+        $column->orderable(false);
         return $column;
     }
 
@@ -70,7 +71,7 @@ class Column extends BaseColumn
     {
         $column = static::make('id', $id ?? 'id');
         $column->visible($visible);
-        $column->title(__('ID'));
+        $column->title(__('admin::translation.id'));
         $column->addClass('text-center');
         return $column;
     }
@@ -84,7 +85,7 @@ class Column extends BaseColumn
     public static function rowIndex(): static
     {
         $column = static::make('DT_RowIndex');
-        $column->title(__('Row Index'));
+        $column->title(__('admin::translation.row_index'));
         $column->addClass('text-center');
         $column->orderable(false);
         $column->searchable(false);
@@ -114,7 +115,7 @@ class Column extends BaseColumn
     {
         /** @var Column */
         return static::computed('created_at')
-            ->title(__('Created At'))
+            ->title(__('admin::translation.created_at'))
             ->addClass('text-center')
             ->searchable(false)
             ->width('150px');
@@ -130,7 +131,7 @@ class Column extends BaseColumn
     {
         /** @var Column */
         return static::computed('updated_at')
-            ->title(__('Updated At'))
+            ->title(__('admin::translation.updated_at'))
             ->addClass('text-center')
             ->searchable(false)
             ->width('150px');

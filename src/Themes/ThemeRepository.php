@@ -7,25 +7,25 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Themes;
+namespace Juzaweb\Modules\Core\Themes;
 
 use Illuminate\Contracts\Config\Repository as ConfigContract;
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 use Illuminate\Contracts\Translation\Translator;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\ViewFinderInterface;
-use Juzaweb\Core\Contracts\Setting;
-use Juzaweb\Core\Contracts\Theme as ThemeContract;
-use Juzaweb\Core\Themes\Exceptions\ThemeNotFoundException;
-use Juzaweb\Translations\Contracts\Translation;
+use Juzaweb\Modules\Core\Contracts\Setting;
+use Juzaweb\Modules\Core\Contracts\Theme as ThemeContract;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface as ModuleRepositoryInterface;
+use Juzaweb\Modules\Core\Themes\Exceptions\ThemeNotFoundException;
+use Juzaweb\Modules\Core\Translations\Contracts\Translation;
 
 class ThemeRepository implements ThemeContract
 {
     protected Collection $themes;
 
-    protected ?Theme $currentTheme;
+    // protected ?Theme $currentTheme;
 
     protected Setting $setting;
 
@@ -86,25 +86,18 @@ class ThemeRepository implements ThemeContract
         throw ThemeNotFoundException::make($name);
     }
 
-    public function current(): ?Theme
+    public function current(): Theme
     {
-        if (isset($this->currentTheme)) {
-            return $this->currentTheme;
-        }
+        // if (isset($this->currentTheme)) {
+        //     return $this->currentTheme;
+        // }
 
-        $theme = null;
-        $statusPath = $this->config->get('themes.path') . '/statuses.json';
-        if (File::exists($statusPath)) {
-            $theme = json_decode(File::get($statusPath), true, 512, JSON_THROW_ON_ERROR);
-        }
+        $theme = $this->setting->get('theme', 'itech');
 
-        if (empty($theme)) {
-            return null;
-        }
+        $currentTheme = $this->find($theme);
 
-        $currentTheme = $this->find(Arr::get($theme, 'name'));
-
-        return ($this->currentTheme = $currentTheme);
+        // return ($this->currentTheme = $currentTheme);
+        return $currentTheme;
     }
 
     public function has(string $name): bool
@@ -123,6 +116,9 @@ class ThemeRepository implements ThemeContract
             return;
         }
 
+        // Register and boot required modules for this theme
+        $this->bootRequiredModules($theme);
+
         foreach ($theme->get('providers', []) as $provider) {
             $this->app->register($provider);
         }
@@ -130,41 +126,35 @@ class ThemeRepository implements ThemeContract
         foreach ($theme->get('files', []) as $file) {
             require ($theme->path($file));
         }
+    }
 
-        $lowerName = $theme->lowerName();
-        $langPublishPath = resource_path('lang/themes/' . $theme->name());
+    /**
+     * Boot required modules for the theme
+     *
+     * @param Theme $theme
+     * @return void
+     */
+    protected function bootRequiredModules(Theme $theme): void
+    {
+        $requiredModules = $theme->getRequiredModules();
 
-        $this->app[Translation::class]->register("{$lowerName}_theme", [
-            'type' => 'theme',
-            'key' => $lowerName,
-            'namespace' => $lowerName,
-            'lang_path' => $theme->path('resources/lang'),
-            'src_path' => $theme->path(),
-            'publish_path' => $langPublishPath,
-        ]);
-
-        return;
-
-        $viewPath = $theme->path('views');
-        $langPath = $theme->path('lang');
-
-        $viewPublishPath = resource_path('views/themes/' . $theme->name());
-        $langPublishPath = resource_path('lang/themes/' . $theme->name());
-
-        $namespace = 'theme';
-        $this->viewFinder->addNamespace($namespace, $viewPath);
-
-        if (is_dir($viewPublishPath)) {
-            $this->viewFinder->prependNamespace($namespace, $viewPublishPath);
+        if (empty($requiredModules)) {
+            return;
         }
 
-        $this->translator->addNamespace($namespace, $langPath);
+        $moduleRepository = $this->app[ModuleRepositoryInterface::class];
 
-        if (is_dir($langPublishPath)) {
-            $this->translator->addNamespace($namespace, $langPublishPath);
+        foreach ($requiredModules as $moduleName) {
+            $module = $moduleRepository->find($moduleName);
+
+            if ($module === null || $module->isEnabled()) {
+                // Already logged in register method
+                continue;
+            }
+
+            $module->register();
+            $module->boot();
         }
-
-        $lowerName = $theme->lowerName();
     }
 
     protected function scan(): Collection
@@ -179,6 +169,18 @@ class ThemeRepository implements ThemeContract
         foreach ($themeDirectories as $themePath) {
             $theme = $this->makeThemeEntity($themePath);
             $themes[$theme->name()] = $theme;
+
+            $lowerName = $theme->lowerName();
+            $langPublishPath = resource_path("lang/themes/{$lowerName}");
+
+            $this->app[Translation::class]->register($lowerName, [
+                'type' => 'theme',
+                'key' => $lowerName,
+                'namespace' => $lowerName,
+                'lang_path' => $theme->path('resources/lang'),
+                'src_path' => $theme->path(),
+                'publish_path' => $langPublishPath,
+            ]);
         }
 
         return ($this->themes = new Collection($themes));

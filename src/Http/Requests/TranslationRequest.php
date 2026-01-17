@@ -8,9 +8,10 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Http\Requests;
+namespace Juzaweb\Modules\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Juzaweb\Modules\Core\Rules\XssBlock;
 
 class TranslationRequest extends FormRequest
 {
@@ -20,7 +21,7 @@ class TranslationRequest extends FormRequest
             'group' => 'required|string|max:255',
             'namespace' => 'required|string|max:255',
             'key' => 'required|string|max:255',
-            'value' => 'required|string',
+            'value' => ['required', 'string', new XssBlock()],
         ];
     }
 }

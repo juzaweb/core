@@ -7,14 +7,14 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Http\Resources;
+namespace Juzaweb\Modules\Core\Http\Resources;
 
 use Illuminate\Http\Request;
-use Juzaweb\Core\Support\Resources\ModelResource;
+use Juzaweb\Modules\Core\Support\Resources\ModelResource;
 use OpenApi\Annotations as OA;
 
 /**
- * @property-read \Juzaweb\Translations\Models\Language $resource
+ * @property-read \Juzaweb\Modules\Core\Translations\Models\Language $resource
  *
  * @OA\Schema(
  *       schema="LanguageResource",

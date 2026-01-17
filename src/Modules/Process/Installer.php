@@ -1,10 +1,10 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Process;
+namespace Juzaweb\Modules\Core\Modules\Process;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Juzaweb\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
 use Symfony\Component\Process\Process;
 
 class Installer
@@ -25,7 +25,7 @@ class Installer
 
     /**
      * The module repository instance.
-     * @var \Juzaweb\Core\Modules\Contracts\RepositoryInterface
+     * @var \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface
      */
     protected $repository;
 
@@ -90,7 +90,7 @@ class Installer
 
     /**
      * Set the module repository instance.
-     * @param \Juzaweb\Core\Modules\Contracts\RepositoryInterface $repository
+     * @param \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface $repository
      * @return $this
      */
     public function setRepository(RepositoryInterface $repository)

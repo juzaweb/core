@@ -8,7 +8,9 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\DataTables;
+namespace Juzaweb\Modules\Core\DataTables;
+
+use Illuminate\Support\Str;
 
 class BulkAction
 {
@@ -70,7 +72,7 @@ class BulkAction
      */
     public static function delete(): static
     {
-        return static::make(__('Delete'), null, 'fas fa-trash')
+        return static::make(__('admin::translation.delete'), null, 'fas fa-trash')
             ->type('action')
             ->action('delete')
             ->color('danger');
@@ -169,10 +171,10 @@ class BulkAction
 
     public function getAction(): ?string
     {
-        return $this->action;
+        return $this->action ?? Str::slug(Str::lower($this->label));
     }
 
-    public function getColor(): string
+    public function getColor(): ?string
     {
         return $this->color;
     }

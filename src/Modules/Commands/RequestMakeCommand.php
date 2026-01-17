@@ -1,15 +1,15 @@
 <?php
 
-namespace Juzaweb\Core\Modules\Commands;
+namespace Juzaweb\Modules\Core\Modules\Commands;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Str;
-use Juzaweb\Core\Models\Model;
-use Juzaweb\Core\Modules\Contracts\RepositoryInterface;
-use Juzaweb\Core\Modules\Support\Config\GenerateConfigReader;
-use Juzaweb\Core\Modules\Support\Stub;
-use Juzaweb\Core\Modules\Traits\UseFromModel;
-use Juzaweb\Translations\Contracts\Translatable;
+use Juzaweb\Modules\Core\Models\Model;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\Support\Config\GenerateConfigReader;
+use Juzaweb\Modules\Core\Modules\Support\Stub;
+use Juzaweb\Modules\Core\Modules\Traits\UseFromModel;
+use Juzaweb\Modules\Core\Translations\Contracts\Translatable;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -67,10 +67,9 @@ class RequestMakeCommand extends GeneratorCommand
 
         if ($model instanceof Translatable) {
             $columns = array_diff($model->getTranslatedFields(), ['id', 'created_at', 'updated_at', 'locale']);
-            $defaultLocale = $model->getDefaultLocale() ?? config('translatable.fallback_locale');
 
             foreach ($columns as $column) {
-                $this->rules[] = "'{$defaultLocale}.{$column}' => ['required']";
+                $this->rules[] = "'$column' => ['required']";
             }
         }
 
@@ -92,11 +91,9 @@ class RequestMakeCommand extends GeneratorCommand
         return (new Stub($this->getStubName(), [
             'NAMESPACE' => $this->getClassNamespace($module),
             'CLASS' => $this->getClass(),
-            'REPOSITORY_NAMESPACE' => $this->getRepositoryClass($module),
-            'REPOSITORY_CLASS' => $this->getRepositoryName(),
-            'REPOSITORY_NAME' => Str::camel($this->getRepositoryName()),
             'TABLE' => $this->getTableName($module),
             'RULES' => $this->getRules(),
+            'MODEL_NAME' => $this->getModelName(),
         ]))->render();
     }
 

@@ -7,14 +7,17 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Facades;
+namespace Juzaweb\Modules\Core\Facades;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Juzaweb\Core\Themes\Theme|null current()
- * @method static \Juzaweb\Core\Themes\Theme|null find(string $name)
- * @method static \Juzaweb\Core\Themes\Theme findOrFail(string $name): Theme
+ * @method static \Juzaweb\Modules\Core\Themes\Theme current()
+ * @method static \Juzaweb\Modules\Core\Themes\Theme|null find(string $name)
+ * @method static Collection<\Juzaweb\Modules\Core\Themes\Theme> all()
+ * @method static \Juzaweb\Modules\Core\Themes\Theme findOrFail(string $name): Theme
+ * @see \Juzaweb\Modules\Core\Themes\ThemeRepository
  */
 class Theme extends Facade
 {
@@ -25,6 +28,6 @@ class Theme extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return \Juzaweb\Core\Contracts\Theme::class;
+        return \Juzaweb\Modules\Core\Contracts\Theme::class;
     }
 }

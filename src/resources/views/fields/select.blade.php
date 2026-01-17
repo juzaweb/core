@@ -9,9 +9,12 @@
     <select
             name="{{ $name }}"
             id="{{ $options['id'] ?? $name }}"
-            class="form-control {{ Arr::get($options, 'autocomplete', true) ? 'select2' : '' }} {{ isset($options['classes']) ? implode(' ', $options['classes']) : '' }}"
+            class="form-control {{ Arr::get($options, 'autocomplete', false) ? 'select2-input' : '' }} {{ isset($options['classes']) ? implode(' ', $options['classes']) : '' }} @if(isset($options['data_url'])) load-data @endif"
             @if(isset($options['disabled']) && $options['disabled']) disabled @endif
-            @foreach(Arr::except($options, ['classes', 'id', 'options', 'disabled', 'value']) as $key => $value) {{ $key }}="{{ $value }}" @endforeach
+            @foreach(Arr::except($options, ['classes', 'id', 'options', 'disabled', 'value', 'data_url']) as $key => $value) {{ $key }}="{{ $value }}" @endforeach
+            @if(isset($options['data_url']))
+            data-url="{{ $options['data_url'] }}"
+            @endif
     >
         @foreach($options['options'] ?? [] as $key => $val)
             <option value="{{ $key }}" @selected(in_array($key, $fieldValue ?? []))>

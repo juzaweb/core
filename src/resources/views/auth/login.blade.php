@@ -1,84 +1,103 @@
-@extends('core::layouts.auth')
+@extends('admin::layouts.auth')
+
+@section('title', __('admin::translation.login'))
+
+@section('head')
+    <link rel="stylesheet" href="{{ mix('css/auth.min.css', 'themes/main') }}">
+@endsection
 
 @section('content')
-    <div class="card">
-        <div class="card-body login-card-body">
-            <p class="login-box-msg">{{ __('Sign in to start your session') }}</p>
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="auth-container">
+                    <!-- Title -->
+                    <div class="text-center mb-4">
+                        <img src="{{ logo_url(asset('assets/images/logo.png?v=2')) }}"
+                             alt="Logo"
+                             class="img-fluid mb-3"
+                             style="max-height: 50px;">
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
-                </div>
-            @endif
-
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{ $error }}
+                        <h2 class="auth-title">{{ __('admin::translation.login') }}</h2>
+                        <p class="auth-subtitle">{{ __('admin::translation.sign_in_to_your_account') }}</p>
                     </div>
-                @endforeach
-            @endif
+                    <!-- End Title -->
 
-            <form action="{{ route('auth.login') }}" class="form-ajax" method="post">
-                @csrf
-
-                <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
                         </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember" name="remember" checked value="1">
-                            <label for="remember">
-                                {{ __('Remember Me') }}
-                            </label>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">{{ __('Sign In') }}</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
+                    @endif
 
-            @if($socialLogins->isNotEmpty())
-            <div class="social-auth-links text-center mb-3">
-                <p>- {{ __('OR') }} -</p>
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    @endif
 
-                @foreach($socialLogins as $key => $name)
-                    <a href="{{ route('auth.social.redirect', [$key]) }}" class="btn btn-block btn-primary">
-                        <i class="fab fa-{{ $key }} mr-2"></i> {{ __('Sign in using :name', ['name' => $name]) }}
-                    </a>
-                @endforeach
+                    <form method="post" action="{{ route('login') }}" class="form-ajax" data-notify="false" data-jw-token="true">
+                        <div class="jquery-message mb-2"></div>
+
+                        <!-- Input Group -->
+                        <div class="form-group">
+                            <label for="loginEmail">{{ __('admin::translation.email') }}</label>
+                            <input type="email" name="email" id="loginEmail" class="form-control"
+                                   placeholder="{{ __('admin::translation.email') }}" required>
+                            <span class="error-email text-danger"></span>
+                        </div>
+                        <!-- End Input Group -->
+
+                        <!-- Input Group -->
+                        <div class="form-group">
+                            <label for="loginPassword">{{ __('admin::translation.password') }}</label>
+                            <input type="password" name="password" id="loginPassword" class="form-control"
+                                   placeholder="{{ __('admin::translation.password') }}" required>
+                            <span class="error-password text-danger"></span>
+                        </div>
+                        <!-- End Input Group -->
+
+                        <div class="auth-options">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember" value="1" checked>
+                                <label class="form-check-label" for="rememberMe">
+                                    {{ __('admin::translation.remember_me') }}
+                                </label>
+                            </div>
+                            <a href="{{ url('user/forgot-password') }}" class="auth-link">
+                                {{ __('admin::translation.forgot_password') }}
+                            </a>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block" data-loading-text="{{ __('admin::translation.logging_in') }}">
+                                {{ __('admin::translation.login') }}
+                            </button>
+                        </div>
+                    </form>
+
+                    @if($socialLogins->isNotEmpty())
+                    <div class="social-auth-separator">
+                        <span>{{ __('admin::translation.or_continue_with') }}</span>
+                    </div>
+
+                    <div class="social-auth-links">
+                        @foreach($socialLogins as $key => $name)
+                            <a href="{{ route('auth.social.redirect', [$key]) }}" class="btn btn-social btn-{{ $key }}">
+                                <i class="fab fa-{{ $key }}"></i> {{ $name }}
+                            </a>
+                        @endforeach
+                    </div>
+                    @endif
+
+                    @if(setting('user_registration'))
+                    <div class="text-center auth-footer">
+                        <p>{{ __("admin::translation.dont_have_an_account") }} <a href="{{ home_url('user/register') }}" class="auth-link-bold">{{ __('admin::translation.register') }}</a></p>
+                    </div>
+                    @endif
+                </div>
             </div>
-            <!-- /.social-auth-links -->
-            @endif
-
-            <p class="mb-1">
-                <a href="{{ url('user/forgot-password') }}">{{ __('I forgot my password') }}</a>
-            </p>
-
-            @if(setting('user_registration'))
-            <p class="mb-0">
-                <a href="{{ url('user/register') }}" class="text-center">{{ __('Register a new account') }}</a>
-            </p>
-            @endif
         </div>
-        <!-- /.login-card-body -->
     </div>
 @endsection

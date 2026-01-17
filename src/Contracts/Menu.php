@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -7,17 +8,20 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Contracts;
+namespace Juzaweb\Modules\Core\Contracts;
 
 use Illuminate\Support\Collection;
-use Juzaweb\Core\Support\MenuRepository;
 
 /**
- * @see MenuRepository
+ * @see \Juzaweb\Modules\Core\Support\MenuRepository
  */
 interface Menu
 {
-    public function make(string $key, ?string $title = null): \Juzaweb\Core\Support\Entities\Menu;
+    public function make(string $key, callable $callback): void;
 
-    public function get(string $position): Collection;
+    public function get(string $key): ?array;
+
+    public function getByPosition(string $position): Collection;
+
+    public function all(): Collection;
 }

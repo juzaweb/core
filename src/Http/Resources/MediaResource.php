@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Http\Resources;
+namespace Juzaweb\Modules\Core\Http\Resources;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
 
 /**
- * @property-read \Juzaweb\FileManager\Models\Media $resource
+ * @property-read \Juzaweb\Modules\Core\Models\Media $resource
  */
 class MediaResource extends JsonResource
 {

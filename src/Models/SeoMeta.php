@@ -1,9 +1,9 @@
 <?php
 
-namespace Juzaweb\Core\Models;
+namespace Juzaweb\Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Juzaweb\Translations\Traits\Translatable;
+use Juzaweb\Modules\Core\Traits\Translatable;
 
 class SeoMeta extends Model
 {
@@ -19,6 +19,7 @@ class SeoMeta extends Model
         'description',
         'keywords',
         'image',
+        'locale',
     ];
 
     public function seometable(): MorphTo

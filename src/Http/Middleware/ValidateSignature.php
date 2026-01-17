@@ -7,12 +7,13 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Http\Middleware;
+namespace Juzaweb\Modules\Core\Http\Middleware;
 
 use Closure;
+use Illuminate\Routing\Middleware\ValidateSignature as BaseValidateSignature;
 use Illuminate\Support\Facades\URL;
 
-class ValidateSignature extends \Illuminate\Routing\Middleware\ValidateSignature
+class ValidateSignature extends BaseValidateSignature
 {
     public function handle($request, Closure $next, ...$args)
     {

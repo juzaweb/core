@@ -7,7 +7,7 @@
  * @link       https://cms.juzaweb.com
  */
 
-namespace Juzaweb\Core\Providers;
+namespace Juzaweb\Modules\Core\Providers;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 

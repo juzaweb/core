@@ -8,11 +8,11 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Core\Support;
+namespace Juzaweb\Modules\Core\Support;
 
-use Juzaweb\Core\Application;
-use Juzaweb\Core\Contracts\Setting;
-use Juzaweb\Core\Models\Language;
+use Juzaweb\Modules\Core\Application;
+use Juzaweb\Modules\Core\Contracts\Setting;
+use Juzaweb\Modules\Core\Models\Language;
 
 class LocaleRepository
 {
