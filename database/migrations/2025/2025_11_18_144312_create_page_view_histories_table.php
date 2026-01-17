@@ -19,11 +19,10 @@ return new class extends Migration
             $table->string('viewable_type');
             $table->uuid('viewer_id')->nullable()->index();
             $table->string('viewer_type');
-            $table->websiteId();
             $table->datetimes();
 
-            $table->index(['viewable_id', 'viewable_type', 'website_id']);
-            $table->index(['viewer_id', 'viewer_type', 'website_id']);
+            $table->index(['viewable_id', 'viewable_type']);
+            $table->index(['viewer_id', 'viewer_type']);
         });
     }
 

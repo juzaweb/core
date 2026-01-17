@@ -19,11 +19,10 @@ return new class extends Migration {
                 $table->string('channel', 50)->index();
                 $table->uuidMorphs('notifiable');
                 $table->json('data')->nullable();
-                $table->websiteId();
                 $table->datetimes();
 
                 $table->unique(
-                    ['channel', 'notifiable_type', 'notifiable_id', 'website_id'],
+                    ['channel', 'notifiable_type', 'notifiable_id'],
                     'notification_subscriptions_channel_notifiable_unique'
                 );
             }

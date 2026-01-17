@@ -43,9 +43,7 @@ return new class extends Migration {
                 $table->text('description')->nullable();
                 $table->datetimes();
 
-                $table->websiteId();
-
-                $table->unique(['code', 'guard_name', 'website_id'], "{$tbprefix}permissions_code_guard_unique");
+                $table->unique(['code', 'guard_name'], "{$tbprefix}permissions_code_guard_unique");
             }
         );
 
@@ -59,10 +57,8 @@ return new class extends Migration {
                 $table->boolean('grant_all_permissions')->default(false);
                 $table->datetimes();
 
-                $table->websiteId();
-
                 $table->unique(
-                    ['code', 'guard_name', 'website_id'],
+                    ['code', 'guard_name'],
                     "{$tbprefix}roles_code_guard_unique"
                 );
             }
@@ -81,8 +77,10 @@ return new class extends Migration {
                 $table->uuid($columnNames['model_morph_key']);
 
                 $table->index(
-                    [$columnNames['model_morph_key'],
-                        'model_type'],
+                    [
+                        $columnNames['model_morph_key'],
+                        'model_type'
+                    ],
                     "{$tbprefix}has_permissions_model_id_model_type_index"
                 );
 
@@ -111,8 +109,10 @@ return new class extends Migration {
                 $table->uuid($columnNames['model_morph_key']);
 
                 $table->index(
-                    [$columnNames['model_morph_key'],
-                        'model_type'],
+                    [
+                        $columnNames['model_morph_key'],
+                        'model_type'
+                    ],
                     $tbprefix . 'has_roles_model_id_model_type_index'
                 );
 

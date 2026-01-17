@@ -31,10 +31,9 @@ return new class extends Migration
             $table->string('slug', 190)->unique();
             $table->string('locale', 5)->index();
             $table->uuid('post_category_id');
-            $table->uuid('website_id');
             $table->datetimes();
 
-            $table->unique(['slug', 'website_id']);
+            $table->unique(['slug']);
             $table->unique(['post_category_id', 'locale']);
             $table->foreign('post_category_id')
                 ->references('id')

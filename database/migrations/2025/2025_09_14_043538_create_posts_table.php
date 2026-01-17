@@ -29,9 +29,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('locale', 5)->index();
             $table->uuid('post_id');
-            $table->uuid('website_id');
 
-            $table->unique(['slug', 'website_id']);
+            $table->unique(['slug']);
             $table->unique(['post_id', 'locale']);
             $table->datetimes();
 

@@ -19,21 +19,19 @@ return new class extends Migration
             $table->string('name', 100);
             $table->datetimes();
 
-            $table->unique(['code', 'website_id']);
+            $table->unique(['code']);
         });
 
         DB::table('languages')->insert([
             [
                 'code' => 'en',
                 'name' => 'English',
-                'website_id' => config('network.main_website_id'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'code' => 'vi',
                 'name' => 'Vietnamese',
-                'website_id' => config('network.main_website_id'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

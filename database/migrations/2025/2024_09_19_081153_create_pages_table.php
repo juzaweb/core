@@ -17,7 +17,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('status', 20)->index()->default('published');
             $table->string('template', 100)->nullable();
-            $table->websiteId();
             $table->datetimes();
         });
 
@@ -29,10 +28,9 @@ return new class extends Migration
             $table->longText('content')->nullable();
             $table->string('locale', 10)->index();
             $table->uuid('page_id');
-            $table->uuid('website_id');
 
             $table->unique(['page_id', 'locale']);
-            $table->unique(['slug', 'website_id']);
+            $table->unique(['slug']);
             $table->foreign('page_id')
                 ->references('id')
                 ->on('pages')

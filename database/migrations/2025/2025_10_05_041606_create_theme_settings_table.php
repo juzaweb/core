@@ -16,9 +16,7 @@ return new class extends Migration
             $table->string('code', 100)->index();
             $table->string('theme', 100)->index();
             $table->text('value')->nullable();
-            $table->websiteId();
-
-            $table->unique(['code', 'theme', 'website_id']);
+            $table->unique(['code', 'theme']);
         });
     }
 

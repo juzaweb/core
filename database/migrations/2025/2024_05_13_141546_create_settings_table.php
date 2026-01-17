@@ -11,10 +11,8 @@ return new class extends Migration {
             'settings',
             function (Blueprint $table) {
                 $table->id();
-                $table->string('code', 100)->index();
+                $table->string('code', 100)->unique();
                 $table->text('value')->nullable();
-
-                $table->unique(['code', 'website_id']);
             }
         );
     }
