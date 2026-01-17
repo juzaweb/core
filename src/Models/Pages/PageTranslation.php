@@ -50,7 +50,6 @@ class PageTranslation extends Model implements Sitemapable
             ->cacheDriver('file')
             ->cacheFor(3600 * 24)
             ->where('pages.status', PageStatus::PUBLISHED)
-            ->where('pages.website_id'
             ->where('pages.id', '!=', theme_setting('home_page'))
             ->orderBy('page_translations.updated_at', 'desc');
     }
