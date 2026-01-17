@@ -33,7 +33,6 @@ return new class extends Migration
             $table->uuid('post_category_id');
             $table->datetimes();
 
-            $table->unique(['slug']);
             $table->unique(['post_category_id', 'locale']);
             $table->foreign('post_category_id')
                 ->references('id')

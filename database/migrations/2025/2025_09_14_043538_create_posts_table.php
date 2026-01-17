@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('status', 10)->default('draft');
-            $table->bigInteger('views')->default(0)->after('status');
+            $table->bigInteger('views')->default(0);
             $table->creator();
             $table->datetimes();
         });
