@@ -22,6 +22,7 @@ abstract class TestCase extends Orchestra
     {
         return [
             CoreServiceProvider::class,
+            \Juzaweb\QueryCache\QueryCacheServiceProvider::class,
         ];
     }
 
@@ -39,6 +40,17 @@ abstract class TestCase extends Orchestra
             'driver'   => 'sqlite',
             'database' => ':memory:',
             'prefix'   => '',
+        ]);
+
+        // Setup filesystem disks for testing
+        $app['config']->set('filesystems.disks.public', [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+        ]);
+
+        $app['config']->set('filesystems.disks.private', [
+            'driver' => 'local',
+            'root' => storage_path('app/private'),
         ]);
     }
 

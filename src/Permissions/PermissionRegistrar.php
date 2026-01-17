@@ -31,25 +31,25 @@ class PermissionRegistrar
     protected $permissions;
 
     /** @var string */
-    public static string $pivotRole;
+    public static string $pivotRole = 'role_id';
 
     /** @var string */
-    public static string $pivotPermission;
+    public static string $pivotPermission = 'permission_id';
 
     /** @var DateInterval|int */
-    public static DateInterval|int $cacheExpirationTime;
+    public static DateInterval|int $cacheExpirationTime = 86400; // 24 hours in seconds
 
     /** @var bool */
-    public static bool $teams;
+    public static bool $teams = false;
 
     /** @var string */
-    public static string $teamsKey;
+    public static string $teamsKey = 'team_id';
 
     /** @var int|string */
     protected int|string|null $teamId = null;
 
     /** @var string */
-    public static string $cacheKey;
+    public static string $cacheKey = 'permissions';
 
     /** @var array */
     private array $cachedRoles = [];
@@ -323,7 +323,7 @@ class PermissionRegistrar
      */
     private function getSerializedPermissionsForCache(): array
     {
-        $this->except = ['created_at','updated_at', 'deleted_at'];
+        $this->except = ['created_at', 'updated_at', 'deleted_at'];
 
         $permissions = $this->getPermissionClass()->select()->with('roles')->get()
             ->map(
