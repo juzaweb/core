@@ -1,13 +1,16 @@
-<div class="modal fade" id="add-folder-modal" tabindex="-1" role="dialog" aria-labelledby="add-folder-modal-label" aria-hidden="true">
+<div class="modal fade" id="add-folder-modal" tabindex="-1" role="dialog" aria-labelledby="add-folder-modal-label"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form action="{{ route('admin.media.folders.store', [$websiteId]) }}" method="post" class="form-ajax" data-success="add_folder_success">
+        <form action="{{ route('admin.media.folders.store') }}" method="post" class="form-ajax"
+            data-success="add_folder_success">
 
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="add-folder-modal-label">
-                        {{ trans(('Add Folder')) }}
+                        {{ trans('Add Folder') }}
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('core::translation.close') }}">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="{{ trans('core::translation.close') }}">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>

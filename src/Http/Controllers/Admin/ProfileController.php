@@ -36,7 +36,7 @@ class ProfileController extends AdminController
     {
         $user = $request->user();
 
-        Breadcrumb::add(__('core::translation.profile'), route('admin.profile', [$websiteId]));
+        Breadcrumb::add(__('core::translation.profile'), route('admin.profile'));
 
         Breadcrumb::add(__('core::translation.notifications'));
 

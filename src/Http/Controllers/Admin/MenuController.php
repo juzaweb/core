@@ -133,7 +133,7 @@ class MenuController extends AdminController
         return $this->success(
             [
                 'message' => trans('core::translation.menu_name_deleted_successfully', ['name' => $model->name]),
-                'redirect' => action([self::class, 'index'], [$websiteId]),
+                'redirect' => action([self::class, 'index']),
             ]
         );
     }

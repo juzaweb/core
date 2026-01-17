@@ -1,7 +1,7 @@
 @extends('core::layouts.admin')
 
 @section('content')
-    <form action="{{ route('admin.settings.update', [$websiteId]) }}" class="form-ajax" method="post">
+    <form action="{{ route('admin.settings.update') }}" class="form-ajax" method="post">
         @method('PUT')
 
         <div class="row mb-3">
@@ -41,7 +41,8 @@
                     <div class="card-body">
                         <div class="form-group clearfix">
                             <div class="icheck-primary d-inline">
-                                <input type="radio" id="multiple_language" name="multiple_language" value="none" @checked(setting('multiple_language') == 'none')>
+                                <input type="radio" id="multiple_language" name="multiple_language" value="none"
+                                    @checked(setting('multiple_language') == 'none')>
                                 <label class="form-check-label" for="multiple_language">
                                     {{ __('core::translation.disable_multiple_language') }}
                                 </label>
@@ -50,7 +51,8 @@
 
                         <div class="form-group clearfix">
                             <div class="icheck-primary d-inline">
-                                <input type="radio" id="multiple_language_session" name="multiple_language" value="session" @checked(setting('multiple_language') == 'session')>
+                                <input type="radio" id="multiple_language_session" name="multiple_language"
+                                    value="session" @checked(setting('multiple_language') == 'session')>
                                 <label class="form-check-label" for="multiple_language_session">
                                     {{ __('core::translation.use_session_to_store_language') }}
                                 </label>
@@ -59,7 +61,8 @@
 
                         <div class="form-group clearfix">
                             <div class="icheck-primary d-inline">
-                                <input type="radio" id="multiple_language_prefix" name="multiple_language" value="prefix" @checked(setting('multiple_language') == 'prefix')>
+                                <input type="radio" id="multiple_language_prefix" name="multiple_language" value="prefix"
+                                    @checked(setting('multiple_language') == 'prefix')>
                                 <label class="form-check-label" for="multiple_language_prefix">
                                     {{ __('core::translation.use_prefix_in_slug_ex_viabout_us') }}
                                 </label>
@@ -68,7 +71,8 @@
 
                         <div class="form-group clearfix">
                             <div class="icheck-primary d-inline">
-                                <input type="radio" id="multiple_language_subdomain" name="multiple_language" value="subdomain" @checked(setting('multiple_language') == 'subdomain')>
+                                <input type="radio" id="multiple_language_subdomain" name="multiple_language"
+                                    value="subdomain" @checked(setting('multiple_language') == 'subdomain')>
                                 <label class="form-check-label" for="multiple_language_subdomain">
                                     {{ __('core::translation.use_subdomain_for_each_language_ex_viexamplecom') }}
                                 </label>

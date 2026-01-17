@@ -6,14 +6,10 @@
 
             <div class="col-md-6 form-select-menu">
                 <div class="alert-default">
-                    @if($menu)
+                    @if ($menu)
                         {{ __('core::translation.select_menu_to_edit') }}:
-                        <select
-                            name="id"
-                            id="select-menu"
-                            class="w-25 form-control load-data"
-                            data-url="{{ $menuDataUrl }}"
-                        >
+                        <select name="id" id="select-menu" class="w-25 form-control load-data"
+                            data-url="{{ $menuDataUrl }}">
                             <option value="{{ $menu->id }}" selected>{{ $menu->name }}</option>
                         </select>
 
@@ -27,16 +23,10 @@
             </div>
 
             <div class="col-md-6 form-add-menu box-hidden">
-                <form action="{{ route('admin.menus.store', [$websiteId]) }}" method="post"
-                      class="form-ajax form-inline">
+                <form action="{{ route('admin.menus.store') }}" method="post" class="form-ajax form-inline">
                     <div class="form-group">
-                        <input type="text"
-                           name="name"
-                           class="form-control"
-                           autocomplete="off"
-                           required
-                           placeholder="{{ __('core::translation.menu_name') }}"
-                        >
+                        <input type="text" name="name" class="form-control" autocomplete="off" required
+                            placeholder="{{ __('core::translation.menu_name') }}">
                     </div>
 
                     <button type="submit" class="btn btn-primary">
@@ -46,7 +36,7 @@
         </div>
 
 
-        @if($menu)
+        @if ($menu)
             <div class="row mt-5">
                 <div class="col-md-4">
                     <h5 class="mb-2 font-weight-bold">{{ __('core::translation.items') }}</h5>
@@ -55,7 +45,7 @@
                         $hidden = true;
                         $index = 0;
                     @endphp
-                    @foreach($boxes as $key => $box)
+                    @foreach ($boxes as $key => $box)
                         @php
                             $options = $box['options']();
                             if ($index == 0) {
@@ -80,12 +70,11 @@
                                 </div>
                             </div>
 
-                            <div class="card-body @if($hidden) box-hidden @endif">
+                            <div class="card-body @if ($hidden) box-hidden @endif">
                                 @component('core::admin.menu.components.model-box', [
                                     'key' => $key,
                                     'box' => $box,
                                 ])
-
                                 @endcomponent
                             </div>
                         </div>
@@ -108,7 +97,6 @@
                             <form action="" method="post" class="form-menu-block" data-template="custom">
 
                                 @component('core::admin.menu.components.custom-box')
-
                                 @endcomponent
 
                                 <button type="submit" class="btn btn-primary btn-sm mt-2 px-3">
@@ -122,9 +110,8 @@
                 <div class="col-md-8">
                     <h5 class="mb-2 font-weight-bold">{{ __('core::translation.structure') }}</h5>
 
-                    <form action="{{ route('admin.menus.update', [$websiteId, $menu->id]) }}"
-                          method="post"
-                          class="form-ajax form-menu-structure">
+                    <form action="{{ route('admin.menus.update', [$websiteId, $menu->id]) }}" method="post"
+                        class="form-ajax form-menu-structure">
                         <input type="hidden" name="id" value="{{ $menu->id }}">
                         <input type="hidden" name="reload_after_save" value="0">
 
@@ -135,10 +122,11 @@
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="form-group">
-                                            <label for="name" class="col-sm-3">{{ __('core::translation.menu_name') }}</label>
+                                            <label for="name"
+                                                class="col-sm-3">{{ __('core::translation.menu_name') }}</label>
                                             <div class="col-sm-9">
                                                 <input type="text" name="name" id="name" class="form-control"
-                                                       value="{{ $menu->name ?? '' }}" autocomplete="off">
+                                                    value="{{ $menu->name ?? '' }}" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
@@ -152,20 +140,20 @@
                             <div class="card-body" id="form-menu">
                                 <div class="dd" id="jw-menu-builder">
                                     <ol class="dd-list">
-                                        @foreach($menu->items->sortBy('display_order') as $item)
+                                        @foreach ($menu->items->sortBy('display_order') as $item)
                                             @component('core::admin.menu.components.menu-item', [
                                                 'item' => $item,
                                                 'register' => true,
                                                 'children' => $item->children,
                                             ])
-                                                @if($item->is_custom)
+                                                @if ($item->is_custom)
                                                     @component('core::admin.menu.components.items.custom', [
-                                                        'item' => $item
+                                                        'item' => $item,
                                                     ])
                                                     @endcomponent
                                                 @else
                                                     @component('core::admin.menu.components.items.model', [
-                                                        'item' => $item
+                                                        'item' => $item,
                                                     ])
                                                     @endcomponent
                                                 @endif
@@ -176,12 +164,12 @@
 
                                 <hr>
 
-                                @foreach($navMenus as $key => $navMenu)
+                                @foreach ($navMenus as $key => $navMenu)
                                     <div class="form-check mb-2">
                                         <label class="form-check-label">
                                             <input class="form-check-input" name="location[]" type="checkbox"
-                                                   value="{{ $key }}"
-                                                   @if(isset($location[$key]) && $location[$key] == $menu->id) checked @endif>
+                                                value="{{ $key }}"
+                                                @if (isset($location[$key]) && $location[$key] == $menu->id) checked @endif>
                                             {{ $navMenu['label'] }}
                                         </label>
                                     </div>
@@ -190,11 +178,9 @@
 
                             <div class="card-footer">
                                 <div class="btn-group">
-                                    <a href="javascript:void(0)"
-                                       class="text-danger delete-menu"
-                                       data-id="{{ $menu->id }}"
-                                       data-name="{{ $menu->name }}"
-                                    >{{ __('core::translation.delete_menu') }}</a>
+                                    <a href="javascript:void(0)" class="text-danger delete-menu"
+                                        data-id="{{ $menu->id }}"
+                                        data-name="{{ $menu->name }}">{{ __('core::translation.delete_menu') }}</a>
                                 </div>
 
                                 <div class="btn-group float-right">
@@ -255,7 +241,7 @@
         $(function() {
             $('#select-menu').on('change', function() {
                 var url = "{{ route('admin.menus.show', [$websiteId, '__ID__']) }}"
-                .replace('__ID__', $(this).val());
+                    .replace('__ID__', $(this).val());
                 window.location.href = url;
             });
         });

@@ -44,7 +44,7 @@ class PageController extends AdminController
         Breadcrumb::add(__('core::translation.add_new_page'));
 
         $model = new Page();
-        $action = action([static::class, 'store'], [$websiteId]);
+        $action = action([static::class, 'store']);
         $locale = $this->getFormLanguage();
         $templates = collect(PageTemplate::all())->map(fn($item) => $item->label);
 
@@ -144,7 +144,7 @@ class PageController extends AdminController
         return $this->success(
             [
                 'message' => __('core::translation.created_page_name_successful', ['name' => $model->name]),
-                'redirect' => action([static::class, 'index'], [$websiteId]),
+                'redirect' => action([static::class, 'index']),
             ]
         );
     }

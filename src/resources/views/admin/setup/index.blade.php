@@ -9,7 +9,8 @@
                 </div>
                 <div class="card-body">
                     <div id="setup-content">
-                        <p class="lead">{{ __('core::translation.your_website_is_almost_ready_just_wait_a_little_longer') }}</p>
+                        <p class="lead">
+                            {{ __('core::translation.your_website_is_almost_ready_just_wait_a_little_longer') }}</p>
                     </div>
 
                     <div id="setup-loading" style="display: none;" class="text-center">
@@ -22,7 +23,8 @@
                     <div id="setup-success" style="display: none;">
                         <div class="alert alert-success">
                             <h5><i class="icon fas fa-check"></i> {{ __('core::translation.success') }}</h5>
-                            <p>{{ __('core::translation.your_website_has_been_set_up_successfully_redirecting_to_dashboard') }}</p>
+                            <p>{{ __('core::translation.your_website_has_been_set_up_successfully_redirecting_to_dashboard') }}
+                            </p>
                         </div>
                     </div>
 
@@ -51,7 +53,7 @@
                 $('#setup-loading').show();
 
                 $.ajax({
-                    url: '{{ route('admin.setup.process', [$websiteId]) }}',
+                    url: '{{ route('admin.setup.process') }}',
                     type: 'POST',
                     dataType: 'json',
                     success: function(response) {
@@ -65,14 +67,16 @@
                                 window.location.href = response.redirect;
                             }, 2000);
                         } else {
-                            $('#setup-error-message').text(response.message || '{{ __('core::translation.an_error_occurred_during_setup') }}');
+                            $('#setup-error-message').text(response.message ||
+                                '{{ __('core::translation.an_error_occurred_during_setup') }}');
                             $('#setup-error').show();
                         }
                     },
                     error: function(xhr) {
                         $('#setup-loading').hide();
 
-                        let errorMessage = '{{ __('core::translation.an_error_occurred_during_setup') }}';
+                        let errorMessage =
+                            '{{ __('core::translation.an_error_occurred_during_setup') }}';
                         if (xhr.responseJSON && xhr.responseJSON.message) {
                             errorMessage = xhr.responseJSON.message;
                         }

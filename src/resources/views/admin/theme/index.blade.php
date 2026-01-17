@@ -24,16 +24,14 @@
     <div class="row" id="theme-list">
         <div class="col-md-4 p-2 theme-list-item">
             @component('core::admin.theme.components.theme-item', ['theme' => $currentTheme, 'active' => true])
-
             @endcomponent
         </div>
     </div>
 @endsection
 
 @section('scripts')
-
     <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
-        $(function () {
+        $(function() {
             let pageSize = 12;
             let offset = 0;
             let total = 0;
@@ -42,7 +40,7 @@
             function loadData() {
                 let jqxhr = $.ajax({
                     type: this.method,
-                    url: '{{ route('admin.themes.get-data', [$websiteId]) }}',
+                    url: '{{ route('admin.themes.get-data') }}',
                     dataType: 'json',
                     cache: false,
                     async: false,
@@ -62,7 +60,7 @@
 
             loadData();
 
-            $('#theme-list').on('click', '.active-theme', function () {
+            $('#theme-list').on('click', '.active-theme', function() {
                 let btn = $(this);
                 let icon = btn.find('i').attr('class');
                 let theme = btn.data('theme');
@@ -72,12 +70,12 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: "{{ route('admin.themes.activate', [$websiteId]) }}",
+                    url: "{{ route('admin.themes.activate') }}",
                     dataType: 'json',
                     data: {
                         theme: theme
                     }
-                }).done(function (response) {
+                }).done(function(response) {
                     btn.find('i').attr('class', icon);
                     btn.prop("disabled", false);
 
@@ -88,7 +86,7 @@
 
                     window.location.reload();
                     return false;
-                }).fail(function (response) {
+                }).fail(function(response) {
                     btn.find('i').attr('class', icon);
                     btn.prop("disabled", false);
                     show_message(response);
@@ -96,7 +94,7 @@
                 });
             });
 
-            $(window).scroll(function () {
+            $(window).scroll(function() {
                 if ($(window).scrollTop() === $(document).height() - $(window).height()) {
                     if (offset + pageSize < total) {
                         page = page + 1;

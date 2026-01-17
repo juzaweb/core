@@ -35,7 +35,7 @@ class TranslationController extends AdminController
 
         abort_if($language === null, 404, __('core::translation.language_not_found'));
 
-        Breadcrumb::add(__('core::translation.languages'), action([LanguageController::class, 'index'], [$websiteId]));
+        Breadcrumb::add(__('core::translation.languages'), action([LanguageController::class, 'index']));
 
         Breadcrumb::add(__('core::translation.phrases_language', ['language' => $language->name]));
 
