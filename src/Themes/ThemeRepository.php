@@ -94,10 +94,8 @@ class ThemeRepository implements ThemeContract
 
         $theme = $this->setting->get('theme', 'itech');
 
-        $currentTheme = $this->find($theme);
-
         // return ($this->currentTheme = $currentTheme);
-        return $currentTheme;
+        return $this->find($theme);
     }
 
     public function has(string $name): bool
