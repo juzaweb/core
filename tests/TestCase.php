@@ -10,7 +10,28 @@ abstract class TestCase extends Orchestra
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Create class aliases for backward compatibility
+        if (!class_exists('Juzaweb\Modules\Admin\Models\User')) {
+            class_alias(
+                'Juzaweb\Modules\Core\Models\User',
+                'Juzaweb\Modules\Admin\Models\User'
+            );
+        }
+
+        // Load and alias UserFactory
+        $factoryPath = __DIR__ . '/Factories/UserFactory.php';
+        if (file_exists($factoryPath)) {
+            require_once $factoryPath;
+            if (!class_exists('Juzaweb\Modules\Admin\Database\Factories\UserFactory')) {
+                class_alias(
+                    'Juzaweb\Modules\Core\Tests\Factories\UserFactory',
+                    'Juzaweb\Modules\Admin\Database\Factories\UserFactory'
+                );
+            }
+        }
     }
+
 
     /**
      * Get package providers.
