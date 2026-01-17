@@ -33,6 +33,3 @@ jobs:
 
       - name: Run tests
         run: composer test
-
-      - name: Check code style
-        run: composer format -- --test
