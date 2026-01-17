@@ -15,32 +15,32 @@ Route::get('user/login', [AuthController::class, 'login'])
     ->name('login')
     ->middleware(['guest']);
 Route::post('user/login', [AuthController::class, 'doLogin'])
-    ->middleware(['throttle:5,1', 'guest', VerifyToken::class]);
+    ->middleware(['throttle:5,1', 'guest']);
 
 Route::get('user/register', [AuthController::class, 'register'])
     ->name('register')
     ->middleware(['guest']);
 Route::post('user/register', [AuthController::class, 'doRegister'])
-    ->middleware(['throttle:5,1', 'guest', VerifyToken::class]);
+    ->middleware(['throttle:5,1', 'guest']);
 
 Route::get('user/forgot-password', [AuthController::class, 'forgotPassword'])
     ->name('forgot-password')
     ->middleware(['guest']);
 Route::post('user/forgot-password', [AuthController::class, 'doForgotPassword'])
-    ->middleware(['throttle:5,1', 'guest', VerifyToken::class]);
+    ->middleware(['throttle:5,1', 'guest']);
 
 Route::get('user/reset-password/{email}/{token}', [AuthController::class, 'resetPassword'])
     ->name('password.reset')
     ->middleware(['guest']);
 Route::post('user/reset-password/{email}/{token}', [AuthController::class, 'doResetPassword'])
-    ->middleware(['guest', VerifyToken::class]);
+    ->middleware(['guest']);
 
 Route::get('user/verification', [AuthController::class, 'verificationNotice'])
     ->name('verification.notice')
     ->middleware(['auth']);
 Route::post('user/verification/resend', [AuthController::class, 'resendVerification'])
     ->name('verification.resend')
-    ->middleware(['auth', 'throttle:3,1', VerifyToken::class]);
+    ->middleware(['auth', 'throttle:3,1']);
 
 Route::get('user/verification/{id}/{hash}', [AuthController::class, 'verification'])
     ->middleware(['signed'])

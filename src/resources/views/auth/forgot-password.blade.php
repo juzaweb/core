@@ -1,54 +1,54 @@
 @extends('core::layouts.auth')
 
-@section('title', __('core::translation.forgot_password'))
-
-@section('head')
-    <link rel="stylesheet" href="{{ mix('css/auth.min.css', 'themes/main') }}">
-@endsection
-
 @section('content')
-    <div class="container mt-5 mb-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
-                <div class="auth-container">
-                    <!-- Title -->
-                    <div class="text-center mb-4">
-                        <img src="{{ logo_url() }}"
-                             alt="Logo"
-                             class="img-fluid mb-3"
-                             style="max-height: 50px;">
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">{{ __('core::translation.enter_your_email_to_reset_password') }}</p>
 
-                        <h2 class="auth-title">{{ __('core::translation.forgot_password') }}</h2>
-                        <p class="auth-subtitle">{{ __('core::translation.enter_your_email_to_reset_password') }}</p>
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ $error }}
                     </div>
-                    <!-- End Title -->
+                @endforeach
+            @endif
 
-                    <form method="post" action="" class="form-ajax" data-notify="false" data-jw-token="true">
-                        @csrf
+            <form action="" class="form-ajax" method="post">
+                @csrf
 
-                        <div class="jquery-message mb-2"></div>
-
-                        <!-- Input Group -->
-                        <div class="form-group">
-                            <label for="forgotEmail">{{ __('core::translation.email') }}</label>
-                            <input type="email" name="email" id="forgotEmail" class="form-control"
-                                   placeholder="{{ __('core::translation.email') }}" required>
-                            <span class="error-email text-danger"></span>
+                <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control"
+                        placeholder="{{ __('core::translation.email') }}" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
                         </div>
-                        <!-- End Input Group -->
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">
-                                {{ __('core::translation.send_reset_link') }}
-                            </button>
-                        </div>
-                    </form>
-
-                    <div class="text-center auth-footer">
-                        <p><a href="{{ home_url('user/login') }}" class="auth-link-bold">{{ __('core::translation.back_to_login') }}</a></p>
                     </div>
                 </div>
-            </div>
+
+                <button type="submit"
+                    class="btn btn-primary btn-block">{{ __('core::translation.forgot_password') }}</button>
+
+            </form>
+
+            <p class="mb-0 mt-3">
+                <a href="{{ url('user/login') }}" class="text-center">{{ __('core::translation.login_to_account') }}</a>
+            </p>
+
+            @if (setting('user_registration'))
+                <p class="mb-0">
+                    <a href="{{ url('user/register') }}"
+                        class="text-center">{{ __('core::translation.register_a_new_account') }}</a>
+                </p>
+            @endif
         </div>
+        <!-- /.login-card-body -->
     </div>
 @endsection

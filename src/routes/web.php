@@ -24,8 +24,7 @@ Route::get('sitemap/{provider}/page-{page}.xml', [SitemapController::class, 'pro
     ->where('page', '[0-9]+');
 
 Route::post('online/statuses', [AddonController::class, 'statuses'])
-    ->name('online.statuses')
-    ->middleware([VerifyToken::class]);
+    ->name('online.statuses');
 Route::post('verify/recaptcha', [AddonController::class, 'recaptcha'])
     ->name('addon.recaptcha');
 Route::get('generator/thumbnail', [AddonController::class, 'thumbnail'])
@@ -33,7 +32,7 @@ Route::get('generator/thumbnail', [AddonController::class, 'thumbnail'])
 
 Route::post('notification/{channel}/subscribe', [NotificationSubscribeController::class, 'subscribe'])
     ->name('notification.subscribe')
-    ->middleware(['throttle:5,1', VerifyToken::class]);
+    ->middleware(['throttle:5,1']);
 
 Route::get('notification/{channel}/verify', [NotificationSubscribeController::class, 'verify'])
     ->name('notification.verify')

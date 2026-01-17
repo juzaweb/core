@@ -1,61 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ $title }} | Juzaweb</title>
 
-    @include('core::components.theme-head')
+    @if($favicon = setting('favicon'))
+    <link rel="shortcut icon" href="{{ upload_url(setting('favicon')) }}" />
+    @endif
 
-    <title>{{ $title }}{{ setting('sitename') ? ' - ' . setting('sitename') : '' }}</title>
-
-    <link rel="stylesheet" href="{{ mix('css/main.min.css', 'themes/main') }}">
-    <link rel="stylesheet" href="{{ mix('css/home.min.css', 'themes/main') }}">
-
-    <script src="{{ mix('js/vendor.min.js', 'themes/main') }}"></script>
-
-    <x-theme-js-var />
-
-    @yield('head')
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'juzaweb') }}">
+    <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'juzaweb') }}">
 </head>
-
-<body class="juzaweb-theme homepage1-body @yield('body-classes')">
-    <!--===== PRELOADER STARTS =======-->
-    <div class="preloader">
-        <div class="loading-container">
-            <div class="loading"></div>
-            <div id="loading-icon">
-                <img src="{{ asset('assets/images/logo.png?v=2') }}" alt="">
-            </div>
-        </div>
+<body class="hold-transition login-page">
+<div id="admin-overlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
     </div>
-    <!--===== PRELOADER ENDS =======-->
-
-    <!--===== PROGRESS STARTS=======-->
-    <div class="paginacontainer">
-        <div class="progress-wrap">
-            <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-                <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-            </svg>
-        </div>
+</div>
+<div class="login-box">
+    <div class="login-logo">
+        <a href="/"><b>Juza</b>web</a>
     </div>
-    <!--===== PROGRESS ENDS=======-->
+    <!-- /.login-logo -->
 
     @yield('content')
+</div>
+<!-- /.login-box -->
 
-    {{-- Auth Modals --}}
-    {{-- @include('main::components.auth-modals') --}}
+<x-js-var />
 
-    <x-theme-init />
+<script src="{{ mix('js/vendor.min.js', 'juzaweb') }}"></script>
+<script src="{{ mix('js/admin.min.js', 'juzaweb') }}"></script>
 
-    <script src="{{ mix('js/main.min.js', 'themes/main') }}"></script>
+@if(config("network.recaptcha.site_key"))
+    <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
+        const recaptchaSiteKey = "{{ config("network.recaptcha.site_key") }}";
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaLoadCallback&render=explicit" async defer></script>
+@endguest
 
-    @yield('scripts')
+@yield('scripts')
 
-    @if(setting('custom_footer_script'))
-        {!! setting('custom_footer_script') !!}
-    @endif
 </body>
-
 </html>

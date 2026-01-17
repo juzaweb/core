@@ -1,29 +1,8 @@
-@php
-    $websiteId = $website->id;
-    $gaId = config('network.google_analytics.main');
-@endphp
-
-@if ($gaId)
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
-    <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', '{{ $gaId }}');
-    </script>
-@endif
-
 <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
     const juzaweb = {
-        adminPrefix: "{{ config('core.admin_prefix') }}/{{ $websiteId }}",
-        adminUrl: "{{ url(config('core.admin_prefix') . '/' . $websiteId) }}",
+        adminPrefix: "{{ config('core.admin_prefix') }}",
+        adminUrl: "{{ url(config('core.admin_prefix')) }}",
         documentBaseUrl: "{{ Storage::disk('public')->url('/') }}",
-        staticBaseUrl: "{{ Storage::disk('cloud')->url('/') }}",
-        imageUrl: "{{ config('services.imgproxy.base_url') }}",
         locale: "{{ app()->getLocale() }}",
         lang: {
             successfully: '{{ __('core::translation.successfully') }}',
