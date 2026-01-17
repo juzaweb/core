@@ -16,14 +16,13 @@ use Juzaweb\Modules\Core\Enums\PageStatus;
 use Juzaweb\Modules\Core\FileManager\Traits\HasMedia;
 use Juzaweb\Modules\Core\Models\Model;
 use Juzaweb\Modules\Core\Traits\HasDescription;
-use Juzaweb\Modules\Core\Traits\HasNetworkWebsite;
 use Juzaweb\Modules\Core\Traits\HasSitemap;
 use Juzaweb\Modules\Core\Traits\HasSlug;
 use function Juzaweb\Modules\Admin\Models\Pages\website_id;
 
 class PageTranslation extends Model implements Sitemapable
 {
-    use HasDescription, HasMedia, HasSlug, HasNetworkWebsite, HasSitemap;
+    use HasDescription, HasMedia, HasSlug, HasSitemap;
 
     protected $table = 'page_translations';
 
