@@ -55,13 +55,32 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app): void
     {
-        // Setup default database to use sqlite :memory:
-        $app['config']->set('database.default', 'testbench');
-        $app['config']->set('database.connections.testbench', [
-            'driver'   => 'sqlite',
-            'database' => ':memory:',
-            'prefix'   => '',
-        ]);
+        // Use MySQL if DB_CONNECTION is set (e.g., in CI), otherwise use SQLite
+        $connection = env('DB_CONNECTION', 'sqlite');
+
+        if ($connection === 'mysql') {
+            $app['config']->set('database.default', 'mysql');
+            $app['config']->set('database.connections.mysql', [
+                'driver' => 'mysql',
+                'host' => env('DB_HOST', '127.0.0.1'),
+                'port' => env('DB_PORT', '3306'),
+                'database' => env('DB_DATABASE', 'testing'),
+                'username' => env('DB_USERNAME', 'root'),
+                'password' => env('DB_PASSWORD', ''),
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+                'prefix' => '',
+                'strict' => true,
+            ]);
+        } else {
+            // Setup default database to use sqlite :memory:
+            $app['config']->set('database.default', 'testbench');
+            $app['config']->set('database.connections.testbench', [
+                'driver'   => 'sqlite',
+                'database' => ':memory:',
+                'prefix'   => '',
+            ]);
+        }
 
         // Setup filesystem disks for testing
         $app['config']->set('filesystems.disks.public', [
@@ -82,11 +101,13 @@ abstract class TestCase extends Orchestra
      */
     protected function defineDatabaseMigrations(): void
     {
-        $this->loadLaravelMigrations(['--database' => 'testbench']);
+        $connection = config('database.default');
+
+        $this->loadLaravelMigrations(['--database' => $connection]);
 
         // Load package migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        $this->artisan('migrate', ['--database' => 'testbench'])->run();
+        $this->artisan('migrate', ['--database' => $connection])->run();
     }
 }

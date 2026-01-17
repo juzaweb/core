@@ -2,17 +2,16 @@
 
 namespace Juzaweb\Modules\Core\Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Juzaweb\Modules\Core\Models\User;
 use Juzaweb\Modules\Core\Tests\TestCase;
 
-
 class AuthTest extends TestCase
 {
-    use WithoutMiddleware;
-
+    use WithoutMiddleware, DatabaseTransactions;
 
     protected function setUp(): void
     {
@@ -20,6 +19,7 @@ class AuthTest extends TestCase
 
         $this->defineDatabaseMigrations();
     }
+
 
     /**
      * Test login with valid credentials
