@@ -21,7 +21,6 @@ async function askNotificationPermission(messaging) {
 
         if (permission === "granted") {
             const token = await messaging.getToken({ vapidKey });
-            const jwToken = await loadReCaptcha();
             const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
             await fetch("/notification/fcm/subscribe", {
@@ -30,7 +29,7 @@ async function askNotificationPermission(messaging) {
                     "Content-Type": "application/json",
                     "X-CSRF-TOKEN": csrf,
                 },
-                body: JSON.stringify({ token: token, 'jw-token': jwToken }),
+                body: JSON.stringify({ token: token}),
             });
         } else {
             console.warn("🚫 Notification denied");

@@ -66,9 +66,9 @@
 
 <x-js-var/>
 
-<script src="{{ mix('assets/js/vendor.min.js', 'juzaweb') }}"></script>
+<script src="{{ mix('js/vendor.min.js', 'juzaweb') }}"></script>
 <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
-<script src="{{ mix('assets/js/admin.min.js', 'juzaweb') }}"></script>
+<script src="{{ mix('js/admin.min.js', 'juzaweb') }}"></script>
 
 @yield('scripts')
 </body>

@@ -140,54 +140,26 @@ $(function () {
         if (typeof grecaptcha !== 'undefined') {
             loadRecapchaAndSubmit(
                 function (token) {
-                    if (hasToken) {
-                        loadReCaptcha().then(function (jwToken) {
-                            sendRequestFormAjax(
-                                form,
-                                formData,
-                                btnsubmit,
-                                currentText,
-                                currentIcon,
-                                token,
-                                jwToken
-                            );
-                        });
-                    } else {
-                        sendRequestFormAjax(
-                            form,
-                            formData,
-                            btnsubmit,
-                            currentText,
-                            currentIcon,
-                            token
-                        );
-                    }
+                    sendRequestFormAjax(
+                        form,
+                        formData,
+                        btnsubmit,
+                        currentText,
+                        currentIcon,
+                        token
+                    );
                 }
             );
             return false;
         }
 
-        if (hasToken) {
-            loadReCaptcha().then(function (jwToken) {
-                sendRequestFormAjax(
-                    form,
-                    formData,
-                    btnsubmit,
-                    currentText,
-                    currentIcon,
-                    null,
-                    jwToken
-                );
-            });
-        } else {
-            sendRequestFormAjax(
-                form,
-                formData,
-                btnsubmit,
-                currentText,
-                currentIcon
-            );
-        }
+        sendRequestFormAjax(
+            form,
+            formData,
+            btnsubmit,
+            currentText,
+            currentIcon
+        );
     });
 
     $(document).on('keypress', '.is-number', function () {

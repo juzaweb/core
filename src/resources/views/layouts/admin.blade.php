@@ -26,8 +26,8 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
-    <link rel="stylesheet" href="{{ mix('/assets/css/vendor.min.css') }}">
-    <link rel="stylesheet" href="{{ mix('/assets/css/admin.min.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'juzaweb') }}">
+    <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'juzaweb') }}">
 
     @yield('head')
 </head>
@@ -180,9 +180,9 @@
     </div>
 </div>
 
-<script src="{{ mix('assets/js/vendor.min.js', 'juzaweb') }}"></script>
-<script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
-<script src="{{ mix('assets/js/admin.min.js', 'juzaweb') }}"></script>
+<script src="{{ mix('js/vendor.min.js', 'juzaweb') }}"></script>
+<script src="{{ asset('plugins/tinymce/tinymce.min.js', 'juzaweb') }}"></script>
+<script src="{{ mix('js/admin.min.js', 'juzaweb') }}"></script>
 
 <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
     $(function () {
