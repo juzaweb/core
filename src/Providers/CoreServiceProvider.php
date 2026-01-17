@@ -379,7 +379,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function publishAssets(): void
     {
         $this->publishes([
-            __DIR__ . '/../../assets/public' => public_path('assets'),
+            __DIR__ . '/../../assets/public' => public_path('juzaweb'),
         ], 'core-assets');
     }
 }

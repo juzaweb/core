@@ -21,7 +21,7 @@ mix.options(
 );
 
 const assetPath = path.dirname(__filename, '');;
-const publicPath = `vendor/juzaweb/assets/public`;
+const publicPath = `vendor/juzaweb/core/assets/public`;
 
 mix.setPublicPath(publicPath);
 

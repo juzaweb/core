@@ -180,9 +180,9 @@
     </div>
 </div>
 
-<script src="{{ mix('assets/js/vendor.min.js') }}"></script>
+<script src="{{ mix('assets/js/vendor.min.js', 'juzaweb') }}"></script>
 <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
-<script src="{{ mix('assets/js/admin.min.js') }}"></script>
+<script src="{{ mix('assets/js/admin.min.js', 'juzaweb') }}"></script>
 
 <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
     $(function () {
