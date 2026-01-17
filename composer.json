@@ -28,7 +28,8 @@
     },
     "require-dev": {
         "orchestra/testbench": "^9.14",
-        "phpunit/phpunit": "^11.0.1"
+        "phpunit/phpunit": "^11.0.1",
+        "laravel/pint": "^1.13"
     },
     "autoload": {
         "psr-4": {
@@ -72,7 +73,10 @@
         "serve": [
             "Composer\\Config::disableProcessTimeout",
             "@php vendor/bin/testbench serve --ansi"
-        ]
+        ],
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage",
+        "format": "vendor/bin/pint"
     },
     "config": {
         "sort-packages": true
