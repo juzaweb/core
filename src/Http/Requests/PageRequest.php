@@ -13,7 +13,7 @@ namespace Juzaweb\Modules\Core\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Juzaweb\Modules\Core\Enums\PageStatus;
-use Juzaweb\Modules\Core\Models\Language;
+use Juzaweb\Modules\Core\Translations\Models\Language;
 
 class PageRequest extends FormRequest
 {

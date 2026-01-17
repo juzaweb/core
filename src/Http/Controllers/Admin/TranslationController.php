@@ -20,8 +20,8 @@ use Juzaweb\Modules\Core\Facades\Theme;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
 use Juzaweb\Modules\Core\Http\Requests\TranslateModelRequest;
 use Juzaweb\Modules\Core\Http\Requests\TranslationRequest;
-use Juzaweb\Modules\Core\Models\Language;
 use Juzaweb\Modules\Core\Translations\Contracts\Translation;
+use Juzaweb\Modules\Core\Translations\Models\Language;
 use Juzaweb\Modules\Core\Translations\Models\LanguageLine;
 use Yajra\DataTables\Facades\DataTables;
 

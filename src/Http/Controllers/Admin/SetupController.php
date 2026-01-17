@@ -21,10 +21,10 @@ use Juzaweb\Modules\Admin\Networks\Facades\Network;
 use Juzaweb\Modules\Core\Enums\PageStatus;
 use Juzaweb\Modules\Core\Facades\Theme;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
-use Juzaweb\Modules\Core\Models\Language;
 use Juzaweb\Modules\Core\Models\Menus\Menu;
 use Juzaweb\Modules\Core\Models\Menus\MenuItem;
 use Juzaweb\Modules\Core\Models\Pages\Page;
+use Juzaweb\Modules\Core\Translations\Models\Language;
 
 class SetupController extends AdminController
 {

@@ -11,10 +11,11 @@ namespace Juzaweb\Modules\Core\Http\Resources;
 
 use Illuminate\Http\Request;
 use Juzaweb\Modules\Core\Support\Resources\ModelResource;
+use Juzaweb\Modules\Core\Translations\Models\Language;
 use OpenApi\Annotations as OA;
 
 /**
- * @property-read \Juzaweb\Modules\Core\Translations\Models\Language $resource
+ * @property-read Language $resource
  *
  * @OA\Schema(
  *       schema="LanguageResource",

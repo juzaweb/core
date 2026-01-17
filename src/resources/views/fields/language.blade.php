@@ -1,5 +1,5 @@
 @php
-    $languages = \Juzaweb\Modules\Core\Models\Language::languages();
+    $languages = \Juzaweb\Modules\Core\Translations\Models\Language::languages();
     $name = $name ?? 'locale';
     $locale = $options['value'] ?? request()->get('locale', config('translatable.fallback_locale'));
 @endphp

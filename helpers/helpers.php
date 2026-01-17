@@ -18,10 +18,10 @@ use Juzaweb\Modules\Admin\Models\User;
 use Juzaweb\Modules\Core\Contracts\Setting;
 use Juzaweb\Modules\Core\Facades\Theme;
 use Juzaweb\Modules\Core\Models\Authenticatable;
-use Juzaweb\Modules\Core\Models\Language;
 use Juzaweb\Modules\Core\Translations\Contracts\Translatable;
 use Juzaweb\Modules\Core\Translations\Enums\TranslateHistoryStatus;
 use Juzaweb\Modules\Core\Translations\Jobs\ModelTranslateJob;
+use Juzaweb\Modules\Core\Translations\Models\Language;
 use Juzaweb\Modules\Core\Translations\Models\TranslateHistory;
 
 require __DIR__ . '/media.php';

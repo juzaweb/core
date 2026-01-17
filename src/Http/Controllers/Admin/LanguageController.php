@@ -17,7 +17,7 @@ use Juzaweb\Modules\Core\Http\Controllers\AdminController;
 use Juzaweb\Modules\Core\Http\DataTables\LanguagesDataTable;
 use Juzaweb\Modules\Core\Http\Requests\BulkActionsRequest;
 use Juzaweb\Modules\Core\Http\Requests\LanguageRequest;
-use Juzaweb\Modules\Core\Models\Language;
+use Juzaweb\Modules\Core\Translations\Models\Language;
 
 class LanguageController extends AdminController
 {

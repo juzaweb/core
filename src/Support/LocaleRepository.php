@@ -12,7 +12,7 @@ namespace Juzaweb\Modules\Core\Support;
 
 use Juzaweb\Modules\Core\Application;
 use Juzaweb\Modules\Core\Contracts\Setting;
-use Juzaweb\Modules\Core\Models\Language;
+use Juzaweb\Modules\Core\Translations\Models\Language;
 
 class LocaleRepository
 {

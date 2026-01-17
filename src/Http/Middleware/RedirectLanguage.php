@@ -13,8 +13,8 @@
 namespace Juzaweb\Modules\Core\Http\Middleware;
 
 use Illuminate\Http\Request;
-use Juzaweb\Modules\Core\Models\Language;
 use Juzaweb\Modules\Core\Translations\Facades\IP2Location;
+use Juzaweb\Modules\Core\Translations\Models\Language;
 
 class RedirectLanguage
 {
