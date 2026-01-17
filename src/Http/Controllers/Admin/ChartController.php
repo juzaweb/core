@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -26,7 +27,7 @@ class ChartController extends AdminController
         return parent::callAction($method, $parameters);
     }
 
-    public function chart(Request $request, string $websiteId, string $chart): JsonResponse
+    public function chart(Request $request, string $chart): JsonResponse
     {
         $chartClass = Chart::get($chart);
 

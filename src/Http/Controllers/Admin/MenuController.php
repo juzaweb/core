@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -64,7 +65,7 @@ class MenuController extends AdminController
         );
     }
 
-    public function store(MenuRequest $request, string $websiteId)
+    public function store(MenuRequest $request)
     {
         $model = Menu::create($request->all());
 
@@ -76,7 +77,7 @@ class MenuController extends AdminController
         );
     }
 
-    public function update(MenuRequest $request, string $websiteId, string $id)
+    public function update(MenuRequest $request, string $id)
     {
         $model = Menu::findOrFail($id);
         $items = json_decode($request->post('content'), true, 512, JSON_THROW_ON_ERROR);
@@ -91,7 +92,7 @@ class MenuController extends AdminController
 
                 $model->items()
                     ->where(
-                        fn ($q) => $q->whereNotIn('id', $results)
+                        fn($q) => $q->whereNotIn('id', $results)
                             ->orWhereColumn('id', 'parent_id')
                     )
                     ->delete();
@@ -143,7 +144,7 @@ class MenuController extends AdminController
         int $index,
         string $locale,
         ?string $parentId = null
-    ) : array {
+    ): array {
 
         $results = [];
         foreach ($items as $item) {

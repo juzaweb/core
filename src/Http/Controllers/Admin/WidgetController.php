@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -31,7 +32,7 @@ class WidgetController extends AdminController
         $sidebarWidgets = ThemeSidebar::withTranslation($locale)
             ->orderBy('display_order')
             ->get()
-            ->each(fn ($item) => $item->setDefaultLocale($locale))
+            ->each(fn($item) => $item->setDefaultLocale($locale))
             ->groupBy('sidebar');
 
         return view(
@@ -40,7 +41,7 @@ class WidgetController extends AdminController
         );
     }
 
-    public function update(WidgetRequest $request, string $websiteId, string $key)
+    public function update(WidgetRequest $request, string $key)
     {
         $contents = collect($request->input('content', []))->keyBy('key');
         $locale = $this->getFormLanguage();

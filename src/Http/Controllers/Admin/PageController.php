@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -36,7 +37,7 @@ class PageController extends AdminController
         );
     }
 
-    public function create(Request $request, string $websiteId)
+    public function create(Request $request)
     {
         Breadcrumb::add(__('core::translation.pages'), admin_url('pages'));
 
@@ -45,7 +46,7 @@ class PageController extends AdminController
         $model = new Page();
         $action = action([static::class, 'store'], [$websiteId]);
         $locale = $this->getFormLanguage();
-        $templates = collect(PageTemplate::all())->map(fn ($item) => $item->label);
+        $templates = collect(PageTemplate::all())->map(fn($item) => $item->label);
 
         if ($template = $request->get('template')) {
             $template = PageTemplate::get($template);
@@ -58,7 +59,7 @@ class PageController extends AdminController
         );
     }
 
-    public function edit(Request $request, string $websiteId, string $id)
+    public function edit(Request $request, string $id)
     {
         $locale = $this->getFormLanguage();
 
@@ -78,7 +79,7 @@ class PageController extends AdminController
         Breadcrumb::add(__('core::translation.edit_page_name', ['name' => $model->name]));
 
         $action = action([static::class, 'update'], [$websiteId, $model->id]);
-        $templates = collect(PageTemplate::all())->map(fn ($item) => $item->label);
+        $templates = collect(PageTemplate::all())->map(fn($item) => $item->label);
 
         $template = null;
         if ($model->template) {
@@ -96,7 +97,7 @@ class PageController extends AdminController
         );
     }
 
-    public function store(PageRequest $request, string $websiteId): JsonResponse|RedirectResponse
+    public function store(PageRequest $request): JsonResponse|RedirectResponse
     {
         $data = $request->safe()->all();
         $locale = $this->getFormLanguage();
@@ -148,7 +149,7 @@ class PageController extends AdminController
         );
     }
 
-    public function update(PageRequest $request, string $websiteId, string $id): JsonResponse|RedirectResponse
+    public function update(PageRequest $request, string $id): JsonResponse|RedirectResponse
     {
         $model = Page::find($id);
 
@@ -224,7 +225,7 @@ class PageController extends AdminController
         );
     }
 
-    public function bulk(BulkActionsRequest $request, string $websiteId): JsonResponse|RedirectResponse
+    public function bulk(BulkActionsRequest $request): JsonResponse|RedirectResponse
     {
         $action = $request->input('action');
         $ids = $request->input('ids', []);

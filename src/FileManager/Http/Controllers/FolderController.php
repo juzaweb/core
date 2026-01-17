@@ -45,7 +45,7 @@ class FolderController extends FileManagerController
             );
     }
 
-    public function store(StoreFolderRequest $request, string $websiteId, string $disk)
+    public function store(StoreFolderRequest $request, string $disk)
     {
         $name = $request->input('name');
         $parentId = $request->input('working_dir');

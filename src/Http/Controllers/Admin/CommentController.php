@@ -14,7 +14,7 @@ class CommentController extends AdminController
 {
     protected string $commentableType = Post::class;
 
-    public function index(CommentsDataTable $dataTable, string $websiteId)
+    public function index(CommentsDataTable $dataTable)
     {
         Breadcrumb::add(__('core::translation.comments'));
 
@@ -24,7 +24,7 @@ class CommentController extends AdminController
         );
     }
 
-    public function bulk(CommentActionsRequest $request, string $websiteId)
+    public function bulk(CommentActionsRequest $request)
     {
         $action = $request->input('action');
         $ids = $request->input('ids', []);

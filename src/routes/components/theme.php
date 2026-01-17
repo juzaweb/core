@@ -13,17 +13,6 @@ use Juzaweb\Modules\Core\Http\Controllers\Admin\MenuController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\ThemeController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\WidgetController;
 
-Route::get('themes', [ThemeController::class, 'index'])
-    ->name('admin.themes.index')
-    ->middleware(['permission:themes.index']);
-Route::get('themes/get-data', [ThemeController::class, 'loadData'])
-    ->name('admin.themes.get-data')
-    ->middleware(['permission:themes.index']);
-
-Route::post('themes/activate', [ThemeController::class, 'activate'])
-    ->name('admin.themes.activate')
-    ->middleware(['permission:themes.edit']);
-
 Route::group(
     ['prefix' => 'widgets'],
     function () {

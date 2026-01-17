@@ -16,12 +16,12 @@ class UploadController extends FileManagerController
 {
     protected array $errors = [];
 
-    public function upload(Request $request, string $websiteId, string $disk): JsonResponse
+    public function upload(Request $request, string $disk): JsonResponse
     {
         $folderId = $request->input('working_dir');
 
         if (!array_key_exists($disk, config('media.disks'))) {
-            return $this->responseUpload([trans('core::browser.invalid_disk') ]);
+            return $this->responseUpload([trans('core::browser.invalid_disk')]);
         }
 
         if (empty($folderId)) {
@@ -60,7 +60,7 @@ class UploadController extends FileManagerController
         }
     }
 
-    public function import(ImportRequest $request, string $websiteId, string $disk): JsonResponse
+    public function import(ImportRequest $request, string $disk): JsonResponse
     {
         if (! config('media.upload_from_url')) {
             abort(403);

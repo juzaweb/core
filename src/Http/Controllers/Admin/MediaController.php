@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MediaController extends AdminController
 {
-    public function index(Request $request, string $websiteId, ?string $folderId = null)
+    public function index(Request $request, ?string $folderId = null)
     {
         if ($folderId) {
             /** @var Media $folder */
@@ -69,7 +69,7 @@ class MediaController extends AdminController
         );
     }
 
-    public function update(Request $request, string $websiteId, string $id)
+    public function update(Request $request, string $id)
     {
         $request->validate(['name' => 'required|string|max:250']);
 
@@ -82,7 +82,7 @@ class MediaController extends AdminController
         ]);
     }
 
-    public function addFolder(AddFolderRequest $request, string $websiteId)
+    public function addFolder(AddFolderRequest $request)
     {
         Media::create(
             [
@@ -119,7 +119,7 @@ class MediaController extends AdminController
         return $storage->download($model->path);
     }
 
-    public function loadMore(Request $request, string $websiteId, ?string $folderId = null)
+    public function loadMore(Request $request, ?string $folderId = null)
     {
         $type = $request->get('type');
 

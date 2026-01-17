@@ -1,4 +1,5 @@
 <?php
+
 /**
  * LARABIZ CMS - Full SPA Laravel CMS
  *
@@ -17,7 +18,7 @@ use Juzaweb\Modules\Core\Models\Media;
 
 class BrowserController extends FileManagerController
 {
-    public function index(Request $request, string $websiteId, string $disk): View
+    public function index(Request $request, string $disk): View
     {
         if ($type = $this->getType()) {
             $mimeTypes = config("media.types.{$type}");
@@ -40,7 +41,7 @@ class BrowserController extends FileManagerController
         );
     }
 
-    public function items(Request $request, string $websiteId, string $disk): array
+    public function items(Request $request, string $disk): array
     {
         $type = $this->getType();
         $currentPage = $request->input('page', 1);
@@ -54,10 +55,10 @@ class BrowserController extends FileManagerController
             ->when($type, function ($q) use ($type) {
                 $q->where(function ($query) use ($type) {
                     $query->where('type', MediaType::DIRECTORY)
-                          ->orWhere(function ($q) use ($type) {
-                              $q->where('type', MediaType::FILE)
+                        ->orWhere(function ($q) use ($type) {
+                            $q->where('type', MediaType::FILE)
                                 ->whereIn('mime_type', config("media.types.{$type}"));
-                          });
+                        });
                 });
             })->orderBy('type', 'ASC')->orderBy('id', 'DESC')->paginate($perPage);
 
@@ -109,7 +110,7 @@ class BrowserController extends FileManagerController
         return $errors;
     }
 
-    public function delete(Request $request, string $websiteId, string $disk)
+    public function delete(Request $request, string $disk)
     {
         $itemNames = $request->post('items');
         $errors = [];

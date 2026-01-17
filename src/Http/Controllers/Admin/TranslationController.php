@@ -48,7 +48,7 @@ class TranslationController extends AdminController
         );
     }
 
-    public function update(TranslationRequest $request, string $websiteId, string $locale)
+    public function update(TranslationRequest $request, string $locale)
     {
         $group = $request->post('group');
         $value = $request->post('value');
@@ -141,7 +141,7 @@ class TranslationController extends AdminController
         DB::transaction(
             function () use ($model, $ids, $locale, $source, $request, &$historyIds) {
                 $posts = $model::with([
-                    'translations' => fn ($q) => $q->whereIn('locale', [$locale, $source])
+                    'translations' => fn($q) => $q->whereIn('locale', [$locale, $source])
                 ])
                     ->whereIn('id', $ids)
                     ->get();
@@ -173,7 +173,7 @@ class TranslationController extends AdminController
         );
     }
 
-    public function translateStatus(Request $request, string $websiteId): JsonResponse
+    public function translateStatus(Request $request): JsonResponse
     {
         $historyIds = $request->post('history_ids', []);
 

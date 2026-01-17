@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -20,7 +21,7 @@ use Juzaweb\Modules\Core\Models\Language;
 
 class LanguageController extends AdminController
 {
-    public function index(LanguagesDataTable $dataTable, string $websiteId)
+    public function index(LanguagesDataTable $dataTable)
     {
         $dataTable->withWebsiteId($websiteId);
 
@@ -90,7 +91,7 @@ class LanguageController extends AdminController
             ->where('code', '!=', $defaultLanguage)
             ->get();
 
-        $languages->each(fn (Language $language) => $language->delete());
+        $languages->each(fn(Language $language) => $language->delete());
 
         return $this->success(
             __('core::translation.languages_deleted_successfully')

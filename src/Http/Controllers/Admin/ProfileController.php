@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -31,7 +32,7 @@ class ProfileController extends AdminController
         );
     }
 
-    public function notification(Request $request, NotificationsDataTable $dataTable, string $websiteId)
+    public function notification(Request $request, NotificationsDataTable $dataTable)
     {
         $user = $request->user();
 
@@ -61,7 +62,7 @@ class ProfileController extends AdminController
                 $user->logActivity()
                     ->performedOn($user)
                     ->event('change_profile')
-                    ->log('Updated profile information'. ($user->wasChanged('password') ? ' and password' : ''));
+                    ->log('Updated profile information' . ($user->wasChanged('password') ? ' and password' : ''));
 
                 return $user;
             }
