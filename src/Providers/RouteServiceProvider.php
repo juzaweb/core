@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
             });
 
             Route::middleware(['admin'])
-                ->prefix("{$adminPrefix}/{websiteId}")
+                ->prefix($adminPrefix)
                 ->group(__DIR__ . '/../routes/admin.php');
 
             Route::middleware(['theme'])
