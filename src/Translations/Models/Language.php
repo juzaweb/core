@@ -66,6 +66,11 @@ class Language extends Model
         return self::whereCode($code)->exists();
     }
 
+    public static function findCode(string $code): ?self
+    {
+        return self::whereCode($code)->first();
+    }
+
     public function getChangeUrl($languages = null): string
     {
         $languages = $languages ?? self::languages();

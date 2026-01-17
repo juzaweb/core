@@ -31,7 +31,7 @@ class TranslationController extends AdminController
 
     public function index(string $locale)
     {
-        $language = Language::find($locale);
+        $language = Language::findCode($locale);
 
         abort_if($language === null, 404, __('core::translation.language_not_found'));
 
@@ -77,9 +77,9 @@ class TranslationController extends AdminController
         $collection = $this->translationManager->modules()
             ->filter(
                 function ($module, $key) use ($modules, $theme) {
-                    // if ($module['type'] == 'module') {
-                    //     return $key == 'admin' || in_array($key, $modules);
-                    // }
+                    if ($module['type'] == 'module') {
+                        return $key == 'admin' || in_array($key, $modules);
+                    }
 
                     if ($module['type'] === 'theme') {
                         return $key === $theme->lowerName();
