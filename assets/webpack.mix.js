@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+let path = require('path');
 require('laravel-mix-merge-manifest');
 
 mix.disableNotifications();
@@ -19,108 +20,102 @@ mix.options(
     }
 );
 
+const assetPath = path.dirname(__filename, '');;
+const publicPath = `vendor/juzaweb/assets/public`;
+
+mix.setPublicPath(publicPath);
+
 mix.combine(
     [
-        `modules/Admin/resources/assets/plugins/jquery/jquery.min.js`,
-        `modules/Admin/resources/assets/plugins/jquery-ui/jquery-ui.min.js`,
-        `modules/Admin/resources/assets/plugins/bootstrap/js/bootstrap.bundle.min.js`,
-        `modules/Admin/resources/assets/plugins/datatables/jquery.dataTables.min.js`,
-        `modules/Admin/resources/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js`,
-        `modules/Admin/resources/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js`,
-        `modules/Admin/resources/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js`,
-        // `assets/plugins/datatables-buttons/js/dataTables.buttons.min.js`,
-        // `assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js`,
-        // `assets/plugins/datatables-buttons/js/buttons.html5.min.js`,
-        // `assets/plugins/datatables-buttons/js/buttons.print.min.js`,
-        // `assets/plugins/datatables-buttons/js/buttons.colVis.min.js`,
-        `modules/Admin/resources/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js`,
-        `modules/Admin/resources/assets/plugins/select2/js/select2.full.min.js`,
-        `modules/Admin/resources/assets/plugins/jquery-validation/jquery.validate.min.js`,
-        `modules/Admin/resources/assets/plugins/jquery-validation/additional-methods.min.js`,
-        `modules/Admin/resources/assets/plugins/sweetalert2/sweetalert2.min.js`,
-        `modules/Admin/resources/assets/plugins/toastr/toastr.min.js`,
-        `modules/Admin/resources/assets/plugins/lazysizes/js/lazysizes.min.js`,
-        `modules/Admin/resources/assets/plugins/nestable2/jquery.nestable.min.js`,
-        `modules/Admin/resources/assets/file-manager/js/cropper.min.js`,
-        `modules/Admin/resources/assets/file-manager/js/dropzone.js`,
+        `${assetPath}/plugins/jquery/jquery.min.js`,
+        `${assetPath}/plugins/jquery-ui/jquery-ui.min.js`,
+        `${assetPath}/plugins/bootstrap/js/bootstrap.bundle.min.js`,
+        `${assetPath}/plugins/datatables/jquery.dataTables.min.js`,
+        `${assetPath}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js`,
+        `${assetPath}/plugins/datatables-responsive/js/dataTables.responsive.min.js`,
+        `${assetPath}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js`,
+        `${assetPath}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js`,
+        `${assetPath}/plugins/select2/js/select2.full.min.js`,
+        `${assetPath}/plugins/jquery-validation/jquery.validate.min.js`,
+        `${assetPath}/plugins/jquery-validation/additional-methods.min.js`,
+        `${assetPath}/plugins/sweetalert2/sweetalert2.min.js`,
+        `${assetPath}/plugins/toastr/toastr.min.js`,
+        `${assetPath}/plugins/lazysizes/js/lazysizes.min.js`,
+        `${assetPath}/plugins/nestable2/jquery.nestable.min.js`,
+        `${assetPath}/plugins/cropper/cropper.min.js`,
+        `${assetPath}/plugins/dropzone/dropzone.js`,
     ],
-    'public/assets/js/vendor.min.js'
+    `${publicPath}/js/vendor.min.js`
 ).mergeManifest();
 
 mix.combine(
     [
-        `modules/Admin/resources/assets/plugins/datatables/jquery.dataTables.min.js`,
-        `modules/Admin/resources/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js`,
-        `modules/Admin/resources/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js`,
-        `modules/Admin/resources/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js`,
-        // `assets/plugins/datatables-buttons/js/dataTables.buttons.min.js`,
-        // `assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js`,
-        // `assets/plugins/datatables-buttons/js/buttons.html5.min.js`,
-        // `assets/plugins/datatables-buttons/js/buttons.print.min.js`,
-        // `assets/plugins/datatables-buttons/js/buttons.colVis.min.js`,
-        `modules/Admin/resources/assets/admin/js/datatable-helper.js`,
+        `${assetPath}/plugins/datatables/jquery.dataTables.min.js`,
+        `${assetPath}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js`,
+        `${assetPath}/plugins/datatables-responsive/js/dataTables.responsive.min.js`,
+        `${assetPath}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js`,
+        `${assetPath}/admin/js/datatable-helper.js`,
     ],
-    'public/assets/js/datatables.min.js'
+    `${publicPath}/js/datatables.min.js`
 ).mergeManifest();
 
 mix.styles(
     [
-        `modules/Admin/resources/assets/plugins/fontawesome/css/all.min.css`,
-        `modules/Admin/resources/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css`,
-        `modules/Admin/resources/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css`,
-        `modules/Admin/resources/assets/plugins/jquery-ui/jquery-ui.min.css`,
-        // `modules/Admin/resources/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css`,
-        `modules/Admin/resources/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css`,
-        `modules/Admin/resources/assets/plugins/select2/css/select2.min.css`,
-        `modules/Admin/resources/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css`,
-        `modules/Admin/resources/assets/plugins/sweetalert2/sweetalert2.min.css`,
-        `modules/Admin/resources/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css`,
-        `modules/Admin/resources/assets/plugins/toastr/toastr.min.css`,
-        `modules/Admin/resources/assets/plugins/nestable2/jquery.nestable.min.css`,
-        `modules/Admin/resources/assets/file-manager/css/cropper.min.css`,
-        `modules/Admin/resources/assets/file-manager/css/dropzone.css`,
+        `${assetPath}/plugins/fontawesome/css/all.min.css`,
+        `${assetPath}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css`,
+        `${assetPath}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css`,
+        `${assetPath}/plugins/jquery-ui/jquery-ui.min.css`,
+        `${assetPath}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css`,
+        `${assetPath}/plugins/select2/css/select2.min.css`,
+        `${assetPath}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css`,
+        `${assetPath}/plugins/sweetalert2/sweetalert2.min.css`,
+        `${assetPath}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css`,
+        `${assetPath}/plugins/toastr/toastr.min.css`,
+        `${assetPath}/plugins/nestable2/jquery.nestable.min.css`,
+        `${assetPath}/plugins/cropper/cropper.min.css`,
+        `${assetPath}/plugins/dropzone/dropzone.css`,
     ],
-    'public/assets/css/vendor.min.css'
+    `${publicPath}/css/vendor.min.css`
 ).mergeManifest();
 
 mix.combine(
     [
-        `modules/Admin/resources/assets/frontend/js/online.js`,
-        `modules/Admin/resources/assets/frontend/js/firebase.js`,
+        `${assetPath}/frontend/js/online.js`,
+        `${assetPath}/frontend/js/firebase.js`,
     ],
-    `public/assets/js/init.min.js`
+    `${publicPath}/js/init.min.js`
 )
     .mergeManifest();
 
 mix.combine(
     [
 
-        `modules/Admin/resources/assets/admin/dist/js/admin.min.js`,
-        `modules/Admin/resources/assets/admin/js/helpers.js`,
-        `modules/Admin/resources/assets/admin/js/common.js`,
-        `modules/Admin/resources/assets/admin/js/datatable-helper.js`,
-        `modules/Admin/resources/assets/admin/js/filemanager.js`,
-        `modules/Admin/resources/assets/admin/js/form-ajax.js`,
-        'modules/Admin/resources/assets/admin/js/load-select2.js',
-        'modules/Admin/resources/assets/admin/js/media.js',
-        'modules/Admin/resources/assets/admin/js/media-modal.js',
-        'modules/Admin/resources/assets/admin/js/menu.js',
-        'modules/Admin/resources/assets/admin/js/widget.js',
+        `${assetPath}/admin/dist/js/admin.min.js`,
+        `${assetPath}/admin/js/helpers.js`,
+        `${assetPath}/admin/js/common.js`,
+        `${assetPath}/admin/js/datatable-helper.js`,
+        `${assetPath}/admin/js/filemanager.js`,
+        `${assetPath}/admin/js/form-ajax.js`,
+        `${assetPath}/admin/js/load-select2.js`,
+        `${assetPath}/admin/js/media.js`,
+        `${assetPath}/admin/js/media-modal.js`,
+        `${assetPath}/admin/js/menu.js`,
+        `${assetPath}/admin/js/widget.js`,
     ],
-    `public/assets/js/admin.min.js`
+    `${publicPath}/js/admin.min.js`
 ).mergeManifest();
 
 mix.styles(
     [
-        `modules/Admin/resources/assets/admin/dist/css/admin.css`,
-        'modules/Admin/resources/assets/admin/css/media.css',
-        'modules/Admin/resources/assets/admin/css/menu.css',
-        'modules/Admin/resources/assets/admin/css/widget.css',
-        `modules/Admin/resources/assets/admin/css/page.css`,
-        `modules/Admin/resources/assets/admin/css/pricing.css`,
-        `modules/Admin/resources/assets/admin/css/custom.css`,
-        `modules/Admin/resources/assets/admin/css/media-modal.css`,
-        `modules/Admin/resources/assets/admin/css/modern-theme.css`,
+        `${assetPath}/admin/dist/css/admin.css`,
+        `${assetPath}/admin/css/media.css`,
+        `${assetPath}/admin/css/menu.css`,
+        `${assetPath}/admin/css/widget.css`,
+        `${assetPath}/admin/css/page.css`,
+        `${assetPath}/admin/css/pricing.css`,
+        `${assetPath}/admin/css/custom.css`,
+        `${assetPath}/admin/css/media-modal.css`,
+        `${assetPath}/admin/css/modern-theme.css`,
     ],
-    `public/assets/css/admin.min.css`
+    `${publicPath}/css/admin.min.css`
 ).mergeManifest();
