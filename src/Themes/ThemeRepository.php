@@ -86,7 +86,7 @@ class ThemeRepository implements ThemeContract
         throw ThemeNotFoundException::make($name);
     }
 
-    public function current(): Theme
+    public function current(): ?Theme
     {
         // if (isset($this->currentTheme)) {
         //     return $this->currentTheme;

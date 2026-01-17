@@ -16,7 +16,7 @@ interface Theme
 {
     public function find(string $name): ?\Juzaweb\Modules\Core\Themes\Theme;
 
-    public function current(): \Juzaweb\Modules\Core\Themes\Theme;
+    public function current(): ?\Juzaweb\Modules\Core\Themes\Theme;
 
     public function init(): void;
 }
