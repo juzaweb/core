@@ -59,10 +59,7 @@ class RouteServiceProvider extends ServiceProvider
                 'verified',
                 \Juzaweb\Modules\Core\Http\Middleware\OnlyMainSite::class,
                 \Juzaweb\Modules\Core\Http\Middleware\Admin::class,
-                \Juzaweb\Modules\Core\Http\Middleware\CheckWebsiteSetup::class,
                 \Juzaweb\Modules\Core\Http\Middleware\ForceLocale::class,
-                \Juzaweb\Modules\Core\Http\Middleware\BlockDemoWebsiteActions::class,
-                \Juzaweb\Modules\Core\Http\Middleware\TrackWebsiteLastAccess::class,
             ]
         );
 
@@ -71,8 +68,6 @@ class RouteServiceProvider extends ServiceProvider
             [
                 'web',
                 \Juzaweb\Modules\Core\Http\Middleware\XFrameHeadersPolicy::class,
-                \Juzaweb\Modules\Core\Http\Middleware\RedirectSubdomainToCustomDomain::class,
-                // \Juzaweb\Modules\Admin\Http\Middleware\ForceLocale::class,
                 \Juzaweb\Modules\Core\Http\Middleware\RedirectLanguage::class,
                 \Juzaweb\Modules\Core\Http\Middleware\MultipleLanguage::class,
                 \Juzaweb\Modules\Core\Http\Middleware\Theme::class,

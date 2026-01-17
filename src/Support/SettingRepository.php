@@ -12,6 +12,7 @@ namespace Juzaweb\Modules\Core\Support;
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Juzaweb\Modules\Core\Contracts\GlobalData;
 use Juzaweb\Modules\Core\Contracts\Setting as SettingContract;
 use Juzaweb\Modules\Core\Models\Model;
@@ -144,6 +145,10 @@ class SettingRepository implements SettingContract
 
     public function configs(): Collection
     {
+        if (File::missing(storage_path('app/installed'))) {
+            return new Collection();
+        }
+
         return SettingModel::with(['translations' => fn ($q) => $q->cacheFor(3600)])
             ->cacheFor(3600)
             ->get()
