@@ -81,7 +81,7 @@ mix.styles(
 mix.combine(
     [
         `${assetPath}/frontend/js/online.js`,
-        `${assetPath}/frontend/js/firebase.js`,
+        // `${assetPath}/frontend/js/firebase.js`,
     ],
     `${publicPath}/js/init.min.js`
 )

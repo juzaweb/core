@@ -19,7 +19,6 @@
 
 <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
     const juzaweb = {
-        websiteId: "{{ $websiteId }}",
         adminPrefix: "{{ config('core.admin_prefix') }}/{{ $websiteId }}",
         adminUrl: "{{ url(config('core.admin_prefix') . '/' . $websiteId) }}",
         documentBaseUrl: "{{ Storage::disk('public')->url('/') }}",

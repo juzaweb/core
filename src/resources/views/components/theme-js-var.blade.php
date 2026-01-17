@@ -1,12 +1,4 @@
-@php
-    $website = Network::website();
-    $websiteId = $website->id;
-    $gaId = ($website->isMainWebsite() || $website->isDemoWebsite())
-        ? config('network.google_analytics.main')
-        : config('network.google_analytics.subsites');
-@endphp
-
-@if($gaId)
+@if($gaId = setting('google_analytics_id'))
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
     <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
         window.dataLayer = window.dataLayer || [];
@@ -17,25 +9,12 @@
 
         gtag('js', new Date());
 
-        gtag('config', '{{ $gaId }}', {
-            'custom_map': {
-                'dimension2': 'website_id',
-            }
-        });
-
-        gtag('event', 'page_view', {
-            'website_id': '{{ $websiteId }}',
-        });
-
-        @if(setting('google_analytics_id'))
-        gtag('config', '{{ setting('google_analytics_id') }}');
-        @endif
+        gtag('config', '{{ $gaId }}');
     </script>
 @endif
 
 <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
     const juzaweb = {
-        websiteId: "{{ $websiteId }}",
         documentBaseUrl: "{{ Storage::disk('public')->url('/') }}",
         imageUrl: "{{ config('services.imgproxy.base_url') }}",
         viewPage: "{{ $viewPage ?? '' }}",
