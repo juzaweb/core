@@ -21,10 +21,6 @@ class EnsureEmailIsVerified extends BaseEnsureEmailIsVerified
 {
     public function handle($request, \Closure $next, $redirectToRoute = null)
     {
-        if (Network::currentIsMainSite()) {
-            return parent::handle($request, $next, $redirectToRoute);
-        }
-
         if (! setting('user_verification', false)) {
             return $next($request);
         }

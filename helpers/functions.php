@@ -14,8 +14,7 @@ use Juzaweb\Modules\Admin\Networks\Facades\Network;
 if (!function_exists('online_count')) {
     function online_count(): int
     {
-        $siteId = Network::website()->id;
-        $key = "site:{$siteId}:users_online";
+        $key = "site:users_online";
         $now = time();
         $ttl = 300;
 

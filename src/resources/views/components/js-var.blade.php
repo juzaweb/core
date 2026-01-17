@@ -1,10 +1,9 @@
 @php
-    $website = Network::website();
     $websiteId = $website->id;
     $gaId = config('network.google_analytics.main');
 @endphp
 
-@if ($gaId && !$website->isMainWebsite())
+@if ($gaId)
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
     <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
         window.dataLayer = window.dataLayer || [];

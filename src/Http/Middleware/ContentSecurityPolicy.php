@@ -17,6 +17,10 @@ class ContentSecurityPolicy
      */
     public function handle(Request $request, Closure $next)
     {
+        if (! config('core.csp_script_src')) {
+            return $next($request);
+        }
+
         $scriptNonce = Str::random(32);
 
         $request->attributes->set('cspNonce', $scriptNonce);

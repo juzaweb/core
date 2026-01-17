@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('languages', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 10)->index();
+            $table->string('code', 10);
             $table->string('name', 100);
             $table->datetimes();
 
@@ -28,13 +28,7 @@ return new class extends Migration
                 'name' => 'English',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'code' => 'vi',
-                'name' => 'Vietnamese',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            ]
         ]);
     }
 

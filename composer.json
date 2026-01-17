@@ -19,7 +19,6 @@
         "laravel/slack-notification-channel": "^3.7",
         "laravel/socialite": "^5.5",
         "maatwebsite/excel": "^3.1",
-        "opcodesio/log-viewer": "^3.21",
         "pion/laravel-chunk-upload": "^1.5",
         "spatie/image-optimizer": "^1.4",
         "spatie/laravel-activitylog": "^4.10",

@@ -37,8 +37,6 @@ class ModelTranslateJob implements ShouldQueue
 
     public function handle(): void
     {
-        Network::init($this->website);
-
         $this->model->translateTo($this->targetLocale, $this->sourceLocale, ['force' => true]);
 
         sleep(1);

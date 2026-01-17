@@ -13,8 +13,6 @@ namespace Juzaweb\Modules\Core\Translations\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
-use Juzaweb\Modules\Admin\Models\Website;
-use Juzaweb\Modules\Admin\Networks\Facades\Network;
 use Juzaweb\Modules\Core\Translations\Contracts\Translatable;
 use Juzaweb\Modules\Core\Translations\Models\Language;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,13 +38,6 @@ class ModelTranslateCommand extends Command
             return self::FAILURE;
         }
 
-        $website = $websiteId ? Website::find($websiteId) : Website::find(config('network.main_website_id'));
-        if (!$website) {
-            $this->error("Website ID {$websiteId} does not exist.");
-            return self::FAILURE;
-        }
-
-        Network::init($website);
         $source = $this->option('source') ?? config('translatable.fallback_locale');
 
         if ($target = $this->option('target')) {
@@ -109,7 +100,6 @@ class ModelTranslateCommand extends Command
         return [
             ['source', 's', InputOption::VALUE_OPTIONAL, 'The source language to translate from', null],
             ['target', 't', InputOption::VALUE_OPTIONAL, 'The target languages to translate to, separated by commas', null],
-            ['website-id', null, InputOption::VALUE_OPTIONAL, 'The website ID for which to perform translations', null],
             ['limit', null, InputOption::VALUE_OPTIONAL, 'Limit the number of records to translate', null],
         ];
     }

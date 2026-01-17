@@ -26,16 +26,6 @@ class Theme
      */
     public function handle(Request $request, \Closure $next): mixed
     {
-        $website = Network::website();
-
-        View::composer('*', function ($view) use ($website) {
-            $view->with('websiteId', $website->id);
-        });
-
-        // if (! $website->isMainWebsite()) {
-        //     Auth::shouldUse('member');
-        // }
-
         $defaultThubnails = Thumbnail::getDefaults();
 
         foreach ($defaultThubnails as $class => $defaultThubnail) {
