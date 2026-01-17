@@ -2,9 +2,9 @@ name: Test
 
 on:
   push:
-    branches: [ main, master, develop ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ main, master, develop ]
+    branches: [ master, develop ]
 
 jobs:
   test:
@@ -32,11 +32,7 @@ jobs:
           composer install --prefer-dist --no-interaction --no-progress
 
       - name: Run tests
-        run: |
-          cd packages/core
-          composer test
+        run: composer test
 
       - name: Check code style
-        run: |
-          cd packages/core
-          composer format -- --test
+        run: composer format -- --test
