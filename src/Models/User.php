@@ -27,7 +27,7 @@ use Juzaweb\Modules\Core\Traits\HasAPI;
 use Juzaweb\Modules\Core\Traits\HasSocialConnection;
 use Juzaweb\QueryCache\QueryCacheable;
 
-abstract class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use CausesActivity,
         HasAPI,
@@ -38,6 +38,8 @@ abstract class User extends Authenticatable implements MustVerifyEmail
         HasUuids,
         Notifiable,
         QueryCacheable;
+
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
