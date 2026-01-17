@@ -750,7 +750,7 @@ if (!function_exists('img_proxy')) {
             return '';
         }
 
-        $hash = encrypt_deterministic($url, config('services.imgproxy.key'));
+        $hash = encrypt_deterministic($url, sha1(config('app.key')));
         $baseUrl = rtrim(config('services.imgproxy.base_url'), '/');
         $filename = basename($url);
         $method = $crop ? 'crop' : 'cover';
@@ -813,7 +813,7 @@ function decrypt_deterministic(string $token, string $key): ?string
     return $plain === false ? null : $plain;
 }
 
-function ip_in_range(string $ip, string $range)
+function ip_in_range(string $ip, string $range): bool
 {
     [$subnet, $bits] = explode('/', $range);
     $ip = ip2long($ip);

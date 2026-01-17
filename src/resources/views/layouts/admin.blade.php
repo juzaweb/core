@@ -181,7 +181,7 @@
 </div>
 
 <script src="{{ mix('js/vendor.min.js', 'juzaweb') }}"></script>
-<script src="{{ asset('plugins/tinymce/tinymce.min.js', 'juzaweb') }}"></script>
+<script src="{{ asset('juzaweb/plugins/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ mix('js/admin.min.js', 'juzaweb') }}"></script>
 
 <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
