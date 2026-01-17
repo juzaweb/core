@@ -1,6 +1,9 @@
 # Juzaweb Core
 
 [![Test](https://github.com/juzaweb/core/workflows/Test/badge.svg)](https://github.com/juzaweb/core/actions)
+[![Total Downloads](https://img.shields.io/packagist/dt/juzaweb/core.svg?style=social)](https://packagist.org/packages/juzaweb/core)
+[![GitHub Repo stars](https://img.shields.io/github/stars/juzaweb/core?style=social)](https://github.com/juzaweb/core)
+[![GitHub followers](https://img.shields.io/github/followers/juzaweb?style=social)](https://github.com/juzaweb)
 
 Core package for Juzaweb CMS.
 
