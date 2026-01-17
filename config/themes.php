@@ -8,6 +8,8 @@
  */
 
 return [
+    'enable' => env('JW_THEME_ENABLE', true),
+
     'path' => base_path('themes'),
 
     'stubs' => [

@@ -47,7 +47,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{ admin_url('/') }}" class="brand-link">
-            <img src="{{ asset('assets/images/logo-white.png?v=2') }}" alt="Juzaweb Logo" style="opacity: .8"
+            <img src="{{ asset('juzaweb/images/logo-white.png?v=2') }}" alt="Juzaweb Logo" style="opacity: .8"
                  height="45"/>
             {{-- <span class="brand-text font-weight-light">Juzaweb</span> --}}
         </a>

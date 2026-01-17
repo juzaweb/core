@@ -56,6 +56,7 @@ use Juzaweb\Modules\Core\Support\SitemapRepository;
 use Juzaweb\Modules\Core\Support\ThemeSettingRepository;
 use Juzaweb\Modules\Core\Support\ThumbnailRepository;
 use Juzaweb\Modules\Core\Support\WidgetRepository;
+use Juzaweb\Modules\Core\Themes\Providers\ThemeServiceProvider;
 use Juzaweb\Modules\Core\View\Components\Card;
 use Juzaweb\Modules\Core\View\Components\CookieConsent;
 use Juzaweb\Modules\Core\View\Components\Form;

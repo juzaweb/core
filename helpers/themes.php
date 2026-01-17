@@ -165,11 +165,6 @@ function dynamic_block(Page|string|null $page, string $container): Factory|\Illu
     );
 }
 
-function ads_position(string $position): ?string
-{
-    return app(\Juzaweb\Modules\AdsManagement\Ads::class)->getBanner($position)?->getBody();
-}
-
 function dynamic_sidebar(string $name): Factory|\Illuminate\Contracts\View\View
 {
     $sidebars = sidebars($name);

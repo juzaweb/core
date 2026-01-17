@@ -88,7 +88,6 @@ return [
     | language name as the value.
     |
     */
-
     'languages' => [
         'zh',
         'cs',
