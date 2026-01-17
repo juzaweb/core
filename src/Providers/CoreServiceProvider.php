@@ -117,6 +117,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->registerTranslations();
         $this->registerViews();
+        $this->publishAssets();
 
         $this->app->singleton(
             Locale::class,
@@ -373,5 +374,12 @@ class CoreServiceProvider extends ServiceProvider
         ], ['views', 'core-views']);
 
         $this->loadViewsFrom($sourcePath, 'core');
+    }
+
+    protected function publishAssets(): void
+    {
+        $this->publishes([
+            __DIR__ . '/../../assets/public' => public_path('assets'),
+        ], 'core-assets');
     }
 }
