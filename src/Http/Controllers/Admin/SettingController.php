@@ -33,7 +33,7 @@ class SettingController extends AdminController
     {
         Breadcrumb::add(__('core::translation.social_login_setting'));
 
-        $drivers = collect(config('app.social_login.providers', []))->keys()
+        $drivers = collect(config('core.social_login.providers', []))->keys()
             ->mapWithKeys(function ($driver) {
                 return [$driver => title_from_key($driver)];
             });

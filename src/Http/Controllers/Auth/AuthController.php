@@ -70,7 +70,7 @@ class AuthController extends AdminController
         return $this->success(
             [
                 'message' => trans('core::translation.login_successfully'),
-                'redirect' => website()->loginRedirectUrl($user),
+                'redirect' => home_url(),
             ]
         );
     }

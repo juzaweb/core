@@ -18,7 +18,6 @@ use Juzaweb\Modules\Core\Http\Controllers\ThemeController;
 use Juzaweb\Modules\Core\Http\Requests\NotificationSubscribeRequest;
 use Juzaweb\Modules\Core\Models\NotificationSubscription;
 use Juzaweb\Modules\Core\Notifications\SubscriptionVerifyEmail;
-use function Juzaweb\Modules\Admin\Http\Controllers\Frontend\website;
 
 class NotificationSubscribeController extends ThemeController
 {
@@ -52,7 +51,7 @@ class NotificationSubscribeController extends ThemeController
                 ]
             );
 
-            Notification::route('mail', $data)->notify(new SubscriptionVerifyEmail(website(), $url));
+            Notification::route('mail', $data)->notify(new SubscriptionVerifyEmail($url));
 
             return $this->success(__('core::translation.verification_email_sent'));
         }

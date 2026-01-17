@@ -191,7 +191,7 @@ function page_view_name(Page $page, string $namespace): string
 
 function social_login_providers(): Collection
 {
-    return collect(config('app.social_login.providers', []))
+    return collect(config('core.social_login.providers', []))
         ->map(fn($item, $key) => title_from_key($key))
         ->filter(fn ($item, $key) => setting("{$key}_login", false));
 }

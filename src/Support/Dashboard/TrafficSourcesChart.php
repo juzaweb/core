@@ -50,7 +50,6 @@ class TrafficSourcesChart extends PieChart
             period: new Period(now()->subDays(8), now()->subDay()),
             metrics: ['sessions'],
             dimensions: ['sessionSource'],
-            dimensionFilter: website()->isMainWebsite() ? null : $filterExpression,
         );
 
         $rows = collect($response)->sortByDesc('sessions');

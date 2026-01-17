@@ -75,7 +75,7 @@ class SocialLoginController extends AdminController
             );
         }
 
-        $guard = website()->useUserAuth() ? 'web' : 'member';
+        $guard = 'web';
         $provider = config("auth.guards.{$guard}.provider");
         $model = config('auth.providers.' . $provider . '.model');
         $connectionModel = config('auth.providers.' . $provider . '.social_connection_model');
@@ -138,7 +138,7 @@ class SocialLoginController extends AdminController
 
         return $this->success(
             [
-                'redirect' => website()->loginRedirectUrl($user),
+                'redirect' => home_url(),
                 'message' => __('core::translation.login_successful'),
             ]
         );
@@ -146,7 +146,7 @@ class SocialLoginController extends AdminController
 
     protected function getProvider(string $method): AbstractProvider
     {
-        $provider = config("app.social_login.providers.{$method}");
+        $provider = config("core.social_login.providers.{$method}");
 
         if (empty($provider)) {
             abort(404, __('core::translation.page_not_found'));

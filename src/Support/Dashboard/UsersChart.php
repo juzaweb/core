@@ -67,7 +67,6 @@ class UsersChart extends LineChart
             period: new Period(now()->subDays(8), now()->subDay()),
             metrics: ['activeUsers', 'screenPageViews', 'newUsers'],
             dimensions: ['date'],
-            dimensionFilter: website()->isMainWebsite() ? null : $filterExpression,
         );
 
         $response = $response->sort(fn ($a, $b) => $a['date']->timestamp <=> $b['date']->timestamp);

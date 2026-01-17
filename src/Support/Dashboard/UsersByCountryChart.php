@@ -50,7 +50,6 @@ class UsersByCountryChart extends PieChart
             period: new Period(now()->subDays(8), now()->subDay()),
             metrics: ['activeUsers'],
             dimensions: ['country'],
-            dimensionFilter: website()->isMainWebsite() ? null : $filterExpression
         );
 
         $total = collect($response)->sum('activeUsers');

@@ -1,5 +1,5 @@
 @php
-    $host = website()->getHost();
+    $host = config('app.url');
     $siteName = generate_site_name_from_host($host);
     $email = 'admin@' . $host;
 @endphp

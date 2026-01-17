@@ -10,7 +10,6 @@
 
 namespace Juzaweb\Modules\Core\Providers;
 
-use Illuminate\Support\Facades\Blade;
 use Juzaweb\Modules\Blog\Models\Category;
 use Juzaweb\Modules\Core\Contracts\Sitemap;
 use Juzaweb\Modules\Core\Facades\Chart;
@@ -72,13 +71,6 @@ abstract class AdminServiceProvider extends ServiceProvider
             ];
         });
 
-        Menu::make('blog', function () {
-            return [
-                'title' => __('core::translation.blog'),
-                'icon' => 'fas fa-newspaper',
-            ];
-        });
-
         Menu::make('appearance', function () {
             return [
                 'title' => __('core::translation.appearance'),
@@ -117,14 +109,6 @@ abstract class AdminServiceProvider extends ServiceProvider
             ];
         });
 
-        Menu::make('domain', function () {
-            return [
-                'title' => __('core::translation.custom_domain'),
-                'url' => 'settings/domain',
-                'parent' => 'settings',
-            ];
-        });
-
         Menu::make('social-login', function () {
             return [
                 'title' => __('core::translation.social_login'),
@@ -141,9 +125,9 @@ abstract class AdminServiceProvider extends ServiceProvider
             ];
         });
 
-        Menu::make('members', function () {
+        Menu::make('users', function () {
             return [
-                'title' => __('core::translation.members'),
+                'title' => __('core::translation.users'),
                 'parent' => 'settings',
             ];
         });
@@ -198,7 +182,7 @@ abstract class AdminServiceProvider extends ServiceProvider
                 Setting::make('language')->default('en');
 
                 // Social Login Settings
-                $drivers = array_keys(config('app.social_login.providers', []));
+                $drivers = array_keys(config('core.social_login.providers', []));
 
                 foreach ($drivers as $driver) {
                     Setting::make("{$driver}_login")

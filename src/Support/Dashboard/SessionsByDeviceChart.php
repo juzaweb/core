@@ -50,7 +50,6 @@ class SessionsByDeviceChart extends PieChart
             period: new Period(now()->subDays(8), now()->subDay()),
             metrics: ['sessions'],
             dimensions: ['deviceCategory'],
-            dimensionFilter: website()->isMainWebsite() ? null : $filterExpression
         );
 
         return [

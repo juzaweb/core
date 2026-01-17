@@ -21,8 +21,8 @@
                         </div>
                         <div class="card-body">
                             @php
-                                $redirectUrl = website()->url . route('auth.social.redirect', [$name], false);
-                                $callbackUrl = website()->url . route('auth.social.callback', [$name], false);
+                                $redirectUrl = route('auth.social.redirect', [$name]);
+                                $callbackUrl = route('auth.social.callback', [$name]);
                             @endphp
 
                             {{ Field::security(__('core::translation.client_id'), "{$name}_client_id", ['value' => setting("{$name}_client_id")]) }}

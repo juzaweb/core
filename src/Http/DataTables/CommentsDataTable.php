@@ -76,7 +76,7 @@ class CommentsDataTable extends DataTable
                 if ($commentable) {
                     $title = $commentable->title ?? $commentable->name ?? __('core::translation.no_title');
                     $url = parse_url($commentable->getUrl(), PHP_URL_PATH);
-                    $url = website()->url . $url;
+                    $url = url($url);
 
                     return '<a href="' . $url . '" target="_blank">' . e($title) . '</a>';
                 }
