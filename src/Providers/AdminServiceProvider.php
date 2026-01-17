@@ -79,27 +79,6 @@ abstract class AdminServiceProvider extends ServiceProvider
             ];
         });
 
-        Menu::make('posts', function () {
-            return [
-                'title' => __('core::translation.posts'),
-                'parent' => 'blog',
-            ];
-        });
-
-        Menu::make('post-categories', function () {
-            return [
-                'title' => __('core::translation.categories'),
-                'parent' => 'blog',
-            ];
-        });
-
-        Menu::make('comments', function () {
-            return [
-                'title' => __('core::translation.comments'),
-                'parent' => 'blog',
-            ];
-        });
-
         Menu::make('appearance', function () {
             return [
                 'title' => __('core::translation.appearance'),

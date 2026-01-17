@@ -94,7 +94,6 @@ trait HasSlug
         do {
             $row = self::where('id', '!=', $this->id)
                 ->where('slug', '=', $slug)
-                ->where('website_id', '='
                 ->orderBy('slug', 'DESC')
                 ->first(['slug']);
 

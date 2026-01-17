@@ -145,8 +145,6 @@ class ThemeSettingRepository implements SettingContract
     public function configs(): Collection
     {
         return SettingModel::cacheFor(3600)
-            ->withoutGlobalScope('website_id')
-            ->where('website_id'
             ->where('theme', $this->theme->current()->name())
             ->get(['code', 'value'])
             ->pluck('value', 'code');

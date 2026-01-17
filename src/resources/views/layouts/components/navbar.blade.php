@@ -7,9 +7,9 @@
                 <i class="fas fa-bars"></i>
             </a>
         </li>
-        
+
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ website()->url }}" class="nav-link text-primary"
+            <a href="{{ url('/') }}" class="nav-link text-primary"
                 target="_blank">{{ __('core::translation.view_website') }}</a>
         </li>
 
@@ -38,18 +38,6 @@
                 </form>
             </div>
         </li> --}}
-
-        @if (!website()->isMainWebsite())
-            <li class="nav-item d-flex align-items-center ml-2">
-                <a href="{{ admin_url('/upgrade') }}" class="btn btn-warning btn-sm rounded-pill font-weight-bold px-3">
-                    @if (($plan = website()->currentPlan('network')) && !$plan->is_free)
-                        <i class="fas fa-star mr-1"></i> {{ $plan->name }} {{ __('core::translation.plan') }}
-                    @else
-                        <i class="fas fa-rocket mr-1"></i> {{ __('core::translation.upgrade_to_pro') }}
-                    @endif
-                </a>
-            </li>
-        @endif
 
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
