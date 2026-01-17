@@ -21,7 +21,7 @@ trait UsedInFrontend
 
     public function scopeWhereFrontend(Builder $builder, array $translationCacheTags = []): Builder
     {
-        $cache = config('app.optimize.cache_in_frontend', true);
+        $cache = config('core.optimize.cache_in_frontend', true);
 
         return $builder
             ->when(

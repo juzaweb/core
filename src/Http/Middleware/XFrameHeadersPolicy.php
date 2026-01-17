@@ -34,7 +34,7 @@ class XFrameHeadersPolicy
          */
         $response = $next($request);
 
-        if (config('app.optimize.deny_iframe')) {
+        if (config('core.optimize.deny_iframe')) {
             $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
         }
 

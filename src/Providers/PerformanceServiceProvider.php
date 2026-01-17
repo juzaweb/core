@@ -17,7 +17,7 @@ class PerformanceServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        if (config('app.optimize.minify_views')) {
+        if (config('core.optimize.minify_views')) {
             $this->registerBladeCompiler();
         }
     }

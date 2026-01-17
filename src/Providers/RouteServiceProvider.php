@@ -31,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider
             //     ->prefix('api/v1')
             //     ->group(__DIR__ . '/../routes/api.php');
 
-            $adminPrefix = $this->app['config']->get('app.admin_prefix');
+            $adminPrefix = $this->app['config']->get('core.admin_prefix');
             Route::group([], function () {
                 require __DIR__ . '/../routes/statics.php';
             });

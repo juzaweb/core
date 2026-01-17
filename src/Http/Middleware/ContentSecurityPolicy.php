@@ -33,7 +33,7 @@ class ContentSecurityPolicy
                 "'self'",
                 "'unsafe-eval'",
             ],
-            config('app.csp_script_src')
+            config('core.csp_script_src')
         );
 
         $arr = [

@@ -164,7 +164,7 @@ if (! function_exists('admin_url')) {
         $websiteId = $websiteId ?? website_id();
 
         return url(rtrim(
-            '/' . config('app.admin_prefix')
+            '/' . config('core.admin_prefix')
                 . '/' . $websiteId
                 . '/' . ltrim($uri, '/'),
             '/'
@@ -332,7 +332,7 @@ if (!function_exists('is_admin_page')) {
     {
         // Check if the current page is an admin page by checking if the
         // current URL matches the prefix defined in the config.
-        return request()->is(config('app.admin_prefix') . '*');
+        return request()->is(config('core.admin_prefix') . '*');
     }
 }
 

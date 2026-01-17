@@ -127,6 +127,11 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerConfigs(): void
     {
         $this->mergeConfigFrom(
+            __DIR__ . '/../../config/core.php',
+            'core'
+        );
+
+        $this->mergeConfigFrom(
             __DIR__ . '/../../config/media.php',
             'media'
         );

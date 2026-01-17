@@ -66,8 +66,6 @@ return [
          * Default: true
          */
         'deny_iframe' => (bool) env('DENY_IFRAME', true),
-
-        'cache_in_frontend' => (bool) env('CACHE_IN_FRONTEND', true),
     ],
 
     /*

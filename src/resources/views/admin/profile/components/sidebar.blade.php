@@ -22,12 +22,12 @@
 
                     <div class="profile-usermenu">
                         <ul class="nav flex-column">
-                            <li class="nav-item {{ request()->is(config('app.admin_prefix') . '/profile') ? 'active' : '' }}">
+                            <li class="nav-item {{ request()->is(config('core.admin_prefix') . '/profile') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ admin_url('profile') }}">
                                     <i class="fas fa-user"></i> {{ __('admin::translation.profile') }}
                                 </a>
                             </li>
-                            <li class="nav-item {{ request()->is((config('app.admin_prefix') . '/profile/notifications')) ? 'active' : '' }}">
+                            <li class="nav-item {{ request()->is((config('core.admin_prefix') . '/profile/notifications')) ? 'active' : '' }}">
                                 <a class="nav-link"
                                    href="{{ admin_url('profile/notifications') }}">
                                     <i class="fas fa-bell"></i> {{ __('admin::translation.notifications') }}
