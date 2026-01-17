@@ -161,6 +161,10 @@ class ThemeRepository implements ThemeContract
             return $this->themes;
         }
 
+        if (!File::isDirectory($this->path)) {
+            return ($this->themes = new Collection());
+        }
+
         $themeDirectories = File::directories($this->path);
         $themes = [];
 
