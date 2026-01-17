@@ -29,9 +29,6 @@ class ThemeSeedCommand extends Command
             return Command::FAILURE;
         }
 
-        $websiteId = $this->argument('website');
-        set_website($websiteId);
-
         $seederClass = "Juzaweb\\Themes\\{$theme->studlyName()}\\Database\\Seeders\\DatabaseSeeder";
 
         if (!class_exists($seederClass)) {
@@ -39,7 +36,7 @@ class ThemeSeedCommand extends Command
             return Command::FAILURE;
         }
 
-        app($seederClass)->run($websiteId);
+        app($seederClass)->run();
 
         $this->info('Theme data seeded successfully.');
 

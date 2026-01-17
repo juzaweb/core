@@ -1,12 +1,3 @@
-@php
-    $websites = \Juzaweb\Modules\Admin\Models\Website::where(
-        'status',
-        \Juzaweb\Modules\Admin\Enums\WebsiteStatus::ACTIVE,
-    )
-        ->cacheTags(['websites', 'website_users:' . auth()->id()])
-        ->whereHas('users', fn($q) => $q->where('user_id', auth()->id()))
-        ->get();
-@endphp
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -16,29 +7,7 @@
                 <i class="fas fa-bars"></i>
             </a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-primary font-weight-bold" href="#" id="websitesDropdown"
-                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-globe mr-1"></i> {{ __('core::translation.my_websites') }}
-            </a>
-            <div class="dropdown-menu shadow animated--fade-in" aria-labelledby="websitesDropdown"
-                style="min-width: 220px;">
-                @if (auth()->user()->isSuperAdmin())
-                    <a class="dropdown-item d-flex align-items-center" href="{{ network_url('/') }}">
-                        <i class="fas fa-globe text-secondary mr-2"></i>
-                        <span>{{ __('core::translation.network') }}</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                @endif
-
-                @foreach ($websites as $website)
-                    <a class="dropdown-item d-flex align-items-center" href="{{ $website->admin_url }}">
-                        <i class="fas fa-link text-secondary mr-2"></i>
-                        <span>{{ sub_char($website->title, 25) }}</span>
-                    </a>
-                @endforeach
-            </div>
-        </li>
+        
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{ website()->url }}" class="nav-link text-primary"
                 target="_blank">{{ __('core::translation.view_website') }}</a>

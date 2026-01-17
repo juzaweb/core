@@ -24,17 +24,19 @@
 
 @section('scripts')
     <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
-        $(function () {
+        $(function() {
             $('#translations-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('admin.languages.translations.get-data', [$websiteId, $locale]) }}',
-                columns: [
-                    {data: 'value', name: 'value'},
+                ajax: '{{ route('admin.languages.translations.get-data', [$locale]) }}',
+                columns: [{
+                        data: 'value',
+                        name: 'value'
+                    },
                     {
                         data: 'trans',
                         name: 'trans',
-                        render: function (data, type, row) {
+                        render: function(data, type, row) {
                             data = htmlspecialchars(data);
 
                             return `<input class="form-control trans-text" type="text" value="${data}" data-key="${row.key}" data-group="${row.group}" data-namespace="${row.namespace}"/>`;
@@ -43,7 +45,7 @@
                 ]
             });
 
-            $(document).on('change', '.trans-text', function (e) {
+            $(document).on('change', '.trans-text', function(e) {
                 e.preventDefault();
 
                 let $this = $(this);
@@ -53,7 +55,7 @@
                 let value = $this.val();
 
                 $.ajax({
-                    url: '{{ route('admin.languages.translations.update', [$websiteId, $locale]) }}',
+                    url: '{{ route('admin.languages.translations.update', [$locale]) }}',
                     type: 'PUT',
                     data: {
                         key: key,
@@ -61,11 +63,13 @@
                         namespace: namespace,
                         value: value,
                     },
-                    success: function (response) {
+                    success: function(response) {
                         // Check if the response is successful
                     },
-                    error: function () {
-                        toastr.error('{{ __('core::translation.an_error_occurred_while_updating_the_translation') }}');
+                    error: function() {
+                        toastr.error(
+                            '{{ __('core::translation.an_error_occurred_while_updating_the_translation') }}'
+                            );
                     }
                 });
             });

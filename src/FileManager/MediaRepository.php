@@ -169,18 +169,5 @@ class MediaRepository implements Media
         if (($maxSize = config("media.disks.{$disk}.max_size", [])) && $file->getSize() > $maxSize) {
             throw MediaException::maxFileSizeExceeded($maxSize);
         }
-
-        // Check storage limit from subscription plan
-        $website = website();
-        if ($website) {
-            $storageLimit = $website->getFeatureValue('network', 'storage') * 1024 * 1024;
-
-            $currentUsed = MediaModel::getTotalStorageUsed();
-            $fileSize = $file->getSize();
-
-            if (($currentUsed + $fileSize) > $storageLimit) {
-                throw MediaException::storageLimitExceeded($currentUsed, $storageLimit, $fileSize);
-            }
-        }
     }
 }

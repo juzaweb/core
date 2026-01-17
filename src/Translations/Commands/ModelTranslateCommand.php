@@ -24,7 +24,6 @@ class ModelTranslateCommand extends Command
 
     public function handle(): int
     {
-        $websiteId = $this->option('website-id');
         $model = $this->argument('model');
         $limit = $this->option('limit');
 
@@ -44,14 +43,13 @@ class ModelTranslateCommand extends Command
             $targets = explode(',', $target);
         } else {
             // Get all languages for this website except the source language
-            $targets = Language::where('website_id', $websiteId)
-                ->where('code', '!=', $source)
+            $targets = Language::where('code', '!=', $source)
                 ->pluck('code')
                 ->toArray();
         }
 
         if (empty($targets)) {
-            $this->info("No target languages found for website ID {$websiteId}.");
+            $this->info("No target languages found");
             return self::SUCCESS;
         }
 

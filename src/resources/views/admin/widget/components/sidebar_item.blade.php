@@ -1,5 +1,5 @@
 <div class="card sidebar-item" id="sidebar-{{ $item->get('key') }}">
-    <form action="{{ route('admin.widgets.update', [$websiteId, $item->get('key')]) }}" method="post" class="form-ajax">
+    <form action="{{ route('admin.widgets.update', [$item->get('key')]) }}" method="post" class="form-ajax">
         @method('PUT')
 
         <input type="hidden" name="locale" value="{{ $locale }}">
@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="card-body @if(empty($show)) box-hidden @endif">
+        <div class="card-body @if (empty($show)) box-hidden @endif">
             <div class="dd jw-widget-builder" data-key="{{ $item->get('key') }}">
 
                 @php
@@ -22,12 +22,12 @@
                 @endphp
 
                 <ol class="dd-list">
-                    @foreach($widgets as $key => $widget)
+                    @foreach ($widgets as $key => $widget)
                         @php
                             $widgetData = Widget::get($widget->widget ?? 'null');
                         @endphp
 
-                        @if($widgetData === null)
+                        @if ($widgetData === null)
                             @continue
                         @endif
 

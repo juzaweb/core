@@ -61,7 +61,6 @@
         $dataUrl = route(
             'admin.load-box',
             [
-                'websiteId' => website_id(),
                 'token' => encrypt(['box' => $key]),
             ]
         )

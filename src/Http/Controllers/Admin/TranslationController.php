@@ -29,7 +29,7 @@ class TranslationController extends AdminController
 {
     public function __construct(protected Translation $translationManager) {}
 
-    public function index(string $websiteId, string $locale)
+    public function index(string $locale)
     {
         $language = Language::find($locale);
 
@@ -69,7 +69,7 @@ class TranslationController extends AdminController
         return $this->success(__('core::translation.translation_updated_successfully'));
     }
 
-    public function getDataCollection(string $websiteId, string $locale): JsonResponse
+    public function getDataCollection(string $locale): JsonResponse
     {
         $modules = collect(Module::allEnabled())->map(fn($item) => $item->getAliasName())->toArray();
         $theme = Theme::current();
@@ -145,18 +145,6 @@ class TranslationController extends AdminController
                 ])
                     ->whereIn('id', $ids)
                     ->get();
-
-                $canUsing = $request->website()->checkFeatureLimit(
-                    'network',
-                    'translate_posts_per_day',
-                    $posts->count()
-                );
-
-                if (! $canUsing) {
-                    throw new \Exception(
-                        __('core::translation.feature_limit_exceeded')
-                    );
-                }
 
                 foreach ($posts as $post) {
                     $history = model_translate($post, $source, $locale);

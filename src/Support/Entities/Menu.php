@@ -148,9 +148,6 @@ class Menu extends Customizer
         }
 
         $prefix = $this->prefix;
-        if ($websiteId = request()->route('websiteId')) {
-            $prefix .= "/{$websiteId}";
-        }
 
         $url = rtrim($this->url ? "/{$prefix}/{$this->url}" : "/{$prefix}/{$slug}", '/');
 

@@ -18,17 +18,11 @@ class Tag extends Model
 
     protected $fillable = [
         'name',
-        'website_id',
     ];
 
     public $searchable = [
         'name',
     ];
-
-    public function website(): BelongsTo
-    {
-        return $this->belongsTo(Website::class, 'website_id');
-    }
 
     public function taggable()
     {

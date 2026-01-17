@@ -40,7 +40,6 @@ class SessionDurationChart extends LineChart
             'field_name' => 'customEvent:website_id',
             'string_filter' => new StringFilter([
                 'match_type' => StringFilter\MatchType::EXACT,
-                'value' => website_id(),
             ]),
         ]);
 
@@ -52,7 +51,6 @@ class SessionDurationChart extends LineChart
             period: new Period(now()->subDays(8), now()->subDay()),
             metrics: ['averageSessionDuration', 'userEngagementDuration'],
             dimensions: ['date'],
-            dimensionFilter: website()->isMainWebsite() ? null : $filterExpression,
         );
 
         $response = $response->sort(fn ($a, $b) => $a['date']->timestamp <=> $b['date']->timestamp);

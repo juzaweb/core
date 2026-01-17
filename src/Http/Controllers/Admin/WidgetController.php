@@ -80,7 +80,7 @@ class WidgetController extends AdminController
         return $this->success(
             [
                 'message' => __('core::translation.update_successfully'),
-                'redirect' => route('admin.widgets.index', [$websiteId, 'locale' => $locale]),
+                'redirect' => route('admin.widgets.index', ['locale' => $locale]),
             ]
         );
     }

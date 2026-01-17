@@ -1,7 +1,7 @@
 @extends('core::layouts.admin')
 
 @section('content')
-    <div id="media-container" data-folder-id="{{ $folderId ?? '' }}" data-website-id="{{ $websiteId }}">
+    <div id="media-container" data-folder-id="{{ $folderId ?? '' }}">
         <div class="row mb-2">
             <div class="col-md-8">
                 <form action="" method="get" class="form-inline">
@@ -80,7 +80,7 @@
         </div>
 
         <div class="mt-2 mb-3 text-center">
-            <a href="{{ str_replace('__ID__', '{id}', route('admin.media.download', [website_id(), 'public', '__ID__'])) }}"
+            <a href="{{ str_replace('__ID__', '{id}', route('admin.media.download', ['public', '__ID__'])) }}"
                 class="btn btn-secondary">
                 <i class="fa fa-download"></i> {{ __('core::translation.download') }}
             </a>
@@ -89,7 +89,7 @@
                 data-name="{name}"><i class="fa fa-trash"></i> {{ __('core::translation.delete') }}</a>
         </div>
 
-        <form action="{{ str_replace('__ID__', '{id}', route('admin.media.update', [$websiteId, '__ID__'])) }}" method="post"
+        <form action="{{ str_replace('__ID__', '{id}', route('admin.media.update', ['__ID__'])) }}" method="post"
             class="form-ajax">
             @method('put')
             <input type="hidden" name="is_file" value="{is_file}">

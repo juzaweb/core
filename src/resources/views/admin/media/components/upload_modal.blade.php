@@ -28,9 +28,8 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="upload" role="tabpanel" aria-labelledby="upload-tab">
                         <div class="upload-container p-2">
-                            <form action="{{ route('media.upload', [$websiteId, 'public']) }}" role="form"
-                                id="uploadForm" name="uploadForm" method="post" class="dropzone"
-                                enctype='multipart/form-data'>
+                            <form action="{{ route('media.upload', ['public']) }}" role="form" id="uploadForm"
+                                name="uploadForm" method="post" class="dropzone" enctype='multipart/form-data'>
                                 <input type="hidden" name="working_dir" id='working_dir' value="{{ $folderId }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="dz-message text-center">
@@ -44,8 +43,8 @@
 
                     <div class="tab-pane fade" id="import" role="tabpanel" aria-labelledby="import-tab">
                         <div class="upload-container p-4">
-                            <form action="{{ route('media.import', [$websiteId, 'public']) }}" role="form"
-                                method="post" class="form-ajax" data-success="add_folder_success">
+                            <form action="{{ route('media.import', ['public']) }}" role="form" method="post"
+                                class="form-ajax" data-success="add_folder_success">
 
                                 {{ Field::text(__('core::translation.url'), 'url', ['required' => true]) }}
 

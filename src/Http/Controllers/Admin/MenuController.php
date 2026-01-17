@@ -22,7 +22,7 @@ use Juzaweb\Modules\Core\Models\Menus\Menu;
 
 class MenuController extends AdminController
 {
-    public function index(string $websiteId, ?string $id = null)
+    public function index(?string $id = null)
     {
         Breadcrumb::add(__('core::translation.menus'));
 
@@ -44,7 +44,6 @@ class MenuController extends AdminController
         $menuDataUrl = route(
             'admin.load-data',
             [
-                'websiteId' => $websiteId,
                 'token' => encrypt([
                     'model' => Menu::class,
                     'field' => 'name',
@@ -72,7 +71,7 @@ class MenuController extends AdminController
         return $this->success(
             [
                 'message' => trans('core::translation.menu_name_created_successfully', ['name' => $model->name]),
-                'redirect' => action([self::class, 'index'], [$websiteId, $model->id]),
+                'redirect' => action([self::class, 'index'], [$model->id]),
             ]
         );
     }
@@ -120,12 +119,12 @@ class MenuController extends AdminController
         return $this->success(
             [
                 'message' => trans('core::translation.menu_name_update_successfully', ['name' => $model->name]),
-                'redirect' => action([self::class, 'index'], [$websiteId, $model->id, 'locale' => $locale]),
+                'redirect' => action([self::class, 'index'], [$model->id, 'locale' => $locale]),
             ]
         );
     }
 
-    public function destroy(string $websiteId, string $id)
+    public function destroy(string $id)
     {
         $model = Menu::findOrFail($id);
         $model->delete();

@@ -39,7 +39,6 @@ class TopPagesChart extends PieChart
             'field_name' => 'customEvent:website_id',
             'string_filter' => new StringFilter([
                 'match_type' => StringFilter\MatchType::EXACT,
-                'value' => website_id(),
             ]),
         ]);
 
@@ -51,7 +50,6 @@ class TopPagesChart extends PieChart
             period: new Period(now()->subDays(8), now()->subDay()),
             metrics: ['screenPageViews'],
             dimensions: ['pagePath'],
-            dimensionFilter: website()->isMainWebsite() ? null : $filterExpression,
         );
 
         $rows = collect($response)->sortByDesc('screenPageViews');

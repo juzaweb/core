@@ -33,12 +33,6 @@ class SetupController extends AdminController
      */
     public function index()
     {
-        $website = Network::website();
-
-        if ($website && $website->setup) {
-            return redirect()->route('admin.dashboard', [$website->id]);
-        }
-
         $title = __('core::translation.website_setup');
 
         return view(
@@ -52,16 +46,6 @@ class SetupController extends AdminController
      */
     public function setup(Request $request): JsonResponse
     {
-        $website = Network::website();
-
-        if (! $website) {
-            return $this->error(__('core::translation.website_not_found'));
-        }
-
-        if ($website->setup) {
-            return $this->error(__('core::translation.website_is_already_set_up'));
-        }
-
         $user = $request->user();
 
         try {

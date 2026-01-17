@@ -44,10 +44,7 @@ class MenuRepository implements MenuContract
                 // Merge key vào data
                 $data['key'] = $key;
                 $prefix = $data['prefix'] ?? 'admin';
-                if ($websiteId = request()->route('websiteId')) {
-                    $prefix .= "/{$websiteId}";
-                }
-
+            
                 // Build URL nếu chưa có
                 if (!isset($data['url'])) {
                     if ($key === 'dashboard') {

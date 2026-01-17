@@ -159,13 +159,10 @@ if (! function_exists('admin_url')) {
      *
      * @return string the generated URL
      */
-    function admin_url(?string $uri = null, ?string $websiteId = null): string
+    function admin_url(?string $uri = null): string
     {
-        $websiteId = $websiteId ?? website_id();
-
         return url(rtrim(
             '/' . config('core.admin_prefix')
-                . '/' . $websiteId
                 . '/' . ltrim($uri, '/'),
             '/'
         ));
@@ -711,7 +708,6 @@ if (!function_exists('load_data_url')) {
         return route(
             'admin.load-data',
             [
-                'websiteId' => website_id(),
                 'token' => encrypt([
                     'model' => $model,
                     'field' => $field,
@@ -880,7 +876,7 @@ function model_translate(Translatable $model, string $sourceLocale, string $targ
         ]
     );
 
-    ModelTranslateJob::dispatch(website(), $model, $sourceLocale, $targetLocale);
+    ModelTranslateJob::dispatch($model, $sourceLocale, $targetLocale);
 
     return $history;
 }

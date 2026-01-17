@@ -25,8 +25,7 @@ class AddonController extends Controller
 {
     public function statuses(Request $request): JsonResponse
     {
-        $siteId = Network::website()->id;
-        $key = "site:{$siteId}:users_online";
+        $key = "site:users_online";
         $ip = client_ip();
 
         Redis::zadd($key, [$ip => time()]);
@@ -51,29 +50,6 @@ class AddonController extends Controller
 
         return response()->json([
             'success' => true,
-        ]);
-    }
-
-    public function recaptcha(Request $request): JsonResponse
-    {
-        $nonce = $request->input('nonce');
-        $csrf = $request->header('X-CSRF-TOKEN');
-        $hash = Network::website()->id . substr($csrf, 9, 16);
-
-        if ($nonce !== hash('sha256', hash('sha256', $hash))) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid nonce',
-            ], 403);
-        }
-
-        $now = now()->format('Y-m-d H:i:s');
-        $token = hash('sha256', config('app.key') . Network::website()->id);
-
-        return response()->json([
-            'success' => true,
-            't' => $now,
-            'k' => $token,
         ]);
     }
 

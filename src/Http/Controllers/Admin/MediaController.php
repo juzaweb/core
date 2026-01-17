@@ -28,14 +28,14 @@ class MediaController extends AdminController
             /** @var Media $folder */
             $folder = Media::with(['parents'])->findOrFail($folderId);
 
-            Breadcrumb::add(__('core::translation.media'), route('admin.media.index', $websiteId));
+            Breadcrumb::add(__('core::translation.media'), route('admin.media.index'));
 
             $parent = $folder->parents;
 
             while ($parent) {
                 Breadcrumb::add(
                     $parent->name,
-                    route('admin.media.folder', [$websiteId, $parent->id])
+                    route('admin.media.folder', [$parent->id])
                 );
 
                 $parent = $parent->parents;
@@ -97,7 +97,7 @@ class MediaController extends AdminController
         ]);
     }
 
-    public function destroy(string $websiteId, string $id)
+    public function destroy(string $id)
     {
         $model = Media::findOrFail($id);
 
@@ -108,7 +108,7 @@ class MediaController extends AdminController
         ]);
     }
 
-    public function download(string $websiteId, string $disk, string $id): StreamedResponse
+    public function download(string $disk, string $id): StreamedResponse
     {
         $model = Media::findOrFail($id);
         $storage = Storage::disk($disk);
@@ -149,7 +149,7 @@ class MediaController extends AdminController
 
         $html = '';
         foreach ($mediaFiles as $item) {
-            $html .= view('core::admin.media.components.item', ['item' => $item, 'websiteId' => $websiteId])->render();
+            $html .= view('core::admin.media.components.item', ['item' => $item])->render();
         }
 
         return response()->json([

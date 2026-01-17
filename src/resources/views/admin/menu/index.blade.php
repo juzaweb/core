@@ -110,7 +110,7 @@
                 <div class="col-md-8">
                     <h5 class="mb-2 font-weight-bold">{{ __('core::translation.structure') }}</h5>
 
-                    <form action="{{ route('admin.menus.update', [$websiteId, $menu->id]) }}" method="post"
+                    <form action="{{ route('admin.menus.update', [$menu->id]) }}" method="post"
                         class="form-ajax form-menu-structure">
                         <input type="hidden" name="id" value="{{ $menu->id }}">
                         <input type="hidden" name="reload_after_save" value="0">
@@ -240,7 +240,7 @@
     <script nonce="{{ csp_script_nonce() }}">
         $(function() {
             $('#select-menu').on('change', function() {
-                var url = "{{ route('admin.menus.show', [$websiteId, '__ID__']) }}"
+                var url = "{{ route('admin.menus.show', ['__ID__']) }}"
                     .replace('__ID__', $(this).val());
                 window.location.href = url;
             });

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -26,18 +27,9 @@ class LanguagesDataTable extends DataTable
 
     protected array $rawColumns = ['actions', 'checkbox', 'is_default'];
 
-    protected string $websiteId;
-
     protected int|array $orderBy = [1, 'asc'];
 
     protected ?string $defaultLanguage = null;
-
-    public function withWebsiteId(string $websiteId): static
-    {
-        $this->websiteId = $websiteId;
-
-        return $this;
-    }
 
     protected function getDefaultLanguage(): string
     {

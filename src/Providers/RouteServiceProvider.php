@@ -57,7 +57,6 @@ class RouteServiceProvider extends ServiceProvider
                 \Juzaweb\Modules\Core\Http\Middleware\ContentSecurityPolicy::class,
                 ...config('app.auth_middleware', []),
                 'verified',
-                \Juzaweb\Modules\Core\Http\Middleware\OnlyMainSite::class,
                 \Juzaweb\Modules\Core\Http\Middleware\Admin::class,
                 \Juzaweb\Modules\Core\Http\Middleware\ForceLocale::class,
             ]

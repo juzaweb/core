@@ -23,8 +23,6 @@ class LanguageController extends AdminController
 {
     public function index(LanguagesDataTable $dataTable)
     {
-        $dataTable->withWebsiteId($websiteId);
-
         Breadcrumb::add(__('core::translation.languages'));
 
         return $dataTable->render(

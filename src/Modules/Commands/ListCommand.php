@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Juzaweb\Modules\Core\Modules\Module;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use function Juzaweb\Modules\Admin\Modules\Commands\set_website;
 
 class ListCommand extends Command
 {
@@ -29,10 +28,6 @@ class ListCommand extends Command
      */
     public function handle(): int
     {
-        if ($websiteId = $this->argument('website')) {
-            set_website($websiteId);
-        }
-
         $this->components->twoColumnDetail('<fg=gray>Status / Name</>', '<fg=gray>Path / priority</>');
         collect($this->getRows())->each(function ($row) {
 

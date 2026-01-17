@@ -39,7 +39,6 @@ class UsersByCountryChart extends PieChart
             'field_name' => 'customEvent:website_id',
             'string_filter' => new StringFilter([
                 'match_type' => StringFilter\MatchType::EXACT,
-                'value' => website_id(),
             ]),
         ]);
 

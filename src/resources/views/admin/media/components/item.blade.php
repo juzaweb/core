@@ -1,5 +1,5 @@
 <li class="media-item col-6 col-md-2 col-lg-2 mb-1" title="{{ $item->name }}">
-    <a href="{{ $item->isDirectory() ? route('admin.media.folder', [$websiteId, $item->id]) : 'javascript:void(0)' }}"
+    <a href="{{ $item->isDirectory() ? route('admin.media.folder', [$item->id]) : 'javascript:void(0)' }}"
         class="media-item-info @if ($item->isFile()) media-file-item @endif" data-id="{{ $item->id }}">
         @php
             $arr = $item->toArray();

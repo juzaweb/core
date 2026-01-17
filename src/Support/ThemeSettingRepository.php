@@ -88,7 +88,6 @@ class ThemeSettingRepository implements SettingContract
                     [
                         'code' => $key,
                         'theme' => $this->theme->current()->name(),
-                        'website_id' => website_id(),
                     ],
                     [
                         'value' => $value,
@@ -147,7 +146,7 @@ class ThemeSettingRepository implements SettingContract
     {
         return SettingModel::cacheFor(3600)
             ->withoutGlobalScope('website_id')
-            ->where('website_id', website_id())
+            ->where('website_id'
             ->where('theme', $this->theme->current()->name())
             ->get(['code', 'value'])
             ->pluck('value', 'code');

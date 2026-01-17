@@ -78,7 +78,7 @@ class PageController extends AdminController
 
         Breadcrumb::add(__('core::translation.edit_page_name', ['name' => $model->name]));
 
-        $action = action([static::class, 'update'], [$websiteId, $model->id]);
+        $action = action([static::class, 'update'], [$model->id]);
         $templates = collect(PageTemplate::all())->map(fn($item) => $item->label);
 
         $template = null;
@@ -207,12 +207,12 @@ class PageController extends AdminController
         return $this->success(
             [
                 'message' => __('core::translation.page_name_updated_successfully', ['name' => $model->name]),
-                'redirect' => action([static::class, 'edit'], [$websiteId, $model->id]),
+                'redirect' => action([static::class, 'edit'], [$model->id]),
             ]
         );
     }
 
-    public function destroy(string $websiteId, string $id): JsonResponse|RedirectResponse
+    public function destroy(string $id): JsonResponse|RedirectResponse
     {
         $model = Page::find($id);
 
