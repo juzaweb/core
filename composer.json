@@ -75,8 +75,7 @@
             "@php vendor/bin/testbench serve --ansi"
         ],
         "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage",
-        "format": "vendor/bin/pint"
+        "test-coverage": "vendor/bin/phpunit --coverage"
     },
     "config": {
         "sort-packages": true
