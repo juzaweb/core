@@ -19,7 +19,6 @@ return new class extends Migration
             $table->text('content');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->uuid('parent_id')->nullable()->index();
-            $table->websiteId();
             $table->datetimes();
 
             $table->foreign('parent_id')

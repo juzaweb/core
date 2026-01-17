@@ -18,7 +18,6 @@ return new class extends Migration
             $table->json('data')->nullable();
             $table->string('theme', 100)->index();
             $table->integer('display_order')->default(0);
-            $table->websiteId();
             $table->datetimes();
         });
 

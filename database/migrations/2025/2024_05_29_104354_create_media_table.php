@@ -31,7 +31,6 @@ return new class extends Migration
                 $table->json('conversions')->nullable();
                 $table->json('metadata')->nullable();
                 $table->uuid('parent_id')->index()->nullable();
-                $table->websiteId();
                 $table->datetimes();
 
                 $table->foreign('parent_id')

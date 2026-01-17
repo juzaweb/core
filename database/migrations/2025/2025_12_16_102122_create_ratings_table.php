@@ -17,7 +17,6 @@ return new class extends Migration
             'ratings',
             function (Blueprint $table) {
                 $table->id();
-                $table->websiteId();
                 $table->uuidMorphs('ratingable');
                 $table->creator();
                 $table->float('star');
