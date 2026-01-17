@@ -12,6 +12,7 @@ use Juzaweb\Modules\Core\Tests\TestCase;
 class UploaderTest extends TestCase
 {
     use RefreshDatabase;
+
     public function testUpload()
     {
         $file = UploadedFile::fake()->image('file-one.jpg');

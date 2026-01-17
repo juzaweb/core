@@ -10,7 +10,7 @@
 
 namespace Juzaweb\Modules\Core\Support;
 
-use Juzaweb\Modules\Core\Application;
+use Illuminate\Foundation\Application;
 use Juzaweb\Modules\Core\Contracts\Setting;
 use Juzaweb\Modules\Core\Translations\Models\Language;
 
