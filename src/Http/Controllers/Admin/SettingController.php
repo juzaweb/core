@@ -22,41 +22,41 @@ class SettingController extends AdminController
 {
     public function index()
     {
-        Breadcrumb::add(__('admin::translation.general_setting'));
+        Breadcrumb::add(__('core::translation.general_setting'));
 
         $locale = $this->getFormLanguage();
 
-        return view('admin::admin.setting.index', compact('locale'));
+        return view('core::admin.setting.index', compact('locale'));
     }
 
     public function socialLogin()
     {
-        Breadcrumb::add(__('admin::translation.social_login_setting'));
+        Breadcrumb::add(__('core::translation.social_login_setting'));
 
         $drivers = collect(config('app.social_login.providers', []))->keys()
             ->mapWithKeys(function ($driver) {
                 return [$driver => title_from_key($driver)];
             });
 
-        return view('admin::admin.setting.social-login', compact('drivers'));
+        return view('core::admin.setting.social-login', compact('drivers'));
     }
 
     public function email(Request $request)
     {
-        Breadcrumb::add(__('admin::translation.settings'), admin_url('settings/general'));
+        Breadcrumb::add(__('core::translation.settings'), admin_url('settings/general'));
 
-        Breadcrumb::add(__('admin::translation.email_setting'));
+        Breadcrumb::add(__('core::translation.email_setting'));
 
         $user = $request->user();
 
-        return view('admin::admin.setting.email', compact('user'));
+        return view('core::admin.setting.email', compact('user'));
     }
 
     public function update(SettingRequest $request)
     {
         app(Setting::class)->sets($request->safe()->all());
 
-        return $this->success(__('admin::translation.setting_updated_successfully'));
+        return $this->success(__('core::translation.setting_updated_successfully'));
     }
 
     public function testEmail(TestMailRequest $request)
@@ -65,6 +65,6 @@ class SettingController extends AdminController
 
         Mail::to($email)->send(new Test());
 
-        return $this->success(__('admin::translation.mail_sent_successfully_check_your_inbox'));
+        return $this->success(__('core::translation.mail_sent_successfully_check_your_inbox'));
     }
 }

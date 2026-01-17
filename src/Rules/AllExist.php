@@ -27,15 +27,15 @@ class AllExist implements InvokableRule
     public function __invoke($attribute, $value, $fail)
     {
         if (! is_array($value)) {
-            return $fail(__('admin::translation.the_value_of_attribute_must_be_an_array', ['attribute' => $attribute]));
+            return $fail(__('core::translation.the_value_of_attribute_must_be_an_array', ['attribute' => $attribute]));
         }
 
         if (empty($this->table) || empty($this->column)) {
-            return $fail(__('admin::translation.the_table_and_column_must_be_set_for'));
+            return $fail(__('core::translation.the_table_and_column_must_be_set_for'));
         }
 
         if (empty($value)) {
-            return $fail(__('admin::translation.the_value_of_attribute_must_not_be_empty', ['attribute' => $attribute]));
+            return $fail(__('core::translation.the_value_of_attribute_must_not_be_empty', ['attribute' => $attribute]));
         }
 
         try {
@@ -50,12 +50,12 @@ class AllExist implements InvokableRule
                     continue;
                 }
 
-                return $fail(__("admin::translation.the_value_value_of_attribute_does_not_exist_in_table_table_under_column_column",
+                return $fail(__("core::translation.the_value_value_of_attribute_does_not_exist_in_table_table_under_column_column",
                     ['attribute' => $attribute, 'table' => $this->table, 'column' => $this->column, 'value' => $v])
                 );
             }
         } catch (\Exception $e) {
-            return $fail(__('admin::translation.validation_failed_message', ['message' => $e->getMessage()]));
+            return $fail(__('core::translation.validation_failed_message', ['message' => $e->getMessage()]));
         }
     }
 }

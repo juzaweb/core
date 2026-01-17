@@ -28,7 +28,7 @@ class Form extends Component
      */
     public function render(): View|\Closure|string
     {
-        return view('admin::components.form', [
+        return view('core::components.form', [
                 'action' => $this->action,
                 'method' => $this->method,
                 'notify' => $this->notify,

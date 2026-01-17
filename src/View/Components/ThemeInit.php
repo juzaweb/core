@@ -17,6 +17,6 @@ class ThemeInit extends Component
 {
     public function render(): View|string
     {
-        return view('admin::components.theme-init');
+        return view('core::components.theme-init');
     }
 }

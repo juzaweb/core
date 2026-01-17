@@ -32,7 +32,7 @@ class StoreFolderRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.exists' => trans('admin::browser.error_folder_exist'),
+            'name.exists' => trans('core::browser.error_folder_exist'),
         ];
     }
 }

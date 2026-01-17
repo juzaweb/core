@@ -17,7 +17,7 @@ class OnlyMainSite
     public function handle(Request $request, \Closure $next): mixed
     {
         if ($request->getHost() !== config('network.domain')) {
-            abort(404, __('admin::translation.page_not_found'));
+            abort(404, __('core::translation.page_not_found'));
         }
 
         return $next($request);

@@ -4,8 +4,8 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{{ __('admin::translation.customize_theme') }}</title>
-    <meta name="description" content="{{ __('admin::translation.customize_theme') }}">
+    <title>{{ __('core::translation.customize_theme') }}</title>
+    <meta name="description" content="{{ __('core::translation.customize_theme') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <x-js-var />
@@ -65,7 +65,7 @@
                         </button>
 
                         <h2 class="ui-heading theme-editor__heading text-uppercase">
-                            {{ __('admin::translation.theme_editor') }}
+                            {{ __('core::translation.theme_editor') }}
                         </h2>
 
                     </div>
@@ -75,12 +75,12 @@
                 </div>
             </header>
 
-            @include('admin::admin.customize.components.config-option')
+            @include('core::admin.customize.components.config-option')
 
         </section>
     </div>
 
-    @include('admin::admin.customize.components.preview-page')
+    @include('core::admin.customize.components.preview-page')
 
     <div class="theme-editor__spinner" component="UI.Spinner">
         <div class="next-spinner">
@@ -90,7 +90,7 @@
 
 </main>
 
-@include('admin::admin.customize.components.global-icon')
+@include('core::admin.customize.components.global-icon')
 
 <div>
     <div class="section-footer">

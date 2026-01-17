@@ -3,15 +3,15 @@
     <div class="cookie-consent-container">
         <div class="cookie-consent-content">
             <p class="cookie-consent-message">
-                {{ setting('cookie_consent_message') ?: __('admin::translation.cookie_consent_message_default') }}
+                {{ setting('cookie_consent_message') ?: __('core::translation.cookie_consent_message_default') }}
             </p>
         </div>
         <div class="cookie-consent-actions">
             <button id="cookie-consent-reject" class="cookie-consent-button cookie-consent-reject">
-                {{ __('admin::translation.cookie_consent_reject') }}
+                {{ __('core::translation.cookie_consent_reject') }}
             </button>
             <button id="cookie-consent-accept" class="cookie-consent-button cookie-consent-accept">
-                {{ __('admin::translation.cookie_consent_accept') }}
+                {{ __('core::translation.cookie_consent_accept') }}
             </button>
         </div>
     </div>
@@ -100,12 +100,12 @@
         flex-direction: column;
         text-align: center;
     }
-    
+
     .cookie-consent-actions {
         width: 100%;
         justify-content: center;
     }
-    
+
     .cookie-consent-button {
         flex: 1;
     }
@@ -115,17 +115,17 @@
 <script>
 (function() {
     'use strict';
-    
+
     const COOKIE_NAME = 'cookie_consent_accepted';
     const COOKIE_EXPIRY_DAYS = 365;
-    
+
     function setCookie(name, value, days) {
         const date = new Date();
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         const expires = "expires=" + date.toUTCString();
         document.cookie = name + "=" + value + ";" + expires + ";path=/;SameSite=Lax";
     }
-    
+
     function getCookie(name) {
         const nameEQ = name + "=";
         const ca = document.cookie.split(';');
@@ -136,50 +136,50 @@
         }
         return null;
     }
-    
+
     function showBanner() {
         const banner = document.getElementById('cookie-consent-banner');
         if (banner) {
             banner.style.display = 'block';
         }
     }
-    
+
     function hideBanner() {
         const banner = document.getElementById('cookie-consent-banner');
         if (banner) {
             banner.style.display = 'none';
         }
     }
-    
+
     function acceptCookies() {
         setCookie(COOKIE_NAME, 'true', COOKIE_EXPIRY_DAYS);
         hideBanner();
     }
-    
+
     function rejectCookies() {
         setCookie(COOKIE_NAME, 'false', COOKIE_EXPIRY_DAYS);
         hideBanner();
     }
-    
+
     function init() {
         // Check if user has already made a choice
         if (!getCookie(COOKIE_NAME)) {
             showBanner();
         }
-        
+
         // Add event listener to accept button
         const acceptBtn = document.getElementById('cookie-consent-accept');
         if (acceptBtn) {
             acceptBtn.addEventListener('click', acceptCookies);
         }
-        
+
         // Add event listener to reject button
         const rejectBtn = document.getElementById('cookie-consent-reject');
         if (rejectBtn) {
             rejectBtn.addEventListener('click', rejectCookies);
         }
     }
-    
+
     // Initialize when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);

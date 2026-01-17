@@ -68,7 +68,7 @@ class ModelUnique implements Rule
 
     public function message()
     {
-        return trans('admin::translation.validationmodel_unique',
+        return trans('core::translation.validationmodel_unique',
             [
                 'attribute' => $this->attribute,
                 'value' => $this->value,

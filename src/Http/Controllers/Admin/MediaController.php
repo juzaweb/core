@@ -28,7 +28,7 @@ class MediaController extends AdminController
             /** @var Media $folder */
             $folder = Media::with(['parents'])->findOrFail($folderId);
 
-            Breadcrumb::add(__('admin::translation.media'), route('admin.media.index', $websiteId));
+            Breadcrumb::add(__('core::translation.media'), route('admin.media.index', $websiteId));
 
             $parent = $folder->parents;
 
@@ -43,7 +43,7 @@ class MediaController extends AdminController
 
             Breadcrumb::add($folder->name);
         } else {
-            Breadcrumb::add(__('admin::translation.media'));
+            Breadcrumb::add(__('core::translation.media'));
         }
 
         $mediaFiles = Media::query()
@@ -64,7 +64,7 @@ class MediaController extends AdminController
         $mimeTypes = config("media.disks.public.mime_types");
 
         return view(
-            'admin::admin.media.index',
+            'core::admin.media.index',
             compact('mediaFiles', 'maxSize', 'mimeTypes', 'folderId')
         );
     }
@@ -78,7 +78,7 @@ class MediaController extends AdminController
         $model->update(['name' => $request->input('name')]);
 
         return $this->success([
-            'message' => __('admin::translation.updated_media_successfully'),
+            'message' => __('core::translation.updated_media_successfully'),
         ]);
     }
 
@@ -93,7 +93,7 @@ class MediaController extends AdminController
         );
 
         return $this->success([
-            'message' => __('admin::translation.created_folder_successfully'),
+            'message' => __('core::translation.created_folder_successfully'),
         ]);
     }
 
@@ -104,7 +104,7 @@ class MediaController extends AdminController
         $model->delete();
 
         return $this->success([
-            'message' => __('admin::translation.deleted_media_successfully'),
+            'message' => __('core::translation.deleted_media_successfully'),
         ]);
     }
 
@@ -149,7 +149,7 @@ class MediaController extends AdminController
 
         $html = '';
         foreach ($mediaFiles as $item) {
-            $html .= view('admin::admin.media.components.item', ['item' => $item, 'websiteId' => $websiteId])->render();
+            $html .= view('core::admin.media.components.item', ['item' => $item, 'websiteId' => $websiteId])->render();
         }
 
         return response()->json([

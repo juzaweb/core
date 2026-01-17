@@ -1,4 +1,4 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('head')
     <style>
@@ -23,7 +23,7 @@
 @section('content')
     <div class="row" id="theme-list">
         <div class="col-md-4 p-2 theme-list-item">
-            @component('admin::admin.theme.components.theme-item', ['theme' => $currentTheme, 'active' => true])
+            @component('core::admin.theme.components.theme-item', ['theme' => $currentTheme, 'active' => true])
 
             @endcomponent
         </div>

@@ -21,7 +21,7 @@ class UploadController extends FileManagerController
         $folderId = $request->input('working_dir');
 
         if (!array_key_exists($disk, config('media.disks'))) {
-            return $this->responseUpload([trans('admin::browser.invalid_disk') ]);
+            return $this->responseUpload([trans('core::browser.invalid_disk') ]);
         }
 
         if (empty($folderId)) {

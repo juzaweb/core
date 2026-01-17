@@ -14,7 +14,7 @@ class Image extends Field
     public function render(): \Illuminate\Contracts\View\View|string
     {
         return view(
-            'admin::fields.image',
+            'core::fields.image',
             $this->renderParams()
         );
     }

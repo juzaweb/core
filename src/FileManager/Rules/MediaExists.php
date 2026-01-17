@@ -61,6 +61,6 @@ class MediaExists implements Rule
      */
     public function message(): string
     {
-        return __('admin::translation.the_media_medias_does_not_exist', ['medias' => implode(',', $this->notFound)]);
+        return __('core::translation.the_media_medias_does_not_exist', ['medias' => implode(',', $this->notFound)]);
     }
 }

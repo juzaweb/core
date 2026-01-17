@@ -39,10 +39,10 @@ class SetupController extends AdminController
             return redirect()->route('admin.dashboard', [$website->id]);
         }
 
-        $title = __('admin::translation.website_setup');
+        $title = __('core::translation.website_setup');
 
         return view(
-            'admin::admin.setup.index',
+            'core::admin.setup.index',
             compact('website', 'title')
         );
     }
@@ -55,11 +55,11 @@ class SetupController extends AdminController
         $website = Network::website();
 
         if (! $website) {
-            return $this->error(__('admin::translation.website_not_found'));
+            return $this->error(__('core::translation.website_not_found'));
         }
 
         if ($website->setup) {
-            return $this->error(__('admin::translation.website_is_already_set_up'));
+            return $this->error(__('core::translation.website_is_already_set_up'));
         }
 
         $user = $request->user();
@@ -99,7 +99,7 @@ class SetupController extends AdminController
                     ], [
                         'status' => PageStatus::PUBLISHED,
                         'en' => [
-                            'title' => __('admin::translation.home'),
+                            'title' => __('core::translation.home'),
                             'locale' => 'en',
                         ],
                     ]);
@@ -110,8 +110,8 @@ class SetupController extends AdminController
                         $privacyPolicy = Page::create([
                             'status' => PageStatus::PUBLISHED,
                             $website->language => [
-                                'title' => __('admin::translation.privacy_policy'),
-                                'content' => view('admin::frontend.defaults.privacy-policy')->render(),
+                                'title' => __('core::translation.privacy_policy'),
+                                'content' => view('core::frontend.defaults.privacy-policy')->render(),
                                 'locale' => $website->language,
                             ],
                         ]);
@@ -121,8 +121,8 @@ class SetupController extends AdminController
                         $termsOfService = Page::create([
                             'status' => PageStatus::PUBLISHED,
                             $website->language => [
-                                'title' => __('admin::translation.terms_of_service'),
-                                'content' => view('admin::frontend.defaults.terms')->render(),
+                                'title' => __('core::translation.terms_of_service'),
+                                'content' => view('core::frontend.defaults.terms')->render(),
                                 'locale' => $website->language,
                             ],
                         ]);
@@ -182,13 +182,13 @@ class SetupController extends AdminController
             );
 
             return $this->success([
-                'message' => __('admin::translation.website_setup_completed_successfully'),
+                'message' => __('core::translation.website_setup_completed_successfully'),
                 'redirect' => admin_url(),
                 'status' => true,
             ]);
         } catch (\Exception $e) {
             report($e);
-            return $this->error(__('admin::translation.setup_failed_error', ['error' => $e->getMessage()]));
+            return $this->error(__('core::translation.setup_failed_error', ['error' => $e->getMessage()]));
         }
     }
 

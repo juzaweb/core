@@ -16,7 +16,7 @@ class Date extends Field
     public function render(): View|string
     {
         return view(
-            'admin::fields.date',
+            'core::fields.date',
             $this->renderParams()
         );
     }

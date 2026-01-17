@@ -38,9 +38,9 @@ class MakeUserCommand extends Command
             ],
             [],
             [
-                'name' => trans('admin::translation.name'),
-                'email' => trans('admin::translation.email'),
-                'password' => trans('admin::translation.password'),
+                'name' => trans('core::translation.name'),
+                'email' => trans('core::translation.email'),
+                'password' => trans('core::translation.password'),
             ]
         );
 

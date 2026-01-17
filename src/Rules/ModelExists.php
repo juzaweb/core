@@ -69,7 +69,7 @@ class ModelExists implements Rule
 
     public function message(): string
     {
-        return trans('admin::translation.validationmodel_exists',
+        return trans('core::translation.validationmodel_exists',
             [
                 'attribute' => $this->attribute,
                 'value' => $this->value,

@@ -1,9 +1,9 @@
-@extends('admin::layouts.auth')
+@extends('core::layouts.auth')
 
 @section('content')
     <div class="card">
         <div class="card-body login-card-body" id="register-form">
-            <p class="login-box-msg">{{ __('admin::translation.sign_up_new_a_account') }}</p>
+            <p class="login-box-msg">{{ __('core::translation.sign_up_new_a_account') }}</p>
 
             <div id="jquery-message"></div>
 
@@ -26,7 +26,7 @@
                 @csrf
 
                 <div class="input-group mb-3">
-                    <input type="text" name="name" class="form-control" placeholder="{{ __('admin::translation.your_name') }}" required>
+                    <input type="text" name="name" class="form-control" placeholder="{{ __('core::translation.your_name') }}" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="{{ __('admin::translation.email') }}">
+                    <input type="email" name="email" class="form-control" placeholder="{{ __('core::translation.email') }}">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="{{ __('admin::translation.password') }}">
+                    <input type="password" name="password" class="form-control" placeholder="{{ __('core::translation.password') }}">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="input-group mb-3">
-                    <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('admin::translation.confirm_password') }}">
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('core::translation.confirm_password') }}">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -73,7 +73,7 @@
                     <!-- /.col -->
                     <div class="col-4">
                         <button type="submit" class="btn btn-primary btn-block">
-                            {{ __('admin::translation.sign_up') }}
+                            {{ __('core::translation.sign_up') }}
                         </button>
                     </div>
                     <!-- /.col -->
@@ -82,11 +82,11 @@
 
             @if($socialLogins->isNotEmpty())
                 <div class="social-auth-links text-center mb-3">
-                    <p>- {{ __('admin::translation.or') }} -</p>
+                    <p>- {{ __('core::translation.or') }} -</p>
 
                     @foreach($socialLogins as $key => $name)
                         <a href="{{ route('auth.social.redirect', [$key]) }}" class="btn btn-block btn-primary">
-                            <i class="fab fa-{{ $key }} mr-2"></i> {{ __('admin::translation.sign_in_using_name', ['name' => $name]) }}
+                            <i class="fab fa-{{ $key }} mr-2"></i> {{ __('core::translation.sign_in_using_name', ['name' => $name]) }}
                         </a>
                     @endforeach
                 </div>
@@ -94,10 +94,10 @@
             @endif
 
             <p class="mb-1">
-                <a href="{{ url('forgot-password') }}">{{ __('admin::translation.i_forgot_my_password') }}</a>
+                <a href="{{ url('forgot-password') }}">{{ __('core::translation.i_forgot_my_password') }}</a>
             </p>
             <p class="mb-0">
-                <a href="{{ route('login') }}" class="text-center">{{ __('admin::translation.login_to_account') }}</a>
+                <a href="{{ route('login') }}" class="text-center">{{ __('core::translation.login_to_account') }}</a>
             </p>
         </div>
         <!-- /.login-card-body -->
@@ -106,7 +106,7 @@
 
 @section('scripts')
     <script type="text/html" id="must-verification-template">
-        @component('admin::frontend.auth.components.must-verification')
+        @component('core::frontend.auth.components.must-verification')
 
         @endcomponent
     </script>

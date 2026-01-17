@@ -150,6 +150,14 @@ class CoreServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/translator.php',
             'translator'
         );
+
+        $this->publishes([
+            __DIR__ . '/../../config/core.php' => config_path('core.php'),
+            __DIR__ . '/../../config/media.php' => config_path('media.php'),
+            __DIR__ . '/../../config/modules.php' => config_path('modules.php'),
+            __DIR__ . '/../../config/themes.php' => config_path('themes.php'),
+            __DIR__ . '/../../config/translator.php' => config_path('translator.php'),
+        ], 'core-config');
     }
 
     protected function registerProviders(): void
@@ -160,7 +168,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(FileManagerServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemeServiceProvider::class);
-        // $this->app->register(AdminServiceProvider::class);
     }
 
     protected function registerServices(): void
@@ -265,16 +272,6 @@ class CoreServiceProvider extends ServiceProvider
             '\Juzaweb\Modules\Admin\Rules\DomainValidator@validate'
         );
 
-        Validator::extend(
-            'cloudflare',
-            '\Juzaweb\Modules\Admin\Rules\CloudflareValidator@validate'
-        );
-
-        Validator::extend(
-            'website_subdomain',
-            '\Juzaweb\Modules\Admin\Rules\WebsiteSubdomainValidate@validate'
-        );
-
         Rule::macro(
             'modelExists',
             function (
@@ -367,13 +364,13 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerViews(): void
     {
-        $viewPath = resource_path('views/modules/core');
+        $viewPath = resource_path('views/vendor/core');
 
         $sourcePath = __DIR__ . '/../resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ], ['views', 'core-module-views']);
+        ], ['views', 'core-views']);
 
         $this->loadViewsFrom($sourcePath, 'core');
     }

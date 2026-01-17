@@ -39,7 +39,7 @@ class AuthController extends AdminController
 
         return view($this->getViewName('login'),
             [
-                'title' => __('admin::translation.login'),
+                'title' => __('core::translation.login'),
                 ...compact('socialLogins'),
             ]
         );
@@ -54,7 +54,7 @@ class AuthController extends AdminController
 
             return $this->error(
                 [
-                    'message' => trans('admin::translation.authfailed'),
+                    'message' => trans('core::translation.authfailed'),
                 ]
             );
         }
@@ -63,13 +63,13 @@ class AuthController extends AdminController
 
         $user->logActivity()
             ->event('logined')
-            ->log(__('admin::translation.logged_in_to_the_system'));
+            ->log(__('core::translation.logged_in_to_the_system'));
 
         do_action('login.success', $user);
 
         return $this->success(
             [
-                'message' => trans('admin::translation.login_successfully'),
+                'message' => trans('core::translation.login_successfully'),
                 'redirect' => website()->loginRedirectUrl($user),
             ]
         );
@@ -77,14 +77,14 @@ class AuthController extends AdminController
 
     public function register()
     {
-        abort_if(setting('user_registration') === false, 403, __('admin::translation.user_registration_is_disabled'));
+        abort_if(setting('user_registration') === false, 403, __('core::translation.user_registration_is_disabled'));
 
         $socialLogins = social_login_providers();
 
         return view(
             $this->getViewName('register'),
             [
-                'title' => __('admin::translation.register'),
+                'title' => __('core::translation.register'),
                 ...compact('socialLogins'),
             ]
         );
@@ -92,7 +92,7 @@ class AuthController extends AdminController
 
     public function doRegister(RegisterRequest $request)
     {
-        abort_if(setting('user_registration') === false, 403, __('admin::translation.user_registration_is_disabled'));
+        abort_if(setting('user_registration') === false, 403, __('core::translation.user_registration_is_disabled'));
 
         $user = DB::transaction(fn () => $request->register());
 
@@ -103,7 +103,7 @@ class AuthController extends AdminController
 
         return $this->success(
             [
-                'message' => trans('admin::translation.register_successfully'),
+                'message' => trans('core::translation.register_successfully'),
                 'redirect' => $redirect,
                 'user' => ['id' => $user->id],
             ]
@@ -121,7 +121,7 @@ class AuthController extends AdminController
     {
         return view($this->getViewName('verification-notice'),
             [
-                'title' => __('admin::translation.email_verification'),
+                'title' => __('core::translation.email_verification'),
             ]
         );
     }
@@ -133,7 +133,7 @@ class AuthController extends AdminController
         if ($user->hasVerifiedEmail()) {
             return $this->success(
                 [
-                    'message' => __('admin::translation.email_is_already_verified'),
+                    'message' => __('core::translation.email_is_already_verified'),
                 ]
             );
         }
@@ -142,7 +142,7 @@ class AuthController extends AdminController
 
         return $this->success(
             [
-                'message' => __('admin::translation.a_new_verification_link_has_been_sent_to_your_email_address'),
+                'message' => __('core::translation.a_new_verification_link_has_been_sent_to_your_email_address'),
             ]
         );
     }
@@ -152,15 +152,15 @@ class AuthController extends AdminController
         $user = User::find($id);
 
         if ($user === null) {
-            return $this->error(__('admin::translation.invalid_verification_token'));
+            return $this->error(__('core::translation.invalid_verification_token'));
         }
 
         if (! hash_equals((string) $user->getKey(), $id)) {
-            return $this->error(__('admin::translation.invalid_verification_token'));
+            return $this->error(__('core::translation.invalid_verification_token'));
         }
 
         if (! hash_equals(sha1($user->getEmailForVerification()), $hash)) {
-            return $this->error(__('admin::translation.invalid_verification_token'));
+            return $this->error(__('core::translation.invalid_verification_token'));
         }
 
         if (! $user->hasVerifiedEmail()) {
@@ -173,7 +173,7 @@ class AuthController extends AdminController
 
         return $this->success(
             [
-                'message' => __('admin::translation.email_verified_successfully'),
+                'message' => __('core::translation.email_verified_successfully'),
                 'redirect' => route('login'),
             ]
         );
@@ -183,7 +183,7 @@ class AuthController extends AdminController
     {
         return view($this->getViewName('forgot-password'),
             [
-                'title' => __('admin::translation.forgot_password'),
+                'title' => __('core::translation.forgot_password'),
             ]
         );
     }
@@ -194,7 +194,7 @@ class AuthController extends AdminController
 
         if ($user === null) {
             // Avoid email scanning attacks
-            return $this->success(__('admin::translation.we_have_e_mailed_your_password_reset_link'));
+            return $this->success(__('core::translation.we_have_e_mailed_your_password_reset_link'));
         }
 
         DB::transaction(
@@ -206,11 +206,11 @@ class AuthController extends AdminController
                 $user->logActivity()
                     ->performedOn($user)
                     ->event('forgot_password')
-                    ->log(__('admin::translation.requested_password_reset'));
+                    ->log(__('core::translation.requested_password_reset'));
             }
         );
 
-        return $this->success(__('admin::translation.we_have_e_mailed_your_password_reset_link'));
+        return $this->success(__('core::translation.we_have_e_mailed_your_password_reset_link'));
     }
 
     public function resetPassword(string $email, string $token)
@@ -218,11 +218,11 @@ class AuthController extends AdminController
         /** @var User $user */
         $user = $this->passwordBroker->getUser(['email' => $email]);
 
-        abort_if($user === null, 404, __('admin::translation.invalid_password_reset_token'));
+        abort_if($user === null, 404, __('core::translation.invalid_password_reset_token'));
 
         return view($this->getViewName('reset-password'),
             [
-                'title' => __('admin::translation.reset_password'),
+                'title' => __('core::translation.reset_password'),
                 'token' => $token,
                 'email' => $user->email,
             ]
@@ -245,7 +245,7 @@ class AuthController extends AdminController
                 $user->logActivity()
                     ->performedOn($user)
                     ->event('change_password')
-                    ->log(__('admin::translation.reset_password_by_email'));
+                    ->log(__('core::translation.reset_password_by_email'));
 
                 event(new PasswordReset($user));
             }
@@ -257,7 +257,7 @@ class AuthController extends AdminController
 
         return $this->success(
             [
-                'message' => __('admin::translation.your_password_has_been_reset_please_login_again'),
+                'message' => __('core::translation.your_password_has_been_reset_please_login_again'),
                 'redirect' => route('login'),
             ]
         );
@@ -271,6 +271,6 @@ class AuthController extends AdminController
             return $theme->name() . '::auth.'. $name;
         }
 
-        return 'admin::auth.'. $name;
+        return 'core::auth.'. $name;
     }
 }

@@ -1,11 +1,11 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             @can('languages.create')
             <a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
-                <i class="fas fa-plus"></i> {{ __('admin::translation.add_language') }}
+                <i class="fas fa-plus"></i> {{ __('core::translation.add_language') }}
             </a>
             @endcan
         </div>
@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('admin::translation.languages') }}</h3>
+                    <h3 class="card-title">{{ __('core::translation.languages') }}</h3>
                 </div>
                 <div class="card-body">
                     {{ $dataTable->table() }}
@@ -32,13 +32,13 @@
             <form action="" class="form-ajax" method="post" data-success="addLanguageSuccess">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">{{ __('admin::translation.add_new_language') }}</h4>
+                        <h4 class="modal-title">{{ __('core::translation.add_new_language') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        {{ Field::select(__('admin::translation.language'), 'code', [])
+                        {{ Field::select(__('core::translation.language'), 'code', [])
                             ->dropDownList(
                                 collect(config('locales'))->pluck('name', 'code')
                                 ->prepend('--- Choose Language ---', '')->toArray()
@@ -46,7 +46,7 @@
                             ->autocomplete()
                         }}
 
-                        {{ Field::text(__('admin::translation.name'), 'name', ['placeholder' => __('admin::translation.language_name')]) }}
+                        {{ Field::text(__('core::translation.name'), 'name', ['placeholder' => __('core::translation.language_name')]) }}
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="submit" class="btn btn-primary">@lang('Save changes')</button>

@@ -66,6 +66,6 @@ class Select extends Field
 
     public function render(): View|string
     {
-        return view('admin::fields.select', $this->renderParams());
+        return view('core::fields.select', $this->renderParams());
     }
 }

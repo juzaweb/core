@@ -53,56 +53,56 @@ abstract class AdminServiceProvider extends ServiceProvider
     {
         Menu::make('dashboard', function () {
             return [
-                'title' => __('admin::translation.dashboard'),
+                'title' => __('core::translation.dashboard'),
                 'icon' => 'fas fa-tachometer-alt',
             ];
         });
 
         Menu::make('media', function () {
             return [
-                'title' => __('admin::translation.media'),
+                'title' => __('core::translation.media'),
                 'icon' => 'fas fa-photo-video',
             ];
         });
 
         Menu::make('pages', function () {
             return [
-                'title' => __('admin::translation.pages'),
+                'title' => __('core::translation.pages'),
                 'icon' => 'fas fa-layer-group',
             ];
         });
 
         Menu::make('blog', function () {
             return [
-                'title' => __('admin::translation.blog'),
+                'title' => __('core::translation.blog'),
                 'icon' => 'fas fa-newspaper',
             ];
         });
 
         Menu::make('posts', function () {
             return [
-                'title' => __('admin::translation.posts'),
+                'title' => __('core::translation.posts'),
                 'parent' => 'blog',
             ];
         });
 
         Menu::make('post-categories', function () {
             return [
-                'title' => __('admin::translation.categories'),
+                'title' => __('core::translation.categories'),
                 'parent' => 'blog',
             ];
         });
 
         Menu::make('comments', function () {
             return [
-                'title' => __('admin::translation.comments'),
+                'title' => __('core::translation.comments'),
                 'parent' => 'blog',
             ];
         });
 
         Menu::make('appearance', function () {
             return [
-                'title' => __('admin::translation.appearance'),
+                'title' => __('core::translation.appearance'),
                 'icon' => 'fas fa-paint-roller',
                 'priority' => 98,
             ];
@@ -110,21 +110,21 @@ abstract class AdminServiceProvider extends ServiceProvider
 
         Menu::make('widgets', function () {
             return [
-                'title' => __('admin::translation.widgets'),
+                'title' => __('core::translation.widgets'),
                 'parent' => 'appearance',
             ];
         });
 
         Menu::make('menus', function () {
             return [
-                'title' => __('admin::translation.menus'),
+                'title' => __('core::translation.menus'),
                 'parent' => 'appearance',
             ];
         });
 
         Menu::make('settings', function () {
             return [
-                'title' => __('admin::translation.settings'),
+                'title' => __('core::translation.settings'),
                 'icon' => 'fas fa-cogs',
                 'priority' => 99,
             ];
@@ -132,7 +132,7 @@ abstract class AdminServiceProvider extends ServiceProvider
 
         Menu::make('general', function () {
             return [
-                'title' => __('admin::translation.general'),
+                'title' => __('core::translation.general'),
                 'url' => 'settings/general',
                 'parent' => 'settings',
             ];
@@ -140,7 +140,7 @@ abstract class AdminServiceProvider extends ServiceProvider
 
         Menu::make('domain', function () {
             return [
-                'title' => __('admin::translation.custom_domain'),
+                'title' => __('core::translation.custom_domain'),
                 'url' => 'settings/domain',
                 'parent' => 'settings',
             ];
@@ -148,7 +148,7 @@ abstract class AdminServiceProvider extends ServiceProvider
 
         Menu::make('social-login', function () {
             return [
-                'title' => __('admin::translation.social_login'),
+                'title' => __('core::translation.social_login'),
                 'url' => 'settings/social-login',
                 'parent' => 'settings',
             ];
@@ -156,7 +156,7 @@ abstract class AdminServiceProvider extends ServiceProvider
 
         Menu::make('email', function () {
             return [
-                'title' => __('admin::translation.email'),
+                'title' => __('core::translation.email'),
                 'url' => 'settings/email',
                 'parent' => 'settings',
             ];
@@ -164,14 +164,14 @@ abstract class AdminServiceProvider extends ServiceProvider
 
         Menu::make('members', function () {
             return [
-                'title' => __('admin::translation.members'),
+                'title' => __('core::translation.members'),
                 'parent' => 'settings',
             ];
         });
 
         Menu::make('languages', function () {
             return [
-                'title' => __('admin::translation.languages'),
+                'title' => __('core::translation.languages'),
                 'parent' => 'settings',
             ];
         });
@@ -181,7 +181,7 @@ abstract class AdminServiceProvider extends ServiceProvider
     {
         MenuBox::make('pages', Page::class, function () {
             return [
-                'label' => __('admin::translation.pages'),
+                'label' => __('core::translation.pages'),
                 'icon' => 'fas fa-layer-group',
                 'priority' => 1,
                 'field' => 'title',
@@ -190,7 +190,7 @@ abstract class AdminServiceProvider extends ServiceProvider
 
         MenuBox::make('post-categories', Category::class, function () {
             return [
-                'label' => __('admin::translation.categories'),
+                'label' => __('core::translation.categories'),
                 'icon' => 'fas fa-newspaper',
                 'priority' => 1,
                 'field' => 'name',
@@ -269,9 +269,9 @@ abstract class AdminServiceProvider extends ServiceProvider
             'html',
             function () {
                 return [
-                    'label' => __('admin::translation.html_block'),
-                    'form' => 'admin::global.blocks.html.form',
-                    'view' => 'admin::global.blocks.html.view',
+                    'label' => __('core::translation.html_block'),
+                    'form' => 'core::global.blocks.html.form',
+                    'view' => 'core::global.blocks.html.view',
                 ];
             }
         );
@@ -283,10 +283,10 @@ abstract class AdminServiceProvider extends ServiceProvider
             'html',
             function () {
                 return [
-                    'label' => __('admin::translation.html_widget'),
-                    'description' => __('admin::translation.display_custom_html_content'),
-                    'form' => 'admin::global.widgets.html.form',
-                    'view' => 'admin::global.widgets.html.show',
+                    'label' => __('core::translation.html_widget'),
+                    'description' => __('core::translation.display_custom_html_content'),
+                    'form' => 'core::global.widgets.html.form',
+                    'view' => 'core::global.widgets.html.show',
                 ];
             }
         );

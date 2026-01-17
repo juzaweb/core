@@ -6,7 +6,7 @@
                     $block = PageBlock::get($item->block);
                 @endphp
 
-                @component('admin::admin.page.components.blocks.page-block-item', [
+                @component('core::admin.page.components.blocks.page-block-item', [
                     'key' => 'block-' . $item->id,
                     'block' => $block,
                     'contentKey' => $contentKey,
@@ -22,7 +22,7 @@
         <div class="dropdown">
             <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton-{{ $key }}"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ __('admin::translation.add_block') }}
+                {{ __('core::translation.add_block') }}
             </button>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ $key }}">

@@ -4,11 +4,11 @@
         <div class="dd-nodrag">
             <div class="block-action-button">
                 <a href="javascript:void(0)" class="show-form-block">
-                    <i class="fa fa-edit"></i> {{ __('admin::translation.edit') }}
+                    <i class="fa fa-edit"></i> {{ __('core::translation.edit') }}
                 </a>
 
                 <a href="javascript:void(0)" class="remove-form-block text-danger">
-                    <i class="fa fa-trash"></i> {{ __('admin::translation.delete') }}
+                    <i class="fa fa-trash"></i> {{ __('core::translation.delete') }}
                 </a>
             </div>
         </div>

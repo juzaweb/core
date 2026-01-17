@@ -12,7 +12,7 @@
             <input type="hidden" class="input-name" value="{{ $name }}[]">
             <div class="images-list">
                 @foreach ($paths as $path)
-                    @component('admin::fields.components.image-item', [
+                    @component('core::fields.components.image-item', [
                         'name' => "{$name}[]",
                         'path' => $path,
                         'url' => upload_url($path),
@@ -23,7 +23,7 @@
                 <div class="image-item add-image-container">
                     <button type="button" class="btn btn-info btn-block add-image-images-modal" data-type="image">
                         <i class="fa fa-images fa-2x mb-2"></i>
-                        <div>{{ __('admin::translation.add_images') }}</div>
+                        <div>{{ __('core::translation.add_images') }}</div>
                     </button>
                 </div>
             </div>

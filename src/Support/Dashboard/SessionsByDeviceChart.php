@@ -25,7 +25,7 @@ class SessionsByDeviceChart extends PieChart
 
     public function getTitle(): string
     {
-        return __('admin::translation.sessions_by_device');
+        return __('core::translation.sessions_by_device');
     }
 
     public function getIcon(): string
@@ -58,7 +58,7 @@ class SessionsByDeviceChart extends PieChart
             'labels' => $response->pluck('deviceCategory')->values(),
             'datasets' => [
                 [
-                    'label' => __('admin::translation.sessions'),
+                    'label' => __('core::translation.sessions'),
                     'data' => $response->pluck('sessions')->values(),
                 ],
             ],

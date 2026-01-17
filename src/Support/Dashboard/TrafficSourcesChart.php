@@ -25,7 +25,7 @@ class TrafficSourcesChart extends PieChart
 
     public function getTitle(): string
     {
-        return __('admin::translation.traffic_sources');
+        return __('core::translation.traffic_sources');
     }
 
     public function getIcon(): string
@@ -60,7 +60,7 @@ class TrafficSourcesChart extends PieChart
             'labels' => $rows->pluck('sessionSource')->values(),
             'datasets' => [
                 [
-                    'label' => __('admin::translation.sessions'),
+                    'label' => __('core::translation.sessions'),
                     'data' => $rows->pluck('sessions')->values(),
                 ],
             ],

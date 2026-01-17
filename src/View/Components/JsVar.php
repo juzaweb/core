@@ -21,6 +21,6 @@ class JsVar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('admin::components.js-var');
+        return view('core::components.js-var');
     }
 }

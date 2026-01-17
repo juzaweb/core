@@ -26,9 +26,9 @@ enum PostStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::PUBLISHED => __('admin::translation.published'),
-            self::DRAFT => __('admin::translation.draft'),
-            self::PRIVATE => __('admin::translation.private'),
+            self::PUBLISHED => __('core::translation.published'),
+            self::DRAFT => __('core::translation.draft'),
+            self::PRIVATE => __('core::translation.private'),
         };
     }
 }

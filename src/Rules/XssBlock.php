@@ -49,7 +49,7 @@ class XssBlock implements ValidationRule
 
         foreach ($this->patterns as $pattern) {
             if (preg_match($pattern, $value)) {
-                $fail(__('admin::translation.invalid_value'));
+                $fail(__('core::translation.invalid_value'));
                 return;
             }
         }

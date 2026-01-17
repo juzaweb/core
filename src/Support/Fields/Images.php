@@ -16,7 +16,7 @@ class Images extends Field
     public function render(): View|string
     {
         return view(
-            'admin::fields.images',
+            'core::fields.images',
             $this->renderParams()
         );
     }

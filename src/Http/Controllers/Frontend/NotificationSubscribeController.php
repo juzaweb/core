@@ -25,7 +25,7 @@ class NotificationSubscribeController extends ThemeController
     public function subscribe(NotificationSubscribeRequest $request, string $channel)
     {
         if (! in_array($channel, ['mail', 'fcm'])) {
-            return $this->error(__('admin::translation.channel_not_supported'));
+            return $this->error(__('core::translation.channel_not_supported'));
         }
 
         $notifiable = $request->user() ?? Guest::firstOrCreate(
@@ -54,14 +54,14 @@ class NotificationSubscribeController extends ThemeController
 
             Notification::route('mail', $data)->notify(new SubscriptionVerifyEmail(website(), $url));
 
-            return $this->success(__('admin::translation.verification_email_sent'));
+            return $this->success(__('core::translation.verification_email_sent'));
         }
 
         $this->doSubscribe($channel, $notifiable, $name, $data);
 
         return $this->success(
             [
-                'message' => __('admin::translation.subscribed_successfully'),
+                'message' => __('core::translation.subscribed_successfully'),
             ]
         );
     }
@@ -79,15 +79,15 @@ class NotificationSubscribeController extends ThemeController
         $notifiable = $notifiableType::find($notifiableId);
 
         if (! $notifiable) {
-            return $this->error(__('admin::translation.notifiable_not_found'));
+            return $this->error(__('core::translation.notifiable_not_found'));
         }
 
         $name = $channel === 'mail' ? 'email' : 'token';
 
         $this->doSubscribe($channel, $notifiable, $name, $data);
 
-        return view('admin::frontend.subscription-verified', [
-            'title' => __('admin::translation.subscription_verified_successfully'),
+        return view('core::frontend.subscription-verified', [
+            'title' => __('core::translation.subscription_verified_successfully'),
         ]);
     }
 

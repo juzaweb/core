@@ -34,7 +34,7 @@ class UploadUrl extends Field
     public function render(): View|string
     {
         return view(
-            'admin::fields.upload-url',
+            'core::fields.upload-url',
             [
                 ...$this->renderParams(),
                 'uploadType' => $this->uploadType,

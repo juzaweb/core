@@ -18,7 +18,7 @@ class Security extends Field
         $this->options['disabled'] = isset($this->options['value']) && $this->options['value'] != '';
 
         return view(
-            'admin::fields.security',
+            'core::fields.security',
             $this->renderParams()
         );
     }

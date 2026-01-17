@@ -1,9 +1,9 @@
-@extends('admin::layouts.auth')
+@extends('core::layouts.auth')
 
 @section('content')
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">{{ __('admin::translation.please_verify_your_email_address') }}</p>
+            <p class="login-box-msg">{{ __('core::translation.please_verify_your_email_address') }}</p>
 
             @if (session('success'))
                 <div class="alert alert-success">
@@ -26,14 +26,14 @@
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block">{{ __('admin::translation.re_send_email') }}</button>
+                        <button type="submit" class="btn btn-primary btn-block">{{ __('core::translation.re_send_email') }}</button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
 
             <p class="mt-1">
-                <a href="{{ route('login') }}" class="text-center">{{ __('admin::translation.login_to_account') }}</a>
+                <a href="{{ route('login') }}" class="text-center">{{ __('core::translation.login_to_account') }}</a>
             </p>
         </div>
         <!-- /.login-card-body -->

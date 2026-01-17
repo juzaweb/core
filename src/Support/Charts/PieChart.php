@@ -22,7 +22,7 @@ abstract class PieChart
     public function render(): Htmlable
     {
         return view(
-            'admin::components.dashboard.pie-chart',
+            'core::components.dashboard.pie-chart',
             ['chart' => $this]
         );
     }

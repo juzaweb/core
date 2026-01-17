@@ -72,7 +72,7 @@ class BulkAction
      */
     public static function delete(): static
     {
-        return static::make(__('admin::translation.delete'), null, 'fas fa-trash')
+        return static::make(__('core::translation.delete'), null, 'fas fa-trash')
             ->type('action')
             ->action('delete')
             ->color('danger');

@@ -1,4 +1,4 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('content')
     <div class="row" id="module-list">
@@ -13,7 +13,7 @@
                     <div class="card-footer bg-white border-top-0">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="badge badge-{{ $module->isEnabled() ? 'success' : 'secondary' }}">
-                                {{ $module->isEnabled() ? __('admin::translation.active') : __('admin::translation.inactive') }}
+                                {{ $module->isEnabled() ? __('core::translation.active') : __('core::translation.inactive') }}
                             </span>
 
                             <div class="custom-control custom-switch">

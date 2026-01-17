@@ -16,10 +16,10 @@ class CommentController extends AdminController
 
     public function index(CommentsDataTable $dataTable, string $websiteId)
     {
-        Breadcrumb::add(__('admin::translation.comments'));
+        Breadcrumb::add(__('core::translation.comments'));
 
         return $dataTable->forCommentableType($this->commentableType)->render(
-            'admin::comment.index',
+            'core::comment.index',
             []
         );
     }
@@ -48,7 +48,7 @@ class CommentController extends AdminController
         }
 
         return $this->success([
-            'message' => __('admin::translation.bulk_action_performed_successfully'),
+            'message' => __('core::translation.bulk_action_performed_successfully'),
         ]);
     }
 }

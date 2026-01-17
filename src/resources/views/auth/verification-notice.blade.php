@@ -1,6 +1,6 @@
-@extends('admin::layouts.auth')
+@extends('core::layouts.auth')
 
-@section('title', __('admin::translation.email_verification'))
+@section('title', __('core::translation.email_verification'))
 
 @section('head')
     <link rel="stylesheet" href="{{ mix('css/auth.min.css', 'themes/main') }}">
@@ -19,20 +19,20 @@
 
                     <!-- Title -->
                     <div class="mb-4">
-                        <h2 class="auth-title">{{ __('admin::translation.verify_your_email_address') }}</h2>
-                        <p class="auth-subtitle">{{ __('admin::translation.before_proceeding_please_check_your_email_for_a_verification_link') }}</p>
+                        <h2 class="auth-title">{{ __('core::translation.verify_your_email_address') }}</h2>
+                        <p class="auth-subtitle">{{ __('core::translation.before_proceeding_please_check_your_email_for_a_verification_link') }}</p>
                     </div>
                     <!-- End Title -->
 
                     <p class="mb-4">
-                        {{ __('admin::translation.if_you_did_not_receive_the_email') }},
+                        {{ __('core::translation.if_you_did_not_receive_the_email') }},
                     </p>
 
                     <form method="post" action="{{ route('verification.resend') }}" class="d-inline form-ajax" data-notify="false" data-jw-token="true">
                         <div class="jquery-message mb-2"></div>
 
                         <button type="submit" class="btn btn-primary">
-                            {{ __('admin::translation.click_here_to_request_another') }}
+                            {{ __('core::translation.click_here_to_request_another') }}
                         </button>
                     </form>
 

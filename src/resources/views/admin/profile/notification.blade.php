@@ -1,4 +1,4 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('head')
     <style>
@@ -79,7 +79,7 @@
 
 @section('content')
     <div class="row">
-        @include('admin::admin.profile.components.sidebar')
+        @include('core::admin.profile.components.sidebar')
 
         <div class="col-xs-12 col-sm-12 col-md-9">
             <div class="card">

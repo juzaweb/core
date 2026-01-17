@@ -60,7 +60,7 @@ class MakeTemplateCommand extends GenerateCommand
                     'label' => __('".title_from_key($name)."'),
                     'view' => '{$theme->name()}::templates.{$name}',
                     'blocks' => [
-                        'content' => __('admin::translation.content'),
+                        'content' => __('core::translation.content'),
                     ],
                 ];
             }

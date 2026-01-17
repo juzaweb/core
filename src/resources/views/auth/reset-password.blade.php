@@ -1,6 +1,6 @@
-@extends('admin::layouts.auth')
+@extends('core::layouts.auth')
 
-@section('title', __('admin::translation.reset_password'))
+@section('title', __('core::translation.reset_password'))
 
 @section('head')
     <link rel="stylesheet" href="{{ mix('css/auth.min.css', 'themes/main') }}">
@@ -18,8 +18,8 @@
                              class="img-fluid mb-3"
                              style="max-height: 50px;">
 
-                        <h2 class="auth-title">{{ __('admin::translation.reset_password') }}</h2>
-                        <p class="auth-subtitle">{{ __('admin::translation.enter_your_new_password') }}</p>
+                        <h2 class="auth-title">{{ __('core::translation.reset_password') }}</h2>
+                        <p class="auth-subtitle">{{ __('core::translation.enter_your_new_password') }}</p>
                     </div>
                     <!-- End Title -->
 
@@ -31,32 +31,32 @@
 
                         <!-- Input Group -->
                         <div class="form-group">
-                            <label for="resetPassword">{{ __('admin::translation.new_password') }}</label>
+                            <label for="resetPassword">{{ __('core::translation.new_password') }}</label>
                             <input type="password" name="password" id="resetPassword" class="form-control"
-                                   placeholder="{{ __('admin::translation.new_password') }}" required>
-                            <small class="form-text text-muted">{{ __('admin::translation.minimum_8_characters') }}</small>
+                                   placeholder="{{ __('core::translation.new_password') }}" required>
+                            <small class="form-text text-muted">{{ __('core::translation.minimum_8_characters') }}</small>
                             <span class="error-password text-danger"></span>
                         </div>
                         <!-- End Input Group -->
 
                         <!-- Input Group -->
                         <div class="form-group">
-                            <label for="resetConfirmPassword">{{ __('admin::translation.confirm_password') }}</label>
+                            <label for="resetConfirmPassword">{{ __('core::translation.confirm_password') }}</label>
                             <input type="password" name="password_confirmation" id="resetConfirmPassword" class="form-control"
-                                   placeholder="{{ __('admin::translation.confirm_password') }}" required>
+                                   placeholder="{{ __('core::translation.confirm_password') }}" required>
                             <span class="error-password_confirmation text-danger"></span>
                         </div>
                         <!-- End Input Group -->
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block">
-                                {{ __('admin::translation.reset_password') }}
+                                {{ __('core::translation.reset_password') }}
                             </button>
                         </div>
                     </form>
 
                     <div class="text-center auth-footer">
-                        <p><a href="{{ home_url('user/login') }}" class="auth-link-bold">{{ __('admin::translation.back_to_login') }}</a></p>
+                        <p><a href="{{ home_url('user/login') }}" class="auth-link-bold">{{ __('core::translation.back_to_login') }}</a></p>
                     </div>
                 </div>
             </div>

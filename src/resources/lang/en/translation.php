@@ -539,7 +539,7 @@ return [
     'referral_code_generated_successfully' => 'Referral code generated successfully.',
     'unlimited_traffic' => 'Unlimited traffic',
     'traffic_per_day' => 'traffic per day',
-    'adminbrowser' => 'admin::browser',
+    'adminbrowser' => 'core::browser',
     'upload_media' => 'Upload media',
     'my_referral_information' => 'My Referral Information',
     'referral_code' => 'Referral Code',

@@ -18,7 +18,7 @@ class Slug extends Field
         $this->options['disabled'] = true;
 
         return view(
-            'admin::fields.slug',
+            'core::fields.slug',
             $this->renderParams()
         );
     }

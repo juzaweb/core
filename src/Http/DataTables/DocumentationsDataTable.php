@@ -25,7 +25,7 @@ class DocumentationsDataTable extends DataTable
 			Column::checkbox(),
 			Column::id(),
 			Column::actions(),
-			Column::editLink('title', admin_url('documentations/{id}/edit'), __('admin::translation.label')),
+			Column::editLink('title', admin_url('documentations/{id}/edit'), __('core::translation.label')),
 			Column::make('code'),
 			Column::make('module'),
 			Column::make('active'),

@@ -15,6 +15,6 @@ class Textarea extends Field
 {
     public function render(): View|string
     {
-        return view('admin::fields.textarea', $this->renderParams());
+        return view('core::fields.textarea', $this->renderParams());
     }
 }

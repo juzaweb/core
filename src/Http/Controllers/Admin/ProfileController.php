@@ -23,10 +23,10 @@ class ProfileController extends AdminController
     {
         $user = $request->user();
 
-        Breadcrumb::add(__('admin::translation.profile'));
+        Breadcrumb::add(__('core::translation.profile'));
 
         return view(
-            'admin::admin.profile.index',
+            'core::admin.profile.index',
             compact('user')
         );
     }
@@ -35,12 +35,12 @@ class ProfileController extends AdminController
     {
         $user = $request->user();
 
-        Breadcrumb::add(__('admin::translation.profile'), route('admin.profile', [$websiteId]));
+        Breadcrumb::add(__('core::translation.profile'), route('admin.profile', [$websiteId]));
 
-        Breadcrumb::add(__('admin::translation.notifications'));
+        Breadcrumb::add(__('core::translation.notifications'));
 
         return $dataTable->render(
-            'admin::admin.profile.notification',
+            'core::admin.profile.notification',
             compact('user')
         );
     }
@@ -68,7 +68,7 @@ class ProfileController extends AdminController
         );
 
         return $this->success(
-            __('admin::translation.profile_updated_successfully'),
+            __('core::translation.profile_updated_successfully'),
         );
     }
 }

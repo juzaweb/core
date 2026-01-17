@@ -1,4 +1,4 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('content')
     <form action="{{ $action }}" class="form-ajax" method="post">
@@ -9,11 +9,11 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="{{ admin_url('pages') }}" class="btn btn-warning">
-                    <i class="fas fa-arrow-left"></i> {{ __('admin::translation.back') }}
+                    <i class="fas fa-arrow-left"></i> {{ __('core::translation.back') }}
                 </a>
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ __('admin::translation.save') }}
+                    <i class="fas fa-save"></i> {{ __('core::translation.save') }}
                 </button>
             </div>
         </div>
@@ -22,19 +22,19 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ __('admin::translation.pages') }}</h3>
+                        <h3 class="card-title">{{ __('core::translation.pages') }}</h3>
                     </div>
                     <div class="card-body">
-                        {{ Field::text($model, "title", ['label' => __('admin::translation.title'), 'value' => $model->title]) }}
+                        {{ Field::text($model, "title", ['label' => __('core::translation.title'), 'value' => $model->title]) }}
 
                         @if(!isset($template) || !$template->blocks)
-                            {{ Field::editor($model, "content", ['label' => __('admin::translation.content'), 'value' => $model->content]) }}
+                            {{ Field::editor($model, "content", ['label' => __('core::translation.content'), 'value' => $model->content]) }}
                         @endif
                     </div>
                 </div>
 
                 @if($template && $template->blocks)
-                    @include('admin::admin.page.components.blocks.block')
+                    @include('core::admin.page.components.blocks.block')
                 @endif
 
                 {{--<x-seo-meta :model="$model" :locale="$locale"/>--}}
@@ -45,7 +45,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        {{ Field::select($model, 'status', ['label' => __('admin::translation.status')])
+                        {{ Field::select($model, 'status', ['label' => __('core::translation.status')])
                             ->dropDownList(
                                 \Juzaweb\Modules\Core\Enums\PageStatus::all()
                             ) }}
@@ -54,15 +54,15 @@
 
                 <div class="card">
                     <div class="card-body">
-                        {{ Field::select($model, 'template', ['label' => __('admin::translation.template')])
+                        {{ Field::select($model, 'template', ['label' => __('core::translation.template')])
                             ->dropDownList(
                                 [
-                                    '' => __('admin::translation.select_template'),
+                                    '' => __('core::translation.select_template'),
                                     ...$templates,
                                 ]
                             ) }}
 
-                        {{ Field::checkbox(__('admin::translation.set_as_home_page'), 'is_home', [
+                        {{ Field::checkbox(__('core::translation.set_as_home_page'), 'is_home', [
                             'value' => (theme_setting('home_page') && theme_setting('home_page') == $model->id) ? 1 : 0,
                         ]) }}
                     </div>
@@ -70,7 +70,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        {{ Field::image($model, "thumbnail", ['label' => __('admin::translation.thumbnail'), 'value' => $model->thumbnail]) }}
+                        {{ Field::image($model, "thumbnail", ['label' => __('core::translation.thumbnail'), 'value' => $model->thumbnail]) }}
                     </div>
                 </div>
 

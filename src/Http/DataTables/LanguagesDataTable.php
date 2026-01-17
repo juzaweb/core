@@ -62,7 +62,7 @@ class LanguagesDataTable extends DataTable
             Column::make('code')->width('100px'),
             Column::make('name'),
             Column::make('is_default')
-                ->title(__('admin::translation.default'))
+                ->title(__('core::translation.default'))
                 ->width('80px')
                 ->center(),
             Column::createdAt(),
@@ -87,7 +87,7 @@ class LanguagesDataTable extends DataTable
         $defaultLanguage = $this->getDefaultLanguage();
         $actions = [
             Action::link(
-                __('admin::translation.phrases'),
+                __('core::translation.phrases'),
                 route('admin.languages.translations', [$this->websiteId, $model->code]),
                 'fas fa-language'
             ),
@@ -95,7 +95,7 @@ class LanguagesDataTable extends DataTable
 
         if ($model->code !== $defaultLanguage) {
             $actions[] = Action::make(
-                __('admin::translation.set_as_default'),
+                __('core::translation.set_as_default'),
                 'javascript:void(0)',
                 'fas fa-star'
             )

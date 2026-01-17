@@ -24,7 +24,7 @@ class UsersChart extends LineChart
 
     public function getTitle(): string
     {
-        return __('admin::translation.users_this_week');
+        return __('core::translation.users_this_week');
     }
 
     public function getIcon(): string
@@ -81,28 +81,28 @@ class UsersChart extends LineChart
             ),
             'datasets' => [
                 [
-                    'label' => __('admin::translation.active_users'),
+                    'label' => __('core::translation.active_users'),
                     'data' => $response->pluck('activeUsers'),
                     'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
                     'borderColor' => 'rgba(54, 162, 235, 1)',
                     'borderWidth' => 1,
                 ],
                 [
-                    'label' => __('admin::translation.page_views'),
+                    'label' => __('core::translation.page_views'),
                     'data' => $response->pluck('screenPageViews'),
                     'backgroundColor' => 'rgba(255, 206, 86, 0.2)',
                     'borderColor' => 'rgba(255, 206, 86, 1)',
                     'borderWidth' => 1,
                 ],
                 [
-                    'label' => __('admin::translation.new_users'),
+                    'label' => __('core::translation.new_users'),
                     'data' => $response->pluck('newUsers'),
                     'backgroundColor' => 'rgba(75, 192, 192, 0.2)',
                     'borderColor' => 'rgba(75, 192, 192, 1)',
                     'borderWidth' => 1,
                 ],
                 [
-                    'label' => __('admin::translation.new_registed_users'),
+                    'label' => __('core::translation.new_registed_users'),
                     'data' => $newUsers->values(),
                     'backgroundColor' => 'rgba(153, 102, 255, 0.2)',
                     'borderColor' => 'rgba(153, 102, 255, 1)',

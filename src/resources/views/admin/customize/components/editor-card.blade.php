@@ -15,6 +15,6 @@
         </section>
     </section>
 
-    <button class="btn btn--full-width mb-2" type="submit">{{ __('admin::translation.save') }}</button>
+    <button class="btn btn--full-width mb-2" type="submit">{{ __('core::translation.save') }}</button>
 
 </form>

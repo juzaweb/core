@@ -1,6 +1,6 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
-@section('title', __('admin::translation.upgrade'))
+@section('title', __('core::translation.upgrade'))
 
 @section('content')
     <section class="py-5" id="pricing-plans">
@@ -46,7 +46,7 @@
                                             data-id="{{ $plan->id }}"
                                             @disabled($plan->is_free || $currentPlan?->id === $plan->id)
                                     >
-                                        {{ __('admin::translation.choose_plan') }}
+                                        {{ __('core::translation.choose_plan') }}
                                     </button>
                                 </div>
                             </div>
@@ -72,14 +72,14 @@
             >
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="subscriptionLabel">{{ __('admin::translation.payment') }}</h5>
+                        <h5 class="modal-title" id="subscriptionLabel">{{ __('core::translation.payment') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div id="payment-container">
-                            {{ Field::select(__('admin::translation.method'), 'method_id')->dropDownList($paymentMethods) }}
+                            {{ Field::select(__('core::translation.method'), 'method_id')->dropDownList($paymentMethods) }}
 
                             <input type="hidden" id="plan_id" name="plan_id" value="">
                             <input type="hidden" name="token"
@@ -89,7 +89,7 @@
 
                             <div id="payment-message"></div>
 
-                            <button type="submit" class="btn btn-primary">{{ __('admin::translation.payment') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('core::translation.payment') }}</button>
                         </div>
                     </div>
                 </div>

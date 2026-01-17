@@ -1,5 +1,5 @@
 <x-card class="card">
-    {{ Field::language($label, 'locale', ['value' => $locale, 'label' => __('admin::translation.language')]) }}
+    {{ Field::language($label, 'locale', ['value' => $locale, 'label' => __('core::translation.language')]) }}
 
     @php
         $translate = config('network.translate_enabled', false);
@@ -18,7 +18,7 @@
            data-locale="{{ $locale }}"
            data-source="{{ $fallbackLocale }}"
         >
-            <i class="fas fa-language"></i> {{ __('admin::translation.translate_from_name', ['name' => config("locales.{$fallbackLocale}.name")]) }}
+            <i class="fas fa-language"></i> {{ __('core::translation.translate_from_name', ['name' => config("locales.{$fallbackLocale}.name")]) }}
         </a>
     @endif
 </x-card>

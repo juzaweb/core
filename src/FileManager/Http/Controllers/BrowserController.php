@@ -29,7 +29,7 @@ class BrowserController extends FileManagerController
         $multiChoose = $request->get('multichoose', 0);
 
         return view(
-            'admin::file-manager.index',
+            'core::file-manager.index',
             compact(
                 'mimeTypes',
                 'maxSize',
@@ -95,15 +95,15 @@ class BrowserController extends FileManagerController
     {
         $errors = [];
         if (! extension_loaded('gd') && ! extension_loaded('imagick')) {
-            $errors[] = trans('admin::browser.message_extension_not_found', ['name' => 'gd']);
+            $errors[] = trans('core::browser.message_extension_not_found', ['name' => 'gd']);
         }
 
         if (! extension_loaded('exif')) {
-            $errors[] = trans('admin::browser.message_extension_not_found', ['name' => 'exif']);
+            $errors[] = trans('core::browser.message_extension_not_found', ['name' => 'exif']);
         }
 
         if (! extension_loaded('fileinfo')) {
-            $errors[] = trans('admin::browser.message_extension_not_found', ['name' => 'fileinfo']);
+            $errors[] = trans('core::browser.message_extension_not_found', ['name' => 'fileinfo']);
         }
 
         return $errors;

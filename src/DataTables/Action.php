@@ -71,7 +71,7 @@ class Action
 
     public static function edit(string $url): static
     {
-        return static::link(__('admin::translation.edit'), $url, 'fas fa-edit');
+        return static::link(__('core::translation.edit'), $url, 'fas fa-edit');
     }
 
     public static function link(string $label, string $url, string $icon = 'fas fa-link'): static
@@ -86,7 +86,7 @@ class Action
      */
     public static function delete(): static
     {
-        return static::make(__('admin::translation.delete'), null, 'fas fa-trash')
+        return static::make(__('core::translation.delete'), null, 'fas fa-trash')
             ->type('action')
             ->action('delete')
             ->color('danger');

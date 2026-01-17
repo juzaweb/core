@@ -1,6 +1,6 @@
-@extends('admin::layouts.auth')
+@extends('core::layouts.auth')
 
-@section('title', __('admin::translation.register'))
+@section('title', __('core::translation.register'))
 
 @section('head')
     <link rel="stylesheet" href="{{ mix('css/auth.min.css', 'themes/main') }}">
@@ -18,8 +18,8 @@
                              class="img-fluid mb-3"
                              style="max-height: 50px;">
 
-                        <h2 class="auth-title">{{ __('admin::translation.register') }}</h2>
-                        <p class="auth-subtitle">{{ __('admin::translation.create_your_account') }}</p>
+                        <h2 class="auth-title">{{ __('core::translation.register') }}</h2>
+                        <p class="auth-subtitle">{{ __('core::translation.create_your_account') }}</p>
                     </div>
                     <!-- End Title -->
 
@@ -29,51 +29,51 @@
 
                         <!-- Input Group -->
                         <div class="form-group">
-                            <label for="registerName">{{ __('admin::translation.name') }}</label>
+                            <label for="registerName">{{ __('core::translation.name') }}</label>
                             <input type="text" name="name" id="registerName" class="form-control"
-                                   placeholder="{{ __('admin::translation.your_name') }}" required>
+                                   placeholder="{{ __('core::translation.your_name') }}" required>
                             <span class="error-name text-danger"></span>
                         </div>
                         <!-- End Input Group -->
 
                         <!-- Input Group -->
                         <div class="form-group">
-                            <label for="registerEmail">{{ __('admin::translation.email') }}</label>
+                            <label for="registerEmail">{{ __('core::translation.email') }}</label>
                             <input type="email" name="email" id="registerEmail" class="form-control"
-                                   placeholder="{{ __('admin::translation.email') }}" required>
+                                   placeholder="{{ __('core::translation.email') }}" required>
                             <span class="error-email text-danger"></span>
                         </div>
                         <!-- End Input Group -->
 
                         <!-- Input Group -->
                         <div class="form-group">
-                            <label for="registerPassword">{{ __('admin::translation.password') }}</label>
+                            <label for="registerPassword">{{ __('core::translation.password') }}</label>
                             <input type="password" name="password" id="registerPassword" class="form-control"
-                                   placeholder="{{ __('admin::translation.password') }}" required>
-                            <small class="form-text text-muted">{{ __('admin::translation.minimum_8_characters') }}</small>
+                                   placeholder="{{ __('core::translation.password') }}" required>
+                            <small class="form-text text-muted">{{ __('core::translation.minimum_8_characters') }}</small>
                             <span class="error-password text-danger"></span>
                         </div>
                         <!-- End Input Group -->
 
                         <!-- Input Group -->
                         <div class="form-group">
-                            <label for="registerConfirmPassword">{{ __('admin::translation.confirm_password') }}</label>
+                            <label for="registerConfirmPassword">{{ __('core::translation.confirm_password') }}</label>
                             <input type="password" name="password_confirmation" id="registerConfirmPassword" class="form-control"
-                                   placeholder="{{ __('admin::translation.confirm_password') }}" required>
+                                   placeholder="{{ __('core::translation.confirm_password') }}" required>
                             <span class="error-password_confirmation text-danger"></span>
                         </div>
                         <!-- End Input Group -->
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block" data-loading-text="{{ __('admin::translation.registering') }}">
-                                {{ __('admin::translation.register') }}
+                            <button type="submit" class="btn btn-primary btn-block" data-loading-text="{{ __('core::translation.registering') }}">
+                                {{ __('core::translation.register') }}
                             </button>
                         </div>
                     </form>
 
                     @if($socialLogins->isNotEmpty())
                     <div class="social-auth-separator">
-                        <span>{{ __('admin::translation.or_continue_with') }}</span>
+                        <span>{{ __('core::translation.or_continue_with') }}</span>
                     </div>
 
                     <div class="social-auth-links">
@@ -86,7 +86,7 @@
                     @endif
 
                     <div class="text-center auth-footer">
-                        <p>{{ __('admin::translation.already_have_an_account') }} <a href="{{ home_url('user/login') }}" class="auth-link-bold">{{ __('admin::translation.login') }}</a></p>
+                        <p>{{ __('core::translation.already_have_an_account') }} <a href="{{ home_url('user/login') }}" class="auth-link-bold">{{ __('core::translation.login') }}</a></p>
                     </div>
                 </div>
             </div>
@@ -97,9 +97,9 @@
 @section('scripts')
     <script type="text/html" id="must-verification-template">
         <p class="login-box-msg">
-            {{ __('admin::translation.your_account_has_been_created_successfully') }}<br />
-            {{ __('admin::translation.please_click_link_email_activate_account') }}<br />
-            <em>{{ __('admin::translation.check_box_mail_spam') }}</em>
+            {{ __('core::translation.your_account_has_been_created_successfully') }}<br />
+            {{ __('core::translation.please_click_link_email_activate_account') }}<br />
+            <em>{{ __('core::translation.check_box_mail_spam') }}</em>
         </p>
     </script>
 

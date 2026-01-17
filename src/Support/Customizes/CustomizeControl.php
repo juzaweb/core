@@ -48,15 +48,15 @@ class CustomizeControl
     public function contentTemplate(): Factory|View
     {
         return match ($this->args->get('type')) {
-            'text' => view('admin::admin.customize.control.text', [
+            'text' => view('core::admin.customize.control.text', [
                 'args' => $this->args,
                 'key' => $this->key,
             ]),
-            'textarea' => view('admin::admin.customize.control.textarea', [
+            'textarea' => view('core::admin.customize.control.textarea', [
                 'args' => $this->args,
                 'key' => $this->key,
             ]),
-            'site_identity' => view('admin::admin.customize.control.site-identity', [
+            'site_identity' => view('core::admin.customize.control.site-identity', [
                 'args' => $this->args,
                 'key' => $this->key,
             ]),

@@ -27,7 +27,7 @@ class LanguageCard extends Component
     public function render(): View|Closure|string
     {
         return view(
-            'admin::components.language-card',
+            'core::components.language-card',
             [
                 'label' => $this->label,
                 'name' => $this->name,

@@ -29,7 +29,7 @@
 
         <div class="icon-choose">
             <i class="fa fa-cloud-upload fa-5x"></i>
-            <p>{{ trans('admin::translation.click_here_to_select_file') }}</p>
+            <p>{{ trans('core::translation.click_here_to_select_file') }}</p>
         </div>
     </div>
 </div>

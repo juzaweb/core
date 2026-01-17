@@ -17,6 +17,6 @@ class CookieConsent extends Component
 {
     public function render(): View|string
     {
-        return view('admin::components.cookie-consent');
+        return view('core::components.cookie-consent');
     }
 }

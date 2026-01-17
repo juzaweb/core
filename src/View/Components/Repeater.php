@@ -27,7 +27,7 @@ class Repeater extends Component
      */
     public function render(): View|\Closure|string
     {
-        return view('admin::components.repeater', [
+        return view('core::components.repeater', [
                 'name' => $this->name,
                 'view' => $this->view,
                 'items' => $this->items,

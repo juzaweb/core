@@ -104,7 +104,7 @@ class DatatableMakeCommand extends GeneratorCommand
             if (! $hasTitle && in_array($item, $config->get('titleColumns'))) {
                 $label = Str::title(str_replace('_', ' ', $item));
                 $prefix = $this->getUrlPrefix();
-                $this->columns[] = "Column::editLink('{$item}', admin_url('{$prefix}/{id}/edit'), __('admin::translation.label'))";
+                $this->columns[] = "Column::editLink('{$item}', admin_url('{$prefix}/{id}/edit'), __('core::translation.label'))";
                 $hasTitle = true;
                 continue;
             }

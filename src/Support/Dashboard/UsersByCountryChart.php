@@ -25,7 +25,7 @@ class UsersByCountryChart extends PieChart
 
     public function getTitle(): string
     {
-        return __('admin::translation.top_countries_by_users');
+        return __('core::translation.top_countries_by_users');
     }
 
     public function getIcon(): string
@@ -77,7 +77,7 @@ class UsersByCountryChart extends PieChart
             'labels' => $top10->pluck('country')->values(),
             'datasets' => [
                 [
-                    'label' => __('admin::translation.users'),
+                    'label' => __('core::translation.users'),
                     'data' => $top10->pluck('users')->values(),
                 ],
             ],

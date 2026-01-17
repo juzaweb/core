@@ -19,14 +19,14 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-primary font-weight-bold" href="#" id="websitesDropdown"
                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-globe mr-1"></i> {{ __('admin::translation.my_websites') }}
+                <i class="fas fa-globe mr-1"></i> {{ __('core::translation.my_websites') }}
             </a>
             <div class="dropdown-menu shadow animated--fade-in" aria-labelledby="websitesDropdown"
                 style="min-width: 220px;">
                 @if (auth()->user()->isSuperAdmin())
                     <a class="dropdown-item d-flex align-items-center" href="{{ network_url('/') }}">
                         <i class="fas fa-globe text-secondary mr-2"></i>
-                        <span>{{ __('admin::translation.network') }}</span>
+                        <span>{{ __('core::translation.network') }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
                 @endif
@@ -41,7 +41,7 @@
         </li>
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{ website()->url }}" class="nav-link text-primary"
-                target="_blank">{{ __('admin::translation.view_website') }}</a>
+                target="_blank">{{ __('core::translation.view_website') }}</a>
         </li>
 
     </ul>
@@ -74,9 +74,9 @@
             <li class="nav-item d-flex align-items-center ml-2">
                 <a href="{{ admin_url('/upgrade') }}" class="btn btn-warning btn-sm rounded-pill font-weight-bold px-3">
                     @if (($plan = website()->currentPlan('network')) && !$plan->is_free)
-                        <i class="fas fa-star mr-1"></i> {{ $plan->name }} {{ __('admin::translation.plan') }}
+                        <i class="fas fa-star mr-1"></i> {{ $plan->name }} {{ __('core::translation.plan') }}
                     @else
-                        <i class="fas fa-rocket mr-1"></i> {{ __('admin::translation.upgrade_to_pro') }}
+                        <i class="fas fa-rocket mr-1"></i> {{ __('core::translation.upgrade_to_pro') }}
                     @endif
                 </a>
             </li>
@@ -137,7 +137,7 @@
 
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">
-                    {{ __('admin::translation.num_notifications', ['num' => auth()->user()->notifications()->count()]) }}
+                    {{ __('core::translation.num_notifications', ['num' => auth()->user()->notifications()->count()]) }}
                 </span>
 
                 @foreach (auth()->user()->notifications()->limit(5)->get() as $notification)
@@ -152,7 +152,7 @@
 
                 <div class="dropdown-divider"></div>
                 <a href="{{ admin_url('/profile/notifications') }}"
-                    class="dropdown-item dropdown-footer">{{ __('admin::translation.see_all_notifications') }}</a>
+                    class="dropdown-item dropdown-footer">{{ __('core::translation.see_all_notifications') }}</a>
             </div>
         </li>
         <li class="nav-item dropdown">
@@ -162,20 +162,20 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="{{ admin_url('/profile') }}" class="dropdown-item">
-                    <i class="fas fa-user-cog mr-2"></i> {{ __('admin::translation.profile') }}
+                    <i class="fas fa-user-cog mr-2"></i> {{ __('core::translation.profile') }}
                 </a>
 
                 <a href="{{ admin_url('my-support-tickets') }}" class="dropdown-item">
-                    <i class="fas fa-ticket-alt mr-2"></i> {{ __('admin::translation.support_tickets') }}
+                    <i class="fas fa-ticket-alt mr-2"></i> {{ __('core::translation.support_tickets') }}
                 </a>
 
                 <a href="{{ admin_url('my-referrals') }}" class="dropdown-item">
-                    <i class="fas fa-user-friends mr-2"></i> {{ __('admin::translation.my_referrals') }}
+                    <i class="fas fa-user-friends mr-2"></i> {{ __('core::translation.my_referrals') }}
                 </a>
 
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-danger logout-link" href="javascript:void(0)">
-                    <i class="fas fa-sign-out-alt mr-2"></i> {{ __('admin::translation.logout') }}
+                    <i class="fas fa-sign-out-alt mr-2"></i> {{ __('core::translation.logout') }}
                 </a>
             </div>
         </li>

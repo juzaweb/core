@@ -17,16 +17,16 @@ enum PageStatus: string
     public static function all(): array
     {
         return [
-            self::PUBLISHED->value => __('admin::translation.published'),
-            self::DRAFT->value => __('admin::translation.draft'),
+            self::PUBLISHED->value => __('core::translation.published'),
+            self::DRAFT->value => __('core::translation.draft'),
         ];
     }
 
     public function label(): string
     {
         return match ($this) {
-            self::DRAFT => __('admin::translation.draft'),
-            self::PUBLISHED => __('admin::translation.published'),
+            self::DRAFT => __('core::translation.draft'),
+            self::PUBLISHED => __('core::translation.published'),
         };
     }
 }

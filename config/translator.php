@@ -13,7 +13,7 @@ return [
     /**
      * Driver default to use for translation services.
      */
-    'driver' => env('TRANSLATOR_DRIVER', 'ex-google'),
+    'driver' => env('TRANSLATOR_DRIVER', 'google'),
 
     'queue' => env('TRANSLATOR_QUEUE', 'default'),
 

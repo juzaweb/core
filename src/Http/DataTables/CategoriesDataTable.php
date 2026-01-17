@@ -35,7 +35,7 @@ class CategoriesDataTable extends DataTable
         return [
             Column::checkbox(),
             Column::id(),
-            Column::editLink('name', admin_url('post-categories/{id}/edit'), __('admin::translation.name')),
+            Column::editLink('name', admin_url('post-categories/{id}/edit'), __('core::translation.name')),
             Column::createdAt(),
             Column::actions(),
         ];
@@ -45,7 +45,7 @@ class CategoriesDataTable extends DataTable
     {
         return [
             BulkAction::delete()->can('post-categories.delete'),
-            BulkAction::make(__('admin::translation.translate'), null, 'fas fa-language')
+            BulkAction::make(__('core::translation.translate'), null, 'fas fa-language')
                 ->type('url')
                 ->action('translate')
                 ->can('post-categories.edit'),

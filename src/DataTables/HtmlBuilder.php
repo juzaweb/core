@@ -26,7 +26,7 @@ class HtmlBuilder extends Builder
         $bulkActions = array_filter($this->bulkActions, fn ($action) => $action->isVisible());
 
         $filters = $this->view->make(
-            'admin::components.datatables.bulk-actions',
+            'core::components.datatables.bulk-actions',
             [
                 'bulkActions' => $bulkActions,
                 'tableId' => $this->getTableId(),

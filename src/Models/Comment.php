@@ -84,7 +84,7 @@ class Comment extends Model
             return $this->commented->name;
         }
 
-        return __('admin::translation.guest');
+        return __('core::translation.guest');
     }
 
     /**

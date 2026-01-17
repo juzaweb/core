@@ -11,7 +11,7 @@
     @endphp
 
     <x-card title="{{ $block }}">
-        @component('admin::admin.page.components.blocks.content-form', compact(
+        @component('core::admin.page.components.blocks.content-form', compact(
             'key',
             'block',
             'blocks',
@@ -25,7 +25,7 @@
 
 @foreach($blocks as $bkey => $block)
     <script type="text/html" id="block-{{ $bkey }}-template">
-        @component('admin::admin.page.components.blocks.page-block-item', [
+        @component('core::admin.page.components.blocks.page-block-item', [
             // 'data' => $data,
             'key' => '{marker}',
             'block' => $block,

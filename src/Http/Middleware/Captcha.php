@@ -33,7 +33,7 @@ class Captcha
 
             $body = json_decode((string)$response->getBody(), false, 512, JSON_THROW_ON_ERROR);
 
-            abort_if(!$body->success, 400, __('admin::translation.captcha_validation_failed'));
+            abort_if(!$body->success, 400, __('core::translation.captcha_validation_failed'));
         }
 
         return $next($request);

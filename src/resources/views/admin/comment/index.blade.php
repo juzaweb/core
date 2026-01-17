@@ -1,17 +1,17 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('content')
     <div class="row mt-3">
         {{--<div class="col-md-12">
-            <x-admin::datatables.filters>
+            <x-core::datatables.filters>
                 <div class="col-md-3 jw-datatable_filters">
 
                 </div>
-            </x-admin::datatables.filters>
+            </x-core::datatables.filters>
         </div>--}}
 
         <div class="col-md-12 mt-2">
-            <x-card title="{{ __('admin::translation.comments') }}">
+            <x-card title="{{ __('core::translation.comments') }}">
                 {{ $dataTable->table() }}
             </x-card>
         </div>

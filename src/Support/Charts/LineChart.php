@@ -23,7 +23,7 @@ abstract class LineChart implements LineChartContract
     public function render(): Htmlable
     {
         return view(
-            'admin::components.dashboard.line-chart',
+            'core::components.dashboard.line-chart',
             ['chart' => $this]
         );
     }

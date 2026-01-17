@@ -11,12 +11,12 @@
                 </div>
                 <div class="text-gray-6">
                     @if($active ?? false)
-                        <button class="btn btn-secondary" disabled> {{ __('admin::translation.activated') }}</button>
+                        <button class="btn btn-secondary" disabled> {{ __('core::translation.activated') }}</button>
                     @else
-                        <button class="btn btn-primary active-theme" data-theme="{{ $theme->slug }}"> {{ __('admin::translation.activate') }}</button>
+                        <button class="btn btn-primary active-theme" data-theme="{{ $theme->slug }}"> {{ __('core::translation.activate') }}</button>
                     @endif
 
-                    <a href="javascript:void(0)" class="btn btn-info text-white" data-toggle="modal" data-target="#theme-modal-{{ $theme->id }}"> {{ __('admin::translation.details') }}</a>
+                    <a href="javascript:void(0)" class="btn btn-info text-white" data-toggle="modal" data-target="#theme-modal-{{ $theme->id }}"> {{ __('core::translation.details') }}</a>
                 </div>
             </div>
         </div>
@@ -40,10 +40,10 @@
 
                         <!-- Info -->
                         <div class="col-md-8">
-                            <h6 class="text-muted mb-2">{{ __('admin::translation.description') }}</h6>
+                            <h6 class="text-muted mb-2">{{ __('core::translation.description') }}</h6>
                             <p class="mb-3">{{ $theme->description }}</p>
 
-                            <h6 class="text-muted mb-2">{{ __('admin::translation.content') }}</h6>
+                            <h6 class="text-muted mb-2">{{ __('core::translation.content') }}</h6>
                             <div class="p-2" style="max-height: 200px; overflow-y: auto;">
                                 {!! $theme->content !!}
                             </div>

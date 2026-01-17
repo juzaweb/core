@@ -23,7 +23,7 @@ class WidgetController extends AdminController
 {
     public function index()
     {
-        Breadcrumb::add(__('admin::translation.widgets'));
+        Breadcrumb::add(__('core::translation.widgets'));
 
         $widgets = Widget::all();
         $sidebars = Sidebar::all();
@@ -35,7 +35,7 @@ class WidgetController extends AdminController
             ->groupBy('sidebar');
 
         return view(
-            'admin::admin.widget.index',
+            'core::admin.widget.index',
             compact('widgets', 'sidebars', 'locale', 'sidebarWidgets')
         );
     }
@@ -78,7 +78,7 @@ class WidgetController extends AdminController
 
         return $this->success(
             [
-                'message' => __('admin::translation.update_successfully'),
+                'message' => __('core::translation.update_successfully'),
                 'redirect' => route('admin.widgets.index', [$websiteId, 'locale' => $locale]),
             ]
         );

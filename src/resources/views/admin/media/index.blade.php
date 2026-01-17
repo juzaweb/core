@@ -1,4 +1,4 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('content')
     <div id="media-container" data-folder-id="{{ $folderId ?? '' }}" data-website-id="{{ $websiteId }}">
@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <form action="" method="get" class="form-inline">
                     <input type="text" class="form-control w-25" name="q"
-                        placeholder="{{ __('admin::translation.search_by_name') }}" autocomplete="off"
+                        placeholder="{{ __('core::translation.search_by_name') }}" autocomplete="off"
                         value="{{ request('q') }}">
 
                     {{-- <select name="mime" class="form-control w-25 ml-1">
@@ -21,7 +21,7 @@
                         <option value="mine">Mine</option>
                     </select> --}}
 
-                    <button type="submit" class="btn btn-primary ml-1">{{ __('admin::translation.search') }}</button>
+                    <button type="submit" class="btn btn-primary ml-1">{{ __('core::translation.search') }}</button>
                 </form>
             </div>
 
@@ -29,9 +29,9 @@
                 <div class="btn-group float-right">
                     <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal"
                         data-target="#add-folder-modal"><i class="fas fa-plus"></i>
-                        {{ __('admin::translation.add_folder') }}</a>
+                        {{ __('core::translation.add_folder') }}</a>
                     <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#upload-modal"><i
-                            class="fas fa-cloud-upload-alt"></i> {{ __('admin::translation.upload') }}</a>
+                            class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload') }}</a>
                 </div>
             </div>
         </div>
@@ -42,16 +42,16 @@
                     <div class="list-media">
                         <ul class="media-list row list-unstyled">
                             @foreach ($mediaFiles as $item)
-                                @component('admin::admin.media.components.item', ['item' => $item])
+                                @component('core::admin.media.components.item', ['item' => $item])
                                 @endcomponent
                             @endforeach
                         </ul>
                         @if ($mediaFiles->isEmpty())
-                            <p class="text-center">{{ __('admin::translation.no_files_found') }}</p>
+                            <p class="text-center">{{ __('core::translation.no_files_found') }}</p>
                         @endif
                         <div class="loading-indicator text-center py-3" style="display: none;">
                             <i class="fas fa-spinner fa-spin fa-2x"></i>
-                            <p>{{ __('admin::translation.loading_more_items') }}</p>
+                            <p>{{ __('core::translation.loading_more_items') }}</p>
                         </div>
                     </div>
                 </x-card>
@@ -62,11 +62,11 @@
         <div id="context-menu" class="context-menu" style="display: none;">
             <ul>
                 <li class="context-menu-item" data-action="view-detail">
-                    <i class="fas fa-info-circle"></i> {{ __('admin::translation.view_detail') }}
+                    <i class="fas fa-info-circle"></i> {{ __('core::translation.view_detail') }}
                 </li>
                 <li class="context-menu-item" data-action="delete">
                     <i class="fas fa-trash text-danger"></i> <span
-                        class="text-danger">{{ __('admin::translation.delete') }}</span>
+                        class="text-danger">{{ __('core::translation.delete') }}</span>
                 </li>
             </ul>
         </div>
@@ -82,11 +82,11 @@
         <div class="mt-2 mb-3 text-center">
             <a href="{{ str_replace('__ID__', '{id}', route('admin.media.download', [website_id(), 'public', '__ID__'])) }}"
                 class="btn btn-secondary">
-                <i class="fa fa-download"></i> {{ __('admin::translation.download') }}
+                <i class="fa fa-download"></i> {{ __('core::translation.download') }}
             </a>
 
             <a href="javascript:void(0)" class="btn btn-danger delete-file" data-id="{id}" data-is_file="{is_file}"
-                data-name="{name}"><i class="fa fa-trash"></i> {{ __('admin::translation.delete') }}</a>
+                data-name="{name}"><i class="fa fa-trash"></i> {{ __('core::translation.delete') }}</a>
         </div>
 
         <form action="{{ str_replace('__ID__', '{id}', route('admin.media.update', [$websiteId, '__ID__'])) }}" method="post"
@@ -94,29 +94,29 @@
             @method('put')
             <input type="hidden" name="is_file" value="{is_file}">
 
-            {{ Field::text(__('admin::translation.name'), 'name', ['value' => '{name}']) }}
+            {{ Field::text(__('core::translation.name'), 'name', ['value' => '{name}']) }}
 
-            {{ Field::text(__('admin::translation.url'), 'url', ['value' => '{url}', 'disabled' => true]) }}
+            {{ Field::text(__('core::translation.url'), 'url', ['value' => '{url}', 'disabled' => true]) }}
 
             <table class="table">
                 <tbody>
                     <tr>
-                        <td>{{ __('admin::translation.extension') }}</td>
+                        <td>{{ __('core::translation.extension') }}</td>
                         <td>{extension}</td>
                     </tr>
 
                     <tr>
-                        <td>{{ __('admin::translation.size') }}</td>
+                        <td>{{ __('core::translation.size') }}</td>
                         <td>{size}</td>
                     </tr>
                     <tr>
-                        <td>{{ __('admin::translation.last_update') }}</td>
+                        <td>{{ __('core::translation.last_update') }}</td>
                         <td>{updated}</td>
                     </tr>
                 </tbody>
             </table>
 
-            <button type="submit" class="btn btn-primary mb-2">{{ __('admin::translation.save') }}</button>
+            <button type="submit" class="btn btn-primary mb-2">{{ __('core::translation.save') }}</button>
         </form>
     </template>
 
@@ -125,7 +125,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediaPreviewModalLabel">{{ __('admin::translation.file_details') }}</h5>
+                    <h5 class="modal-title" id="mediaPreviewModalLabel">{{ __('core::translation.file_details') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -137,9 +137,9 @@
         </div>
     </div>
 
-    @include('admin::admin.media.components.add_modal')
+    @include('core::admin.media.components.add_modal')
 
-    @include('admin::admin.media.components.upload_modal')
+    @include('core::admin.media.components.upload_modal')
 
     <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
         Dropzone.autoDiscover = false;
@@ -157,7 +157,7 @@
                 uploadMultiple: false,
                 parallelUploads: 5,
                 timeout: 0,
-                dictDefaultMessage: "{{ __('admin::browser.message-drop') }}",
+                dictDefaultMessage: "{{ __('core::browser.message-drop') }}",
                 init: function() {
                     this.on('success', function(file, response) {
                         window.location.reload();

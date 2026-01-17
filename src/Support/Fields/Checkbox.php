@@ -16,7 +16,7 @@ class Checkbox extends Field
     public function render(): View|string
     {
         return view(
-            'admin::fields.checkbox',
+            'core::fields.checkbox',
             $this->renderParams()
         );
     }

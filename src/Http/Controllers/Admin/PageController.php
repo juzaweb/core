@@ -28,19 +28,19 @@ class PageController extends AdminController
 {
     public function index(PagesDataTable $dataTable)
     {
-        Breadcrumb::add(__('admin::translation.pages'));
+        Breadcrumb::add(__('core::translation.pages'));
 
         return $dataTable->render(
-            'admin::admin.page.index',
+            'core::admin.page.index',
             []
         );
     }
 
     public function create(Request $request, string $websiteId)
     {
-        Breadcrumb::add(__('admin::translation.pages'), admin_url('pages'));
+        Breadcrumb::add(__('core::translation.pages'), admin_url('pages'));
 
-        Breadcrumb::add(__('admin::translation.add_new_page'));
+        Breadcrumb::add(__('core::translation.add_new_page'));
 
         $model = new Page();
         $action = action([static::class, 'store'], [$websiteId]);
@@ -53,7 +53,7 @@ class PageController extends AdminController
         }
 
         return view(
-            'admin::admin.page.form',
+            'core::admin.page.form',
             compact('model', 'action', 'locale', 'templates', 'template')
         );
     }
@@ -66,7 +66,7 @@ class PageController extends AdminController
 
         abort_if($model === null, 404, __('video-sharing::translation.page_not_found'));
 
-        Breadcrumb::add(__('admin::translation.pages'), admin_url('pages'));
+        Breadcrumb::add(__('core::translation.pages'), admin_url('pages'));
 
         $model->setDefaultLocale($locale);
         $model->load(['blocks' => function ($query) use ($locale) {
@@ -75,7 +75,7 @@ class PageController extends AdminController
 
         $model->blocks->each->setDefaultLocale($locale);
 
-        Breadcrumb::add(__('admin::translation.edit_page_name', ['name' => $model->name]));
+        Breadcrumb::add(__('core::translation.edit_page_name', ['name' => $model->name]));
 
         $action = action([static::class, 'update'], [$websiteId, $model->id]);
         $templates = collect(PageTemplate::all())->map(fn ($item) => $item->label);
@@ -91,7 +91,7 @@ class PageController extends AdminController
         }
 
         return view(
-            'admin::admin.page.form',
+            'core::admin.page.form',
             compact('model', 'action', 'locale', 'templates', 'template')
         );
     }
@@ -142,7 +142,7 @@ class PageController extends AdminController
 
         return $this->success(
             [
-                'message' => __('admin::translation.created_page_name_successful', ['name' => $model->name]),
+                'message' => __('core::translation.created_page_name_successful', ['name' => $model->name]),
                 'redirect' => action([static::class, 'index'], [$websiteId]),
             ]
         );
@@ -152,7 +152,7 @@ class PageController extends AdminController
     {
         $model = Page::find($id);
 
-        abort_if($model === null, 404, __('admin::translation.page_not_found'));
+        abort_if($model === null, 404, __('core::translation.page_not_found'));
 
         $locale = $this->getFormLanguage();
         $data = $request->safe()->all();
@@ -205,7 +205,7 @@ class PageController extends AdminController
 
         return $this->success(
             [
-                'message' => __('admin::translation.page_name_updated_successfully', ['name' => $model->name]),
+                'message' => __('core::translation.page_name_updated_successfully', ['name' => $model->name]),
                 'redirect' => action([static::class, 'edit'], [$websiteId, $model->id]),
             ]
         );
@@ -215,7 +215,7 @@ class PageController extends AdminController
     {
         $model = Page::find($id);
 
-        abort_if($model === null, 404, __('admin::translation.page_not_found'));
+        abort_if($model === null, 404, __('core::translation.page_not_found'));
 
         $model->delete();
 

@@ -1,5 +1,5 @@
 <div class="theme-setting theme-setting--text editor-item">
-    <label class="next-label">{{ __('admin::translation.menu') }}</label>
+    <label class="next-label">{{ __('core::translation.menu') }}</label>
     <select name="theme[{{ $args->get('settings') }}]" class="load-menu">
         @php
         $menu = \Juzaweb\Backend\Models\Menu::find(get_theme_mod($args->get('settings')));

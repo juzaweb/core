@@ -17,7 +17,7 @@
             <div class="list-group mt-3">
                 @foreach($sidebars as $sidebarKey => $sidebar)
                     <a href="javascript:void(0)" class="list-group-item rounded-0 widget-sidebar-item">
-                        <span></span> {{ __('admin::translation.add_to_name', ['name' => $sidebar->get('label')]) }}
+                        <span></span> {{ __('core::translation.add_to_name', ['name' => $sidebar->get('label')]) }}
                         <input type="checkbox" name="sidebars[]" value="{{ $sidebarKey }}" class="box-hidden">
                     </a>
                 @endforeach
@@ -28,7 +28,7 @@
                 <input type="hidden" name="widget_label" value="{{ $widget->get('label') }}">
 
                 <button type="submit"
-                        class="btn btn-success btn-sm mt-2">{{ __('admin::translation.add_widget') }}</button>
+                        class="btn btn-success btn-sm mt-2">{{ __('core::translation.add_widget') }}</button>
             </div>
         </form>
 

@@ -39,14 +39,14 @@ class PostsDataTable extends DataTable
             Column::id(),
             Column::actions(),
             Column::computed('thumbnail')
-                ->title(__('admin::translation.thumbnail'))
+                ->title(__('core::translation.thumbnail'))
                 ->width('100px')
                 ->addClass('text-center')
                 ->orderable(false)
                 ->searchable(false),
-            Column::editLink('title', admin_url('posts/{id}/edit'), __('admin::translation.title')),
+            Column::editLink('title', admin_url('posts/{id}/edit'), __('core::translation.title')),
             Column::computed('status')
-                ->title(__('admin::translation.status'))
+                ->title(__('core::translation.status'))
                 ->width('100px')
                 ->addClass('text-center')
                 ->orderable(false),
@@ -58,7 +58,7 @@ class PostsDataTable extends DataTable
     {
         return [
             BulkAction::delete()->can('posts.delete'),
-            BulkAction::make(__('admin::translation.translate'), null, 'fas fa-language')
+            BulkAction::make(__('core::translation.translate'), null, 'fas fa-language')
                 ->type('url')
                 ->action('translate')
                 ->can('posts.edit'),
@@ -87,9 +87,9 @@ class PostsDataTable extends DataTable
 
         $builder->editColumn('status', function (Post $post) {
             $statusLabels = [
-                'draft' => '<span class="badge badge-secondary">' . __('admin::translation.draft') . '</span>',
-                'published' => '<span class="badge badge-success">' . __('admin::translation.published') . '</span>',
-                'private' => '<span class="badge badge-warning">' . __('admin::translation.private') . '</span>',
+                'draft' => '<span class="badge badge-secondary">' . __('core::translation.draft') . '</span>',
+                'published' => '<span class="badge badge-success">' . __('core::translation.published') . '</span>',
+                'private' => '<span class="badge badge-warning">' . __('core::translation.private') . '</span>',
             ];
             return $statusLabels[$post->status->value] ?? '<span class="badge badge-secondary">' . e($post->status->value) . '</span>';
         });

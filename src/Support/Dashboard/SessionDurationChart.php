@@ -26,7 +26,7 @@ class SessionDurationChart extends LineChart
 
     public function getTitle(): string
     {
-        return __('admin::translation.average_session_duration');
+        return __('core::translation.average_session_duration');
     }
 
     public function getIcon(): string
@@ -65,14 +65,14 @@ class SessionDurationChart extends LineChart
             ),
             'datasets' => [
                 [
-                    'label' => __('admin::translation.avg_session_duration_seconds'),
+                    'label' => __('core::translation.avg_session_duration_seconds'),
                     'data' => $response->pluck('averageSessionDuration'),
                     'backgroundColor' => 'rgba(153, 102, 255, 0.2)',
                     'borderColor' => 'rgba(153, 102, 255, 1)',
                     'borderWidth' => 1,
                 ],
                 [
-                    'label' => __('admin::translation.user_engagement_duration_seconds'),
+                    'label' => __('core::translation.user_engagement_duration_seconds'),
                     'data' => $response->pluck('userEngagementDuration'),
                     'backgroundColor' => 'rgba(255, 159, 64, 0.2)',
                     'borderColor' => 'rgba(255, 159, 64, 1)',

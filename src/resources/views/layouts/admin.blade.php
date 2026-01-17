@@ -4,7 +4,7 @@
 <head>
     @php
         $breadcrumbs = \Juzaweb\Modules\Core\Facades\Breadcrumb::getItems();
-        $title = $breadcrumbs ? last($breadcrumbs)['title'] : __('admin::translation.dashboard');
+        $title = $breadcrumbs ? last($breadcrumbs)['title'] : __('core::translation.dashboard');
     @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    @include('admin::layouts.components.navbar')
+    @include('core::layouts.components.navbar')
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -54,7 +54,7 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
-            @include('admin::layouts.components.sidebar', ['menu' => 'admin-left'])
+            @include('core::layouts.components.sidebar', ['menu' => 'admin-left'])
         </div>
         <!-- /.sidebar -->
     </aside>
@@ -74,7 +74,7 @@
                         <ol class="breadcrumb float-sm-right">
                             @if ($breadcrumbs)
                                 <li class="breadcrumb-item">
-                                    <a href="{{ admin_url() }}">{{ __('admin::translation.dashboard') }}</a>
+                                    <a href="{{ admin_url() }}">{{ __('core::translation.dashboard') }}</a>
                                 </li>
                             @endif
 
@@ -136,7 +136,7 @@
 </form>
 
 <script type="text/html" id="form-images-template">
-    @component('admin::fields.components.image-item', [
+    @component('core::fields.components.image-item', [
         'name' => '{name}',
         'path' => '{path}',
         'url' => '{url}',
@@ -148,7 +148,7 @@
 <x-js-var/>
 
 @if(isset($translateModel))
-    @component('admin::components.translate-modal', [
+    @component('core::components.translate-modal', [
         'translateModel' => $translateModel,
     ])
     @endcomponent
@@ -159,13 +159,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{ __('admin::translation.translation_in_progress') }}</h5>
+                <h5 class="modal-title">{{ __('core::translation.translation_in_progress') }}</h5>
             </div>
             <div class="modal-body text-center">
                 <div class="mb-3">
                     <i class="fas fa-spinner fa-spin fa-3x text-primary"></i>
                 </div>
-                <p id="translate-progress-status">{{ __('admin::translation.translation_processing') }}</p>
+                <p id="translate-progress-status">{{ __('core::translation.translation_processing') }}</p>
                 <div class="progress mt-3" style="height: 25px;">
                     <div id="translate-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
                          role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">

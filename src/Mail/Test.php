@@ -21,7 +21,7 @@ class Test extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'admin::mail.test',
+            markdown: 'core::mail.test',
         );
     }
 }

@@ -26,7 +26,7 @@ class Column extends BaseColumn
     {
         /** @var Column $column */
         $column = static::computed('actions');
-        $column->title(__('admin::translation.actions'));
+        $column->title(__('core::translation.actions'));
         $column->addClass('text-center');
         $column->width('80px');
         $column->orderable(false);
@@ -71,7 +71,7 @@ class Column extends BaseColumn
     {
         $column = static::make('id', $id ?? 'id');
         $column->visible($visible);
-        $column->title(__('admin::translation.id'));
+        $column->title(__('core::translation.id'));
         $column->addClass('text-center');
         return $column;
     }
@@ -85,7 +85,7 @@ class Column extends BaseColumn
     public static function rowIndex(): static
     {
         $column = static::make('DT_RowIndex');
-        $column->title(__('admin::translation.row_index'));
+        $column->title(__('core::translation.row_index'));
         $column->addClass('text-center');
         $column->orderable(false);
         $column->searchable(false);
@@ -115,7 +115,7 @@ class Column extends BaseColumn
     {
         /** @var Column */
         return static::computed('created_at')
-            ->title(__('admin::translation.created_at'))
+            ->title(__('core::translation.created_at'))
             ->addClass('text-center')
             ->searchable(false)
             ->width('150px');
@@ -131,7 +131,7 @@ class Column extends BaseColumn
     {
         /** @var Column */
         return static::computed('updated_at')
-            ->title(__('admin::translation.updated_at'))
+            ->title(__('core::translation.updated_at'))
             ->addClass('text-center')
             ->searchable(false)
             ->width('150px');

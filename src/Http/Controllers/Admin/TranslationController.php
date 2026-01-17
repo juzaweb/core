@@ -33,14 +33,14 @@ class TranslationController extends AdminController
     {
         $language = Language::find($locale);
 
-        abort_if($language === null, 404, __('admin::translation.language_not_found'));
+        abort_if($language === null, 404, __('core::translation.language_not_found'));
 
-        Breadcrumb::add(__('admin::translation.languages'), action([LanguageController::class, 'index'], [$websiteId]));
+        Breadcrumb::add(__('core::translation.languages'), action([LanguageController::class, 'index'], [$websiteId]));
 
-        Breadcrumb::add(__('admin::translation.phrases_language', ['language' => $language->name]));
+        Breadcrumb::add(__('core::translation.phrases_language', ['language' => $language->name]));
 
         return view(
-            'admin::admin.translation.index',
+            'core::admin.translation.index',
             [
                 'title' => $language,
                 'locale' => $locale,
@@ -66,7 +66,7 @@ class TranslationController extends AdminController
         $model->setTranslation($locale, $value);
         $model->save();
 
-        return $this->success(__('admin::translation.translation_updated_successfully'));
+        return $this->success(__('core::translation.translation_updated_successfully'));
     }
 
     public function getDataCollection(string $websiteId, string $locale): JsonResponse
@@ -119,7 +119,7 @@ class TranslationController extends AdminController
 
     public function translateModel(TranslateModelRequest $request): JsonResponse
     {
-        abort_if(!config('network.translate_enabled'), 404, __('admin::translation.translation_feature_is_not_enabled'));
+        abort_if(!config('network.translate_enabled'), 404, __('core::translation.translation_feature_is_not_enabled'));
 
         $model = decrypt($request->post('model'));
         $ids = $request->post('ids');
@@ -128,7 +128,7 @@ class TranslationController extends AdminController
 
         if ($locale === $source) {
             return $this->error(
-                __('admin::translation.source_and_target_language_must_be_different')
+                __('core::translation.source_and_target_language_must_be_different')
             );
         }
 
@@ -154,7 +154,7 @@ class TranslationController extends AdminController
 
                 if (! $canUsing) {
                     throw new \Exception(
-                        __('admin::translation.feature_limit_exceeded')
+                        __('core::translation.feature_limit_exceeded')
                     );
                 }
 
@@ -167,7 +167,7 @@ class TranslationController extends AdminController
 
         return $this->success(
             [
-                'message' => __('admin::translation.translation_for_model_has_been_created'),
+                'message' => __('core::translation.translation_for_model_has_been_created'),
                 'history_ids' => $historyIds,
             ]
         );

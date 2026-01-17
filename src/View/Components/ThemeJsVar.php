@@ -22,7 +22,7 @@ class ThemeJsVar extends Component
     public function render(): View|Closure|string
     {
         return view(
-            'admin::components.theme-js-var',
+            'core::components.theme-js-var',
             [
                 'viewPage' => $this->viewPage,
             ]

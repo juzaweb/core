@@ -24,7 +24,7 @@
             </div>
 
             @if($category->children && $category->children->isNotEmpty())
-                @component('admin::components.categories-checkbox', [
+                @component('core::components.categories-checkbox', [
                     'categories' => $category->children,
                     'selectedCategories' => $selectedCategories ?? [],
                     'level' => $level + 1,
@@ -43,13 +43,13 @@
             <div class="form-group mb-2">
                 <input type="text"
                        class="form-control form-control-sm quick-add-category-name"
-                       placeholder="{{ __('admin::translation.category_name') }}">
+                       placeholder="{{ __('core::translation.category_name') }}">
             </div>
 
             @if($hasParent)
                 <div class="form-group mb-2">
                     <select class="form-control form-control-sm quick-add-category-parent">
-                        <option value="">{{ __('admin::translation.select_parent') }}</option>
+                        <option value="">{{ __('core::translation.select_parent') }}</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @if($category->children && $category->children->isNotEmpty())
@@ -65,19 +65,19 @@
             <div class="d-flex justify-content-between">
                 <button type="button"
                         class="btn btn-sm btn-success quick-add-category-save"
-                        data-saving-text="{{ __('admin::translation.saving') }}"
+                        data-saving-text="{{ __('core::translation.saving') }}"
                         data-input-name="{{ $name }}"
                 >
-                    <i class="fas fa-check"></i> {{ __('admin::translation.save') }}
+                    <i class="fas fa-check"></i> {{ __('core::translation.save') }}
                 </button>
                 <button type="button" class="btn btn-sm btn-secondary quick-add-category-cancel">
-                    <i class="fas fa-times"></i> {{ __('admin::translation.cancel') }}
+                    <i class="fas fa-times"></i> {{ __('core::translation.cancel') }}
                 </button>
             </div>
         </div>
         <div class="mt-2">
             <button type="button" class="btn btn-sm btn-primary btn-block quick-add-category-toggle">
-                <i class="fas fa-plus"></i> {{ __('admin::translation.quick_add_category') }}
+                <i class="fas fa-plus"></i> {{ __('core::translation.quick_add_category') }}
             </button>
         </div>
     @endif

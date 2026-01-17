@@ -46,9 +46,9 @@
         </div>
     </header>
     <label class="helper--visually-hidden" for="theme-editor__iframe-wrapper" id="theme-editor__iframe-label">
-        <h1>{{ __('admin::translation.preview') }}</h1>
+        <h1>{{ __('core::translation.preview') }}</h1>
         <p>
-            {{ __('admin::translation.press_enter_to_navigate_click_escape_to_return_to_the_edit_page') }}
+            {{ __('core::translation.press_enter_to_navigate_click_escape_to_return_to_the_edit_page') }}
         </p>
     </label>
     <div class="theme-editor__iframe-wrapper"

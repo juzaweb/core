@@ -25,9 +25,9 @@ class SupportTicketsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::editLink('subject', 'my-support-tickets/{id}/show', __('admin::translation.subject')),
-            Column::computed('category')->title(__('admin::translation.category')),
-            Column::make('status')->title(__('admin::translation.status')),
+            Column::editLink('subject', 'my-support-tickets/{id}/show', __('core::translation.subject')),
+            Column::computed('category')->title(__('core::translation.category')),
+            Column::make('status')->title(__('core::translation.status')),
             Column::createdAt(),
         ];
     }
@@ -37,7 +37,7 @@ class SupportTicketsDataTable extends DataTable
         return parent::renderColumns($builder)->editColumn(
             'category',
             function (SupportTicket $model) {
-                return $model->category->name ?? __('admin::translation.uncategorized');
+                return $model->category->name ?? __('core::translation.uncategorized');
             }
         );
     }

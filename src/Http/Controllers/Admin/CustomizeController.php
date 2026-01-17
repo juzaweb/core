@@ -20,14 +20,14 @@ class CustomizeController extends AdminController
 {
     public function index()
     {
-        Breadcrumb::add(__('admin::translation.customize'));
+        Breadcrumb::add(__('core::translation.customize'));
 
         $customize = new Customize();
 
         $customize->addSection(
             'site_identity',
             [
-                'title' => __('admin::translation.site_identity'),
+                'title' => __('core::translation.site_identity'),
                 'priority' => 1,
             ]
         );
@@ -37,7 +37,7 @@ class CustomizeController extends AdminController
                 $customize,
                 'site_identity',
                 [
-                    'label' => __('admin::translation.site_identity'),
+                    'label' => __('core::translation.site_identity'),
                     'section' => 'site_identity',
                     'settings' => 'site_identity',
                     'type' => 'site_identity',
@@ -76,7 +76,7 @@ class CustomizeController extends AdminController
         }
 
         return view(
-            'admin::admin.customize.index',
+            'core::admin.customize.index',
             compact('panels')
         );
     }

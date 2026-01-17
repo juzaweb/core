@@ -31,7 +31,7 @@ class MembersDataTable extends DataTable
         return [
             Column::checkbox(),
             Column::id(),
-            Column::editLink('name', admin_url('members/{id}/edit'), __('admin::translation.name')),
+            Column::editLink('name', admin_url('members/{id}/edit'), __('core::translation.name')),
             Column::make('email'),
             Column::createdAt(),
         ];

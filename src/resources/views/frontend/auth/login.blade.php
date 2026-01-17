@@ -1,9 +1,9 @@
-@extends('admin::layouts.auth')
+@extends('core::layouts.auth')
 
 @section('content')
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">{{ __('admin::translation.sign_in_to_start_your_session') }}</p>
+            <p class="login-box-msg">{{ __('core::translation.sign_in_to_start_your_session') }}</p>
 
             @if (session('success'))
                 <div class="alert alert-success">
@@ -44,13 +44,13 @@
                         <div class="icheck-primary">
                             <input type="checkbox" id="remember" name="remember" checked value="1">
                             <label for="remember">
-                                {{ __('admin::translation.remember_me') }}
+                                {{ __('core::translation.remember_me') }}
                             </label>
                         </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">{{ __('admin::translation.sign_in') }}</button>
+                        <button type="submit" class="btn btn-primary btn-block">{{ __('core::translation.sign_in') }}</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -58,11 +58,11 @@
 
             @if($socialLogins->isNotEmpty())
             <div class="social-auth-links text-center mb-3">
-                <p>- {{ __('admin::translation.or') }} -</p>
+                <p>- {{ __('core::translation.or') }} -</p>
 
                 @foreach($socialLogins as $key => $name)
                     <a href="{{ route('auth.social.redirect', [$key]) }}" class="btn btn-block btn-primary">
-                        <i class="fab fa-{{ $key }} mr-2"></i> {{ __('admin::translation.sign_in_using_name', ['name' => $name]) }}
+                        <i class="fab fa-{{ $key }} mr-2"></i> {{ __('core::translation.sign_in_using_name', ['name' => $name]) }}
                     </a>
                 @endforeach
             </div>
@@ -70,12 +70,12 @@
             @endif
 
             <p class="mb-1">
-                <a href="{{ url('forgot-password') }}">{{ __('admin::translation.i_forgot_my_password') }}</a>
+                <a href="{{ url('forgot-password') }}">{{ __('core::translation.i_forgot_my_password') }}</a>
             </p>
 
             @if(setting('user_registration'))
             <p class="mb-0">
-                <a href="{{ route('register') }}" class="text-center">{{ __('admin::translation.register_a_new_account') }}</a>
+                <a href="{{ route('register') }}" class="text-center">{{ __('core::translation.register_a_new_account') }}</a>
             </p>
             @endif
         </div>

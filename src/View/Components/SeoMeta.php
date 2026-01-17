@@ -25,7 +25,7 @@ class SeoMeta extends Component
     public function render(): View|Closure|string
     {
         return view(
-            'admin::components.seo-meta',
+            'core::components.seo-meta',
             [
                 'model' => $this->model,
                 'locale' => $this->locale ?? config('translatable.fallback_locale'),

@@ -14,7 +14,7 @@ class Editor extends Field
     public function render(): \Illuminate\Contracts\View\View|string
     {
         return view(
-            'admin::fields.editor',
+            'core::fields.editor',
             $this->renderParams()
         );
     }

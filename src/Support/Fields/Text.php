@@ -26,7 +26,7 @@ class Text extends Field
     public function render(): View|string
     {
         return view(
-            'admin::fields.text',
+            'core::fields.text',
             $this->renderParams()
         );
     }

@@ -10,7 +10,7 @@
         <div class="input-group-append">
             <button type="button" class="btn btn-info btn-sm upload-url-media-picker"
                 data-input="{{ $options['id'] ?? $name }}" data-type="{{ $uploadType ?? 'file' }}">
-                <i class="fas fa-images"></i> {{ __('admin::translation.media_library') }}
+                <i class="fas fa-images"></i> {{ __('core::translation.media_library') }}
             </button>
         </div>
     </div>

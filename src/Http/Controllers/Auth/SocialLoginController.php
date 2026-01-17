@@ -30,7 +30,7 @@ class SocialLoginController extends AdminController
     public function redirect(string $driver)
     {
         if (! setting()->boolean("{$driver}_login", false)) {
-            return $this->error(__('admin::translation.invalid_provider_name', ['name' => Str::title($driver)]));
+            return $this->error(__('core::translation.invalid_provider_name', ['name' => Str::title($driver)]));
         }
 
         $redirectUrl = action([static::class, 'callback'], ['driver' => $driver]);
@@ -41,7 +41,7 @@ class SocialLoginController extends AdminController
             return $this->error($e->getMessage());
         } catch (ClientException $e) {
             report($e);
-            return $this->error(__('admin::translation.invalid_credentials_provided'));
+            return $this->error(__('core::translation.invalid_credentials_provided'));
         }
 
         return $socialite->redirect();
@@ -50,7 +50,7 @@ class SocialLoginController extends AdminController
     public function callback(string $driver)
     {
         if (! setting()->boolean("{$driver}_login", false)) {
-            return $this->error(__('admin::translation.invalid_provider_name', ['name' => Str::title($driver)]));
+            return $this->error(__('core::translation.invalid_provider_name', ['name' => Str::title($driver)]));
         }
 
         $redirectUrl = action([static::class, 'callback'], ['driver' => $driver]);
@@ -69,7 +69,7 @@ class SocialLoginController extends AdminController
             report($e);
             return $this->error(
                 [
-                    'message' => __('admin::translation.invalid_credentials_provided'),
+                    'message' => __('core::translation.invalid_credentials_provided'),
                     'redirect' => route('login'),
                 ]
             );
@@ -85,7 +85,7 @@ class SocialLoginController extends AdminController
             if ($userSocial->user->status === UserStatus::BANNED) {
                 return $this->error(
                     [
-                        'message' => __('admin::translation.your_account_has_been_deactivated'),
+                        'message' => __('core::translation.your_account_has_been_deactivated'),
                         'redirect' => route('login'),
                     ]
                 );
@@ -139,7 +139,7 @@ class SocialLoginController extends AdminController
         return $this->success(
             [
                 'redirect' => website()->loginRedirectUrl($user),
-                'message' => __('admin::translation.login_successful'),
+                'message' => __('core::translation.login_successful'),
             ]
         );
     }
@@ -149,7 +149,7 @@ class SocialLoginController extends AdminController
         $provider = config("app.social_login.providers.{$method}");
 
         if (empty($provider)) {
-            abort(404, __('admin::translation.page_not_found'));
+            abort(404, __('core::translation.page_not_found'));
         }
 
         $config = [

@@ -160,7 +160,7 @@ function dynamic_block(Page|string|null $page, string $container): Factory|\Illu
     $blocks = page_blocks($page)->get($container)?->sortBy('display_order');
 
     return view(
-        'admin::frontend.dynamic-block',
+        'core::frontend.dynamic-block',
         compact('blocks')
     );
 }
@@ -175,7 +175,7 @@ function dynamic_sidebar(string $name): Factory|\Illuminate\Contracts\View\View
     $sidebars = sidebars($name);
 
     return view(
-        'admin::frontend.dynamic-sidebar',
+        'core::frontend.dynamic-sidebar',
         compact('sidebars')
     );
 }

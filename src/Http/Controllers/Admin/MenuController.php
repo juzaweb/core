@@ -23,7 +23,7 @@ class MenuController extends AdminController
 {
     public function index(string $websiteId, ?string $id = null)
     {
-        Breadcrumb::add(__('admin::translation.menus'));
+        Breadcrumb::add(__('core::translation.menus'));
 
         $navMenus = NavMenu::all();
         $boxes = MenuBox::all();
@@ -52,7 +52,7 @@ class MenuController extends AdminController
         );
 
         return view(
-            'admin::admin.menu.index',
+            'core::admin.menu.index',
             compact(
                 'menu',
                 'navMenus',
@@ -70,7 +70,7 @@ class MenuController extends AdminController
 
         return $this->success(
             [
-                'message' => trans('admin::translation.menu_name_created_successfully', ['name' => $model->name]),
+                'message' => trans('core::translation.menu_name_created_successfully', ['name' => $model->name]),
                 'redirect' => action([self::class, 'index'], [$websiteId, $model->id]),
             ]
         );
@@ -118,7 +118,7 @@ class MenuController extends AdminController
 
         return $this->success(
             [
-                'message' => trans('admin::translation.menu_name_update_successfully', ['name' => $model->name]),
+                'message' => trans('core::translation.menu_name_update_successfully', ['name' => $model->name]),
                 'redirect' => action([self::class, 'index'], [$websiteId, $model->id, 'locale' => $locale]),
             ]
         );
@@ -131,7 +131,7 @@ class MenuController extends AdminController
 
         return $this->success(
             [
-                'message' => trans('admin::translation.menu_name_deleted_successfully', ['name' => $model->name]),
+                'message' => trans('core::translation.menu_name_deleted_successfully', ['name' => $model->name]),
                 'redirect' => action([self::class, 'index'], [$websiteId]),
             ]
         );

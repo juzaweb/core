@@ -1,4 +1,4 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('head')
     <style>
@@ -79,24 +79,24 @@
 
 @section('content')
     <div class="row" id="wrapper">
-        @include('admin::admin.profile.components.sidebar')
+        @include('core::admin.profile.components.sidebar')
 
         <div class="col-xs-12 col-sm-12 col-md-9">
             <div class="card">
                 <div class="card-body">
                     <form action="" method="post" class="form-ajax">
-                        {{ Field::text(__('admin::translation.name'), 'name', ['value' => $user->name]) }}
+                        {{ Field::text(__('core::translation.name'), 'name', ['value' => $user->name]) }}
 
-                        {{ Field::text(__('admin::translation.email'), 'email', ['disabled' => true, 'value' => $user->email]) }}
+                        {{ Field::text(__('core::translation.email'), 'email', ['disabled' => true, 'value' => $user->email]) }}
 
                         <hr class="my-4">
 
-                        {{ Field::password(__('admin::translation.password'), 'password', ['placeholder' => __('admin::translation.new_password')]) }}
+                        {{ Field::password(__('core::translation.password'), 'password', ['placeholder' => __('core::translation.new_password')]) }}
 
-                        {{ Field::password(__('admin::translation.confirm_password'), 'password_confirmation', ['placeholder' => __('admin::translation.confirm_new_password')]) }}
+                        {{ Field::password(__('core::translation.confirm_password'), 'password_confirmation', ['placeholder' => __('core::translation.confirm_new_password')]) }}
 
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> {{ __('admin::translation.update_profile') }}
+                            <i class="fas fa-save"></i> {{ __('core::translation.update_profile') }}
                         </button>
                     </form>
                 </div>

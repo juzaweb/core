@@ -45,7 +45,7 @@ class PagesDataTable extends DataTable
                 'Title'
             ),
             Column::computed('is_home')
-                ->title(__('admin::translation.pages'))
+                ->title(__('core::translation.pages'))
                 ->width('100px')
                 ->addClass('text-center')
                 ->orderable(false)
@@ -58,7 +58,7 @@ class PagesDataTable extends DataTable
     {
         return [
             BulkAction::delete(),
-            BulkAction::make(__('admin::translation.translate'), null, 'fas fa-language')
+            BulkAction::make(__('core::translation.translate'), null, 'fas fa-language')
                 ->type('url')
                 ->action('translate')
                 ->can('pages.edit'),
@@ -68,7 +68,7 @@ class PagesDataTable extends DataTable
     public function actions(Model $model): array
     {
         return [
-            Action::link(__('admin::translation.view_online'), $model->getUrl(), 'fas fa-eye')
+            Action::link(__('core::translation.view_online'), $model->getUrl(), 'fas fa-eye')
                 ->color('info')
                 ->target('_blank'),
             Action::edit(admin_url("pages/{$model->id}/edit")),
@@ -80,7 +80,7 @@ class PagesDataTable extends DataTable
     {
         $builder->editColumn('is_home', function (Page $page) {
             if ($page->id == theme_setting('home_page')) {
-                return '<span class="badge badge-success"><i class="fas fa-home"></i> ' . e(__('admin::translation.home')) . '</span>';
+                return '<span class="badge badge-success"><i class="fas fa-home"></i> ' . e(__('core::translation.home')) . '</span>';
             }
             return '<span class="text-muted">-</span>';
         });

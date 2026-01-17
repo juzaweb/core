@@ -25,7 +25,7 @@ class TopPagesChart extends PieChart
 
     public function getTitle(): string
     {
-        return __('admin::translation.top_10_pages_most_traffic');
+        return __('core::translation.top_10_pages_most_traffic');
     }
 
     public function getIcon(): string
@@ -62,7 +62,7 @@ class TopPagesChart extends PieChart
             })->values(),
             'datasets' => [
                 [
-                    'label' => __('admin::translation.page_views'),
+                    'label' => __('core::translation.page_views'),
                     'data' => $rows->pluck('screenPageViews')->values(),
                 ],
             ],

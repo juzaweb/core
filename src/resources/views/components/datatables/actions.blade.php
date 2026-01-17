@@ -5,7 +5,7 @@
             aria-haspopup="true"
             aria-expanded="false"
             title="Actions">
-        <i class="fas fa-list"></i> {{ __('admin::translation.actions') }}
+        <i class="fas fa-list"></i> {{ __('core::translation.actions') }}
     </button>
 
     <div class="dropdown-menu dropdown-menu-right">

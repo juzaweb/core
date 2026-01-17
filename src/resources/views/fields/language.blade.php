@@ -4,7 +4,7 @@
     $locale = $options['value'] ?? request()->get('locale', config('translatable.fallback_locale'));
 @endphp
 <div class="form-group">
-    <label for="{{ $options['id'] ?? $name }}">{{ $label ?? __('admin::translation.language') }}</label>
+    <label for="{{ $options['id'] ?? $name }}">{{ $label ?? __('core::translation.language') }}</label>
     <select
             name="{{ $name }}"
             id="{{ $options['id'] ?? $name }}"

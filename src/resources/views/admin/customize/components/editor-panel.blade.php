@@ -19,7 +19,7 @@
                 <section class="next-card theme-editor__card">
                     <ul class="theme-editor-action-list theme-editor-action-list--divided theme-editor-action-list--rounded">
                         @foreach($childs as $keyChild => $child)
-                            @component('admin::admin.customize.components.action-item', [
+                            @component('core::admin.customize.components.action-item', [
                                 'title' => $child->get('title'),
                                 'key' => $keyChild,
                                 'id' => 'section-' . $keyChild
@@ -38,7 +38,7 @@
     @endphp
 
     @if($controls->isNotEmpty())
-        @component('admin::admin.customize.components.editor-card', [
+        @component('core::admin.customize.components.editor-card', [
             'key' => $key,
             'id' => $key,
             'title' => $panel->get('title')
@@ -55,7 +55,7 @@
 
 @foreach($childs as $keyChild => $child)
 
-    @component('admin::admin.customize.components.editor-panel', [
+    @component('core::admin.customize.components.editor-panel', [
         'key' => $keyChild,
         'id' => 'section-' . $keyChild,
         'panel' => $child

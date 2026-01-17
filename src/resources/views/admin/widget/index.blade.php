@@ -1,12 +1,12 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('content')
     <div class="row" id="widget-container">
         <div class="col-md-4">
-            <x-language-card label="{{ __('admin::translation.language') }}" locale="{{ $locale }}"/>
+            <x-language-card label="{{ __('core::translation.language') }}" locale="{{ $locale }}"/>
 
             @foreach($widgets as $key => $widget)
-                @component('admin::admin.widget.components.widget_item', [
+                @component('core::admin.widget.components.widget_item', [
                         'widget' => $widget,
                         'key' => $key,
                         'sidebars' => $sidebars
@@ -20,7 +20,7 @@
                 $index = 0;
             @endphp
             @foreach($sidebars as $key => $sidebar)
-                @component('admin::admin.widget.components.sidebar_item', [
+                @component('core::admin.widget.components.sidebar_item', [
                     'item' => $sidebar,
                     'show' => $index == 0,
                     'sidebarWidgets' => $sidebarWidgets,
@@ -38,7 +38,7 @@
 
 @section('scripts')
     <script type="text/html" id="sidebar-widget-form-template">
-        @component('admin::admin.widget.components.sidebar_widget_item', [
+        @component('core::admin.widget.components.sidebar_widget_item', [
             'widget' => new \Juzaweb\Modules\Core\Support\Entities\Widget(
                 '{widget_key}',
                 [

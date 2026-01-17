@@ -38,7 +38,7 @@
                             $data['locale'] = $locale;
                         @endphp
 
-                        @component('admin::admin.widget.components.sidebar_widget_item', [
+                        @component('core::admin.widget.components.sidebar_widget_item', [
                             'widget' => $widgetData,
                             'sidebar' => $item,
                             'key' => $key,
@@ -50,7 +50,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">
-                <i class="fa fa-save"></i> {{ __('admin::translation.save') }}
+                <i class="fa fa-save"></i> {{ __('core::translation.save') }}
             </button>
 
         </div>

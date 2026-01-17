@@ -45,6 +45,6 @@ class Currency extends Field
 
     public function render(): View|string
     {
-        return view('admin::fields.currency', $this->renderParams());
+        return view('core::fields.currency', $this->renderParams());
     }
 }

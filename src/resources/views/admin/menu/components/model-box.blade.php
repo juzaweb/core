@@ -1,10 +1,10 @@
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" id="box-{{ $key }}-latest-label" href="#box-{{ $key }}-latest-tab" data-toggle="tab">{{ __('admin::translation.latest') }}</a>
+        <a class="nav-link active" id="box-{{ $key }}-latest-label" href="#box-{{ $key }}-latest-tab" data-toggle="tab">{{ __('core::translation.latest') }}</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" id="box-{{ $key }}-search-label" href="#box-{{ $key }}-search-tab" data-toggle="tab">{{ __('admin::translation.search') }}</a>
+        <a class="nav-link" id="box-{{ $key }}-search-label" href="#box-{{ $key }}-search-tab" data-toggle="tab">{{ __('core::translation.search') }}</a>
     </li>
 </ul>
 
@@ -44,14 +44,14 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input class="form-check-input reset-after-add select-all-checkbox" type="checkbox" data-select="select-all-{{ $key }}">
-                            {{ __('admin::translation.select_all') }}
+                            {{ __('core::translation.select_all') }}
                         </label>
                     </div>
                 </div>
             </div>
 
             <button type="submit" class="btn btn-primary btn-sm mt-2 px-3">
-                <i class="fa fa-plus"></i> {{ __('admin::translation.add_to_menu') }}
+                <i class="fa fa-plus"></i> {{ __('core::translation.add_to_menu') }}
             </button>
 
         </form>
@@ -68,7 +68,7 @@
     @endphp
 
     <div class="tab-pane fade p-2" id="box-{{ $key }}-search-tab" role="tabpanel" aria-labelledby="box-{{ $key }}-search-label">
-        <input class="form-control menu-box-model-search" type="text" placeholder="{{ __('admin::translation.search') }}" data-class="{{ $box['class'] }}" data-key="{{ $key }}" data-url="{{ $dataUrl }}">
+        <input class="form-control menu-box-model-search" type="text" placeholder="{{ __('core::translation.search') }}" data-class="{{ $box['class'] }}" data-key="{{ $key }}" data-url="{{ $dataUrl }}">
 
         <form action="" method="post"
               class="form-menu-block"
@@ -87,14 +87,14 @@
                             <input class="form-check-input reset-after-add select-all-checkbox"
                                    type="checkbox"
                                    data-select="select-all-search-{{ $key }}">
-                            {{ __('admin::translation.select_all') }}
+                            {{ __('core::translation.select_all') }}
                         </label>
                     </div>
                 </div>
             </div>
 
             <button type="submit" class="btn btn-primary btn-sm mt-2 px-3">
-                <i class="fa fa-plus"></i> {{ __('admin::translation.add_to_menu') }}
+                <i class="fa fa-plus"></i> {{ __('core::translation.add_to_menu') }}
             </button>
 
         </form>

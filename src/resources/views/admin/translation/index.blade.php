@@ -1,18 +1,18 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('content')
     <div class="row mt-3">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('admin::translation.users') }}</h3>
+                    <h3 class="card-title">{{ __('core::translation.users') }}</h3>
                 </div>
                 <div class="card-body">
                     <table id="translations-table" class="table table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr>
-                                <th style="width: 30%;">{{ __('admin::translation.master_value') }}</th>
-                                <th>{{ __('admin::translation.phrase_text') }}</th>
+                                <th style="width: 30%;">{{ __('core::translation.master_value') }}</th>
+                                <th>{{ __('core::translation.phrase_text') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -65,7 +65,7 @@
                         // Check if the response is successful
                     },
                     error: function () {
-                        toastr.error('{{ __('admin::translation.an_error_occurred_while_updating_the_translation') }}');
+                        toastr.error('{{ __('core::translation.an_error_occurred_while_updating_the_translation') }}');
                     }
                 });
             });

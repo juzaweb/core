@@ -28,7 +28,7 @@ class FolderController extends FileManagerController
             ];
         }
 
-        return view('admin::file-manager.tree')
+        return view('core::file-manager.tree')
             ->with(
                 [
                     'storage' => $storage,
@@ -53,7 +53,7 @@ class FolderController extends FileManagerController
         if (preg_match('/[^\w-]/i', $name)) {
             return response()->json([
                 'success' => false,
-                'message' => trans('admin::browser.error_folder_alnum')
+                'message' => trans('core::browser.error_folder_alnum')
             ]);
         }
 

@@ -17,7 +17,7 @@ class Language extends Field
     public function render(): View|string
     {
         return view(
-            'admin::fields.language',
+            'core::fields.language',
             $this->renderParams()
         );
     }

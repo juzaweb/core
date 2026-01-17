@@ -41,10 +41,10 @@ class CommentsDataTable extends DataTable
 			Column::checkbox(),
 			Column::id(),
 			Column::actions(),
-			Column::computed('content', __('admin::translation.content')),
-			Column::computed('commentable', __('admin::translation.commented_on')),
-            Column::computed('commented', __('admin::translation.commented_by')),
-			Column::make('status', __('admin::translation.status')),
+			Column::computed('content', __('core::translation.content')),
+			Column::computed('commentable', __('core::translation.commented_on')),
+            Column::computed('commented', __('core::translation.commented_by')),
+			Column::make('status', __('core::translation.status')),
 			Column::createdAt(),
 		];
     }
@@ -59,8 +59,8 @@ class CommentsDataTable extends DataTable
     public function bulkActions(): array
     {
         return [
-            BulkAction::make(__('admin::translation.approve'), icon: 'fas fa-check')->can('comments.approve')->action('approved'),
-            BulkAction::make(__('admin::translation.reject'), icon: 'fas fa-times')->can('comments.reject')->action('rejected'),
+            BulkAction::make(__('core::translation.approve'), icon: 'fas fa-check')->can('comments.approve')->action('approved'),
+            BulkAction::make(__('core::translation.reject'), icon: 'fas fa-times')->can('comments.reject')->action('rejected'),
             BulkAction::delete()->can('comments.delete'),
         ];
     }
@@ -74,14 +74,14 @@ class CommentsDataTable extends DataTable
             ->editColumn('commentable', function (Comment $model) {
                 $commentable = $model->commentable;
                 if ($commentable) {
-                    $title = $commentable->title ?? $commentable->name ?? __('admin::translation.no_title');
+                    $title = $commentable->title ?? $commentable->name ?? __('core::translation.no_title');
                     $url = parse_url($commentable->getUrl(), PHP_URL_PATH);
                     $url = website()->url . $url;
 
                     return '<a href="' . $url . '" target="_blank">' . e($title) . '</a>';
                 }
 
-                return __('admin::translation.deleted');
+                return __('core::translation.deleted');
             })
             ->editColumn('commented', function (Comment $model) {
                 $commented = $model->commented;
@@ -89,7 +89,7 @@ class CommentsDataTable extends DataTable
                     $name = $commented->name ?? $commented->email;
                     return e($name);
                 }
-                return __('admin::translation.deleted');
+                return __('core::translation.deleted');
             })
             ->rawColumns(['commentable']);
     }

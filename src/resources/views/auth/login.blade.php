@@ -1,6 +1,6 @@
-@extends('admin::layouts.auth')
+@extends('core::layouts.auth')
 
-@section('title', __('admin::translation.login'))
+@section('title', __('core::translation.login'))
 
 @section('head')
     <link rel="stylesheet" href="{{ mix('css/auth.min.css', 'themes/main') }}">
@@ -18,8 +18,8 @@
                              class="img-fluid mb-3"
                              style="max-height: 50px;">
 
-                        <h2 class="auth-title">{{ __('admin::translation.login') }}</h2>
-                        <p class="auth-subtitle">{{ __('admin::translation.sign_in_to_your_account') }}</p>
+                        <h2 class="auth-title">{{ __('core::translation.login') }}</h2>
+                        <p class="auth-subtitle">{{ __('core::translation.sign_in_to_your_account') }}</p>
                     </div>
                     <!-- End Title -->
 
@@ -42,18 +42,18 @@
 
                         <!-- Input Group -->
                         <div class="form-group">
-                            <label for="loginEmail">{{ __('admin::translation.email') }}</label>
+                            <label for="loginEmail">{{ __('core::translation.email') }}</label>
                             <input type="email" name="email" id="loginEmail" class="form-control"
-                                   placeholder="{{ __('admin::translation.email') }}" required>
+                                   placeholder="{{ __('core::translation.email') }}" required>
                             <span class="error-email text-danger"></span>
                         </div>
                         <!-- End Input Group -->
 
                         <!-- Input Group -->
                         <div class="form-group">
-                            <label for="loginPassword">{{ __('admin::translation.password') }}</label>
+                            <label for="loginPassword">{{ __('core::translation.password') }}</label>
                             <input type="password" name="password" id="loginPassword" class="form-control"
-                                   placeholder="{{ __('admin::translation.password') }}" required>
+                                   placeholder="{{ __('core::translation.password') }}" required>
                             <span class="error-password text-danger"></span>
                         </div>
                         <!-- End Input Group -->
@@ -62,24 +62,24 @@
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="rememberMe" name="remember" value="1" checked>
                                 <label class="form-check-label" for="rememberMe">
-                                    {{ __('admin::translation.remember_me') }}
+                                    {{ __('core::translation.remember_me') }}
                                 </label>
                             </div>
                             <a href="{{ url('user/forgot-password') }}" class="auth-link">
-                                {{ __('admin::translation.forgot_password') }}
+                                {{ __('core::translation.forgot_password') }}
                             </a>
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block" data-loading-text="{{ __('admin::translation.logging_in') }}">
-                                {{ __('admin::translation.login') }}
+                            <button type="submit" class="btn btn-primary btn-block" data-loading-text="{{ __('core::translation.logging_in') }}">
+                                {{ __('core::translation.login') }}
                             </button>
                         </div>
                     </form>
 
                     @if($socialLogins->isNotEmpty())
                     <div class="social-auth-separator">
-                        <span>{{ __('admin::translation.or_continue_with') }}</span>
+                        <span>{{ __('core::translation.or_continue_with') }}</span>
                     </div>
 
                     <div class="social-auth-links">
@@ -93,7 +93,7 @@
 
                     @if(setting('user_registration'))
                     <div class="text-center auth-footer">
-                        <p>{{ __("admin::translation.dont_have_an_account") }} <a href="{{ home_url('user/register') }}" class="auth-link-bold">{{ __('admin::translation.register') }}</a></p>
+                        <p>{{ __("core::translation.dont_have_an_account") }} <a href="{{ home_url('user/register') }}" class="auth-link-bold">{{ __('core::translation.register') }}</a></p>
                     </div>
                     @endif
                 </div>

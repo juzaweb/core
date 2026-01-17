@@ -21,7 +21,7 @@
         <input type="hidden" name="content[{{ $key }}][key]" value="{{ $key }}">
 
         <a href="javascript:void(0)" class="delete-item-form text-danger">
-            <i class="fa fa-times"></i> {{ __('admin::translation.delete') }}
+            <i class="fa fa-times"></i> {{ __('core::translation.delete') }}
         </a>
     </div>
 </li>

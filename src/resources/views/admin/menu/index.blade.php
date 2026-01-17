@@ -1,4 +1,4 @@
-@extends('admin::layouts.admin')
+@extends('core::layouts.admin')
 
 @section('content')
     <div id="menu-container">
@@ -7,7 +7,7 @@
             <div class="col-md-6 form-select-menu">
                 <div class="alert-default">
                     @if($menu)
-                        {{ __('admin::translation.select_menu_to_edit') }}:
+                        {{ __('core::translation.select_menu_to_edit') }}:
                         <select
                             name="id"
                             id="select-menu"
@@ -17,11 +17,11 @@
                             <option value="{{ $menu->id }}" selected>{{ $menu->name }}</option>
                         </select>
 
-                        {{ __('admin::translation.or') }}
+                        {{ __('core::translation.or') }}
                     @endif
 
                     <a href="javascript:void(0)" class="ml-1 text-primary btn-add-menu">
-                        <i class="fa fa-plus"></i> {{ __('admin::translation.create_new_menu') }}
+                        <i class="fa fa-plus"></i> {{ __('core::translation.create_new_menu') }}
                     </a>
                 </div>
             </div>
@@ -35,12 +35,12 @@
                            class="form-control"
                            autocomplete="off"
                            required
-                           placeholder="{{ __('admin::translation.menu_name') }}"
+                           placeholder="{{ __('core::translation.menu_name') }}"
                         >
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-plus"></i> {{ __('admin::translation.add_menu') }}</button>
+                        <i class="fa fa-plus"></i> {{ __('core::translation.add_menu') }}</button>
                 </form>
             </div>
         </div>
@@ -49,7 +49,7 @@
         @if($menu)
             <div class="row mt-5">
                 <div class="col-md-4">
-                    <h5 class="mb-2 font-weight-bold">{{ __('admin::translation.items') }}</h5>
+                    <h5 class="mb-2 font-weight-bold">{{ __('core::translation.items') }}</h5>
 
                     @php
                         $hidden = true;
@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="card-body @if($hidden) box-hidden @endif">
-                                @component('admin::admin.menu.components.model-box', [
+                                @component('core::admin.menu.components.model-box', [
                                     'key' => $key,
                                     'box' => $box,
                                 ])
@@ -94,7 +94,7 @@
                     <div class="card card-menu-items" id="menu-box-custom">
                         <div class="card-header card-header-flex">
                             <div class="d-flex flex-column justify-content-center card-menu-title">
-                                <h5 class="mb-0 text-capitalize">{{ __('admin::translation.custom_link') }}</h5>
+                                <h5 class="mb-0 text-capitalize">{{ __('core::translation.custom_link') }}</h5>
                             </div>
 
                             <div class="ml-auto d-flex align-items-stretch card-menu-actions">
@@ -107,12 +107,12 @@
                         <div class="card-body box-hidden">
                             <form action="" method="post" class="form-menu-block" data-template="custom">
 
-                                @component('admin::admin.menu.components.custom-box')
+                                @component('core::admin.menu.components.custom-box')
 
                                 @endcomponent
 
                                 <button type="submit" class="btn btn-primary btn-sm mt-2 px-3">
-                                    <i class="fa fa-plus"></i> {{ __('admin::translation.add_to_menu') }}
+                                    <i class="fa fa-plus"></i> {{ __('core::translation.add_to_menu') }}
                                 </button>
                             </form>
                         </div>
@@ -120,7 +120,7 @@
                 </div>
 
                 <div class="col-md-8">
-                    <h5 class="mb-2 font-weight-bold">{{ __('admin::translation.structure') }}</h5>
+                    <h5 class="mb-2 font-weight-bold">{{ __('core::translation.structure') }}</h5>
 
                     <form action="{{ route('admin.menus.update', [$websiteId, $menu->id]) }}"
                           method="post"
@@ -135,7 +135,7 @@
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="form-group">
-                                            <label for="name" class="col-sm-3">{{ __('admin::translation.menu_name') }}</label>
+                                            <label for="name" class="col-sm-3">{{ __('core::translation.menu_name') }}</label>
                                             <div class="col-sm-9">
                                                 <input type="text" name="name" id="name" class="form-control"
                                                        value="{{ $menu->name ?? '' }}" autocomplete="off">
@@ -144,7 +144,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        {{ Field::language(__('admin::translation.language'), 'locale') }}
+                                        {{ Field::language(__('core::translation.language'), 'locale') }}
                                     </div>
                                 </div>
                             </div>
@@ -153,18 +153,18 @@
                                 <div class="dd" id="jw-menu-builder">
                                     <ol class="dd-list">
                                         @foreach($menu->items->sortBy('display_order') as $item)
-                                            @component('admin::admin.menu.components.menu-item', [
+                                            @component('core::admin.menu.components.menu-item', [
                                                 'item' => $item,
                                                 'register' => true,
                                                 'children' => $item->children,
                                             ])
                                                 @if($item->is_custom)
-                                                    @component('admin::admin.menu.components.items.custom', [
+                                                    @component('core::admin.menu.components.items.custom', [
                                                         'item' => $item
                                                     ])
                                                     @endcomponent
                                                 @else
-                                                    @component('admin::admin.menu.components.items.model', [
+                                                    @component('core::admin.menu.components.items.model', [
                                                         'item' => $item
                                                     ])
                                                     @endcomponent
@@ -194,12 +194,12 @@
                                        class="text-danger delete-menu"
                                        data-id="{{ $menu->id }}"
                                        data-name="{{ $menu->name }}"
-                                    >{{ __('admin::translation.delete_menu') }}</a>
+                                    >{{ __('core::translation.delete_menu') }}</a>
                                 </div>
 
                                 <div class="btn-group float-right">
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-save"></i> {{ __('admin::translation.save') }}
+                                        <i class="fa fa-save"></i> {{ __('core::translation.save') }}
                                     </button>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
 
 @section('scripts')
     <script type="text/html" id="template-menu-item-custom">
-        @component('admin::admin.menu.components.items.custom', [
+        @component('core::admin.menu.components.items.custom', [
             'item' => (object) [
                     'label' => '{label}',
                     'link' => '{link}',
@@ -226,7 +226,7 @@
     </script>
 
     <script type="text/html" id="template-menu-item-model">
-        @component('admin::admin.menu.components.items.model', [
+        @component('core::admin.menu.components.items.model', [
             'item' => (object) [
                     'label' => '{label}',
                     'link' => '{link}',
@@ -239,7 +239,7 @@
     </script>
 
     <script type="text/html" id="template-menu-item">
-        @component('admin::admin.menu.components.menu-item', [
+        @component('core::admin.menu.components.menu-item', [
             'item' => (object) [
                 'label' => '{label}',
                 'target' => '_self',

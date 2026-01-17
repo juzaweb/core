@@ -1,4 +1,4 @@
-@extends('admin::layouts.auth')
+@extends('core::layouts.auth')
 
 @section('content')
     <div class="container mt-5">
@@ -12,11 +12,11 @@
                             </svg>
                         </div>
 
-                        <h2 class="mb-3">{{ __('admin::translation.subscription_verified_successfully') }}</h2>
-                        <p class="text-muted mb-4">{{ __('admin::translation.subscription_verified_message') }}</p>
+                        <h2 class="mb-3">{{ __('core::translation.subscription_verified_successfully') }}</h2>
+                        <p class="text-muted mb-4">{{ __('core::translation.subscription_verified_message') }}</p>
 
                         <a href="{{ route('home') }}" class="btn btn-primary btn-lg">
-                            {{ __('admin::translation.back_to_home') }}
+                            {{ __('core::translation.back_to_home') }}
                         </a>
                     </div>
                 </div>

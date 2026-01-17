@@ -7,14 +7,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="translateModalLabel">{{ __('admin::translation.translate') }}</h5>
+                <h5 class="modal-title" id="translateModalLabel">{{ __('core::translation.translate') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>{{ __('admin::translation.source_language') }}</label>
+                    <label>{{ __('core::translation.source_language') }}</label>
                     <select name="source_locale" class="form-control" id="translate-source-locale">
                         @foreach ($languages as $language)
                             <option value="{{ $language->code }}" @selected($language->code === app()->getLocale())>
@@ -24,7 +24,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>{{ __('admin::translation.target_language') }}</label>
+                    <label>{{ __('core::translation.target_language') }}</label>
                     <select name="target_locale" class="form-control" id="translate-target-locale">
                         @foreach ($languages as $language)
                             <option value="{{ $language->code }}">{{ $language->name }}</option>
@@ -34,9 +34,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">{{ __('admin::translation.close') }}</button>
+                        data-dismiss="modal">{{ __('core::translation.close') }}</button>
                 <button type="button" class="btn btn-primary"
-                        id="translate-submit" data-model="{{ encrypt($translateModel) }}">{{ __('admin::translation.translate') }}</button>
+                        id="translate-submit" data-model="{{ encrypt($translateModel) }}">{{ __('core::translation.translate') }}</button>
             </div>
         </div>
     </div>

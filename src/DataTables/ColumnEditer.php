@@ -27,7 +27,7 @@ class ColumnEditer
         $actions = array_filter($actions, fn ($action) => $action->isVisible());
 
         return view(
-            'admin::components.datatables.actions',
+            'core::components.datatables.actions',
             [
                 'model' => $model,
                 'actions' => $actions,
@@ -39,7 +39,7 @@ class ColumnEditer
     public static function editLink(Model $model, string $editUrl, string $data = 'name'): View
     {
         return view(
-            'admin::components.datatables.edit-link',
+            'core::components.datatables.edit-link',
             compact('model', 'editUrl', 'data')
         );
     }
@@ -54,7 +54,7 @@ class ColumnEditer
     public static function checkbox(Model $model, string $rowId = 'id'): View
     {
         return view(
-            'admin::components.datatables.checkbox',
+            'core::components.datatables.checkbox',
             ['model' => $model, 'rowId' => $rowId]
         );
     }

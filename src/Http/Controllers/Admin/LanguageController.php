@@ -24,10 +24,10 @@ class LanguageController extends AdminController
     {
         $dataTable->withWebsiteId($websiteId);
 
-        Breadcrumb::add(__('admin::translation.languages'));
+        Breadcrumb::add(__('core::translation.languages'));
 
         return $dataTable->render(
-            'admin::admin.language.index'
+            'core::admin.language.index'
         );
     }
 
@@ -45,7 +45,7 @@ class LanguageController extends AdminController
         );
 
         return $this->success(
-            __('admin::translation.language_created_successfully')
+            __('core::translation.language_created_successfully')
         );
     }
 
@@ -61,7 +61,7 @@ class LanguageController extends AdminController
         $language->delete();
 
         return $this->success(
-            __('admin::translation.language_deleted_successfully')
+            __('core::translation.language_deleted_successfully')
         );
     }
 
@@ -73,7 +73,7 @@ class LanguageController extends AdminController
 
         if ($action === 'set-default') {
             if (count($ids) !== 1) {
-                return $this->error(__('admin::translation.please_select_exactly_one_language_to_set_as_default'));
+                return $this->error(__('core::translation.please_select_exactly_one_language_to_set_as_default'));
             }
 
             $code = $ids[0];
@@ -82,7 +82,7 @@ class LanguageController extends AdminController
             $language = Language::where('code', $code)->firstOrFail();
 
             setting()->set('language', $code);
-            return $this->success(__('admin::translation.default_language_set_successfully'));
+            return $this->success(__('core::translation.default_language_set_successfully'));
         }
 
         $languages = Language::whereIn('code', $ids)
@@ -93,7 +93,7 @@ class LanguageController extends AdminController
         $languages->each(fn (Language $language) => $language->delete());
 
         return $this->success(
-            __('admin::translation.languages_deleted_successfully')
+            __('core::translation.languages_deleted_successfully')
         );
     }
 }

@@ -40,7 +40,7 @@ class MediaException extends \Exception
     {
         return new static(
             trans(
-                'admin::translation.storage_limit_exceeded',
+                'core::translation.storage_limit_exceeded',
                 [
                     'current' => Media::readableSize($currentUsed),
                     'limit' => Media::readableSize($maxStorage),

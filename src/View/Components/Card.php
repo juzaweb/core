@@ -25,7 +25,7 @@ class Card extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('admin::components.card', [
+        return view('core::components.card', [
                 'title' => $this->title,
                 'icon' => $this->icon,
                 'description' => $this->description,
