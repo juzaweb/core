@@ -117,8 +117,9 @@ class SetupController extends AdminController
                     if (!setting('language')) {
                         setting()?->set('language', 'en');
                     }
+
                     if (!setting('theme')) {
-                        setting()?->set('theme', $website->theme ?? 'itech');
+                        setting()?->set('theme', 'itech');
                     }
 
                     if (!setting('sitename')) {

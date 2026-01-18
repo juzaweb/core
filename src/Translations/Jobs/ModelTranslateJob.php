@@ -27,7 +27,6 @@ class ModelTranslateJob implements ShouldQueue
     public bool $failOnTimeout = true;
 
     public function __construct(
-        protected Website $website,
         protected Translatable $model,
         protected string $sourceLocale,
         protected string $targetLocale

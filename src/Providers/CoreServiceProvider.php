@@ -153,6 +153,16 @@ class CoreServiceProvider extends ServiceProvider
             'translator'
         );
 
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/locales.php',
+            'locales'
+        );
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/countries.php',
+            'countries'
+        );
+
         $this->publishes([
             __DIR__ . '/../../config/core.php' => config_path('core.php'),
             __DIR__ . '/../../config/media.php' => config_path('media.php'),
