@@ -10,7 +10,6 @@
 use Illuminate\Support\Facades\Route;
 use Juzaweb\Modules\Admin\Http\Controllers\DashboardController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\ChartController;
-use Juzaweb\Modules\Core\Http\Controllers\Admin\CommentController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\LanguageController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\LoadDataController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\PageController;
@@ -18,6 +17,7 @@ use Juzaweb\Modules\Core\Http\Controllers\Admin\ProfileController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\SettingController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\SetupController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\TranslationController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\UserController;
 
 require __DIR__ . '/components/media.php';
 require __DIR__ . '/components/theme.php';
@@ -44,6 +44,7 @@ Route::post('/profile', [ProfileController::class, 'update']);
 Route::admin('languages', LanguageController::class)
     ->except(['edit', 'update', 'create']);
 Route::admin('pages', PageController::class);
+Route::admin('users', UserController::class);
 
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations')
