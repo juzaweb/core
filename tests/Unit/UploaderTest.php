@@ -2,17 +2,13 @@
 
 namespace Juzaweb\Modules\Core\Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Juzaweb\Modules\Core\FileManager\MediaUploader;
 use Juzaweb\Modules\Core\Tests\TestCase;
 
-
 class UploaderTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testUpload()
     {
         $file = UploadedFile::fake()->image('file-one.jpg');
