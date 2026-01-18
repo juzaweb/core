@@ -3,5 +3,8 @@ main:
     children:
       - title: Introduction
         url: /
-      - title: Modules
-        url: /modules
+  - title: Modules
+    url: /modules
+    children:
+      - title: Models
+        url: /models

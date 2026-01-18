@@ -1,5 +1,3 @@
-# Modules
-
 Module is a package created to manage your large application using Modules. A Module is like a Laravel package, it has some views, controllers or models.
 
 ## Getting Started
