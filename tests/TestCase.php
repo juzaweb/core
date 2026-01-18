@@ -44,6 +44,7 @@ abstract class TestCase extends Orchestra
         return [
             CoreServiceProvider::class,
             \Juzaweb\QueryCache\QueryCacheServiceProvider::class,
+            \Spatie\Activitylog\ActivitylogServiceProvider::class,
         ];
     }
 
