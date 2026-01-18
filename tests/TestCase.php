@@ -93,6 +93,8 @@ abstract class TestCase extends Orchestra
             'driver' => 'local',
             'root' => storage_path('app/private'),
         ]);
+
+        $app['config']->set('auth.providers.users.model', \Juzaweb\Modules\Core\Models\User::class);
     }
 
     /**

@@ -25,7 +25,6 @@ use Juzaweb\Modules\Core\Http\Requests\Auth\ForgotPasswordRequest;
 use Juzaweb\Modules\Core\Http\Requests\Auth\LoginRequest;
 use Juzaweb\Modules\Core\Http\Requests\Auth\RegisterRequest;
 use Juzaweb\Modules\Core\Http\Requests\Auth\ResetPasswordRequest;
-use function Juzaweb\Modules\Admin\Http\Controllers\Auth\website;
 
 class AuthController extends AdminController
 {
