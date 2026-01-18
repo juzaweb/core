@@ -11,8 +11,8 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
-    <link rel="stylesheet" href="{{ mix('assets/css/vendor.min.css') }}">
-    <link rel="stylesheet" href="{{ mix('assets/css/admin.min.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'juzaweb') }}">
+    <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'juzaweb') }}">
 
     @yield('head')
 </head>

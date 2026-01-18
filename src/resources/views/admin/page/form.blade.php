@@ -78,7 +78,3 @@
         </div>
     </form>
 @endsection
-
-@section('scripts')
-    <script src="{{ asset('assets/js/page.js') }}?v={{ time() }}"></script>
-@endsection

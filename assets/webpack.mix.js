@@ -101,6 +101,7 @@ mix.combine(
         `${assetPath}/admin/js/media-modal.js`,
         `${assetPath}/admin/js/menu.js`,
         `${assetPath}/admin/js/widget.js`,
+        `${assetPath}/admin/js/page.js`,
     ],
     `${publicPath}/js/admin.min.js`
 ).mergeManifest();
