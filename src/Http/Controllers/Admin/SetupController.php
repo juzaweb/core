@@ -15,9 +15,6 @@ namespace Juzaweb\Modules\Core\Http\Controllers\Admin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Juzaweb\Modules\Admin\Enums\UserStatus;
-use Juzaweb\Modules\Admin\Models\Users\Member;
-use Juzaweb\Modules\Admin\Networks\Facades\Network;
 use Juzaweb\Modules\Core\Enums\PageStatus;
 use Juzaweb\Modules\Core\Facades\Theme;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
@@ -37,7 +34,7 @@ class SetupController extends AdminController
 
         return view(
             'core::admin.setup.index',
-            compact('website', 'title')
+            compact('title')
         );
     }
 
@@ -46,36 +43,15 @@ class SetupController extends AdminController
      */
     public function setup(Request $request): JsonResponse
     {
-        $user = $request->user();
-
         try {
             DB::transaction(
-                function () use ($website, $user) {
-                    Member::firstOrCreate([
-                        'email' => $user->email,
-                    ], [
-                        'name' => $user->name,
-                        'user_id' => $user->id,
-                        'password' => $user->password,
-                        'status' => UserStatus::ACTIVE,
-                    ]);
-
+                function () use ($request) {
                     // Create default language (English)
                     Language::firstOrCreate([
                         'code' => 'en',
                     ], [
                         'name' => 'English',
                     ]);
-
-                    if ($website->language && $website->language != 'en') {
-                        Language::firstOrCreate([
-                            'code' => $website->language,
-                        ], [
-                            'name' => config("locales.{$website->language}.name", 'Unknown'),
-                        ]);
-                    } else {
-                        $website->update(['language' => 'en']);
-                    }
 
                     // Create home page with English translation
                     $homePage = Page::updateOrCreate([
@@ -93,10 +69,10 @@ class SetupController extends AdminController
                     if (! $privacyPolicy) {
                         $privacyPolicy = Page::create([
                             'status' => PageStatus::PUBLISHED,
-                            $website->language => [
+                            'en' => [
                                 'title' => __('core::translation.privacy_policy'),
                                 'content' => view('core::frontend.defaults.privacy-policy')->render(),
-                                'locale' => $website->language,
+                                'locale' => 'en',
                             ],
                         ]);
                     }
@@ -104,10 +80,10 @@ class SetupController extends AdminController
                     if (! $termsOfService) {
                         $termsOfService = Page::create([
                             'status' => PageStatus::PUBLISHED,
-                            $website->language => [
+                            'en' => [
                                 'title' => __('core::translation.terms_of_service'),
                                 'content' => view('core::frontend.defaults.terms')->render(),
-                                'locale' => $website->language,
+                                'locale' => 'en',
                             ],
                         ]);
                     }
@@ -132,30 +108,27 @@ class SetupController extends AdminController
                     ]);
 
                     if (!setting('title')) {
-                        setting()?->set('title', $website->title);
+                        setting()?->set('title', 'Juzaweb');
                     }
 
                     if (!setting('description')) {
-                        setting()?->set('description', $website->description);
+                        setting()?->set('description', 'Just another Juzaweb site');
                     }
                     if (!setting('language')) {
-                        setting()?->set('language', $website->language ?? 'en');
+                        setting()?->set('language', 'en');
                     }
                     if (!setting('theme')) {
                         setting()?->set('theme', $website->theme ?? 'itech');
                     }
+
                     if (!setting('sitename')) {
-                        $host = parse_url($website->url, PHP_URL_HOST);
+                        $host = $request->getHost();
                         $siteName = generate_site_name_from_host($host);
                         setting()?->set('sitename', $siteName);
                     }
 
                     theme_setting()?->set('home_page', $homePage->id);
                     theme_setting()?->set('nav_location', ['main' => $mainMenu->id]);
-
-                    // Mark website as set up
-                    $website->setup = true;
-                    $website->save();
                 }
             );
 

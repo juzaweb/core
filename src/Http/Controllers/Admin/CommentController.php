@@ -2,7 +2,6 @@
 
 namespace Juzaweb\Modules\Core\Http\Controllers\Admin;
 
-use Juzaweb\Modules\Blog\Models\Post;
 use Juzaweb\Modules\Core\Enums\CommentStatus;
 use Juzaweb\Modules\Core\Facades\Breadcrumb;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
