@@ -1,0 +1,7 @@
+main:
+  - title: Getting started
+    children:
+      - title: Introduction
+        url: /
+      - title: Modules
+        url: /modules

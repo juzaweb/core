@@ -8,24 +8,11 @@ It allows users to **create and manage different types of websites** — such as
 * **Frontend:** AdminLTE, Bootstrap 4
 * **Others:** Composer, NPM, Webpack/Mix
 
-# Install
+# Installation
 
 * Install composer and migration
 
 ```
 composer install
-php artisan app:install
-```
-
-* Set `.env`
-```
-NETWORK_DOMAIN=domain.test
-NETWORK_SUBSITE_DOMAIN=domain.test
-```
-
-* Set database, websites table column domain = domain.test
-
-* Active theme for Main site, run command
-```
-php artisan theme:active Main
+php artisan juzaweb:install
 ```

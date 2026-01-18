@@ -271,16 +271,12 @@ class Module
      */
     public function register(): void
     {
-        try {
-            $this->registerAliases();
+        $this->registerAliases();
 
-            $this->registerProviders();
+        $this->registerProviders();
 
-            if ($this->isLoadFilesOnBoot() === false) {
-                $this->registerFiles();
-            }
-        } catch (\Exception $e) {
-            report($e);
+        if ($this->isLoadFilesOnBoot() === false) {
+            $this->registerFiles();
         }
 
         $this->fireEvent('register');
