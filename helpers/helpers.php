@@ -169,24 +169,6 @@ if (! function_exists('admin_url')) {
     }
 }
 
-if (! function_exists('network_url')) {
-    /**
-     * Generate an admin URL from the given URI.
-     *
-     * @param string $uri the URI to generate a URL for
-     *
-     * @return string the generated URL
-     */
-    function network_url(?string $uri = null): string
-    {
-        return url(rtrim(
-            '/network/'
-                . ltrim($uri, '/'),
-            '/'
-        ));
-    }
-}
-
 if (! function_exists('is_super_admin')) {
     /**
      * Check if user is super admin

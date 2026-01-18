@@ -32,7 +32,7 @@ class UsersDataTable extends DataTable
         return [
             Column::checkbox(),
             Column::id(),
-            Column::editLink('name', network_url('users/{id}/edit'), __('admin::translation.name')),
+            Column::editLink('name', admin_url('users/{id}/edit'), __('core::translation.name')),
             Column::make('email'),
             Column::createdAt(),
             Column::actions(),
@@ -49,7 +49,7 @@ class UsersDataTable extends DataTable
     public function actions(Model $model): array
     {
         return [
-            Action::edit(network_url("users/{$model->id}/edit"))
+            Action::edit(admin_url("users/{$model->id}/edit"))
                 ->can('users.edit'),
             Action::delete()
                 ->disabled($model->isSuperAdmin())

@@ -25,26 +25,26 @@ class UserController extends AdminController
 {
     public function index(UsersDataTable $dataTable)
     {
-        Breadcrumb::add(__('admin::translation.users'));
+        Breadcrumb::add(__('core::translation.users'));
 
         return $dataTable->render(
-            'admin::network.user.index',
+            'core::admin.user.index',
             []
         );
     }
 
     public function create()
     {
-        Breadcrumb::add(__('admin::translation.users'), admin_url('users'));
+        Breadcrumb::add(__('core::translation.users'), admin_url('users'));
 
-        Breadcrumb::add(__('admin::translation.add_user'));
+        Breadcrumb::add(__('core::translation.add_user'));
 
         $model = new User();
         $action = action([static::class, 'store']);
         $roles = Role::get();
 
         return view(
-            'admin::network.user.form',
+            'core::admin.user.form',
             compact('model', 'action', 'roles')
         );
     }
@@ -53,17 +53,17 @@ class UserController extends AdminController
     {
         $model = User::where('is_super_admin', '!=', true)->find($id);
 
-        abort_if($model === null, 404, __('admin::translation.user_not_found'));
+        abort_if($model === null, 404, __('core::translation.user_not_found'));
 
-        Breadcrumb::add(__('admin::translation.users'), admin_url('users'));
+        Breadcrumb::add(__('core::translation.users'), admin_url('users'));
 
-        Breadcrumb::add(__('admin::translation.edit_user_name', ['name' => $model->name]));
+        Breadcrumb::add(__('core::translation.edit_user_name', ['name' => $model->name]));
 
         $action = action([static::class, 'update'], ['id' => $model->id]);
         $roles = Role::get();
 
         return view(
-            'admin::network.user.form',
+            'core::admin.user.form',
             compact('model', 'action', 'roles')
         );
     }
@@ -81,7 +81,7 @@ class UserController extends AdminController
         $model = User::create($data);
 
         return $this->success(
-            __('admin::translation.user_name_created_successfully', ['name' => $model->name]),
+            __('core::translation.user_name_created_successfully', ['name' => $model->name]),
         );
     }
 
@@ -89,7 +89,7 @@ class UserController extends AdminController
     {
         $model = User::where('is_super_admin', '!=', true)->find($id);
 
-        abort_if($model === null, 404, __('admin::translation.user_not_found'));
+        abort_if($model === null, 404, __('core::translation.user_not_found'));
 
         $data = $request->safe()->all();
 
@@ -102,7 +102,7 @@ class UserController extends AdminController
         $model->update($data);
 
         return $this->success(
-            __('admin::translation.user_name_updated_successfully', ['name' => $model->name]),
+            __('core::translation.user_name_updated_successfully', ['name' => $model->name]),
         );
     }
 
@@ -110,12 +110,12 @@ class UserController extends AdminController
     {
         $model = User::where('is_super_admin', '!=', true)->find($id);
 
-        abort_if($model === null, 404, __('admin::translation.user_not_found'));
+        abort_if($model === null, 404, __('core::translation.user_not_found'));
 
         $model->delete();
 
         return $this->success(
-            __('admin::translation.user_name_deleted_successfully', ['name' => $model->name]),
+            __('core::translation.user_name_deleted_successfully', ['name' => $model->name]),
         );
     }
 
@@ -127,21 +127,21 @@ class UserController extends AdminController
         switch ($action) {
             case 'delete':
                 User::whereIn('id', $ids)->where('is_super_admin', '!=', true)->delete();
-                return $this->success(__('admin::translation.selected_users_deleted_successfully'));
+                return $this->success(__('core::translation.selected_users_deleted_successfully'));
             case 'activate':
                 User::whereIn('id', $ids)->where('is_super_admin', '!=',
                     true)->update(['status' => UserStatus::ACTIVE]);
-                return $this->success(__('admin::translation.selected_users_activated_successfully'));
+                return $this->success(__('core::translation.selected_users_activated_successfully'));
             case 'deactivate':
                 User::whereIn('id', $ids)->where('is_super_admin', '!=',
                     true)->update(['status' => UserStatus::INACTIVE]);
-                return $this->success(__('admin::translation.selected_users_deactivated_successfully'));
+                return $this->success(__('core::translation.selected_users_deactivated_successfully'));
             case 'banned':
                 User::whereIn('id', $ids)->where('is_super_admin', '!=',
                     true)->update(['status' => UserStatus::BANNED]);
-                return $this->success(__('admin::translation.selected_users_banned_successfully'));
+                return $this->success(__('core::translation.selected_users_banned_successfully'));
             default:
-                return $this->error(__('admin::translation.invalid_action'));
+                return $this->error(__('core::translation.invalid_action'));
         }
     }
 }
