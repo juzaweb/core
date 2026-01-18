@@ -29,7 +29,6 @@ class ThemeSidebar extends Model
         'data',
         'theme',
         'display_order',
-        'website_id',
     ];
 
     protected $casts = [

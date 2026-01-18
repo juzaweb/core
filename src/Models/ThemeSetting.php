@@ -16,7 +16,6 @@ class ThemeSetting extends Model
         'code',
         'theme',
         'value',
-        'website_id',
     ];
 
     public function getValueAttribute(): null|string|array

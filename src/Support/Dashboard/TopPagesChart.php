@@ -16,8 +16,6 @@ use Google\Analytics\Data\V1beta\FilterExpression;
 use Juzaweb\Modules\Core\Support\Charts\PieChart;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
-use function Juzaweb\Modules\Admin\Support\Dashboard\website;
-use function Juzaweb\Modules\Admin\Support\Dashboard\website_id;
 
 class TopPagesChart extends PieChart
 {
@@ -35,17 +33,6 @@ class TopPagesChart extends PieChart
 
     public function getData(): array
     {
-        $filter = new Filter([
-            'field_name' => 'customEvent:website_id',
-            'string_filter' => new StringFilter([
-                'match_type' => StringFilter\MatchType::EXACT,
-            ]),
-        ]);
-
-        $filterExpression = new FilterExpression([
-            'filter' => $filter,
-        ]);
-
         $response = Analytics::get(
             period: new Period(now()->subDays(8), now()->subDay()),
             metrics: ['screenPageViews'],

@@ -3,7 +3,6 @@
 namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Support\Str;
-use function Juzaweb\Modules\Admin\Traits\website_id;
 
 trait HasSlug
 {

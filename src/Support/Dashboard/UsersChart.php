@@ -52,17 +52,6 @@ class UsersChart extends LineChart
             }
         }
 
-        $filter = new Filter([
-            'field_name' => 'customEvent:website_id',
-            'string_filter' => new StringFilter([
-                'match_type' => StringFilter\MatchType::EXACT,
-            ]),
-        ]);
-
-        $filterExpression = new FilterExpression([
-            'filter' => $filter,
-        ]);
-
         $response = Analytics::get(
             period: new Period(now()->subDays(8), now()->subDay()),
             metrics: ['activeUsers', 'screenPageViews', 'newUsers'],

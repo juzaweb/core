@@ -18,7 +18,6 @@ use Juzaweb\Modules\Core\Models\Model;
 use Juzaweb\Modules\Core\Traits\HasDescription;
 use Juzaweb\Modules\Core\Traits\HasSitemap;
 use Juzaweb\Modules\Core\Traits\HasSlug;
-use function Juzaweb\Modules\Admin\Models\Pages\website_id;
 
 class PageTranslation extends Model implements Sitemapable
 {
@@ -33,7 +32,6 @@ class PageTranslation extends Model implements Sitemapable
         'description',
         'locale',
         'thumbnail',
-        'website_id',
     ];
 
     public function page(): BelongsTo

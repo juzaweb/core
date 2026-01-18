@@ -10,7 +10,6 @@ class PageViewHistory extends Model
     protected $fillable = [
         'viewable_id',
         'viewable_type',
-        'website_id',
         'viewer_id',
         'viewer_type',
     ];

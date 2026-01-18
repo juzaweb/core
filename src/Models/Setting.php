@@ -18,7 +18,6 @@ class Setting extends Model
         'code',
         'value',
         'translatable',
-        'website_id',
     ];
 
     public $translatedAttributes = [

@@ -154,7 +154,6 @@ class MenuController extends AdminController
                     'menuable_id' => $item['menuable_id'],
                     'parent_id' => $parentId,
                     'display_order' => $index,
-                    'website_id' => $model->website_id,
                     'box_key' => $item['key'],
                     'target' => $item['target'] ?? '_self',
                     $locale => [
@@ -167,7 +166,6 @@ class MenuController extends AdminController
                     'link' => $item['link'],
                     'parent_id' => $parentId,
                     'display_order' => $index,
-                    'website_id' => $model->website_id,
                     'box_key' => 'custom',
                     'target' => $item['target'] ?? '_self',
                     $locale => [

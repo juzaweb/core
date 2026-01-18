@@ -18,7 +18,6 @@ use Juzaweb\Modules\Core\Contracts\ThemeSetting as SettingContract;
 use Juzaweb\Modules\Core\Models\Model;
 use Juzaweb\Modules\Core\Models\ThemeSetting as SettingModel;
 use Juzaweb\Modules\Core\Support\Entities\ThemeSetting;
-use function Juzaweb\Modules\Admin\Support\website_id;
 
 class ThemeSettingRepository implements SettingContract
 {
@@ -84,7 +83,7 @@ class ThemeSettingRepository implements SettingContract
     {
         $model = Model::withoutEvents(
             function () use ($key, $value) {
-                return SettingModel::withoutGlobalScope('website_id')->updateOrCreate(
+                return SettingModel::updateOrCreate(
                     [
                         'code' => $key,
                         'theme' => $this->theme->current()->name(),

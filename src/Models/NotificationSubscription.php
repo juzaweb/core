@@ -17,7 +17,6 @@ class NotificationSubscription extends Model
         'channel',
         'notifiable_type',
         'notifiable_id',
-        'website_id',
         'data',
     ];
 

@@ -228,7 +228,7 @@ class AdminCrudMakeCommand extends Command
     {
         $makeColumns = $this->getAllModelColumns($model);
 
-        $makeColumns = array_diff($makeColumns, ['created_at', 'updated_at', 'deleted_at', 'deleted_at', 'website_id']);
+        $makeColumns = array_diff($makeColumns, ['created_at', 'updated_at', 'deleted_at', 'deleted_at']);
 
         $fields = [];
         foreach ($makeColumns as $item) {

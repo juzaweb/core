@@ -17,8 +17,6 @@ use Illuminate\Support\Carbon;
 use Juzaweb\Modules\Core\Support\Charts\LineChart;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
-use function Juzaweb\Modules\Admin\Support\Dashboard\website;
-use function Juzaweb\Modules\Admin\Support\Dashboard\website_id;
 
 class SessionDurationChart extends LineChart
 {
@@ -36,17 +34,6 @@ class SessionDurationChart extends LineChart
 
     public function getData(): array
     {
-        $filter = new Filter([
-            'field_name' => 'customEvent:website_id',
-            'string_filter' => new StringFilter([
-                'match_type' => StringFilter\MatchType::EXACT,
-            ]),
-        ]);
-
-        $filterExpression = new FilterExpression([
-            'filter' => $filter,
-        ]);
-
         $response = Analytics::get(
             period: new Period(now()->subDays(8), now()->subDay()),
             metrics: ['averageSessionDuration', 'userEngagementDuration'],

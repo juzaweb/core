@@ -84,8 +84,7 @@ class SettingRepository implements SettingContract
     {
         $model = Model::withoutEvents(
             function () use ($key, $value) {
-                return SettingModel::withoutGlobalScope('website_id')
-                    ->updateOrCreate(
+                return SettingModel::updateOrCreate(
                         [
                             'code' => $key,
                         ],
