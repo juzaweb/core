@@ -5,7 +5,6 @@ use Juzaweb\Modules\Core\Facades\Locale;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\AddonController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\NotificationSubscribeController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\SitemapController;
-use Juzaweb\Modules\Core\Http\Middleware\VerifyToken;
 
 Route::group(['prefix' => Locale::setLocale()], function () {
     require __DIR__ . '/components/auth.php';

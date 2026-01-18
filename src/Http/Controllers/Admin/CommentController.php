@@ -10,10 +10,8 @@ use Juzaweb\Modules\Core\Http\DataTables\CommentsDataTable;
 use Juzaweb\Modules\Core\Http\Requests\CommentActionsRequest;
 use Juzaweb\Modules\Core\Models\Comment;
 
-class CommentController extends AdminController
+abstract class CommentController extends AdminController
 {
-    protected string $commentableType = Post::class;
-
     public function index(CommentsDataTable $dataTable)
     {
         Breadcrumb::add(__('core::translation.comments'));

@@ -78,6 +78,3 @@ Route::get('/settings/email', [SettingController::class, 'email'])
 Route::post('/settings/test-email', [SettingController::class, 'testEmail'])
     ->name('admin.settings.test-email')
     ->middleware(['permission:settings.email.index', 'throttle:5,1']);
-
-Route::admin('comments', CommentController::class)
-    ->except(['create', 'edit', 'store', 'update']);
