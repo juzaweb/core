@@ -31,6 +31,8 @@ return new class extends Migration
                 $table->json('conversions')->nullable();
                 $table->json('metadata')->nullable();
                 $table->uuid('parent_id')->index()->nullable();
+                $table->boolean('in_cloud')->default(false)
+                ->comment('Indicates if the media file is stored in cloud storage');
                 $table->datetimes();
 
                 $table->foreign('parent_id')
