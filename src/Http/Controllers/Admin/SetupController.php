@@ -135,6 +135,9 @@ class SetupController extends AdminController
             DB::transaction(
                 function () {
                     $this->runThemeSeeder();
+
+                    // Mark setup as completed
+                    theme_setting()?->set('setup', true);
                 }
             );
 

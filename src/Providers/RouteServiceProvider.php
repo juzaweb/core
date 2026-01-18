@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -58,6 +59,7 @@ class RouteServiceProvider extends ServiceProvider
                 ...config('app.auth_middleware', []),
                 'verified',
                 \Juzaweb\Modules\Core\Http\Middleware\Admin::class,
+                \Juzaweb\Modules\Core\Http\Middleware\CheckSetup::class,
                 \Juzaweb\Modules\Core\Http\Middleware\ForceLocale::class,
             ]
         );
