@@ -440,16 +440,16 @@ if (! function_exists('upload_url')) {
 
         $path = ltrim($path, '/');
         // If it does not exist in storage, return cloud url
-        // if (config('media.cloud_upload_enabled') && !Storage::disk('public')->exists($path)) {
-        //     // if (in_array(
-        //     //     pathinfo($path, PATHINFO_EXTENSION),
-        //     //     config('media.extensions.image'))
-        //     // ) {
-        //     //     return proxy_image(Storage::disk('cloud')->url($path));
-        //     // }
+        if (config('media.cloud_upload_enabled') && !Storage::disk('public')->exists($path)) {
+            // if (in_array(
+            //     pathinfo($path, PATHINFO_EXTENSION),
+            //     config('media.extensions.image'))
+            // ) {
+            //     return proxy_image(Storage::disk('cloud')->url($path));
+            // }
 
-        //     return Storage::disk('cloud')->url($path);
-        // }
+            return Storage::disk('cloud')->url($path);
+        }
 
         return Storage::disk('public')->url($path);
     }

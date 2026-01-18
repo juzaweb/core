@@ -85,7 +85,7 @@
                 <i class="fa fa-download"></i> {{ __('core::translation.download') }}
             </a>
 
-            <a href="javascript:void(0)" class="btn btn-danger delete-file" data-id="{id}" data-is_file="{is_file}"
+            <a href="#" class="btn btn-danger delete-file" data-id="{id}" data-is_file="{is_file}"
                 data-name="{name}"><i class="fa fa-trash"></i> {{ __('core::translation.delete') }}</a>
         </div>
 
