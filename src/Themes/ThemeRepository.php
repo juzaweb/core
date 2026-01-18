@@ -145,7 +145,13 @@ class ThemeRepository implements ThemeContract
         foreach ($requiredModules as $moduleName) {
             $module = $moduleRepository->find($moduleName);
 
-            if ($module === null || $module->isEnabled()) {
+            if ($module === null) {
+                throw new \RuntimeException(
+                    "Required module '{$moduleName}' for theme '{$theme->name()}' not found."
+                );
+            }
+
+            if ($module->isEnabled()) {
                 // Already logged in register method
                 continue;
             }
