@@ -19,7 +19,7 @@ class CommentController extends AdminController
         Breadcrumb::add(__('core::translation.comments'));
 
         return $dataTable->forCommentableType($this->commentableType)->render(
-            'core::comment.index',
+            'core::admin.comment.index',
             []
         );
     }

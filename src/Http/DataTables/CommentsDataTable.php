@@ -10,7 +10,6 @@ use Juzaweb\Modules\Core\DataTables\Column;
 use Juzaweb\Modules\Core\DataTables\DataTable;
 use Juzaweb\Modules\Core\Models\Comment;
 use Yajra\DataTables\EloquentDataTable;
-use function Juzaweb\Modules\Admin\Http\DataTables\website;
 
 class CommentsDataTable extends DataTable
 {
