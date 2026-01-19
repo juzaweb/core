@@ -106,6 +106,10 @@ abstract class TestCase extends Orchestra
     {
         $connection = config('database.default');
 
+        if ($connection === 'testbench' && !extension_loaded('pdo_sqlite')) {
+            $this->markTestSkipped('PDO SQLite extension is missing.');
+        }
+
         $this->loadLaravelMigrations(['--database' => $connection]);
 
         // Load package migrations
