@@ -24,9 +24,11 @@ class MediaControllerTest extends TestCase
 
         $this->user = User::factory()->create([
             'is_super_admin' => 1,
+            'email_verified_at' => now(),
         ]);
 
         $this->actingAs($this->user);
+        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
     }
 
     public function testIndex()
@@ -39,7 +41,7 @@ class MediaControllerTest extends TestCase
 
     public function testAddFolder()
     {
-        $response = $this->post(route('admin.media.folders.store'), [
+        $response = $this->postJson(route('admin.media.folders.store'), [
             'name' => 'Test Folder',
             'folder_id' => null,
         ]);
@@ -58,20 +60,21 @@ class MediaControllerTest extends TestCase
 
         $file = UploadedFile::fake()->image('test_image.jpg');
 
-        $response = $this->post(route('media.upload', ['disk' => 'public']), [
+        $response = $this->postJson(route('media.upload', ['disk' => 'public']), [
             'upload' => $file,
             'working_dir' => null,
         ]);
 
         $response->assertStatus(200);
-        $response->assertJson(['status' => true]);
+
+        $this->assertEquals('"OK"', $response->getContent());
 
         // Check if file is stored
         // The path in storage is generated, so exact path checking might be tricky without knowing logic.
         // But we can check database.
 
         $this->assertDatabaseHas('media', [
-            'name' => 'test_image',
+            'name' => 'test_image.jpg',
             'mime_type' => 'image/jpeg',
             'type' => MediaType::FILE,
         ]);
@@ -87,7 +90,7 @@ class MediaControllerTest extends TestCase
             'extension' => 'txt',
         ]);
 
-        $response = $this->delete(route('admin.media.delete', [$media->id]));
+        $response = $this->deleteJson(route('admin.media.delete', [$media->id]));
 
         $response->assertStatus(200);
 

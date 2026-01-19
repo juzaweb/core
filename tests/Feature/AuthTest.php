@@ -38,7 +38,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'status' => true,
+                'success' => true,
             ]);
 
         $this->assertAuthenticated();
@@ -59,9 +59,9 @@ class AuthTest extends TestCase
             'password' => 'wrongpassword',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertStatus(422)
             ->assertJson([
-                'status' => false,
+                'success' => false,
             ]);
 
         $this->assertGuest();
@@ -107,7 +107,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'status' => true,
+                'success' => true,
             ]);
 
         $this->assertDatabaseHas('users', [
@@ -195,7 +195,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'status' => true,
+                'success' => true,
             ]);
     }
 
@@ -211,7 +211,7 @@ class AuthTest extends TestCase
         // Should still return success to prevent email scanning
         $response->assertStatus(200)
             ->assertJson([
-                'status' => true,
+                'success' => true,
             ]);
     }
 
@@ -234,7 +234,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'status' => true,
+                'success' => true,
             ]);
 
         // Verify password was changed
@@ -256,9 +256,9 @@ class AuthTest extends TestCase
             'password_confirmation' => 'newpassword123',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertStatus(422)
             ->assertJson([
-                'status' => false,
+                'success' => false,
             ]);
     }
 
@@ -278,7 +278,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'status' => true,
+                'success' => true,
             ]);
 
         $this->assertNotNull($user->fresh()->email_verified_at);
@@ -296,9 +296,9 @@ class AuthTest extends TestCase
 
         $response = $this->getJson("/user/verification/{$user->id}/invalid-hash");
 
-        $response->assertStatus(200)
+        $response->assertStatus(422)
             ->assertJson([
-                'status' => false,
+                'success' => false,
             ]);
 
         $this->assertNull($user->fresh()->email_verified_at);
