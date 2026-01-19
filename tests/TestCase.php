@@ -2,6 +2,8 @@
 
 namespace Juzaweb\Modules\Core\Tests;
 
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Juzaweb\Modules\Core\Providers\CoreServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -165,6 +167,17 @@ abstract class TestCase extends Orchestra
         $connection = config('database.default');
 
         $this->loadLaravelMigrations(['--database' => $connection]);
+
+        if (!Schema::hasTable('password_resets')) {
+            Schema::create(
+                'password_resets',
+                function (Blueprint $table) {
+                    $table->string('email')->index();
+                    $table->string('token');
+                    $table->timestamp('created_at')->nullable();
+                }
+            );
+        }
 
         // Load package migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
