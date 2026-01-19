@@ -166,17 +166,6 @@ abstract class TestCase extends Orchestra
 
         $this->loadLaravelMigrations(['--database' => $connection]);
 
-        if (!\Illuminate\Support\Facades\Schema::connection($connection)->hasTable('password_resets')) {
-            \Illuminate\Support\Facades\Schema::connection($connection)->create(
-                'password_resets',
-                function (\Illuminate\Database\Schema\Blueprint $table) {
-                    $table->string('email')->index();
-                    $table->string('token');
-                    $table->timestamp('created_at')->nullable();
-                }
-            );
-        }
-
         // Load package migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
