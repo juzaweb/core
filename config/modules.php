@@ -27,7 +27,7 @@ return [
 
     'stubs' => [
         'enabled' => true,
-        'path' => resource_path('stubs/modules/'),
+        'path' => __DIR__ . '/../stubs/modules/',
         'files' => [
             'routes/admin' => 'routes/admin.php',
             'routes/web' => 'routes/web.php',

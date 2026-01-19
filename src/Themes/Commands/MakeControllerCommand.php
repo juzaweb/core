@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -40,7 +41,7 @@ class MakeControllerCommand extends GenerateCommand
             $controllerName .= 'Controller';
         }
 
-        Stub::setBasePath(resource_path('stubs/'));
+        Stub::setBasePath(config('themes.stubs.path') . '/');
         $controllerPath = $theme->path("Http/Controllers/{$controllerName}.php");
 
         if (file_exists($controllerPath) && !$this->option('force')) {
@@ -54,7 +55,7 @@ class MakeControllerCommand extends GenerateCommand
 
         file_put_contents(
             $controllerPath,
-            $this->generateContents('themes/controllers/controller.stub', [
+            $this->generateContents('controllers/controller.stub', [
                 'NAMESPACE_SHORT' => Str::studly($themeName),
                 'CLASS' => $controllerName,
             ])

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -22,9 +23,9 @@ abstract class GenerateCommand extends Command
         $providerFile = $theme->path('Providers/StyleServiceProvider.php');
         if (!file_exists($providerFile)) {
             $content = $this->generateContents(
-                'themes/provider.stub',
+                'provider.stub',
                 [
-                    'NAMESPACE' => 'Juzaweb\\Themes\\'.Str::studly($theme->name()).'\\Providers',
+                    'NAMESPACE' => 'Juzaweb\\Themes\\' . Str::studly($theme->name()) . '\\Providers',
                     'CLASS' => 'StyleServiceProvider',
                 ]
             );
