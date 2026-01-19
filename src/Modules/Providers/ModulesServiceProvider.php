@@ -63,7 +63,7 @@ class ModulesServiceProvider extends ServiceProvider
      */
     protected function registerNamespaces()
     {
-        $stubsPath = dirname(__DIR__) . '/Commands/stubs';
+        $stubsPath = dirname(__DIR__, 2) . '/stubs';
 
         $this->publishes([
             $stubsPath => base_path('stubs/nwidart-stubs'),

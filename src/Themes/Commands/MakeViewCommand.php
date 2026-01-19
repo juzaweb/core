@@ -26,7 +26,7 @@ class MakeViewCommand extends GenerateCommand
             return self::FAILURE;
         }
 
-        Stub::setBasePath(resource_path('stubs/'));
+        Stub::setBasePath(config('themes.stubs.path') . '/');
         $viewPath = $theme->path("resources/views/$name.blade.php");
 
         if (file_exists($viewPath) && !$this->option('force')) {
@@ -40,7 +40,7 @@ class MakeViewCommand extends GenerateCommand
 
         file_put_contents(
             $viewPath,
-            $this->generateContents('themes/view.stub', [
+            $this->generateContents('view.stub', [
                 'THEME_NAME' => $theme->lowerName(),
             ])
         );

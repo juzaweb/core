@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -13,7 +14,7 @@ return [
     'path' => base_path('themes'),
 
     'stubs' => [
-        'path' => resource_path('stubs/themes'),
+        'path' => __DIR__ . '/../stubs/themes',
 
         'files' => [
             'index' => 'resources/views/index.blade.php',

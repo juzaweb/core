@@ -27,7 +27,7 @@ class MakeTemplateCommand extends GenerateCommand
             return self::FAILURE;
         }
 
-        Stub::setBasePath(resource_path('stubs/'));
+        Stub::setBasePath(config('themes.stubs.path') . '/');
         $templatePath = $theme->path("resources/views/templates/$name.blade.php");
 
         if (file_exists($templatePath) && !$this->option('force')) {
@@ -46,7 +46,7 @@ class MakeTemplateCommand extends GenerateCommand
 
         file_put_contents(
             $templatePath,
-            $this->generateContents('themes/template.stub', [
+            $this->generateContents('template.stub', [
                 'NAME' => $name,
                 'THEME_NAME' => $themeName,
             ])
@@ -57,7 +57,7 @@ class MakeTemplateCommand extends GenerateCommand
             '{$name}',
             function () {
                 return [
-                    'label' => __('".title_from_key($name)."'),
+                    'label' => __('" . title_from_key($name) . "'),
                     'view' => '{$theme->name()}::templates.{$name}',
                     'blocks' => [
                         'content' => __('core::translation.content'),

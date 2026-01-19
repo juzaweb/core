@@ -29,7 +29,7 @@ class MakePageBlockCommand extends Command
             return self::FAILURE;
         }
 
-        Stub::setBasePath(resource_path('stubs/'));
+        Stub::setBasePath(config('themes.stubs.path') . '/');
 
         $formPath = $theme->path("resources/views/components/blocks/{$name}/form.blade.php");
         $viewPath = $theme->path("resources/views/components/blocks/{$name}/view.blade.php");
@@ -47,14 +47,14 @@ class MakePageBlockCommand extends Command
 
         file_put_contents(
             $formPath,
-            $this->generateContents('themes/blocks/form.stub', ['NAME' => $name])
+            $this->generateContents('blocks/form.stub', ['NAME' => $name])
         );
 
         $this->info("Generated {$formPath}");
 
         file_put_contents(
             $viewPath,
-            $this->generateContents('themes/blocks/view.stub', ['NAME' => $name])
+            $this->generateContents('blocks/view.stub', ['NAME' => $name])
         );
 
         $this->info("Generated {$viewPath}");
@@ -62,9 +62,9 @@ class MakePageBlockCommand extends Command
         $providerFile = $theme->path('Providers/StyleServiceProvider.php');
         if (!file_exists($providerFile)) {
             $content = $this->generateContents(
-                'themes/provider.stub',
+                'provider.stub',
                 [
-                    'NAMESPACE' => 'Juzaweb\\Themes\\'.Str::studly($theme->name()).'\\Providers',
+                    'NAMESPACE' => 'Juzaweb\\Themes\\' . Str::studly($theme->name()) . '\\Providers',
                     'CLASS' => 'StyleServiceProvider',
                 ]
             );
@@ -77,7 +77,7 @@ class MakePageBlockCommand extends Command
             '{$name}',
             function () {
                 return [
-                    'label' => __('". title_from_key($name) ."'),
+                    'label' => __('" . title_from_key($name) . "'),
                     'form' => '{$themeName}::components.blocks.{$name}.form',
                     'view' => '{$themeName}::components.blocks.{$name}.view',
                 ];
