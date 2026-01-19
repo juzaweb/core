@@ -29,6 +29,11 @@ Route::post('verify/recaptcha', [AddonController::class, 'recaptcha'])
 Route::get('generator/thumbnail', [AddonController::class, 'thumbnail'])
     ->name('generate.thumbnail');
 
+Route::get('imgproxy/{method}/{hash}', [AddonController::class, 'proxy'])
+    ->name('imgproxy.handle')
+    ->where('method', '[a-z:0-9x]+')
+    ->where('hash', '[a-zA-Z0-9]+');
+
 Route::post('notification/{channel}/subscribe', [NotificationSubscribeController::class, 'subscribe'])
     ->name('notification.subscribe')
     ->middleware(['throttle:5,1']);
