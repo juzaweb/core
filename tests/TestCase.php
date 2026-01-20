@@ -24,13 +24,13 @@ abstract class TestCase extends Orchestra
         }
 
         // Load and alias UserFactory
-        $factoryPath = __DIR__ . '/Factories/UserFactory.php';
+        $factoryPath = __DIR__ . '/../database/factories/UserFactory.php';
         if (file_exists($factoryPath)) {
             require_once $factoryPath;
-            if (!class_exists('Juzaweb\Modules\Admin\Database\Factories\UserFactory')) {
+            if (!class_exists('Juzaweb\\Modules\\Admin\\Database\\Factories\\UserFactory')) {
                 class_alias(
-                    'Juzaweb\Modules\Core\Tests\Factories\UserFactory',
-                    'Juzaweb\Modules\Admin\Database\Factories\UserFactory'
+                    'Juzaweb\\Modules\\Core\\Database\\Factories\\UserFactory',
+                    'Juzaweb\\Modules\\Admin\\Database\\Factories\\UserFactory'
                 );
             }
         }
