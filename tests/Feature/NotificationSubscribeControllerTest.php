@@ -9,17 +9,7 @@ use Juzaweb\Modules\Core\Notifications\SubscriptionVerifyEmail;
 use Juzaweb\Modules\Core\Models\NotificationSubscription;
 use Juzaweb\Modules\Core\Translations\Models\Language;
 use Illuminate\Support\Facades\Notification;
-
-// Define a local Guest class to use as a substitute
-class LocalGuest extends \Juzaweb\Modules\Core\Models\Model {
-    use \Illuminate\Database\Eloquent\Concerns\HasUuids;
-
-    protected $table = 'guests';
-    protected $guarded = ['id', 'created_at', 'updated_at'];
-    protected $casts = [
-        'data' => 'array',
-    ];
-}
+use Juzaweb\Modules\Core\Models\Guest;
 
 class TestRouteServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -39,9 +29,9 @@ class NotificationSubscribeControllerTest extends TestCase
 
         Language::updateOrCreate(['code' => 'en'], ['name' => 'English', 'default' => true]);
 
-        // Alias LocalGuest to the expected class if it doesn't exist
+        // Alias Guest model to the expected class if it doesn't exist
         if (!class_exists('Juzaweb\Modules\Admin\Models\Guest')) {
-            class_alias(LocalGuest::class, 'Juzaweb\Modules\Admin\Models\Guest');
+            class_alias(Guest::class, 'Juzaweb\Modules\Admin\Models\Guest');
         }
 
         // Update mix-manifest.json to satisfy view requirements
@@ -180,9 +170,9 @@ class NotificationSubscribeControllerTest extends TestCase
         // If middleware is not working, controller manual check returns 401.
         // We accept 403 as the primary expectation.
         if ($response->status() === 401) {
-             $response->assertStatus(401);
+            $response->assertStatus(401);
         } else {
-             $response->assertStatus(403);
+            $response->assertStatus(403);
         }
     }
 }
