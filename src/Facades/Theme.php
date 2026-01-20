@@ -13,10 +13,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Juzaweb\Modules\Core\Themes\Theme current()
+ * @method static \Juzaweb\Modules\Core\Themes\Theme|null current()
  * @method static \Juzaweb\Modules\Core\Themes\Theme|null find(string $name)
  * @method static Collection<\Juzaweb\Modules\Core\Themes\Theme> all()
- * @method static \Juzaweb\Modules\Core\Themes\Theme findOrFail(string $name): Theme
+ * @method static \Juzaweb\Modules\Core\Themes\Theme findOrFail(string $name)
+ * @method static bool has(string $name)
+ * @method static bool activate(string $theme)
+ * @method static void init()
  * @see \Juzaweb\Modules\Core\Themes\ThemeRepository
  */
 class Theme extends Facade

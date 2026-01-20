@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static void defaults(callable $callback)
+ * @method static array getDefaults()
+ * @see \Juzaweb\Modules\Core\Support\ThumbnailRepository
  */
 class Thumbnail extends Facade
 {

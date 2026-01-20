@@ -5,7 +5,6 @@
  * @package    juzaweb/cms
  * @author     The Anh Dang
  * @link       https://cms.juzaweb.com
- * @license    GNU V2
  */
 
 namespace Juzaweb\Modules\Core\Facades;
@@ -14,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
 use Juzaweb\Modules\Core\Contracts\Locale as LocaleContract;
 
 /**
- * @method static string setLocale()
+ * @method static string|null setLocale(string|null $locale = null)
  * @see \Juzaweb\Modules\Core\Support\LocaleRepository
  */
 class Locale extends Facade

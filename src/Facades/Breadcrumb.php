@@ -10,14 +10,14 @@
 namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Juzaweb\Modules\Core\Support\BreadcrumbFactory;
 
 /**
- * @method static void add(string $label, ?string $url = null)
+ * @method static void add(string $title, string $url = null)
  * @method static void items(array $items)
  * @method static void addItems(array $items)
  * @method static array getItems()
- * @see BreadcrumbFactory
+ * @method static array toArray()
+ * @see \Juzaweb\Modules\Core\Support\BreadcrumbFactory
  */
 class Breadcrumb extends Facade
 {
