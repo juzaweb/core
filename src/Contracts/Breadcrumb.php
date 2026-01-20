@@ -18,4 +18,6 @@ interface Breadcrumb
     public function addItems(array $items): void;
 
     public function getItems(): array;
+
+    public function toArray(): array;
 }

@@ -12,5 +12,5 @@ namespace Juzaweb\Modules\Core\Contracts;
 
 interface Locale
 {
-
+    public function setLocale($locale = null): ?string;
 }
