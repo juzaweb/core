@@ -37,6 +37,12 @@ interface Setting
      */
     public function get(string $key, mixed $default = null): mixed;
 
+    public function boolean(string $key, mixed $default = null);
+
+    public function integer(string $key, mixed $default = null): ?int;
+
+    public function float(string $key, mixed $default = null): ?float;
+
     /**
      * Sets a configuration value for the application.
      *
@@ -45,6 +51,8 @@ interface Setting
      * @return SettingModel The updated or created ConfigModel instance.
      */
     public function set(string $key, mixed $value = null): SettingModel;
+
+    public function sets(array $keys): Collection;
 
     /**
      * Retrieves the configuration values for the given keys and returns them in an array.

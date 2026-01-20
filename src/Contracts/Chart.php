@@ -14,6 +14,10 @@ interface Chart
 {
     public function chart(string $key, string $class): void;
 
+    public function get(string $key): ?string;
+
+    public function make(string $key);
+
     /**
      * Get all dashboard charts.
      *

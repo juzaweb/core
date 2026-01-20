@@ -12,5 +12,7 @@ namespace Juzaweb\Modules\Core\Contracts;
 
 interface Thumbnail
 {
+    public function defaults(\Closure $callback): void;
 
+    public function getDefaults(): array;
 }
