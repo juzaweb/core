@@ -12,6 +12,12 @@ namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @method static void make(string $key, callable $callback)
+ * @method static \Juzaweb\Modules\Core\Support\Entities\PageTemplate|null get(string $key)
+ * @method static \Illuminate\Support\Collection all()
+ * @see \Juzaweb\Modules\Core\Support\PageTemplateRepository
+ */
 class PageTemplate extends Facade
 {
     protected static function getFacadeAccessor(): string

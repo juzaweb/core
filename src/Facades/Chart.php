@@ -11,23 +11,18 @@
 namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Juzaweb\Modules\Core\Contracts\Chart as ChartContract;
 
 /**
- * @method static void chart(string $name, string $chart)
- * @method static array<string, string> charts()
- * @method static ?string get(string $name)
- * @method static mixed make(string $name)
+ * @method static void chart(string $key, string $class)
+ * @method static string|null get(string $key)
+ * @method static mixed make(string $key)
+ * @method static array charts()
+ * @see \Juzaweb\Modules\Core\Support\ChartRepository
  */
 class Chart extends Facade
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string
-     */
     protected static function getFacadeAccessor(): string
     {
-        return ChartContract::class;
+        return \Juzaweb\Modules\Core\Contracts\Chart::class;
     }
 }

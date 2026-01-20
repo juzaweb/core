@@ -4,7 +4,7 @@
  *
  * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://cms.juzaweb.com/cms
+ * @link       https://cms.juzaweb.com
  * @license    GNU V2
  */
 
@@ -12,13 +12,13 @@ namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
-use Juzaweb\Modules\Core\Contracts\GlobalData as GlobalDataContract;
 
 /**
- * @method static void set($key, $value)
- * @method static void push($key, $value)
+ * @method static void set(string $key, array $value)
+ * @method static void push(string $key, mixed $value)
  * @method static mixed get(string $key, array $default = [])
  * @method static Collection collect(string $key, array $default = [])
+ * @method static Collection all()
  * @see \Juzaweb\Modules\Core\Support\GlobalDataRepository
  */
 class GlobalData extends Facade
@@ -30,6 +30,6 @@ class GlobalData extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return GlobalDataContract::class;
+        return \Juzaweb\Modules\Core\Contracts\GlobalData::class;
     }
 }

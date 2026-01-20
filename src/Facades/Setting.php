@@ -9,18 +9,23 @@
 
 namespace Juzaweb\Modules\Core\Facades;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 use Juzaweb\Modules\Core\Contracts\Setting as SettingContract;
 
 /**
- * @method static \Juzaweb\Modules\Core\Support\Entities\Setting make(string $key)
  * @method static mixed get(string $key, mixed $default = null)
- * @method static void set(string $key, mixed $value)
- * @method static void sets(array $settings)
+ * @method static \Juzaweb\Modules\Core\Models\Setting set(string $key, mixed $value)
+ * @method static Collection sets(array $settings)
+ * @method static array gets(array $keys, mixed $default = null)
  * @method static bool|null boolean(string $key, mixed $default = null)
  * @method static int|null integer(string $key, mixed $default = null)
- * @method static \Illuminate\Support\Collection settings()
- * @see \Juzaweb\Modules\Core\Support\Entities\Setting
+ * @method static float|null float(string $key, mixed $default = null)
+ * @method static Collection all()
+ * @method static Collection keys(?array $keys = null)
+ * @method static Collection settings(?string $key = null)
+ * @method static Collection configs()
+ * @see \Juzaweb\Modules\Core\Support\SettingRepository
  */
 class Setting extends Facade
 {

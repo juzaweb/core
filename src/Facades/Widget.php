@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void make(string $key, callable $callback)
  * @method static null|\Juzaweb\Modules\Core\Support\Entities\Widget get(string $key)
  * @method static \Illuminate\Support\Collection all()
- * @see \Juzaweb\Modules\Core\Support\SidebarRepository
+ * @see \Juzaweb\Modules\Core\Support\WidgetRepository
  */
 class Widget extends Facade
 {
