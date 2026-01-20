@@ -35,6 +35,18 @@ abstract class TestCase extends Orchestra
             }
         }
 
+        // Load and alias UserStatus enum
+        $enumPath = __DIR__ . '/Enums/UserStatus.php';
+        if (file_exists($enumPath)) {
+            require_once $enumPath;
+            if (!enum_exists('Juzaweb\\Modules\\Admin\\Enums\\UserStatus')) {
+                class_alias(
+                    'Juzaweb\\Modules\\Core\\Tests\\Enums\\UserStatus',
+                    'Juzaweb\\Modules\\Admin\\Enums\\UserStatus'
+                );
+            }
+        }
+
         $this->app[\Juzaweb\Modules\Core\Contracts\ThemeSetting::class]->set('setup', 1);
     }
 
