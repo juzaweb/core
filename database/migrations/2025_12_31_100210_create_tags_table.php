@@ -37,6 +37,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('taggable');
         Schema::dropIfExists('tags');
     }
 };

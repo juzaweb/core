@@ -24,6 +24,8 @@ class Theme implements Arrayable
 
     protected ConfigContract $config;
 
+    protected array $json = [];
+
     public function __construct(
         protected Application $app,
         protected ThemeContract $themeRepository,
@@ -128,7 +130,11 @@ class Theme implements Arrayable
             $file = 'theme.json';
         }
 
-        return collect(json_decode(File::get($this->path($file)), true, 512, JSON_THROW_ON_ERROR));
+        if (isset($this->json[$file])) {
+            return $this->json[$file];
+        }
+
+        return $this->json[$file] = collect(json_decode(File::get($this->path($file)), true, 512, JSON_THROW_ON_ERROR));
     }
 
     public function toArray(): array

@@ -10,6 +10,8 @@
 
 return [
 
+    'enable' => env('TRANSLATOR_ENABLE', false),
+
     /**
      * Driver default to use for translation services.
      */

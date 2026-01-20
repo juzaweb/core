@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -20,6 +21,7 @@ use Juzaweb\Modules\Admin\Models\Guest;
 use Juzaweb\Modules\Admin\Networks\Facades\Network;
 use Juzaweb\Modules\Core\Contracts\Viewable;
 use Juzaweb\Modules\Core\Http\Controllers\Controller;
+use Juzaweb\Modules\Core\Services\ImgProxyService;
 
 class AddonController extends Controller
 {
@@ -200,5 +202,47 @@ class AddonController extends Controller
             'pdf'         => 'application/pdf',
             default       => 'application/octet-stream',
         };
+    }
+
+    /**
+     * Handle image proxy request
+     */
+    public function proxy(string $methodParam, string $hash, Request $request, ImgProxyService $imgProxyService)
+    {
+        try {
+            // Parse method and dimensions from methodParam (e.g., "resize:800x600")
+            $method = $methodParam;
+            $width = null;
+            $height = null;
+
+            if (str_contains($methodParam, ':')) {
+                [$method, $size] = explode(':', $methodParam, 2);
+                [$width, $height] = array_pad(explode('x', $size), 2, null);
+                $width = $width === 'auto' ? null : (int)$width;
+                $height = $height === 'auto' ? null : (int)$height;
+            }
+
+            // Handle image via service
+            $result = $imgProxyService->handle($method, $hash, $width, $height);
+
+            // Clear any output buffers
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+
+            // Return response with proper headers
+            return response($result['data'])
+                ->header('Content-Type', $result['contentType'])
+                ->header('Content-Length', $result['contentLength'])
+                ->header('X-Content-Type-Options', 'nosniff')
+                ->header('X-Accel-Buffering', 'no')
+                ->header('Cache-Control', 'public, max-age=31536000');
+        } catch (\InvalidArgumentException $e) {
+            return response('Error: ' . $e->getMessage(), 400)
+                ->header('Content-Type', 'text/plain');
+        } catch (\Throwable $e) {
+            return response('Error: ' . $e->getMessage(), 500)
+                ->header('Content-Type', 'text/plain');
+        }
     }
 }

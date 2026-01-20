@@ -9,7 +9,11 @@ abstract class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
+        $this->createDummyTheme();
+
         parent::setUp();
+
+        $this->createMixManifest();
 
         // Create class aliases for backward compatibility
         if (!class_exists('Juzaweb\Modules\Admin\Models\User')) {
@@ -20,18 +24,58 @@ abstract class TestCase extends Orchestra
         }
 
         // Load and alias UserFactory
-        $factoryPath = __DIR__ . '/Factories/UserFactory.php';
+        $factoryPath = __DIR__ . '/../database/factories/UserFactory.php';
         if (file_exists($factoryPath)) {
             require_once $factoryPath;
-            if (!class_exists('Juzaweb\Modules\Admin\Database\Factories\UserFactory')) {
+            if (!class_exists('Juzaweb\\Modules\\Admin\\Database\\Factories\\UserFactory')) {
                 class_alias(
-                    'Juzaweb\Modules\Core\Tests\Factories\UserFactory',
-                    'Juzaweb\Modules\Admin\Database\Factories\UserFactory'
+                    'Juzaweb\\Modules\\Core\\Database\\Factories\\UserFactory',
+                    'Juzaweb\\Modules\\Admin\\Database\\Factories\\UserFactory'
                 );
             }
         }
+
+        // Load and alias UserStatus enum
+        $enumPath = __DIR__ . '/Enums/UserStatus.php';
+        if (file_exists($enumPath)) {
+            require_once $enumPath;
+            if (!enum_exists('Juzaweb\\Modules\\Admin\\Enums\\UserStatus')) {
+                class_alias(
+                    'Juzaweb\\Modules\\Core\\Tests\\Enums\\UserStatus',
+                    'Juzaweb\\Modules\\Admin\\Enums\\UserStatus'
+                );
+            }
+        }
+
+        $this->app[\Juzaweb\Modules\Core\Contracts\ThemeSetting::class]->set('setup', 1);
     }
 
+    protected function createMixManifest(): void
+    {
+        $path = public_path('juzaweb');
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+        if (!file_exists($path . '/mix-manifest.json')) {
+            file_put_contents($path . '/mix-manifest.json', '{}');
+        }
+    }
+
+    protected function createDummyTheme(): void
+    {
+        $path = __DIR__ . '/themes/itech';
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+        if (!file_exists($path . '/theme.json')) {
+            file_put_contents($path . '/theme.json', json_encode([
+                "name" => "itech",
+                "title" => "Itech Theme",
+                "version" => "1.0",
+                "require" => []
+            ]));
+        }
+    }
 
     /**
      * Get package providers.
@@ -45,6 +89,32 @@ abstract class TestCase extends Orchestra
             CoreServiceProvider::class,
             \Juzaweb\QueryCache\QueryCacheServiceProvider::class,
             \Spatie\Activitylog\ActivitylogServiceProvider::class,
+            \Juzaweb\Hooks\HooksServiceProvider::class,
+            \Juzaweb\Modules\Core\Translations\TranslationsServiceProvider::class,
+            \Juzaweb\Modules\Core\Permissions\PermissionServiceProvider::class,
+            \Pion\Laravel\ChunkUpload\Providers\ChunkUploadServiceProvider::class,
+            \Yajra\DataTables\DataTablesServiceProvider::class,
+        ];
+    }
+
+    /**
+     * Get package aliases.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return array
+     */
+    protected function getPackageAliases($app): array
+    {
+        return [
+            'Field' => \Juzaweb\Modules\Core\Facades\Field::class,
+            'Module' => \Juzaweb\Modules\Core\Facades\Module::class,
+            'Theme' => \Juzaweb\Modules\Core\Facades\Theme::class,
+            'Widget' => \Juzaweb\Modules\Core\Facades\Widget::class,
+            'Sidebar' => \Juzaweb\Modules\Core\Facades\Sidebar::class,
+            'PageTemplate' => \Juzaweb\Modules\Core\Facades\PageTemplate::class,
+            'PageBlock' => \Juzaweb\Modules\Core\Facades\PageBlock::class,
+            'Chart' => \Juzaweb\Modules\Core\Facades\Chart::class,
+            'DataTables' => \Yajra\DataTables\Facades\DataTables::class,
         ];
     }
 
@@ -56,6 +126,8 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app): void
     {
+        $app['config']->set('themes.path', __DIR__ . '/themes');
+
         // Use MySQL if DB_CONNECTION is set (e.g., in CI), otherwise use SQLite
         $connection = env('DB_CONNECTION', 'sqlite');
 

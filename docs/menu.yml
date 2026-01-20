@@ -3,6 +3,8 @@ main:
     children:
       - title: Introduction
         url: /
+      - title: Google Analytics Setup
+        url: /google-analytics-setup
   - title: Modules
     url: /modules
     children:
