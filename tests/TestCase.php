@@ -93,6 +93,7 @@ abstract class TestCase extends Orchestra
             \Juzaweb\Modules\Core\Translations\TranslationsServiceProvider::class,
             \Juzaweb\Modules\Core\Permissions\PermissionServiceProvider::class,
             \Pion\Laravel\ChunkUpload\Providers\ChunkUploadServiceProvider::class,
+            \Yajra\DataTables\DataTablesServiceProvider::class,
         ];
     }
 
@@ -113,6 +114,7 @@ abstract class TestCase extends Orchestra
             'PageTemplate' => \Juzaweb\Modules\Core\Facades\PageTemplate::class,
             'PageBlock' => \Juzaweb\Modules\Core\Facades\PageBlock::class,
             'Chart' => \Juzaweb\Modules\Core\Facades\Chart::class,
+            'DataTables' => \Yajra\DataTables\Facades\DataTables::class,
         ];
     }
 
