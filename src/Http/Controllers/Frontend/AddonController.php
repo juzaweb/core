@@ -249,4 +249,105 @@ class AddonController extends Controller
                 ->header('Content-Type', 'text/plain');
         }
     }
+
+    /**
+     * Proxy files from storage_path('app/public')
+     */
+    public function storageProxy(Request $request, string $path)
+    {
+        $filePath = storage_path('app/public/' . $path);
+
+        if (!file_exists($filePath) || !is_file($filePath)) {
+            abort(404);
+        }
+
+        $size = filesize($filePath);
+        $lastModified = filemtime($filePath);
+
+        // Get MIME type
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        $mimeType = $this->getMimeType($extension);
+
+        $etag = md5($path . $lastModified);
+
+        // Handle cache
+        if ($request->header('If-None-Match') === $etag) {
+            return response('', 304);
+        }
+
+        // Handle range requests
+        $start = 0;
+        $end = $size - 1;
+        $statusCode = 200;
+
+        if ($rangeHeader = $request->header('Range')) {
+            if (preg_match('/bytes=(\d+)-(\d*)/', $rangeHeader, $matches)) {
+                $start = (int) $matches[1];
+                if (!empty($matches[2])) {
+                    $end = (int) $matches[2];
+                }
+
+                $end = min($end, $size - 1);
+                if ($start <= $end) {
+                    $statusCode = 206;
+                } else {
+                    return response('', 416, ['Content-Range' => "bytes */{$size}"]);
+                }
+            }
+        }
+
+        $contentLength = $end - $start + 1;
+
+        $headers = [
+            'Content-Type' => $mimeType,
+            'Content-Length' => $contentLength,
+            'Accept-Ranges' => 'bytes',
+            'Cache-Control' => 'public, max-age=31536000',
+            'ETag' => $etag,
+            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified) . ' GMT',
+        ];
+
+        if ($statusCode === 206) {
+            $headers['Content-Range'] = "bytes {$start}-{$end}/{$size}";
+        }
+
+        return response()->stream(
+            function () use ($filePath, $start, $contentLength) {
+                // Clear output buffers
+                while (ob_get_level() > 0) {
+                    ob_end_clean();
+                }
+
+                $stream = fopen($filePath, 'rb');
+                if (!is_resource($stream)) {
+                    return;
+                }
+
+                if ($start > 0) {
+                    fseek($stream, $start);
+                }
+
+                $bufferSize = 8192; // 8KB chunks
+                $remaining = $contentLength;
+
+                while (!feof($stream) && $remaining > 0) {
+                    $toRead = min($bufferSize, $remaining);
+                    $chunk = fread($stream, $toRead);
+
+                    if ($chunk === false) {
+                        break;
+                    }
+
+                    echo $chunk;
+                    $remaining -= strlen($chunk);
+
+                    flush();
+                }
+
+                fclose($stream);
+            },
+            $statusCode,
+            $headers
+        );
+    }
 }

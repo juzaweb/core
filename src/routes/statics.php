@@ -21,3 +21,7 @@ if (config('filesystems.disks.cloud.url')) {
         }
     );
 }
+
+Route::get('storage/{path}', [AddonController::class, 'storageProxy'])
+    ->name('storage.proxy')
+    ->where('path', '.*');
