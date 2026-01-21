@@ -1,5 +1,4 @@
 <?php
-
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -22,15 +21,3 @@ if (config('filesystems.disks.cloud.url')) {
         }
     );
 }
-
-Route::get('storage/{path}', [AddonController::class, 'storageProxy'])
-    ->name('storage.proxy')
-    ->where('path', '.*');
-
-Route::get('themes/{path}', [AddonController::class, 'themesProxy'])
-    ->name('themes.proxy')
-    ->where('path', '.*');
-
-Route::get('modules/{path}', [AddonController::class, 'modulesProxy'])
-    ->name('modules.proxy')
-    ->where('path', '.*');

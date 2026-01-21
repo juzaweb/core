@@ -14,6 +14,8 @@ class HasAPITest extends TestCase
     {
         parent::setUp();
 
+        Schema::dropIfExists('test_models');
+
         Schema::create('test_models', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
