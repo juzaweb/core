@@ -30,8 +30,12 @@ class AddonController extends Controller
         $key = "site:users_online";
         $ip = client_ip();
 
-        Redis::zadd($key, [$ip => time()]);
-        Redis::zremrangebyscore($key, 0, time() - 300);
+        try {
+            Redis::zadd($key, [$ip => time()]);
+            Redis::zremrangebyscore($key, 0, time() - 300);
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         if ($viewPage = $request->input('view-page')) {
             [$class, $id] = decrypt(base64url_decode($viewPage));
