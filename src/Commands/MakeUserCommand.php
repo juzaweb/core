@@ -23,7 +23,7 @@ class MakeUserCommand extends Command
 
     protected array $user;
 
-    public function handle(): void
+    public function handle(): int
     {
         $this->user['name'] = $this->option('name') ?? $this->ask('Full Name?');
         $this->user['email'] = $this->option('email') ?? $this->ask('Email?');
@@ -45,8 +45,8 @@ class MakeUserCommand extends Command
         );
 
         if ($validator->fails()) {
-            $this->error($validator->errors()->messages()[0]);
-            exit(1);
+            $this->error($validator->errors()->all()[0]);
+            return self::FAILURE;
         }
 
         $user = DB::transaction(
@@ -68,6 +68,8 @@ class MakeUserCommand extends Command
         );
 
         $this->info("User created successfully user {$user->name}");
+
+        return self::SUCCESS;
     }
 
     protected function getOptions(): array
