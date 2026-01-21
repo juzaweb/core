@@ -23,6 +23,8 @@ class SettingRepository implements SettingContract
 {
     protected ?string $locale = null;
 
+    protected ?Collection $configs = null;
+
     public function __construct(
         protected CacheManager $cache,
         protected GlobalData $globalData
@@ -96,6 +98,7 @@ class SettingRepository implements SettingContract
         );
 
         SettingModel::flushQueryCache();
+        $this->configs = null;
 
         return $model;
     }
@@ -144,11 +147,15 @@ class SettingRepository implements SettingContract
 
     public function configs(): Collection
     {
+        if ($this->configs !== null) {
+            return $this->configs;
+        }
+
         if (File::missing(storage_path('app/installed'))) {
             return new Collection();
         }
 
-        return SettingModel::with(['translations' => fn ($q) => $q->cacheFor(3600)])
+        $this->configs = SettingModel::with(['translations' => fn ($q) => $q->cacheFor(3600)])
             ->cacheFor(3600)
             ->get()
             ->mapWithKeys(
@@ -163,5 +170,7 @@ class SettingRepository implements SettingContract
                     ];
                 }
             );
+
+        return $this->configs;
     }
 }
