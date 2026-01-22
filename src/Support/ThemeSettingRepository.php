@@ -21,6 +21,8 @@ use Juzaweb\Modules\Core\Support\Entities\ThemeSetting;
 
 class ThemeSettingRepository implements SettingContract
 {
+    protected ?Collection $configs = null;
+
     public function __construct(
         protected CacheManager $cache,
         protected GlobalData $globalData,
@@ -95,6 +97,7 @@ class ThemeSettingRepository implements SettingContract
             });
 
         SettingModel::flushQueryCache();
+        $this->configs = null;
 
         return $model;
     }
@@ -143,9 +146,15 @@ class ThemeSettingRepository implements SettingContract
 
     public function configs(): Collection
     {
-        return SettingModel::cacheFor(3600)
+        if ($this->configs !== null) {
+            return $this->configs;
+        }
+
+        $this->configs = SettingModel::cacheFor(3600)
             ->where('theme', $this->theme->current()->name())
             ->get(['code', 'value'])
             ->pluck('value', 'code');
+
+        return $this->configs;
     }
 }
