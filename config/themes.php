@@ -14,7 +14,7 @@ return [
     'path' => base_path('themes'),
 
     'stubs' => [
-        'path' => __DIR__ . '/../stubs/themes',
+        'path' => base_path('vendor/juzaweb/core/stubs/themes'),
 
         'files' => [
             'index' => 'resources/views/index.blade.php',
