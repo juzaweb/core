@@ -266,7 +266,7 @@ class AuthController extends AdminController
     {
         $theme = Theme::current();
 
-        if (View::exists($theme->name() . '::auth.'. $name)) {
+        if ($theme && View::exists($theme->name() . '::auth.'. $name)) {
             return $theme->name() . '::auth.'. $name;
         }
 

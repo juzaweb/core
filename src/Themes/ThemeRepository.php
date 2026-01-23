@@ -100,6 +100,7 @@ class ThemeRepository implements ThemeContract
         $theme = $this->activator->getActiveName();
 
         if ($theme === null) {
+            /** @var Theme */
             return $this->all()->first();
         }
 
