@@ -80,26 +80,55 @@ class SitemapController extends Controller
                     // Calculate number of pages needed
                     $totalPages = (int) ceil($totalItems / self::ITEMS_PER_PAGE);
 
-                    // Add sub-sitemap URL for each page
-                    for ($page = 1; $page <= $totalPages; $page++) {
-                        $latest = $modelClass::forSitemap()
-                            ->skip(($page - 1) * self::ITEMS_PER_PAGE)
-                            ->take(self::ITEMS_PER_PAGE)
-                            ->latest('updated_at')
-                            ->first(['updated_at']);
+                    $model = new $modelClass;
+                    $qualifiedUpdatedAtColumn = $model->getQualifiedUpdatedAtColumn();
+                    $updatedAtColumn = $model->getUpdatedAtColumn();
 
-                        $url = SitemapTag::create(
-                            route('sitemap.provider', [
-                                'provider' => $key,
-                                'page' => $page,
-                            ])
-                        );
+                    // Batch process to reduce queries
+                    // Fetch updated_at for multiple pages at once
+                    // We use a safe batch size (5000) which works well for ITEMS_PER_PAGE=500
+                    $batchSize = 5000;
+                    $totalBatches = (int) ceil($totalItems / $batchSize);
 
-                        if ($latest && isset($latest->updated_at)) {
-                            $url->setLastModificationDate($latest->updated_at);
+                    for ($batch = 0; $batch < $totalBatches; $batch++) {
+                        $offset = $batch * $batchSize;
+
+                        $query = $modelClass::forSitemap();
+                        // Clear existing selects to avoid fetching all columns (e.g. content)
+                        // This is critical for memory usage as we only need the timestamp
+                        $query->getQuery()->columns = null;
+
+                        // Fetch only necessary timestamps for this batch
+                        // We use the same ordering as sitemap generation
+                        $items = $query
+                            ->select($qualifiedUpdatedAtColumn)
+                            ->latest($qualifiedUpdatedAtColumn)
+                            ->skip($offset)
+                            ->take($batchSize)
+                            ->get();
+
+                        // Iterate through the batch to find page boundaries
+                        for ($i = 0; $i < $items->count(); $i++) {
+                            // Check if this item is the start of a new page
+                            // Since items are ordered DESC, the first item of a page block is the "latest"
+                            if (($offset + $i) % self::ITEMS_PER_PAGE === 0) {
+                                $page = ($offset + $i) / self::ITEMS_PER_PAGE + 1;
+                                $latest = $items[$i];
+
+                                $url = SitemapTag::create(
+                                    route('sitemap.provider', [
+                                        'provider' => $key,
+                                        'page' => $page,
+                                    ])
+                                );
+
+                                if ($latest && isset($latest->{$updatedAtColumn})) {
+                                    $url->setLastModificationDate($latest->{$updatedAtColumn});
+                                }
+
+                                $sitemapIndex->add($url);
+                            }
                         }
-
-                        $sitemapIndex->add($url);
                     }
                 } catch (\Exception $e) {
                     // Skip this provider if there's an error (e.g., table doesn't exist)
