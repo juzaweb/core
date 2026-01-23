@@ -83,12 +83,18 @@ class ThemeSettingRepository implements SettingContract
      */
     public function set(string $key, mixed $value = null): SettingModel
     {
+        $theme = $this->theme->current();
+
+        if (! $theme) {
+            return new SettingModel(['code' => $key, 'value' => $value]);
+        }
+
         $model = Model::withoutEvents(
-            function () use ($key, $value) {
+            function () use ($key, $value, $theme) {
                 return SettingModel::updateOrCreate(
                     [
                         'code' => $key,
-                        'theme' => $this->theme->current()->name(),
+                        'theme' => $theme->name(),
                     ],
                     [
                         'value' => $value,
@@ -150,8 +156,14 @@ class ThemeSettingRepository implements SettingContract
             return $this->configs;
         }
 
+        $theme = $this->theme->current();
+
+        if (! $theme) {
+            return ($this->configs = new Collection());
+        }
+
         $this->configs = SettingModel::cacheFor(3600)
-            ->where('theme', $this->theme->current()->name())
+            ->where('theme', $theme->name())
             ->get(['code', 'value'])
             ->pluck('value', 'code');
 

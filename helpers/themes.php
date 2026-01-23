@@ -71,7 +71,7 @@ if (!function_exists('active_theme')) {
      */
     function active_theme(): ?string
     {
-        return Theme::current()->name();
+        return Theme::current()?->name();
     }
 }
 
