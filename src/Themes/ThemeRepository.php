@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -18,6 +19,7 @@ use Illuminate\View\ViewFinderInterface;
 use Juzaweb\Modules\Core\Contracts\Setting;
 use Juzaweb\Modules\Core\Contracts\Theme as ThemeContract;
 use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface as ModuleRepositoryInterface;
+use Juzaweb\Modules\Core\Themes\Contracts\ThemeActivatorInterface;
 use Juzaweb\Modules\Core\Themes\Exceptions\ThemeNotFoundException;
 use Juzaweb\Modules\Core\Translations\Contracts\Translation;
 
@@ -35,6 +37,8 @@ class ThemeRepository implements ThemeContract
 
     protected ConfigContract $config;
 
+    protected ThemeActivatorInterface $activator;
+
     public function __construct(
         protected ApplicationContract $app,
         protected string $path
@@ -43,6 +47,7 @@ class ThemeRepository implements ThemeContract
         $this->viewFinder = $app['view']->getFinder();
         $this->translator = $app['translator'];
         $this->config = $this->app['config'];
+        $this->activator = $app[ThemeActivatorInterface::class];
     }
 
     /**
@@ -92,7 +97,11 @@ class ThemeRepository implements ThemeContract
         //     return $this->currentTheme;
         // }
 
-        $theme = $this->setting->get('theme', 'itech');
+        $theme = $this->activator->getActiveName();
+
+        if ($theme === null) {
+            return $this->all()->first();
+        }
 
         // return ($this->currentTheme = $currentTheme);
         return $this->find($theme);
@@ -122,7 +131,7 @@ class ThemeRepository implements ThemeContract
         }
 
         foreach ($theme->get('files', []) as $file) {
-            require ($theme->path($file));
+            require($theme->path($file));
         }
     }
 
