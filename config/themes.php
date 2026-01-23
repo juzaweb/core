@@ -43,4 +43,22 @@ return [
             'Providers' => 'Providers',
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Theme Activator
+    |--------------------------------------------------------------------------
+    |
+    | You can define the activator for themes here.
+    | The setting activator will store the active theme in settings table.
+    |
+    */
+    'activators' => [
+        'setting' => [
+            'class' => \Juzaweb\Modules\Core\Themes\Activators\SettingActivator::class,
+            'key' => 'theme',
+        ],
+    ],
+
+    'activator' => 'setting',
 ];
