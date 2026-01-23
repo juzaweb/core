@@ -58,7 +58,14 @@ class ThemeServiceProvider extends ServiceProvider
         $this->app->singleton(
             ThemeActivatorInterface::class,
             function ($app) {
-                return new SettingActivator($app);
+                $activator = $app['config']->get('themes.activator');
+                $class = $app['config']->get('themes.activators.' . $activator)['class'];
+
+                if ($class === null) {
+                    throw new \InvalidArgumentException('Theme activator class not configured');
+                }
+
+                return new $class($app);
             }
         );
 

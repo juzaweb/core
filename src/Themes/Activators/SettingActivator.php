@@ -26,7 +26,7 @@ class SettingActivator implements ThemeActivatorInterface
     public function __construct(Container $app)
     {
         $this->setting = $app[Setting::class];
-        $this->settingKey = $app['config']->get('themes.activator-key', 'theme');
+        $this->settingKey = $app['config']->get('themes.activators.setting.key', 'theme');
     }
 
     /**
