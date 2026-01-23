@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -17,12 +18,15 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Juzaweb\Modules\Core\Contracts\Setting;
 use Juzaweb\Modules\Core\Contracts\Theme as ThemeContract;
+use Juzaweb\Modules\Core\Themes\Contracts\ThemeActivatorInterface;
 
 class Theme implements Arrayable
 {
     protected Setting $setting;
 
     protected ConfigContract $config;
+
+    protected ThemeActivatorInterface $activator;
 
     protected array $json = [];
 
@@ -33,6 +37,7 @@ class Theme implements Arrayable
     ) {
         $this->setting = $app[Setting::class];
         $this->config = $this->app['config'];
+        $this->activator = $app[ThemeActivatorInterface::class];
     }
 
     /**
@@ -77,17 +82,17 @@ class Theme implements Arrayable
             return realpath($this->path);
         }
 
-        return realpath($this->path) .'/'. ltrim("/{$path}", '/');
+        return realpath($this->path) . '/' . ltrim("/{$path}", '/');
     }
 
     public function isActive(): bool
     {
-        return $this->themeRepository->current()?->lowerName() == $this->lowerName();
+        return $this->activator->isActive($this);
     }
 
     public function activate(): bool
     {
-        $this->setting->set('theme', $this->name());
+        $this->activator->activate($this);
 
         return true;
     }

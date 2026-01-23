@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -11,6 +12,7 @@ namespace Juzaweb\Modules\Core\Themes\Providers;
 
 use Juzaweb\Modules\Core\Contracts\Theme;
 use Juzaweb\Modules\Core\Providers\ServiceProvider;
+use Juzaweb\Modules\Core\Themes\Activators\SettingActivator;
 use Juzaweb\Modules\Core\Themes\Commands\DownloadStyleCommand;
 use Juzaweb\Modules\Core\Themes\Commands\DownloadTemplateCommand;
 use Juzaweb\Modules\Core\Themes\Commands\MakeControllerCommand;
@@ -22,6 +24,7 @@ use Juzaweb\Modules\Core\Themes\Commands\ThemeGeneratorCommand;
 use Juzaweb\Modules\Core\Themes\Commands\ThemeListCommand;
 use Juzaweb\Modules\Core\Themes\Commands\ThemePublishCommand;
 use Juzaweb\Modules\Core\Themes\Commands\ThemeSeedCommand;
+use Juzaweb\Modules\Core\Themes\Contracts\ThemeActivatorInterface;
 use Juzaweb\Modules\Core\Themes\ThemeRepository;
 
 class ThemeServiceProvider extends ServiceProvider
@@ -51,7 +54,15 @@ class ThemeServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        // Registers the eventy singleton.
+        // Register theme activator
+        $this->app->singleton(
+            ThemeActivatorInterface::class,
+            function ($app) {
+                return new SettingActivator($app);
+            }
+        );
+
+        // Registers the theme repository singleton.
         $this->app->singleton(
             Theme::class,
             function ($app) {

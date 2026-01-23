@@ -69,7 +69,7 @@ if (!function_exists('active_theme')) {
      *
      * @return string The name of the active theme
      */
-    function active_theme(): string
+    function active_theme(): ?string
     {
         return Theme::current()->name();
     }
