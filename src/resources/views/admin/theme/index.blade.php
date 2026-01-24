@@ -83,30 +83,47 @@
                 uploadMultiple: false,
                 parallelUploads: 1,
                 timeout: 0,
-                maxFiles: 1,
                 acceptedFiles: ".zip",
-                maxFilesize: 50, // 50MB
+                maxFilesize: 100, // 100MB
                 dictDefaultMessage: "{{ __('core::browser.message-drop') }}",
                 chunking: true,
                 forceChunking: true,
                 chunkSize: 1000000, // 1MB chunks
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    'accept': 'application/json',
+                },
                 init: function() {
-                    this.on('success', function(file, response) {
+                    this.on('sending', function(file, xhr, formData) {
+                        //console.log('Sending file:', file.name);
+                    });
+
+                    this.on('uploadprogress', function(file, progress, bytesSent) {
+                        //console.log('Upload progress:', progress + '%');
+                    });
+
+                    this.on('success', function(file, res) {
+                        let response = JSON.parse(file.xhr.response);
+
                         if (response.status && response.path) {
                             show_message('{{ __('core::translation.upload_success') }}',
                                 'success');
                             $('#upload-theme-modal').modal('hide');
-                            // You can add additional logic here to process the uploaded theme
-                            console.log('Theme uploaded to:', response.path, 'on disk:',
-                                response.disk);
+
+                        } else {
+                            console.log('Response does not have status and path');
                         }
                     });
-                    this.on('error', function(file, errorMessage) {
+
+                    this.on('error', function(file, errorMessage, xhr) {
+                        console.error('Upload error:', errorMessage);
+                        console.error('XHR status:', xhr ? xhr.status : 'N/A');
                         show_message(errorMessage.message || errorMessage, 'error');
                     });
-                },
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+
+                    this.on('complete', function(file) {
+                        console.log('Upload complete for file:', file.name);
+                    });
                 }
             });
 

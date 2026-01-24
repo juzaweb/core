@@ -124,7 +124,7 @@ class UploadController extends FileManagerController
                 $file = $save->getFile();
 
                 // Generate unique filename
-                $filename = uniqid('tmp_') . '_' . $file->getClientOriginalName();
+                $filename = uniqid('tmp_', true) . '_' . $file->getClientOriginalName();
 
                 // Store file to tmp disk
                 $path = $file->storeAs('', $filename, 'tmp');

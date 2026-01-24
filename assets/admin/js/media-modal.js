@@ -375,7 +375,7 @@ $(function () {
             maxFilesize: 15, // MB
             chunking: true,
             forceChunking: true,
-            chunkSize: 1048576, // 1MB chunks
+            chunkSize: 1000000, // 1MB chunks
             headers: {
                 'Authorization': "Bearer " + $('meta[name="csrf-token"]').attr('content')
             },
