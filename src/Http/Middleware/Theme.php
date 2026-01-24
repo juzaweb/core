@@ -11,8 +11,6 @@
 namespace Juzaweb\Modules\Core\Http\Middleware;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
-use Juzaweb\Modules\Admin\Networks\Facades\Network;
 use Juzaweb\Modules\Core\Facades\Thumbnail;
 
 class Theme

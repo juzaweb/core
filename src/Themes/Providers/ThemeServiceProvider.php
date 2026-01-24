@@ -12,7 +12,6 @@ namespace Juzaweb\Modules\Core\Themes\Providers;
 
 use Juzaweb\Modules\Core\Contracts\Theme;
 use Juzaweb\Modules\Core\Providers\ServiceProvider;
-use Juzaweb\Modules\Core\Themes\Activators\SettingActivator;
 use Juzaweb\Modules\Core\Themes\Commands\DownloadStyleCommand;
 use Juzaweb\Modules\Core\Themes\Commands\DownloadTemplateCommand;
 use Juzaweb\Modules\Core\Themes\Commands\MakeControllerCommand;

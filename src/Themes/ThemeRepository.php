@@ -99,13 +99,13 @@ class ThemeRepository implements ThemeContract
 
         $theme = $this->activator->getActiveName();
 
-        if ($theme === null) {
+        if ($theme === null || !($currentTheme = $this->find($theme))) {
             /** @var Theme */
             return $this->all()->first();
         }
 
         // return ($this->currentTheme = $currentTheme);
-        return $this->find($theme);
+        return $currentTheme;
     }
 
     public function has(string $name): bool

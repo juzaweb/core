@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
 use Juzaweb\Modules\Admin\Models\Guest;
-use Juzaweb\Modules\Admin\Networks\Facades\Network;
 use Juzaweb\Modules\Core\Contracts\Viewable;
 use Juzaweb\Modules\Core\Http\Controllers\Controller;
 use Juzaweb\Modules\Core\Services\ImgProxyService;
