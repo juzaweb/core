@@ -68,6 +68,11 @@
                             </div>
                         </form>
                     </div>
+                    <div class="loading-container p-5 text-center" style="display: none;">
+                        <i class="fas fa-spinner fa-spin fa-3x mb-3 text-primary"></i>
+                        <h4>{{ __('core::translation.installing_theme') }}</h4>
+                        <p class="text-muted">{{ __('core::translation.please_wait') }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,11 +83,12 @@
 
         $(function() {
             // Initialize Dropzone for theme upload
-            new Dropzone("#uploadThemeForm", {
+            let dropzoneInstance = new Dropzone("#uploadThemeForm", {
                 paramName: "file",
                 uploadMultiple: false,
                 parallelUploads: 1,
                 timeout: 0,
+                // maxFiles: 1,
                 acceptedFiles: ".zip",
                 maxFilesize: 100, // 100MB
                 dictDefaultMessage: "{{ __('core::browser.message-drop') }}",
@@ -106,6 +112,10 @@
                         let response = JSON.parse(file.xhr.response);
 
                         if (response.status && response.path) {
+                            // Hide upload form and show loading
+                            $('.upload-container').hide();
+                            $('.loading-container').show();
+
                             // Call install API
                             $.ajax({
                                 type: 'POST',
@@ -119,7 +129,9 @@
                                     if (installResponse && installResponse.status) {
                                         show_message({
                                             success: true,
-                                            message: installResponse.message || '{{ __('core::translation.theme_installed_successfully') }}'
+                                            message: installResponse
+                                                .message ||
+                                                '{{ __('core::translation.theme_installed_successfully') }}'
                                         });
 
                                         $('#upload-theme-modal').modal('hide');
@@ -128,20 +140,38 @@
                                             window.location.reload();
                                         }, 1500);
                                     } else {
-                                        show_notify({
+                                        /*show_notify({
                                             success: false,
-                                            message: installResponse.message || '{{ __('core::translation.theme_installation_failed') }}'
-                                        });
+                                            message: installResponse
+                                                .message ||
+                                                '{{ __('core::translation.theme_installation_failed') }}'
+                                        });*/
+
+                                        // Mark file as error in Dropzone
+                                        dropzoneInstance.emit('error', file,
+                                            installResponse.message ||
+                                            '{{ __('core::translation.theme_installation_failed') }}'
+                                        );
                                     }
                                 },
                                 error: function(xhr) {
-                                    show_notify(xhr.responseJSON);
+                                    // Reset modal state on error
+                                    $('.loading-container').hide();
+                                    $('.upload-container').show();
+
+                                    // show_notify(xhr.responseJSON);
+                                    // Mark file as error in Dropzone
+                                    dropzoneInstance.emit('error', file,
+                                        xhr.responseJSON.message ||
+                                        '{{ __('core::translation.theme_installation_failed') }}'
+                                    );
                                 }
                             });
                         } else {
                             show_notify({
                                 success: false,
-                                message: response.message || '{{ __('Response does not have status and path') }}',
+                                message: response.message ||
+                                    '{{ __('Response does not have status and path') }}',
                             });
                         }
                     });
@@ -156,6 +186,12 @@
                         console.log('Upload complete for file:', file.name);
                     });
                 }
+            });
+
+            // Reset modal state when modal is closed
+            $('#upload-theme-modal').on('hidden.bs.modal', function() {
+                $('.loading-container').hide();
+                $('.upload-container').show();
             });
 
             // Theme list logic
