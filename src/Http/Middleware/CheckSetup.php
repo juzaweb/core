@@ -14,6 +14,7 @@ namespace Juzaweb\Modules\Core\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Juzaweb\Modules\Core\Facades\Theme;
 
 class CheckSetup
 {
@@ -32,7 +33,7 @@ class CheckSetup
         }
 
         // Check if theme setup has been completed
-        if (!theme_setting('setup')) {
+        if (Theme::current() && !theme_setting('setup')) {
             return redirect()->route('admin.setup');
         }
 

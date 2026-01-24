@@ -150,8 +150,12 @@ class ThemeSettingRepository implements SettingContract
             return $this->configs;
         }
 
+        if (!($currentTheme = $this->theme->current())) {
+            return collect();
+        }
+
         $this->configs = SettingModel::cacheFor(3600)
-            ->where('theme', $this->theme->current()->name())
+            ->where('theme', $currentTheme->name())
             ->get(['code', 'value'])
             ->pluck('value', 'code');
 
