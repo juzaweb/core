@@ -79,6 +79,13 @@ abstract class AdminServiceProvider extends ServiceProvider
             ];
         });
 
+        Menu::make('themes', function () {
+            return [
+                'title' => __('admin::translation.themes'),
+                'parent' => 'appearance',
+            ];
+        });
+
         Menu::make('widgets', function () {
             return [
                 'title' => __('core::translation.widgets'),
