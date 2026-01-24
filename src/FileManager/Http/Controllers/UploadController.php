@@ -133,7 +133,7 @@ class UploadController extends FileManagerController
                     'status' => true,
                     'path' => $path,
                     'disk' => 'tmp',
-                    'message' => 'Upload completed successfully',
+                    'message' => trans('core::translation.upload_completed_successfully'),
                 ]);
             }
 

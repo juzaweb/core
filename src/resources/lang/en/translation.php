@@ -541,6 +541,8 @@ return [
     'traffic_per_day' => 'traffic per day',
     'adminbrowser' => 'core::browser',
     'upload_media' => 'Upload media',
+    'upload_theme' => 'Upload Theme',
+    'upload_completed_successfully' => 'Upload completed successfully',
     'my_referral_information' => 'My Referral Information',
     'referral_code' => 'Referral Code',
     'copy' => 'Copy',

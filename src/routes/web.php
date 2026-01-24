@@ -47,7 +47,7 @@ Route::get('notification/{channel}/verify', [NotificationSubscribeController::cl
 Route::group([
     'middleware' => [
         ...config('core.auth_middleware'),
-        'verifed',
+        'verified',
     ]
 ], function() {
     Route::post('temp/upload', [UploadController::class, 'uploadTemp'])
