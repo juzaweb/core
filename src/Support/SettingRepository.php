@@ -155,9 +155,15 @@ class SettingRepository implements SettingContract
             return new Collection();
         }
 
-        $this->configs = SettingModel::with(['translations' => fn ($q) => $q->cacheFor(3600)])
+        $locale = $this->locale ?: app()->getLocale();
+
+        // Optimize: Load only current locale translations and select only necessary columns
+        // to reduce memory usage and query payload.
+        // Note: withTranslation uses eager loading (separate query), so selecting columns
+        // on the main query does not conflict with translation columns.
+        $this->configs = SettingModel::withTranslation($locale, null, true)
             ->cacheFor(3600)
-            ->get()
+            ->get(['id', 'code', 'value', 'translatable'])
             ->mapWithKeys(
                 function ($item) {
                     /** @var SettingModel $item */

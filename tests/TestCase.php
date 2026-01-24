@@ -47,7 +47,9 @@ abstract class TestCase extends Orchestra
             }
         }
 
-        $this->app[\Juzaweb\Modules\Core\Contracts\ThemeSetting::class]->set('setup', 1);
+        if ($this->app[\Juzaweb\Modules\Core\Contracts\Theme::class]->current()) {
+            $this->app[\Juzaweb\Modules\Core\Contracts\ThemeSetting::class]->set('setup', 1);
+        }
     }
 
     protected function createMixManifest(): void
