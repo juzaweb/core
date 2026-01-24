@@ -12,7 +12,7 @@ namespace Juzaweb\Themes\[NAMESPACE_SHORT]\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
-use Juzaweb\Modules\Admin\Facades\Locale;
+use Juzaweb\Modules\Core\Facades\Locale;
 
 class RouteServiceProvider extends ServiceProvider
 {

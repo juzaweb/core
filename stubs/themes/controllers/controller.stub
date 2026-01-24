@@ -10,7 +10,7 @@
 
 namespace Juzaweb\Themes\$NAMESPACE_SHORT$\Http\Controllers;
 
-use Juzaweb\Modules\Admin\Http\Controllers\ThemeController;
+use Juzaweb\Modules\Core\Http\Controllers\ThemeController;
 
 class $CLASS$ extends ThemeController
 {

@@ -12,7 +12,7 @@ namespace Juzaweb\Themes\[NAMESPACE_SHORT]\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Juzaweb\Modules\Admin\Http\Controllers\ThemeController;
+use Juzaweb\Modules\Core\Http\Controllers\ThemeController;
 use App\Http\DataTables\NotificationsDataTable;
 use App\Http\Requests\ProfileUpdateRequest;
 

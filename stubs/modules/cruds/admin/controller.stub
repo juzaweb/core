@@ -2,8 +2,8 @@
 
 namespace $CLASS_NAMESPACE$;
 
-use Juzaweb\Modules\Admin\Facades\Breadcrumb;
-use Juzaweb\Modules\Admin\Http\Controllers\AdminController;
+use Juzaweb\Modules\Core\Facades\Breadcrumb;
+use Juzaweb\Modules\Core\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\DB;
 use $MODEL_NAMESPACE$;
 use $REQUEST_NAMESPACE$;

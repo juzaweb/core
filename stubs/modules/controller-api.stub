@@ -4,7 +4,7 @@ namespace $CLASS_NAMESPACE$;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Juzaweb\Modules\Admin\Http\Controllers\APIController;
+use Juzaweb\Modules\Core\Http\Controllers\APIController;
 
 class $CLASS$ extends APIController
 {

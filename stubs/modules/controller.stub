@@ -3,7 +3,7 @@
 namespace $CLASS_NAMESPACE$;
 
 use Illuminate\Http\Request;
-use Juzaweb\Modules\Admin\Http\Controllers\AdminController;
+use Juzaweb\Modules\Core\Http\Controllers\AdminController;
 
 class $CLASS$ extends AdminController
 {
