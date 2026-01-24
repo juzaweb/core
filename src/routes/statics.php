@@ -26,10 +26,14 @@ Route::get('storage/{path}', [AddonController::class, 'storageProxy'])
     ->name('storage.proxy')
     ->where('path', '.*');
 
-Route::get('themes/{path}', [AddonController::class, 'themesProxy'])
+Route::get('juzaweb/{path}', [AddonController::class, 'juzawebProxy'])
+    ->name('juzaweb.proxy')
+    ->where('path', '.*');
+
+Route::get('themes/{theme}/{path}', [AddonController::class, 'themesProxy'])
     ->name('themes.proxy')
     ->where('path', '.*');
 
-Route::get('modules/{path}', [AddonController::class, 'modulesProxy'])
+Route::get('modules/{module}/{path}', [AddonController::class, 'modulesProxy'])
     ->name('modules.proxy')
     ->where('path', '.*');
