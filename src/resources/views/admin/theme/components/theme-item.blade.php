@@ -1,8 +1,7 @@
 <div class="card">
     <div class="height-200 d-flex flex-column">
         <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-            data-src="{{ $theme->get('thumbnail') ?? route('generate.thumbnail', ['text' => $theme->name(), 'width' => 360, 'height' => 200]) }}"
-            alt="{{ $theme->name() }}" class="lazyload w-100 h-100">
+            data-src="{{ $theme->screenshotUrl() }}" alt="{{ $theme->name() }}" class="lazyload w-100 h-100">
     </div>
 
     <div class="card card-bottom card-borderless mb-0">
@@ -42,8 +41,8 @@
                     <div class="row">
                         <!-- Thumbnail -->
                         <div class="col-md-4 text-center mb-3">
-                            <img src="{{ $theme->get('thumbnail') ?? route('generate.thumbnail', ['text' => $theme->name(), 'width' => 360, 'height' => 200]) }}"
-                                alt="{{ $theme->name() }}" class="img-fluid rounded shadow">
+                            <img src="{{ $theme->screenshotUrl() }}" alt="{{ $theme->name() }}"
+                                class="img-fluid rounded shadow">
                         </div>
 
                         <!-- Info -->
