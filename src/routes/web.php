@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Juzaweb\Modules\Core\Facades\Locale;
+use Juzaweb\Modules\Core\FileManager\Http\Controllers\UploadController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\AddonController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\NotificationSubscribeController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\SitemapController;
@@ -41,3 +43,13 @@ Route::post('notification/{channel}/subscribe', [NotificationSubscribeController
 Route::get('notification/{channel}/verify', [NotificationSubscribeController::class, 'verify'])
     ->name('notification.verify')
     ->middleware(['signed']);
+
+Route::group([
+    'middleware' => [
+        ...config('core.auth_middleware'),
+        'verifed',
+    ]
+], function() {
+    Route::post('temp/upload', [UploadController::class, 'uploadTemp'])
+        ->name('upload.temp');
+});

@@ -170,7 +170,7 @@
                 maxFilesize: parseInt("{{ $maxSize }}"),
                 chunking: true,
                 forceChunking: true,
-                chunkSize: 1048576,
+                chunkSize: 1000000,
             });
         });
 

@@ -102,6 +102,58 @@ class UploadController extends FileManagerController
         );
     }
 
+    /**
+     * Upload file chunk to tmp disk and return path when finished.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function uploadTemp(Request $request): JsonResponse
+    {
+        try {
+            $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+
+            if ($receiver->isUploaded() === false) {
+                throw new UploadMissingFileException();
+            }
+
+            $save = $receiver->receive();
+
+            if ($save->isFinished()) {
+                // Get the uploaded file
+                $file = $save->getFile();
+
+                // Generate unique filename
+                $filename = uniqid('tmp_') . '_' . $file->getClientOriginalName();
+
+                // Store file to tmp disk
+                $path = $file->storeAs('', $filename, 'tmp');
+
+                return response()->json([
+                    'status' => true,
+                    'path' => $path,
+                    'disk' => 'tmp',
+                    'message' => 'Upload completed successfully',
+                ]);
+            }
+
+            // Return progress if not finished
+            $handler = $save->handler();
+
+            return response()->json([
+                'done' => $handler->getPercentageDone(),
+                'status' => true,
+            ]);
+        } catch (Exception $e) {
+            report($e);
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 422);
+        }
+    }
+
     protected function responseUpload($error): JsonResponse
     {
         $response = count($error) > 0 ? $error : parent::$success_response;

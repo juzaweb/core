@@ -21,6 +21,16 @@
 @endsection
 
 @section('content')
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="float-right">
+                <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#upload-theme-modal">
+                    <i class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload_theme') }}
+                </a>
+            </div>
+        </div>
+    </div>
+
     <div class="row" id="theme-list">
         <div class="col-md-4 p-2 theme-list-item">
             @component('core::admin.theme.components.theme-item', ['theme' => $currentTheme, 'active' => true])
@@ -30,8 +40,77 @@
 @endsection
 
 @section('scripts')
+    <!-- Upload Theme Modal -->
+    <div class="modal fade" id="upload-theme-modal" tabindex="-1" role="dialog" aria-labelledby="upload-theme-modal-label"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="upload-theme-modal-label">
+                        <i class="fa fa-cloud-upload-alt"></i> {{ __('core::translation.upload_theme') }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="{{ __('core::translation.close') }}">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="upload-container p-2">
+                        <form action="{{ route('upload.temp') }}" role="form" id="uploadThemeForm" name="uploadThemeForm"
+                            method="post" class="dropzone" enctype='multipart/form-data'>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <div class="dz-message text-center">
+                                <i class="fa fa-cloud-upload-alt fa-4x mb-3 text-muted"></i>
+                                <h4>{{ __('core::browser.message-drop') }}</h4>
+                                <p class="text-muted">{{ __('core::browser.message-choose') }}</p>
+                                <p class="text-info"><small>{{ __('core::translation.accepted_file_types') }}: .zip</small>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
+        Dropzone.autoDiscover = false;
+
         $(function() {
+            // Initialize Dropzone for theme upload
+            new Dropzone("#uploadThemeForm", {
+                paramName: "file",
+                uploadMultiple: false,
+                parallelUploads: 1,
+                timeout: 0,
+                maxFiles: 1,
+                acceptedFiles: ".zip",
+                maxFilesize: 50, // 50MB
+                dictDefaultMessage: "{{ __('core::browser.message-drop') }}",
+                chunking: true,
+                forceChunking: true,
+                chunkSize: 1000000, // 1MB chunks
+                init: function() {
+                    this.on('success', function(file, response) {
+                        if (response.status && response.path) {
+                            show_message('{{ __('core::translation.upload_success') }}',
+                                'success');
+                            $('#upload-theme-modal').modal('hide');
+                            // You can add additional logic here to process the uploaded theme
+                            console.log('Theme uploaded to:', response.path, 'on disk:',
+                                response.disk);
+                        }
+                    });
+                    this.on('error', function(file, errorMessage) {
+                        show_message(errorMessage.message || errorMessage, 'error');
+                    });
+                },
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            });
+
+            // Theme list logic
             let pageSize = 12;
             let offset = 0;
             let total = 0;
