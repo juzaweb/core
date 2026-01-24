@@ -101,7 +101,7 @@ class ThemeRepository implements ThemeContract
 
         if ($theme === null || !($currentTheme = $this->find($theme))) {
             /** @var Theme */
-            return $this->all()->first();
+            return null;
         }
 
         // return ($this->currentTheme = $currentTheme);

@@ -6,9 +6,14 @@ use Juzaweb\Modules\Core\Http\Controllers\Frontend\AddonController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\NotificationSubscribeController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\SitemapController;
 
+if (!Theme::current()) {
+    Route::get('/', [AddonController::class, 'redirect']);
+}
+
 Route::group(['prefix' => Locale::setLocale()], function () {
     require __DIR__ . '/components/auth.php';
 });
+
 
 Route::get('sitemap.xml', [SitemapController::class, 'index'])
     ->name('sitemap.xml');

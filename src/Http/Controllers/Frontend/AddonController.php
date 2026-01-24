@@ -24,6 +24,11 @@ use Juzaweb\Modules\Core\Services\ImgProxyService;
 
 class AddonController extends Controller
 {
+    public function redirect()
+    {
+        return redirect(admin_url());
+    }
+
     public function statuses(Request $request): JsonResponse
     {
         $key = "site:users_online";

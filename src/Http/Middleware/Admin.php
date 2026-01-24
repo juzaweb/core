@@ -18,7 +18,11 @@ class Admin
     {
         $user = $request->user();
 
-        abort_if($user === null, 403, __('core::translation.you_cannot_access_this_page'));
+        if ($user === null) {
+            return redirect()->route('login')->withErrors(
+                __('core::translation.you_cannot_access_this_page')
+            );
+        }
 
         abort_unless($user->hasPermission(), 403, __('core::translation.you_cannot_access_this_page'));
 
