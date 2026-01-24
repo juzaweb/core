@@ -12,6 +12,7 @@ use Juzaweb\Modules\Admin\Http\Controllers\DashboardController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\ChartController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\LanguageController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\LoadDataController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\ModuleController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\PageController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\ProfileController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\SettingController;
@@ -46,6 +47,13 @@ Route::admin('languages', LanguageController::class)
 Route::admin('pages', PageController::class);
 Route::admin('users', UserController::class);
 
+Route::get('modules', [ModuleController::class, 'index'])
+    ->name('admin.modules.index')
+    ->middleware(['permission:modules.index']);
+Route::post('modules/toggle', [ModuleController::class, 'toggle'])
+    ->name('admin.modules.toggle')
+    ->middleware(['permission:modules.edit']);
+
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations')
     ->middleware(['permission:languages.index']);
@@ -58,7 +66,6 @@ Route::put('/languages/{language}/translations', [TranslationController::class, 
 
 Route::post('translations/translate-model', [TranslationController::class, 'translateModel'])
     ->name('admin.translations.translate-model');
-
 Route::post('translations/translate-status', [TranslationController::class, 'translateStatus'])->name('admin.translations.translate-status');
 
 Route::get('/settings/general', [SettingController::class, 'index'])

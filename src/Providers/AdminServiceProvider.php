@@ -75,13 +75,13 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.appearance'),
                 'icon' => 'fas fa-paint-roller',
-                'priority' => 98,
+                'priority' => 80,
             ];
         });
 
         Menu::make('themes', function () {
             return [
-                'title' => __('admin::translation.themes'),
+                'title' => __('core::translation.themes'),
                 'parent' => 'appearance',
             ];
         });
@@ -97,6 +97,14 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.menus'),
                 'parent' => 'appearance',
+            ];
+        });
+
+        Menu::make('modules', function () {
+            return [
+                'title' => __('core::translation.modules'),
+                'icon' => 'fas fa-cubes',
+                'priority' => 90,
             ];
         });
 
