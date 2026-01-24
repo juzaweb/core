@@ -92,7 +92,7 @@ function nav_location(string $location): ?Menu
     return $menu;
 }
 
-function loadMenuItems($items)
+function loadMenuItems($items): void
 {
     $locales = array_unique([app()->getLocale(), config('translatable.fallback_locale')]);
     foreach ($items as $item) {

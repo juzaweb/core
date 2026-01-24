@@ -367,7 +367,7 @@ class AddonController extends Controller
      */
     public function themesProxy(Request $request, string $theme, string $path)
     {
-        $filePath = base_path("themes/{$theme}/assets/{$path}");
+        $filePath = base_path("themes/{$theme}/assets/public/{$path}");
 
         return $this->serveStaticFile($request, $filePath, $path);
     }
@@ -377,7 +377,7 @@ class AddonController extends Controller
      */
     public function modulesProxy(Request $request, string $module, string $path)
     {
-        $filePath = base_path("modules/{$module}/assets/{$path}");
+        $filePath = base_path("modules/{$module}/assets/public/{$path}");
 
         return $this->serveStaticFile($request, $filePath, $path);
     }
@@ -385,6 +385,13 @@ class AddonController extends Controller
     public function juzawebProxy(Request $request, string $path)
     {
         $filePath = public_path("juzaweb/{$path}");
+
+        return $this->serveStaticFile($request, $filePath, $path);
+    }
+
+    public function vendorProxy(Request $request, string $path)
+    {
+        $filePath = public_path("vendor/{$path}");
 
         return $this->serveStaticFile($request, $filePath, $path);
     }

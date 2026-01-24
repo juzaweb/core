@@ -30,6 +30,10 @@ Route::get('juzaweb/{path}', [AddonController::class, 'juzawebProxy'])
     ->name('juzaweb.proxy')
     ->where('path', '.*');
 
+Route::get('vendor/{path}', [AddonController::class, 'vendorProxy'])
+    ->name('vendor.proxy')
+    ->where('path', '.*');
+
 Route::get('themes/{theme}/{path}', [AddonController::class, 'themesProxy'])
     ->name('themes.proxy')
     ->where('path', '.*');
