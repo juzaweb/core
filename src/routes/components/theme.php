@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -22,6 +23,10 @@ Route::get('themes/get-data', [ThemeController::class, 'loadData'])
 
 Route::post('themes/activate', [ThemeController::class, 'activate'])
     ->name('admin.themes.activate')
+    ->middleware(['permission:themes.edit']);
+
+Route::post('themes/install-from-zip', [ThemeController::class, 'installFromZip'])
+    ->name('admin.themes.install-from-zip')
     ->middleware(['permission:themes.edit']);
 
 Route::group(

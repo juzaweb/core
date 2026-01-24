@@ -106,12 +106,43 @@
                         let response = JSON.parse(file.xhr.response);
 
                         if (response.status && response.path) {
-                            show_message('{{ __('core::translation.upload_success') }}',
-                                'success');
-                            $('#upload-theme-modal').modal('hide');
+                            // Call install API
+                            $.ajax({
+                                type: 'POST',
+                                url: '{{ route('admin.themes.install-from-zip') }}',
+                                data: {
+                                    path: response.path,
+                                    _token: '{{ csrf_token() }}'
+                                },
+                                dataType: 'json',
+                                success: function(installResponse) {
+                                    if (installResponse && installResponse.status) {
+                                        show_message({
+                                            success: true,
+                                            message: installResponse.message || '{{ __('core::translation.theme_installed_successfully') }}'
+                                        });
 
+                                        $('#upload-theme-modal').modal('hide');
+                                        // Reload page to show new theme
+                                        setTimeout(function() {
+                                            window.location.reload();
+                                        }, 1500);
+                                    } else {
+                                        show_notify({
+                                            success: false,
+                                            message: installResponse.message || '{{ __('core::translation.theme_installation_failed') }}'
+                                        });
+                                    }
+                                },
+                                error: function(xhr) {
+                                    show_notify(xhr.responseJSON);
+                                }
+                            });
                         } else {
-                            console.log('Response does not have status and path');
+                            show_notify({
+                                success: false,
+                                message: response.message || '{{ __('Response does not have status and path') }}',
+                            });
                         }
                     });
 
