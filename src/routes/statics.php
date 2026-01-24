@@ -37,3 +37,6 @@ Route::get('themes/{theme}/{path}', [AddonController::class, 'themesProxy'])
 Route::get('modules/{module}/{path}', [AddonController::class, 'modulesProxy'])
     ->name('modules.proxy')
     ->where('path', '.*');
+
+Route::get('images/{method}/{hash}/{filename}', [AddonController::class, 'proxy'])
+    ->name('imgproxy.handle');

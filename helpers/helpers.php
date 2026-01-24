@@ -725,7 +725,7 @@ if (!function_exists('custom_var_export')) {
     }
 }
 
-if (!function_exists('img_proxy')) {
+if (!function_exists('proxy_image')) {
     function proxy_image(?string $url, ?int $width = null, ?int $height = null, bool $crop = false): string
     {
         if ($url === null) {
@@ -733,16 +733,16 @@ if (!function_exists('img_proxy')) {
         }
 
         $hash = encrypt_deterministic($url, sha1(config('app.key')));
-        $baseUrl = rtrim(config('services.imgproxy.base_url'), '/');
+        $baseUrl = url('/');
         $filename = basename($url);
         $method = $crop ? 'crop' : 'cover';
 
         if ($width > 0 || $height > 0) {
             $size = ($width ?? 'auto') . 'x' . ($height ?? 'auto');
-            return "{$baseUrl}/{$method}:{$size}/{$hash}/{$filename}";
+            return "{$baseUrl}/images/{$method}:{$size}/{$hash}/{$filename}";
         }
 
-        return "{$baseUrl}/original/{$hash}/{$filename}";
+        return "{$baseUrl}/images/original/{$hash}/{$filename}";
     }
 }
 

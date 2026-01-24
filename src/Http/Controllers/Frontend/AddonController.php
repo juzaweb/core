@@ -222,7 +222,7 @@ class AddonController extends Controller
     /**
      * Handle image proxy request
      */
-    public function proxy(string $methodParam, string $hash, Request $request, ImgProxyService $imgProxyService)
+    public function proxy(ImgProxyService $imgProxyService, string $methodParam, string $hash, string $filename)
     {
         try {
             // Parse method and dimensions from methodParam (e.g., "resize:800x600")
