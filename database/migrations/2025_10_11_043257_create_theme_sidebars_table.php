@@ -23,7 +23,7 @@ return new class extends Migration
 
         Schema::create('theme_sidebar_translations', function (Blueprint $table) {
             $table->id();
-            $table->string('locale', 5)->index();
+            $table->string('locale', 10)->index();
             $table->string('label')->nullable();
             $table->json('fields')->nullable();
             $table->uuid('theme_sidebar_id');

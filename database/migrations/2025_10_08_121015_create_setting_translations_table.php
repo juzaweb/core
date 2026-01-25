@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('setting_translations', function (Blueprint $table) {
             $table->id();
             $table->string('setting_code', 100)->index();
-            $table->string('locale', 5)->index();
+            $table->string('locale', 10)->index();
             $table->text('lang_value')->nullable();
 
             $table->foreignId('setting_id')

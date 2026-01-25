@@ -27,7 +27,7 @@ return new class extends Migration
 
         Schema::create('page_block_translations', function (Blueprint $table) {
             $table->id();
-            $table->string('locale', 5)->index();
+            $table->string('locale', 10)->index();
             $table->string('label')->nullable();
             $table->json('fields')->nullable();
             $table->uuid('page_block_id');
