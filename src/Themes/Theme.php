@@ -77,10 +77,10 @@ class Theme implements Arrayable
      */
     public function thumbnailUrl(): string
     {
-        $screenshotPath = public_path("themes/{$this->lowerName()}/thumbnail.png");
+        $screenshotPath = base_path("themes/{$this->lowerName()}/assets/public/images/thumbnail.png");
 
         if (file_exists($screenshotPath)) {
-            return asset("themes/{$this->lowerName()}/thumbnail.png");
+            return asset("themes/{$this->lowerName()}/images/thumbnail.png");
         }
 
         return route('generate.thumbnail', [
