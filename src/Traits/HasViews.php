@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -53,7 +55,6 @@ trait HasViews
         Cache::remember($rememberKey, 3600, function () use ($count, $viewer) {
             $date = now()->toDateString();
             $dailyView = $this->dailyViews()
-                ->cacheFor(3600)
                 ->where('date', $date)
                 ->first();
 
@@ -70,7 +71,7 @@ trait HasViews
                 ]);
             }
 
-            $this->pageViewHistories()->cacheFor(3600)->firstOrCreate([
+            $this->pageViewHistories()->firstOrCreate([
                 'viewer_id' => $viewer->id,
                 'viewer_type' => get_class($viewer),
             ]);
