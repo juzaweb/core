@@ -54,7 +54,8 @@
                 "Sidebar": "Juzaweb\\Modules\\Core\\Facades\\Sidebar",
                 "PageTemplate": "Juzaweb\\Modules\\Core\\Facades\\PageTemplate",
                 "PageBlock": "Juzaweb\\Modules\\Core\\Facades\\PageBlock",
-                "Chart": "Juzaweb\\Modules\\Core\\Facades\\Chart"
+                "Chart": "Juzaweb\\Modules\\Core\\Facades\\Chart",
+                "Breadcrumb": "Juzaweb\\Modules\\Core\\Facades\\Breadcrumb"
             }
         }
     },
