@@ -104,9 +104,22 @@ class ThemeSettingRepository implements SettingContract
 
     public function sets(array $keys): Collection
     {
-        foreach ($keys as $key => $value) {
-            $this->set($key, $value);
-        }
+        SettingModel::withoutEvents(function () use ($keys) {
+            foreach ($keys as $key => $value) {
+                SettingModel::updateOrCreate(
+                    [
+                        'code' => $key,
+                        'theme' => $this->theme->current()->name(),
+                    ],
+                    [
+                        'value' => $value,
+                    ]
+                );
+            }
+        });
+
+        SettingModel::flushQueryCache();
+        $this->configs = null;
 
         return $this->configs()->only(array_keys($keys));
     }
