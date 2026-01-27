@@ -167,7 +167,10 @@ class SettingRepository implements SettingContract
             return new Collection();
         }
 
-        $this->configs = SettingModel::with(['translations' => fn ($q) => $q->cacheFor(3600)])
+        // Use withTranslation scope to load only current locale translations (with fallback).
+        // This optimizes performance by not loading translations for all other languages.
+        // We pass true for cache argument to cache the translation query.
+        $this->configs = SettingModel::withTranslation(null, null, true)
             ->cacheFor(3600)
             ->get()
             ->mapWithKeys(
