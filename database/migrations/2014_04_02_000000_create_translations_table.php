@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create(
             'translations',
             function (Blueprint $table) {
-                $table->collation = 'utf8mb4_bin';
                 $table->id();
                 $table->string('locale', 50)->index();
                 $table->string('group', 50)->index();
