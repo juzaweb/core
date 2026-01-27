@@ -123,8 +123,24 @@ class MinifyHtml
         );
 
         // trim each line.
-        // @todo take into account attribute values that span multiple lines.
+        $tagPlaceholders = [];
+        $this->_html = preg_replace_callback(
+            '/<(?:(?:"[^"]*")|(?:\'[^\']*\')|[^"\'>])+>/s',
+            function ($m) use (&$tagPlaceholders) {
+                $placeholder = '%' . $this->_replacementHash . 'TAG' . count($tagPlaceholders) . '%';
+                $tagPlaceholders[$placeholder] = $m[0];
+                return $placeholder;
+            },
+            $this->_html
+        );
+
         $this->_html = preg_replace('/^\\s+|\\s+$/mu', '', $this->_html);
+
+        $this->_html = str_replace(
+            array_keys($tagPlaceholders),
+            array_values($tagPlaceholders),
+            $this->_html
+        );
 
         // remove ws around block/undisplayed elements
         $this->_html = preg_replace('/\\s+(<\\/?(?:area|article|aside|base(?:font)?|blockquote|body'
