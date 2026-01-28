@@ -20,11 +20,20 @@ class ThemeSetting extends Model
 
     public function getValueAttribute(): null|string|array
     {
-        if (is_json($this->attributes['value'])) {
-            return json_decode($this->attributes['value'], true, 512, JSON_THROW_ON_ERROR);
+        $value = $this->attributes['value'] ?? null;
+
+        if ($value === null) {
+            return null;
         }
 
-        return $this->attributes['value'];
+        // Optimistic JSON decode to avoid double parsing overhead
+        $decoded = json_decode($value, true);
+
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return $decoded;
+        }
+
+        return $value;
     }
 
     public function setValueAttribute($value): void
