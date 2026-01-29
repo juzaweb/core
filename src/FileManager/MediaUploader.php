@@ -74,6 +74,13 @@ class MediaUploader
      */
     protected null|Authenticatable|int $user = null;
 
+    /**
+     * Force a specific path for the uploaded file.
+     *
+     * @var ?string
+     */
+    protected ?string $forcedPath = null;
+
     protected bool $uploaded = false;
 
     /**
@@ -179,6 +186,19 @@ class MediaUploader
     }
 
     /**
+     * Force a specific path for the uploaded file (overwrite if exists).
+     *
+     * @param string $path The path to force (relative to disk root).
+     * @return static The current instance.
+     */
+    public function forcePath(string $path): static
+    {
+        $this->forcedPath = $path;
+
+        return $this;
+    }
+
+    /**
      * Upload the file to the storage.
      *
      * @param string|null $disk The name of the disk to upload to. If not provided, the
@@ -219,7 +239,19 @@ class MediaUploader
 
             app(MediaContract::class)->validateUploadedFile($this->source, $this->disk);
 
-            $this->newFileName = $this->uniqueFileName($folder, $this->getFileName());
+            if ($this->forcedPath) {
+                $this->newFileName = basename($this->forcedPath);
+                $folder = dirname($this->forcedPath);
+                if ($folder === '.') {
+                    $folder = '';
+                }
+
+                if ($folder && !$this->filesystem()->directoryExists($folder)) {
+                    $this->filesystem()->makeDirectory($folder);
+                }
+            } else {
+                $this->newFileName = $this->uniqueFileName($folder, $this->getFileName());
+            }
 
             // Optimize the image if the image optimization is enabled.
             if (config('media.image-optimize')) {
@@ -240,7 +272,7 @@ class MediaUploader
             $media = new Media(
                 [
                     'disk' => $this->disk,
-                    'path' => $this->getDirectory($this->newFileName),
+                    'path' => $this->forcedPath ?: $this->getDirectory($this->newFileName),
                     'name' => $this->getName(),
                     'extension' => $this->getExtension(),
                     'mime_type' => $this->source->getMimeType(),
@@ -257,7 +289,26 @@ class MediaUploader
             }
 
             // Save the file to the database.
-            $media->save();
+            // Check if media exists with this path to avoid duplicates when forcing path
+            if ($this->forcedPath) {
+                $existingMedia = Media::where('disk', $this->disk)
+                    ->where('path', $this->forcedPath)
+                    ->first();
+
+                if ($existingMedia) {
+                    $media = $existingMedia;
+                    // Update metadata if needed
+                    $media->update([
+                        'size' => $this->source->getSize(),
+                        'mime_type' => $this->source->getMimeType(),
+                        'image_size' => $this->getImageSize(),
+                    ]);
+                } else {
+                    $media->save();
+                }
+            } else {
+                $media->save();
+            }
 
             if ($media->isImage() && ($conversions = app(ImageConversion::class)->getGlobalConversions())) {
                 PerformConversions::dispatch($media, $conversions);
