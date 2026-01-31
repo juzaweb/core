@@ -28,7 +28,7 @@ trait HasMeta
      * @param mixed $default
      * @return string|array
      */
-    public function getMeta(string $key, mixed $default = null): string|array
+    public function getMeta(string $key, mixed $default = null): string|array|null
     {
         return $this->metas->where('meta_key', $key)->first()?->meta_value ?? $default;
     }
