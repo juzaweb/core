@@ -4,6 +4,7 @@ namespace Juzaweb\Modules\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Juzaweb\Modules\Core\Permissions\Models\Role;
 
 class RoleRequest extends FormRequest
 {
@@ -18,7 +19,7 @@ class RoleRequest extends FormRequest
                 'string',
                 'max:50',
                 'alpha_dash',
-                Rule::unique('roles', 'code')->ignore($id)
+                Rule::unique((new Role())->getTable(), 'code')->ignore($id)
             ],
             'permissions' => ['nullable', 'array'],
         ];

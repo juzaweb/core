@@ -26,7 +26,6 @@ class RolesDataTable extends DataTable
             Column::id(),
             Column::editLink('name', admin_url('roles/{id}/edit'), __('core::translation.name')),
             Column::make('code', __('core::translation.code')),
-            Column::make('guard_name', __('core::translation.guard_name')),
             Column::createdAt(),
             Column::actions(),
         ];
