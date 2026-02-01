@@ -10,3 +10,5 @@ main:
     children:
       - title: Models
         url: /models
+  - title: Themes
+    url: /themes
