@@ -26,10 +26,10 @@ Core package for Juzaweb CMS.
     - [x] Tweater
     - [x] Github
     - [x] Instagram
-- [ ] User Permission
-  - [ ] Role management
-  - [ ] Assign permissions to roles
-  - [ ] Assign roles to users
+- [x] User Permission
+  - [x] Role management
+  - [x] Assign permissions to roles
+  - [x] Assign roles to users
   - [x] User management
 - [x] Media manager admin page
 - [ ] Short Code

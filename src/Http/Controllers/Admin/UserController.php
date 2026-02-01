@@ -80,6 +80,8 @@ class UserController extends AdminController
 
         $model = User::create($data);
 
+        $model->syncRoles($request->input('roles', []));
+
         return $this->success(
             __('core::translation.user_name_created_successfully', ['name' => $model->name]),
         );
@@ -100,6 +102,8 @@ class UserController extends AdminController
         }
 
         $model->update($data);
+
+        $model->syncRoles($request->input('roles', []));
 
         return $this->success(
             __('core::translation.user_name_updated_successfully', ['name' => $model->name]),

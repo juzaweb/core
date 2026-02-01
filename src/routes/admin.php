@@ -15,6 +15,7 @@ use Juzaweb\Modules\Core\Http\Controllers\Admin\LoadDataController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\ModuleController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\PageController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\ProfileController;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\RoleController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\SettingController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\SetupController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\TranslationController;
@@ -46,6 +47,7 @@ Route::admin('languages', LanguageController::class)
     ->except(['edit', 'update', 'create']);
 Route::admin('pages', PageController::class);
 Route::admin('users', UserController::class);
+Route::admin('roles', RoleController::class);
 
 Route::get('modules', [ModuleController::class, 'index'])
     ->name('admin.modules.index')
