@@ -28,7 +28,6 @@
                     <div class="card-body">
                         {{ Field::text($model, 'name', ['label' => __('core::translation.name'), 'required' => true]) }}
                         {{ Field::text($model, 'code', ['label' => __('core::translation.code'), 'required' => true]) }}
-                        {{ Field::text($model, 'guard_name', ['label' => __('core::translation.guard_name'), 'disabled' => true, 'value' => $model->guard_name ?? 'web']) }}
                     </div>
                 </div>
             </div>
