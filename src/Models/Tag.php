@@ -2,17 +2,16 @@
 
 namespace Juzaweb\Modules\Core\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Juzaweb\Modules\Admin\Models\Website;
 use Juzaweb\Modules\Blog\Models\Post;
 use Juzaweb\Modules\Core\Traits\HasAPI;
+use Juzaweb\Modules\Core\Traits\HasFrontendUrl;
 use Juzaweb\Modules\Core\Traits\UsedInFrontend;
-use Juzaweb\Modules\StorySharing\Models\Story;
 
 class Tag extends Model
 {
-    use HasAPI,  UsedInFrontend;
+    use HasAPI, UsedInFrontend, HasFrontendUrl;
 
     protected $table = 'tags';
 
@@ -24,7 +23,7 @@ class Tag extends Model
         'name',
     ];
 
-    public function taggable()
+    public function taggable(): MorphTo
     {
         return $this->morphTo();
     }
@@ -32,11 +31,6 @@ class Tag extends Model
     public function posts(): MorphToMany
     {
         return $this->morphedByMany(Post::class, 'taggable', 'taggable');
-    }
-
-    public function stories()
-    {
-        return $this->morphedByMany(Story::class, 'taggable', 'taggable');
     }
 
     public function getUrl(): string
