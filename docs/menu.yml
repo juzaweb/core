@@ -1,14 +1,20 @@
 main:
-  - title: Getting started
-    children:
-      - title: Introduction
-        url: /
-      - title: Google Analytics Setup
-        url: /google-analytics-setup
+  - title: Introduction
+    url: /
   - title: Modules
     url: /modules
     children:
       - title: Models
         url: /models
+      - title: Media
+        url: /media
+      - title: Translation
+        url: /translation
+      - title: Helpers
+        url: /helpers
+      - title: RESTful API
+        url: /restful-api
+      - title: Google Analytics Setup
+        url: /google-analytics-setup
   - title: Themes
     url: /themes
