@@ -76,7 +76,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'birthday' => 'date',
         'is_super_admin' => 'boolean',
         'status' => UserStatus::class,
-        'amount' => 'decimal:5',
     ];
 
     protected $searchable = ['name', 'email'];
