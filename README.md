@@ -12,6 +12,29 @@ Core package for Juzaweb CMS.
 - PHP >= 8.2
 - Laravel >= 11.0
 
+## Features
+- [x] File manager
+- [ ] Modules manager
+- [ ] Themes manager
+- [x] Theme Widgets
+- [x] Page blocks
+- [ ] Upload themes and run composer require command from admin panel (show process bar)
+- [ ] Upload Modules and run composer require command from admin panel (show process bar)
+- [x] Social login
+    - [x] Google
+    - [x] Facebook
+    - [x] Tweater
+    - [x] Github
+    - [x] Instagram
+- [ ] User Permission
+  - [ ] Role management
+  - [ ] Assign permissions to roles
+  - [ ] Assign roles to users
+  - [x] User management
+- [x] Media manager admin page
+- [ ] Short Code
+- [ ] Quick edit pages
+
 ## Installation
 
 ```bash
@@ -25,7 +48,6 @@ composer require juzaweb/core
 Run the test suite:
 
 ```bash
-cd packages/core
 composer test
 ```
 
