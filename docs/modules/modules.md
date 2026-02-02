@@ -5,22 +5,44 @@ Module is a package created to manage your large application using Modules. A Mo
 ### Make a Module
 
 ```bash
-php artisan module:make ModuleName
+php artisan module:make Blog
 ```
 
-### Make CRUD on module
-
-1. Create migration file for your feature
-2. Make model for your feature
-
-```bash
-php artisan module:make-model Post ModuleName
+### Folder Structure
 ```
-
-3. Make CRUD in Admin panel
-
-```bash
-php artisan module:make-crud Post ModuleName
+├── config
+│   └── blog.php
+├── src
+│   ├── Commands
+│   ├── Database
+│   │   ├── Factories
+│   │   ├── Migrations
+│   │   └── Seeders
+│   ├── Http
+│   │   ├── Controllers
+│   │   ├── Middleware
+│   │   └── Requests
+│   ├── Models
+│   ├── Providers
+│   │   ├── BlogServiceProvider.php
+│   │   └── RouteServiceProvider.php
+│   ├── Repositories
+│   ├── Resources
+│   │   ├── js
+│   │   │   └── app.js
+│   │   ├── lang
+│   │   ├── sass
+│   │   │   └── app.scss
+│   │   └── views
+│   └── Routes
+│       ├── api.php
+│       └── web.php
+├── tests
+│   ├── Feature
+│   └── Unit
+├── assets
+├── composer.json
+├── module.json
 ```
 
 ## Facade
