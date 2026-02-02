@@ -12,8 +12,12 @@ main:
         url: /translation
       - title: Helpers
         url: /helpers
-      - title: RESTful API
-        url: /restful-api
+      - title: Form Fields
+        url: /fields
+      - title: Commands
+        url: /commands
+      - title: Hooks Actions
+        url: /hooks
       - title: Google Analytics Setup
         url: /google-analytics-setup
   - title: Themes
