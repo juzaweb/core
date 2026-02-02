@@ -59,6 +59,15 @@ class Post extends Model
 }
 ```
 
+The `HasThumbnail` trait automatically:
+1.  Appends the `thumbnail` attribute to the model (so it appears in `$model->toArray()` or JSON responses).
+2.  Provides the `setThumbnail($media)` helper method to easily attach/update the thumbnail.
+
+```php
+// Update thumbnail
+$post->setThumbnail($request->input('thumbnail'));
+```
+
 #### 2. Register Default Thumbnails
 
 You can register the default thumbnail URLs in the `boot` method of your `ServiceProvider` using the `Thumbnail` facade.
