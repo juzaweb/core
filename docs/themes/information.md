@@ -1,4 +1,11 @@
-# Themes
+Themes in Juzaweb CMS are the presentation layer of your website. They control the look and feel of the frontend, including layouts, styles, and templates. Themes are stored in the `themes/` directory and can be managed via the Admin Panel.
+
+Juzaweb Themes support:
+-   **Blade Templates**: Standard Laravel Blade syntax.
+-   **Asset Management**: Webpack/Laravel Mix integration for SCSS and JS.
+-   **Theme Settings**: Customizable options via `theme.json` and Admin UI.
+-   **Widgets & Sidebars**: Dynamic content areas.
+-   **Multi-Language**: Built-in translation support.
 
 ## Getting Started
 
@@ -32,3 +39,24 @@ Themes can specify required modules in their `theme.json` file. When the theme i
 ```
 
 The `require` field accepts an array of module names that will be booted when the theme is loaded. Required modules are registered and booted at runtime, similar to how the system boots enabled modules, but only when the theme is active.
+
+## Folder Structure
+
+```
+├── README.md
+├── assets
+│   ├── css
+│   ├── js
+│   └── webpack.mix.js
+├── composer.json
+├── config
+│   └── itech.php
+├── database
+│   └── seeders
+├── src
+│   ├── Http
+│   ├── Providers
+│   ├── resources
+│   └── routes
+└── theme.json
+```
