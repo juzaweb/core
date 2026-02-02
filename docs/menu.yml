@@ -22,3 +22,8 @@ main:
         url: /google-analytics-setup
   - title: Themes
     url: /themes
+    children:
+      - title: Theme Compilation
+        url: /themes/assets
+      - title: Theme Commands
+        url: /themes/commands
