@@ -156,6 +156,61 @@ Field::language('Language', 'language_code');
 
 You can register your own field types extending the `Juzaweb\Modules\Core\Support\Fields\Field` abstract class.
 
-1. Create class extending `Field`.
-2. Implement `render()` method returning a View.
-3. Register using `Field::macro` or extending `FieldFactory`.
+1. **Create class extending `Field`**
+
+   Create a new class, for example `Color.php`, and extend the `Field` class.
+
+   ```php
+   namespace Juzaweb\Modules\Core\Support\Fields;
+
+   use Juzaweb\Modules\Core\Support\Fields\Field;
+
+   class Color extends Field
+   {
+       // ...
+   }
+   ```
+
+2. **Implement `render()` method returning a View**
+
+   Implement the `render` method to return the blade view for your field.
+
+   ```php
+   use Illuminate\Contracts\View\View;
+
+   class Color extends Field
+   {
+       public function render(): View|string
+       {
+           // You can pass params to view using $this->renderParams()
+           return view(
+               'theme::components.fields.color',
+               $this->renderParams()
+           );
+       }
+   }
+   ```
+
+3. **Register using `Field::macro` or extending `FieldFactory`**
+
+   Register the new field in your `ServiceProvider` (e.g., `AppServiceProvider` or a Module Service Provider).
+
+   ```php
+   use Juzaweb\Modules\Core\Facades\Field;
+   use Juzaweb\Modules\Core\Support\Fields\Color;
+
+   public function boot()
+   {
+       Field::macro('color', function ($label, $name, $options = []) {
+           return new Color($label, $name, $options);
+       });
+   }
+   ```
+
+### Usage
+
+Now you can use your new field type using the macro name you registered.
+
+```php
+Field::color('Background Color', 'bg_color');
+```
