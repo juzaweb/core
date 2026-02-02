@@ -44,5 +44,3 @@ php artisan module:make Blog
 ├── composer.json
 ├── module.json
 ```
-
-
