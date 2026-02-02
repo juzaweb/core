@@ -8,6 +8,12 @@ Module is a package created to manage your large application using Modules. A Mo
 php artisan module:make Blog
 ```
 
+* Require module with composer (use in locale)
+
+```
+composer require vendor/name:@dev
+```
+
 ### Folder Structure
 ```
 ├── config

@@ -53,3 +53,5 @@ main:
         url: /themes/commands
       - title: Theme Helpers
         url: /themes/helpers
+      - title: Theme Configs
+        url: /themes/settings

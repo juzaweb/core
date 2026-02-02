@@ -1,6 +1,6 @@
 # Theme Helpers
 
-Juzaweb CMS provides a Helper/Facade `Theme` (mapped to `Juzaweb\Modules\Core\Themes\ThemeRepository`) to manage themes easily.
+Juzaweb CMS provides a Facade `Theme` (mapped to `Juzaweb\Modules\Core\Themes\ThemeRepository`) to manage themes easily.
 
 ## Usage
 
