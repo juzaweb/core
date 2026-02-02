@@ -43,12 +43,10 @@ The `require` field accepts an array of module names that will be booted when th
 ## Folder Structure
 
 ```
-├── README.md
 ├── assets
 │   ├── css
 │   ├── js
 │   └── webpack.mix.js
-├── composer.json
 ├── config
 │   └── itech.php
 ├── database
@@ -58,5 +56,8 @@ The `require` field accepts an array of module names that will be booted when th
 │   ├── Providers
 │   ├── resources
 │   └── routes
+├── LICENSE
+├── README.md
+├── composer.json
 └── theme.json
 ```
