@@ -16,16 +16,17 @@ Themes can specify required modules in their `theme.json` file. When the theme i
 
 ```json
 {
-    "name": "igame",
-    "title": "Igame",
-    "description": "Game store theme for managing and displaying games",
-    "author": "Juzaweb",
+    "name": "itech",
+    "title": "Itech - Newspaper, Blog & Magazine",
+    "description": "A powerful, tech-focused newspaper and magazine theme, ideal for blogs, reviews, and high-frequency content publishing.",
+    "keywords": ["blog", "newspaper", "content publishing", "reviews"],
+    "author": "Author Name",
     "version": "1.0",
     "providers": [
-        "Juzaweb\\Themes\\Igame\\Providers\\ThemeServiceProvider"
+        "Juzaweb\\Themes\\Itech\\Providers\\ThemeServiceProvider"
     ],
     "require": [
-        "GameStore"
+        "Blog"
     ]
 }
 ```
