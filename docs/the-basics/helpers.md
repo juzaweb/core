@@ -1,5 +1,3 @@
-# Helper Functions
-
 The following functions provide utility functionality that can be used throughout the application.
 
 ## System & Configuration
@@ -135,3 +133,156 @@ Base64 encode/decode with URL-safe characters.
 
 ### `get_error_by_exception(Throwable $e)`
 Extract standardized error details (message, line, file, code) from an exception.
+
+## Thumbnails
+
+The `Thumbnail` facade allows you to define global default thumbnail images for your models. This is useful when you want to show a placeholder image if a model doesn't have an uploaded thumbnail.
+
+### Usage
+
+#### 1. Add Trait to Model
+
+First, ensure your model uses the `Juzaweb\Modules\Core\Traits\HasThumbnail` trait. This trait provides the `thumbnail` attribute and handling logic.
+
+```php
+namespace Juzaweb\Modules\Blog\Models;
+
+use Juzaweb\Modules\Core\Models\Model;
+use Juzaweb\Modules\Core\Traits\HasThumbnail;
+
+class Post extends Model
+{
+    use HasThumbnail;
+
+    // ...
+}
+```
+
+#### 2. Register Default Thumbnails
+
+You can register the default thumbnail URLs in the `boot` method of your `ServiceProvider` using the `Thumbnail` facade.
+
+```php
+use Juzaweb\Modules\Core\Facades\Thumbnail;
+use Juzaweb\Modules\Blog\Models\Post;
+
+public function boot()
+{
+    Thumbnail::defaults(function () {
+        return [
+            Post::class => asset('assets/images/post-placeholder.png'),
+        ];
+    });
+}
+```
+
+#### 3. Retrieving Thumbnail
+
+Now, when you access the `thumbnail` attribute of your model, it will return the uploaded image (via HasMedia) or the default placeholder if none exists.
+
+```php
+$post = Post::find(1);
+
+// Returns uploaded thumbnail or 'assets/images/post-placeholder.png'
+echo $post->thumbnail;
+```
+
+### How It Works
+
+1.  `Thumbnail::defaults` registers a callback returning the configuration array.
+2.  A global Middleware runs on every request, retrieves these defaults, and injects them into the respective Models using the `defaultThumbnail()` static method provided by the `HasThumbnail` trait.
+3.  The `getThumbnailAttribute` accessor checks `getFirstMediaUrl('thumbnail')`. If it's null, it falls back to the injected static default URL.
+
+## Sitemap
+
+Juzaweb CMS uses the `Sitemap` facade (mapped to `Juzaweb\Modules\Core\Contracts\Sitemap`) to manage XML sitemaps. It integrates with Spatie's Sitemap package but adds a registry system for modules.
+
+### Usage
+
+```php
+use Juzaweb\Modules\Core\Facades\Sitemap;
+```
+
+### Methods
+
+#### register($key, $class)
+
+Register a new sitemap provider. The class must implement `Juzaweb\Modules\Core\Contracts\Sitemapable`.
+
+```php
+use Juzaweb\Modules\Core\Facades\Sitemap;
+
+public function boot()
+{
+    Sitemap::register('posts', \Juzaweb\Modules\Blog\Models\Post::class);
+}
+```
+
+#### all()
+
+Get all registered sitemap providers.
+
+```php
+$providers = Sitemap::all();
+```
+
+#### get($key)
+
+Get a specific sitemap provider class by key.
+
+```php
+$class = Sitemap::get('posts');
+```
+
+### Implementing Sitemapable
+
+To make a Model or Class compatible with the Sitemap system, implement the `Juzaweb\Modules\Core\Contracts\Sitemapable` interface.
+
+```php
+namespace Juzaweb\Modules\Blog\Models;
+
+use Juzaweb\Modules\Core\Models\Model;
+use Juzaweb\Modules\Core\Contracts\Sitemapable;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\Sitemap\Tags\Url;
+
+class Post extends Model implements Sitemapable
+{
+    /**
+     * Query scope for sitemap generation.
+     */
+    public function scopeForSitemap(Builder $builder): Builder
+    {
+        return $builder->where('status', 'publish');
+    }
+
+    /**
+     * Get the URL for the sitemap item.
+     */
+    public function getUrl(): string
+    {
+        return route('post.detail', [$this->slug]);
+    }
+
+    /**
+     * Get the sitemap page name (group).
+     */
+    public static function getSitemapPage(): string
+    {
+        return 'posts';
+    }
+
+    /**
+     * Map the model to a Sitemap Tag (Spatie).
+     */
+    public function toSitemapTag(): Url|string|array
+    {
+        return Url::create($this->getUrl())
+            ->setLastModificationDate($this->updated_at)
+            ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
+            ->setPriority(0.8);
+    }
+}
+```
+
+

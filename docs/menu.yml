@@ -17,6 +17,8 @@ main:
         url: /the-basics/helpers
       - title: Hooks
         url: /the-basics/hooks
+      - title: Settings
+        url: /the-basics/settings
       - title: Google Analytics Setup
         url: /the-basics/google-analytics-setup
   - title: Modules
