@@ -40,6 +40,17 @@ Run the installation command:
 php artisan juzaweb:install
 ```
 
+### Install with browser
+
+1.  Open your browser and navigate to your project URL (e.g., `http://localhost:8000`).
+2.  You will be redirected to the **Installer Wizard**.
+3.  Follow the steps to configure your environment:
+    *   **Requirements**: Check if your server meets the requirements.
+    *   **Permissions**: Ensure directory permissions are correct.
+    *   **Environment**: Configure database connection and app settings.
+4.  Click **Install** to complete the setup.
+5.  After installation, you can log in to the Admin Panel with the account you created.
+
 ### Publish config
 
 ```bash
