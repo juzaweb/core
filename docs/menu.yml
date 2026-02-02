@@ -38,6 +38,8 @@ main:
         url: /modules/media
       - title: Translation
         url: /modules/translation
+      - title: Routing
+        url: /modules/routing
       - title: RESTful API
         url: /modules/restful-api
       - title: Helpers
