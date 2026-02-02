@@ -1,110 +1,161 @@
 # Form Fields
 
-Juzaweb CMS provides a fluent API for generating form fields using the `Field` facade. These fields are typically used in Meta Box registrations or custom form implementations.
+Juzaweb CMS provides a powerful and fluent API for generating form fields using the `Field` facade. These fields are typically used in Meta Box registrations, Settings pages, or custom Admin forms.
 
-## Usage
+## Basic Usage
 
 ```php
 use Juzaweb\Modules\Core\Facades\Field;
 
+// Basic syntax
 Field::text($label, $name, $options);
+
+// Fluent chaining (Recommended)
+Field::select('Status', 'status')->options(['on' => 'On', 'off' => 'Off']);
 ```
 
-### Common Options
-Most fields accept an `$options` array with the following common keys:
-- `default`: Default value.
-- `class`: Additional CSS classes.
-- `id`: Custom ID attribute.
-- `description`: Help text below the field.
-- `disabled`: Disable the field.
+## Global Options
+All fields accept an `$options` array as the third argument, or you can use fluent methods to set them.
 
-## Available Field Types
+| Option | Fluent Method | Description |
+| :--- | :--- | :--- |
+| `default` | `value($value)` | Set default value |
+| `id` | `id($id)` | Custom ID attribute |
+| `class` | `classes($class)` | Custom CSS classes |
+| `disabled` | `disabled($bool)` | Disable the input |
+| `help` | `help($text)` | Help text displayed below input |
+| `placeholder` | `placeholder($text)` | Input placeholder |
+
+## Field Types
 
 ### Text
 Standard text input.
+
 ```php
-Field::text('Full Name', 'name', ['default' => 'John Doe']);
+Field::text('Full Name', 'name')
+    ->placeholder('Enter your name')
+    ->help('Please enter your real name');
 ```
 
 ### Textarea
 Multiline text input.
+
 ```php
-Field::textarea('Bio', 'bio', ['rows' => 5]);
+Field::textarea('Bio', 'bio')
+    ->rows(5); // Set number of rows (if supported via options)
 ```
 
 ### Editor
-WYSIWYG Editor (TinyMCE/CKEditor).
+WYSIWYG Editor.
+
 ```php
 Field::editor('Content', 'content');
 ```
 
 ### Select
-Dropdown list.
+Dropdown list with support for Select2, AJAX loading, and multiple selection.
+
 ```php
-Field::select('Status', 'status', [
-    'options' => [
-        'draft' => 'Draft',
-        'published' => 'Published'
-    ]
-]);
+// Static Options
+Field::select('Status', 'status')
+    ->dropDownList(['published' => 'Published', 'draft' => 'Draft']);
+
+// Collection Options
+Field::select('User', 'user_id')
+    ->dropDownList(User::all(), 'id', 'name');
+
+// Multiple Select
+Field::select('Categories', 'categories')
+    ->multiple();
+
+// AJAX Search (Select2)
+Field::select('Author', 'author_id')
+    ->loadDataModel('Juzaweb\Modules\Admin\Models\User', 'name');
+// OR Custom URL
+Field::select('Author', 'author_id')
+    ->dataUrl(route('admin.authors.search'));
 ```
 
 ### Image
-Single image uploader.
+Single image uploader. Automatically handles file manager integration.
+
 ```php
 Field::image('Thumbnail', 'thumbnail');
 ```
 
 ### Images
-Multiple image uploader (Gallery).
+Gallery uploader (Multiple images).
+
 ```php
 Field::images('Gallery', 'gallery');
 ```
 
 ### UploadUrl
-File upload or URL input.
+Flexible input for uploading files or entering a URL (useful for Videos/Files).
+
 ```php
-Field::uploadUrl('Video', 'video_url');
+Field::uploadUrl('Video Source', 'video_url')
+    ->uploadType('video') // 'image', 'file', 'video', 'audio'
+    ->disk('public');     // 'public', 's3', etc.
 ```
 
 ### Checkbox
-Single checkbox.
+Single checkbox toggle.
+
 ```php
-Field::checkbox('Is Featured', 'is_featured');
+Field::checkbox('Is Featured', 'is_featured')
+    ->checked(true); // default checked
 ```
 
 ### Date
 Date picker.
+
 ```php
-Field::date('Publish Date', 'publish_date');
+Field::date('Publish Date', 'publish_date')
+    ->format('Y-m-d'); // Default format
 ```
 
 ### Tags
-Tag input.
+Tag input interface.
+
 ```php
 Field::tags('Tags', 'tags');
 ```
 
 ### Slug
-Slug generation field, usually paired with a source field.
+Auto-generating slug field.
+
 ```php
-Field::slug('Slug', 'slug', ['target' => 'name']);
+// Automatically listens to the 'name' field changes to update slug
+Field::slug('Slug', 'slug')
+    ->target('name'); // The field name to watch
 ```
 
 ### Security
-Security question or captcha field (specific implementation may vary).
+Security Code / Captcha field (implementation depends on config).
+
 ```php
-Field::security('Verification', 'nonce');
+Field::security('Verify Code', 'security_code');
 ```
 
 ### Currency
-Product price or currency input.
+Currency input format.
+
 ```php
 Field::currency('Price', 'price');
 ```
 
 ### Language
-Language selector.
+Dropdown to select system languages.
+
 ```php
 Field::language('Language', 'language_code');
 ```
+
+## Creating Custom Fields
+
+You can register your own field types extending the `Juzaweb\Modules\Core\Support\Fields\Field` abstract class.
+
+1. Create class extending `Field`.
+2. Implement `render()` method returning a View.
+3. Register using `Field::macro` or extending `FieldFactory`.
