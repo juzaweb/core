@@ -2,91 +2,136 @@
 
 The following functions provide utility functionality that can be used throughout the application.
 
-## `client_ip()`
+## System & Configuration
 
-This function returns the client's IP address. It checks if the HTTP_CF_CONNECTING_IP header is set (which is used by Cloudflare) and returns that value if available. Otherwise, it returns the IP address from the `request()->ip()` method.
+### `client_ip()`
+Get client IP address. Supports Cloudflare `HTTP_CF_CONNECTING_IP`.
 
-Example usage:
-
+### `setting($key = null, $default = null)`
+Get or set a setting value.
 ```php
-$ipAddress = client_ip();
+$value = setting('site_title', 'My Site');
 ```
 
-## `is_json($string)`
+### `is_super_admin($user = null)`
+Check if a user is a super admin.
 
-This function checks if a given string is a valid JSON string. It uses the `json_decode()` function to attempt to parse the string, and returns `true` if the string is valid JSON and `false` otherwise.
+### `is_admin_page()`
+Determine if the current page is an admin page.
 
-Example usage:
+### `default_language()`
+Get the default language locale (e.g., 'en').
 
+### `languages()`
+Get a collection of all available languages.
+
+### `current_actor($guard = null)`
+Get the current authenticated user or a Guest model instance.
+
+### `user($guard = null)`
+Get the currently authenticated user.
+
+### `cache_prefix($key)`
+Get the prefix for cache keys using the application scope.
+
+## URL & Paths
+
+### `home_url($uri = null, $locale = null)`
+Generate a home URL. Handles multi-language prefixes automatically.
 ```php
-$jsonString = '{"name": "John", "age": 30}';
-if (is_json($jsonString)) {
-    echo "The string is valid JSON.";
-} else {
-    echo "The string is not valid JSON.";
-}
+echo home_url('contact');
 ```
 
-## `setting($key = null, $default = null)`
-
-This function is used to retrieve a setting value from the application's settings. It takes two optional parameters: `$key` (the key of the setting to retrieve) and `$default` (the default value to return if the setting is not found).
-
-Example usage:
-
+### `admin_url($uri = null)`
+Generate an admin panel URL.
 ```php
-$settingValue = setting('example_setting');
-
-// or has a default value
-
-$settingValue = setting('example_setting', 'default_value');
+echo admin_url('posts/create');
 ```
 
-## `admin_url()`
+### `upload_url($path)`
+Get the full URL for an uploaded file. Handles local and cloud storage.
 
-Get admin url used in the application
+### `theme_path($path = null)`
+Get the absolute path to the theme directory.
 
-Example usage:
-
+### `theme_asset($path, $theme = null)`
+Get the URL for a theme asset.
 ```php
-$url = admin_url();
-
-// With custom path
-
-$url = admin_url('dashboard');
+echo theme_asset('css/style.css');
 ```
 
-## `languages()`
+### `upload_path_format($path)`
+Format a URL back to a relative storage path.
 
-Get all languages used in the application
+### `back_form_url()`
+Generate a URL to redirect back to, usually the index page of a resource, stripping `create` or `edit` segments.
 
-## `date_range()`
+### `load_data_url($model, $field = 'name', $params = [])`
+Generate a URL for AJAX loading of data (Select2, etc.).
 
-Used to generate a date range. E.g. `date_range('2022-01-01', '2022-01-31')` will return array of dates between '2022-01-01' and '2022-01-31'.
+## String & Formatting
 
-## `month_range()`
+### `is_json($string)`
+Check if a string is valid JSON.
 
-Used to generate a month range. E.g. `month_range('2022-01', '2022-12')` will return array of months between '2022-01' and '2022-12'.
+### `seo_string($string, $chars = 70)`
+Generate an SEO-friendly string (strips tags, decodes entities, truncates).
 
-## `title_from_key()`
+### `str_slug($string)`
+Generate a URL-friendly slug.
 
-Generate title from key, e.g. `title_from_key('users')` will return `Users`, `title_from_key('user_manager')` will return `User Manager`
+### `title_from_key($key)`
+Generate a readable title from a key (e.g., `user_manager` -> `User Manager`).
 
-## `cache_prefix()`
+### `key_from_string($str)`
+Convert a string to a key format (slug with underscores).
 
-Get prefix for cache keys.
+### `number_human_format($number)`
+Format a number to human-readable format (1K, 1M, 1B).
 
-## `format_size_units()`
+### `map_params($text, $params)`
+Replace `{placeholders}` in text with values from an array.
 
-Used to format a size value with units (e.g., bytes, kilobytes, megabytes).
+### `array_to_array_string($array)`
+Convert an array to a string representation (useful for logging/debugging).
 
-## `array_to_array_string()`
+### `remove_zero_width_space_string($string)`
+Remove zero-width characters from a string.
 
-Used to convert an array to a string representation.
+## Media & External
 
-## `used_recaptcha()`
+### `proxy_image($url, $width = null, $height = null, $crop = false)`
+Generate a proxy URL for an image, allowing resizing and caching.
 
-Used to check if reCAPTCHA is being used in the application.
+### `get_youtube_id($url)`
+Extract YouTube video ID from a URL.
 
-## `is_super_admin()`
+### `get_vimeo_id($url)`
+Extract Vimeo video ID from a URL.
 
-Used to check if the current user is a super admin.
+### `get_google_drive_id($url)`
+Extract Google Drive file ID from a URL.
+
+## Date & Time
+
+### `date_range($from, $to, $format = 'd/m/Y')`
+Generate an array of dates between two dates.
+
+### `month_range($from, $to, $format = 'm/Y')`
+Generate an array of months between two dates.
+
+## Security & Encryption
+
+### `encrypt_deterministic($plaintext, $key)`
+Encrypt a string deterministically (same input always produces same output for a given key).
+
+### `decrypt_deterministic($token, $key)`
+Decrypt a deterministically encrypted string.
+
+### `base64url_encode($data)` / `base64url_decode($data)`
+Base64 encode/decode with URL-safe characters.
+
+## Error Handling
+
+### `get_error_by_exception(Throwable $e)`
+Extract standardized error details (message, line, file, code) from an exception.
