@@ -29,6 +29,10 @@ Route::post('themes/install-from-zip', [ThemeController::class, 'installFromZip'
     ->name('admin.themes.install-from-zip')
     ->middleware(['permission:themes.edit']);
 
+Route::post('themes/delete', [ThemeController::class, 'delete'])
+    ->name('admin.themes.delete')
+    ->middleware(['permission:themes.edit']);
+
 Route::group(
     ['prefix' => 'widgets'],
     function () {

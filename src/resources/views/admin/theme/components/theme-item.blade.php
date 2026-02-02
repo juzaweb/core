@@ -16,6 +16,8 @@
                     @else
                         <button class="btn btn-primary active-theme" data-theme="{{ $theme->lowerName() }}">
                             {{ __('core::translation.activate') }}</button>
+                        <button class="btn btn-danger delete-theme" data-theme="{{ $theme->lowerName() }}">
+                            {{ __('core::translation.delete') }}</button>
                     @endif
 
                     <a href="javascript:void(0)" class="btn btn-info text-white" data-toggle="modal"

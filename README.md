@@ -14,8 +14,8 @@ Core package for Juzaweb CMS.
 
 ## Features
 - [x] File manager
-- [ ] Modules manager
-- [ ] Themes manager
+- [x] Modules manager
+- [x] Themes manager
 - [x] Theme Widgets
 - [x] Page blocks
 - [ ] Upload themes and run composer require command from admin panel (show process bar)

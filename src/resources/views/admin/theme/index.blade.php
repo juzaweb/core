@@ -257,6 +257,41 @@
                 });
             });
 
+            $('#theme-list').on('click', '.delete-theme', function() {
+                let btn = $(this);
+                let theme = btn.data('theme');
+
+                if (!confirm("{{ __('core::message.are_you_sure') }}")) {
+                    return false;
+                }
+
+                btn.prop("disabled", true);
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('admin.themes.delete') }}",
+                    dataType: 'json',
+                    data: {
+                        theme: theme,
+                        _token: "{{ csrf_token() }}"
+                    }
+                }).done(function(response) {
+                    if (response.status === false) {
+                        show_message(response.message);
+                        btn.prop("disabled", false);
+                        return false;
+                    }
+
+                    show_message(response.message);
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1000);
+                }).fail(function(response) {
+                    btn.prop("disabled", false);
+                    show_message(response.responseJSON.message);
+                });
+            });
+
             $(window).scroll(function() {
                 if ($(window).scrollTop() === $(document).height() - $(window).height()) {
                     if (offset + pageSize < total) {

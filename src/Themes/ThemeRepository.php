@@ -118,6 +118,17 @@ class ThemeRepository implements ThemeContract
         return $this->findOrFail($theme)->activate();
     }
 
+    public function delete(string $theme): bool
+    {
+        $themeInfo = $this->findOrFail($theme);
+
+        if ($this->current()->name() == $themeInfo->name()) {
+            throw new \RuntimeException("Cannot delete active theme");
+        }
+
+        return File::deleteDirectory($themeInfo->path());
+    }
+
     public function init(): void
     {
         if (!($theme = $this->current())) {

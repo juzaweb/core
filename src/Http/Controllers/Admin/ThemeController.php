@@ -200,4 +200,21 @@ class ThemeController extends AdminController
             return $this->error($e->getMessage());
         }
     }
+
+    public function delete(Request $request): JsonResponse
+    {
+        $request->validate(['theme' => 'required']);
+
+        $theme = $request->input('theme');
+
+        try {
+            Theme::delete($theme);
+
+            return $this->success(
+                __('core::translation.theme_deleted_successfully', ['name' => $theme])
+            );
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
+    }
 }

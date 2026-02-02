@@ -56,6 +56,14 @@ Route::post('modules/toggle', [ModuleController::class, 'toggle'])
     ->name('admin.modules.toggle')
     ->middleware(['permission:modules.edit']);
 
+Route::post('modules/install-from-zip', [ModuleController::class, 'installFromZip'])
+    ->name('admin.modules.install-from-zip')
+    ->middleware(['permission:modules.edit']);
+
+Route::post('modules/delete', [ModuleController::class, 'delete'])
+    ->name('admin.modules.delete')
+    ->middleware(['permission:modules.edit']);
+
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations')
     ->middleware(['permission:languages.index']);

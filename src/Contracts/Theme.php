@@ -34,4 +34,6 @@ interface Theme
     public function activate(string $theme): bool;
 
     public function init(): void;
+
+    public function delete(string $theme): bool;
 }
