@@ -43,23 +43,23 @@ php artisan juzaweb:install
 ### Publish config
 
 ```bash
-php artisan vendor:publish --tag=juzaweb-config
+php artisan vendor:publish --tag=core-config
 ```
 
 ### Publish Assets
 
 ```bash
-php artisan vendor:publish --tag=juzaweb-assets
+php artisan vendor:publish --tag=core-assets
 ```
 
 ### Publish Views
 
 ```bash
-php artisan vendor:publish --tag=juzaweb-views
+php artisan vendor:publish --tag=core-views
 ```
 
 ### Publish Lang
 
 ```bash
-php artisan vendor:publish --tag=juzaweb-lang
+php artisan vendor:publish --tag=core-lang
 ```
