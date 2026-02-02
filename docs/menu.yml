@@ -59,3 +59,9 @@ main:
         url: /themes/helpers
       - title: Theme Configs
         url: /themes/settings
+      - title: Menus
+        url: /themes/menus
+      - title: Templates & Blocks
+        url: /themes/templates
+      - title: Widgets
+        url: /themes/widgets
