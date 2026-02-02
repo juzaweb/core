@@ -1,29 +1,53 @@
 main:
-  - title: Introduction
-    url: /
+  - title: Getting Started
+    url: /getting-started
+    children:
+      - title: Installation
+        url: /getting-started/installation
+      - title: Update
+        url: /getting-started/update
+      - title: Changelog
+        url: /getting-started/changelog
+  - title: The Basics
+    url: /the-basics
+    children:
+      - title: Commands
+        url: /the-basics/commands
+      - title: Helpers
+        url: /the-basics/helpers
+      - title: Hooks
+        url: /the-basics/hooks
+      - title: Google Analytics Setup
+        url: /the-basics/google-analytics-setup
   - title: Modules
     url: /modules
     children:
-      - title: Models
-        url: /models
-      - title: Media
-        url: /media
-      - title: Translation
-        url: /translation
-      - title: Helpers
-        url: /helpers
-      - title: Form Fields
-        url: /fields
+      - title: Information
+        url: /modules/information
+      - title: Make CRUD
+        url: /modules/crud
+      - title: Asset Compilation
+        url: /modules/assets
       - title: Commands
-        url: /commands
-      - title: Hooks Actions
-        url: /hooks
-      - title: Google Analytics Setup
-        url: /google-analytics-setup
+        url: /modules/commands
+      - title: Models
+        url: /modules/models
+      - title: Form Fields
+        url: /modules/fields
+      - title: Media
+        url: /modules/media
+      - title: Translation
+        url: /modules/translation
+      - title: RESTful API
+        url: /modules/restful-api
+      - title: Helpers
+        url: /modules/helpers
   - title: Themes
     url: /themes
     children:
-      - title: Theme Compilation
+      - title: Information
+        url: /themes/information
+      - title: Asset Compilation
         url: /themes/assets
-      - title: Theme Commands
+      - title: Commands
         url: /themes/commands
