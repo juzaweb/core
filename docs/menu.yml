@@ -49,5 +49,7 @@ main:
         url: /themes/information
       - title: Asset Compilation
         url: /themes/assets
-      - title: Commands
+      - title: Theme Commands
         url: /themes/commands
+      - title: Theme Helpers
+        url: /themes/helpers
