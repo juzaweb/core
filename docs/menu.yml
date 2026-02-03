@@ -1,9 +1,8 @@
 main:
   - title: Getting Started
-    url: /
     children:
       - title: Installation
-        url: /
+        url: /installation
       - title: Update
         url: /getting-started/update
       - title: Changelog
