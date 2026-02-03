@@ -22,7 +22,7 @@ php artisan translation:import --module=module-name
 
 All languages and locales key will be imported to `translations` table. Include keys that are not declared in your language file. So you can use translate functions like `trans()`, `__()` or `t()` in react components, anywhere in your application and import them easily.
 
-### Export translation (Only Premium)
+### Export translation
 
 ```bash
 php artisan translation:export
