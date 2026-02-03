@@ -2,7 +2,7 @@ main:
   - title: Getting Started
     children:
       - title: Installation
-        url: /installation
+        url: /getting-started/installation
       - title: Update
         url: /getting-started/update
       - title: Changelog
