@@ -9,15 +9,15 @@ main:
         url: /getting-started/changelog
   - title: The Basics
     children:
-      - title: Commands
-        url: /the-basics/commands
       - title: Helpers
         url: /the-basics/helpers
       - title: Hooks
         url: /the-basics/hooks
       - title: Settings
         url: /the-basics/settings
-      - title: Google Analytics Setup
+      - title: Commands
+        url: /the-basics/commands
+      - title: Dashboard Analytics Setup
         url: /the-basics/google-analytics-setup
   - title: Modules
     children:
