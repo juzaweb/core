@@ -1,15 +1,14 @@
 main:
   - title: Getting Started
-    url: /getting-started
+    url: /
     children:
       - title: Installation
-        url: /getting-started/installation
+        url: /
       - title: Update
         url: /getting-started/update
       - title: Changelog
         url: /getting-started/changelog
   - title: The Basics
-    url: /the-basics
     children:
       - title: Commands
         url: /the-basics/commands
@@ -22,7 +21,6 @@ main:
       - title: Google Analytics Setup
         url: /the-basics/google-analytics-setup
   - title: Modules
-    url: /modules
     children:
       - title: Information
         url: /modules/information
@@ -45,7 +43,6 @@ main:
       - title: Commands
         url: /modules/commands
   - title: Themes
-    url: /themes
     children:
       - title: Information
         url: /themes/information
