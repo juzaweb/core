@@ -1,5 +1,3 @@
-# Google Analytics Setup Guide
-
 This guide will help you configure Google Analytics to display dashboard charts in your application.
 
 ## Prerequisites
