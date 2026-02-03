@@ -28,10 +28,6 @@ main:
         url: /modules/information
       - title: Make CRUD
         url: /modules/crud
-      - title: Asset Compilation
-        url: /modules/assets
-      - title: Commands
-        url: /modules/commands
       - title: Models
         url: /modules/models
       - title: Form Fields
@@ -42,10 +38,12 @@ main:
         url: /modules/translation
       - title: Routing
         url: /modules/routing
-      - title: RESTful API
-        url: /modules/restful-api
       - title: Helpers
         url: /modules/helpers
+      - title: Asset Compilation
+        url: /modules/assets
+      - title: Commands
+        url: /modules/commands
   - title: Themes
     url: /themes
     children:
