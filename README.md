@@ -14,12 +14,12 @@ Core package for Juzaweb CMS.
 
 ## Features
 - [x] File manager
-- [ ] Modules manager
-- [ ] Themes manager
+- [x] Modules manager
+- [x] Themes manager
 - [x] Theme Widgets
 - [x] Page blocks
-- [ ] Upload themes and run composer require command from admin panel (show process bar)
-- [ ] Upload Modules and run composer require command from admin panel (show process bar)
+- [x] Upload themes and run composer require command from admin panel (show process bar)
+- [x] Upload Modules and run composer require command from admin panel (show process bar)
 - [x] Social login
     - [x] Google
     - [x] Facebook
@@ -32,8 +32,8 @@ Core package for Juzaweb CMS.
   - [x] Assign roles to users
   - [x] User management
 - [x] Media manager admin page
-- [ ] Short Code
-- [ ] Quick edit pages
+- [x] Short Code
+- [x] Quick edit pages
 
 ## Installation
 

@@ -45,6 +45,10 @@ Route::post('/profile', [ProfileController::class, 'update']);
 
 Route::admin('languages', LanguageController::class)
     ->except(['edit', 'update', 'create']);
+
+Route::get('pages/{id}/modal-data', [PageController::class, 'getModalData'])->name('admin.pages.modal-data');
+Route::put('pages/{id}/quick-update', [PageController::class, 'quickUpdate'])->name('admin.pages.quick-update');
+
 Route::admin('pages', PageController::class);
 Route::admin('users', UserController::class);
 Route::admin('roles', RoleController::class);
@@ -55,6 +59,10 @@ Route::get('modules', [ModuleController::class, 'index'])
 Route::post('modules/toggle', [ModuleController::class, 'toggle'])
     ->name('admin.modules.toggle')
     ->middleware(['permission:modules.edit']);
+
+Route::post('modules/install-from-zip', [ModuleController::class, 'installFromZip'])
+    ->name('admin.modules.install-from-zip')
+    ->middleware(['permission:modules.create']);
 
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations')

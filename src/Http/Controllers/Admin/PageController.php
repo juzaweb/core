@@ -247,4 +247,37 @@ class PageController extends AdminController
                 return $this->error(__('video-sharing::translation.invalid_action'));
         }
     }
+
+    public function getModalData(Request $request, string $id): JsonResponse
+    {
+        $model = Page::find($id);
+        abort_if($model === null, 404);
+
+        return $this->success([
+            'title' => $model->title,
+            'status' => $model->status,
+        ]);
+    }
+
+    public function quickUpdate(Request $request, string $id): JsonResponse
+    {
+        $request->validate([
+            'title' => 'required|string|max:150',
+            'status' => 'required|in:' . implode(',', array_keys(PageStatus::all())),
+        ]);
+
+        $model = Page::find($id);
+        abort_if($model === null, 404);
+
+        $locale = $this->getFormLanguage();
+
+        DB::transaction(function () use ($model, $request, $locale) {
+            $model->setDefaultLocale($locale)->update([
+                'title' => $request->input('title'),
+                'status' => $request->input('status'),
+            ]);
+        });
+
+        return $this->success(__('core::translation.saved_successfully'));
+    }
 }

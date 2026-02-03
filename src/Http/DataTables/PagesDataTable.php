@@ -71,6 +71,10 @@ class PagesDataTable extends DataTable
             Action::link(__('core::translation.view_online'), $model->getUrl(), 'fas fa-eye')
                 ->color('info')
                 ->target('_blank'),
+            Action::make(__('core::translation.quick_edit'), 'javascript:void(0)', 'fas fa-bolt')
+                ->type('action')
+                ->action('quick-edit')
+                ->color('secondary'),
             Action::edit(admin_url("pages/{$model->id}/edit")),
             Action::delete(),
         ];

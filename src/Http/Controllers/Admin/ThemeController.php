@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Juzaweb\Modules\Core\Facades\Breadcrumb;
 use Juzaweb\Modules\Core\Facades\Theme;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
+use Juzaweb\Modules\Core\Support\Composer;
 use ZipArchive;
 
 class ThemeController extends AdminController
@@ -155,6 +156,11 @@ class ThemeController extends AdminController
             }
 
             $themeName = $themeConfig['name'];
+            if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $themeName)) {
+                File::deleteDirectory($tempDir);
+                Storage::disk($disk)->delete($path);
+                return $this->error(__('core::translation.invalid_theme_name'));
+            }
 
             // Check if theme already exists
             $themesPath = base_path('themes/' . $themeName);
@@ -180,6 +186,11 @@ class ThemeController extends AdminController
             // Move theme to themes directory
             File::ensureDirectoryExists(base_path('themes'));
             File::moveDirectory($themeDir, $themesPath);
+
+            // Install dependencies
+            if (File::exists($themesPath . '/composer.json')) {
+                app(Composer::class)->install($themesPath);
+            }
 
             // Clean up
             File::deleteDirectory($tempDir);

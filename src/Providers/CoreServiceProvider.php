@@ -270,6 +270,11 @@ class CoreServiceProvider extends ServiceProvider
             Sitemap::class,
             fn($app) => new SitemapRepository()
         );
+
+        $this->app->singleton(
+            \Juzaweb\Modules\Core\Contracts\ShortCode::class,
+            fn($app) => new \Juzaweb\Modules\Core\Support\ShortCode()
+        );
     }
 
     protected function customServices(): void
