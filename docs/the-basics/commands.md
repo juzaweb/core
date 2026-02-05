@@ -64,6 +64,13 @@ php artisan language:make en
 ### `theme:download-template`
 Download a template html from a URL and save it as a blade view.
 
+This command is interactive and will ask for:
+- **Url Template**: The URL of the page you want to crawl.
+- **Container**: The CSS selector of the main content area (e.g., `.container`, `#content`). Default: `.container-fluid`.
+- **File**: The output filename for the blade view (e.g., `home`, `about`). Default: `index.blade.php`.
+
+The command will crawl the content from the URL, extract the HTML inside the specified container, and save it to the theme's `resources/views` directory. The generated file will automatically extend `layouts.main`.
+
 **Usage:**
 ```bash
 php artisan theme:download-template theme_name
@@ -73,6 +80,12 @@ php artisan theme:download-template theme_name
 
 ### `theme:download-style`
 Download assets (CSS/JS) from a URL and configure Laravel Mix.
+
+This command asks for the **Url Template** and then:
+1. Crawls the page to find all linked CSS and JS files.
+2. Downloads these files to the theme's `assets/css` and `assets/js` directories.
+3. Downloads referenced assets (fonts, images) inside CSS files.
+4. Generates a `mix.js` file in the theme's `assets` folder to compile these resources.
 
 **Usage:**
 ```bash
