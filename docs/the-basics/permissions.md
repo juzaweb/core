@@ -6,7 +6,7 @@ The `PermissionManager` singleton manages the registration and retrieval of perm
 
 ### Registering Permissions manually
 
-You can register permissions using the `make` method. This is typically done in a ServiceProvider's `boot` method or via `AdminResource`.
+You can register permissions using the `make` method.
 
 ```php
 use Juzaweb\Modules\Core\Facades\PermissionManager;
