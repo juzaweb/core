@@ -15,6 +15,10 @@ main:
         url: /the-basics/hooks
       - title: Settings
         url: /the-basics/settings
+      - title: Translation
+        url: /the-basics/translation
+      - title: Permissions
+        url: /the-basics/permissions
       - title: Commands
         url: /the-basics/commands
       - title: Dashboard Analytics Setup
@@ -31,8 +35,6 @@ main:
         url: /modules/fields
       - title: Media
         url: /modules/media
-      - title: Translation
-        url: /modules/translation
       - title: Routing
         url: /modules/routing
       - title: Helpers
