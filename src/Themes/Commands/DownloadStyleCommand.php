@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -46,9 +47,21 @@ class DownloadStyleCommand extends DownloadCommand
 
     protected function generateMixFile(array $css, array $js): void
     {
-        $output = 'public/themes/' . $this->theme->name();
         $mixOutput = 'themes/' . $this->theme->studlyName() . '/assets';
-        $mix = "const mix = require('laravel-mix');
+
+        $cssList = array_map(
+            fn($item) => "basePath + '/css/" . basename(trim($item, "'")) . "'",
+            $css
+        );
+
+        $jsList = array_map(
+            fn($item) => "basePath + '/js/" . basename(trim($item, "'")) . "'",
+            $js
+        );
+
+        $mix = "let mix = require('laravel-mix');
+let path = require('path');
+
 require('laravel-mix-merge-manifest');
 
 mix.disableNotifications();
@@ -61,19 +74,21 @@ mix.options({
     terser: {extractComments: false}
 });
 
-mix.setPublicPath('public/themes/{$this->theme->name()}');
+const basePath = path.relative(process.cwd(), __dirname);
+const publishPath = basePath + '/public';
+mix.setPublicPath(publishPath);
 
 mix.styles([
-    ". implode(",\n\t", $css) .",
-], '{$output}/css/main.min.css');
+    " . implode(",\n    ", $cssList) . "
+], publishPath + '/css/main.min.css');
 
 mix.combine([
-    ". implode(",\n\t", $js) .",
-], '{$output}/js/main.min.js');";
+    " . implode(",\n    ", $jsList) . "
+], publishPath + '/js/main.min.js');";
 
-        File::put(base_path("{$mixOutput}/mix.js"), $mix);
+        File::put(base_path("{$mixOutput}/webpack.mix.js"), $mix);
 
-        $this->info("-- Generated {$mixOutput}/mix.js");
+        $this->info("-- Generated {$mixOutput}/webpack.mix.js");
     }
 
     protected function sendAsks(): void
