@@ -103,3 +103,46 @@ Adding the same filter as the one in the filter example above:
 ```
 You are @apply_filters('my.hook', 'awesome')
 ```
+
+### Using Facade
+You can also use the `Hook` facade to manage actions and filters.
+
+```php
+use Juzaweb\Hooks\Facades\Hook;
+
+// Add action
+Hook::addAction('my.hook', function($user) {
+    // ...
+});
+
+// Do action
+Hook::action('my.hook', $user);
+
+// Add filter
+Hook::addFilter('my.hook', function($value) {
+    return $value;
+});
+
+// Apply filter
+$value = Hook::filter('my.hook', $value);
+
+// Remove specific action callback
+Hook::removeAction('my.hook', $callback, $priority);
+
+// Remove all actions for a hook
+Hook::removeAllActions('my.hook');
+
+// Remove specific filter callback
+Hook::removeFilter('my.hook', $callback, $priority);
+
+// Remove all filters for a hook
+Hook::removeAllFilters('my.hook');
+
+// Check if hook has listeners
+if (Hook::hasListeners('my.hook')) {
+    // ...
+}
+
+// Get all listeners for a hook
+$listeners = Hook::getListeners('my.hook');
+```
