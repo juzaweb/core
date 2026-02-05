@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -17,20 +18,38 @@ abstract class Resource
 
     protected string $permissionName;
 
+    /**
+     * @var string[]
+     */
     protected array $methods = [];
 
+    /**
+     * @var array<string, string[]>
+     */
     protected array $permissions = [];
 
+    /**
+     * @var array<string, string[]>
+     */
     protected array $middleware = [];
 
     protected bool $withoutPermission = false;
 
     protected ?string $routeName = null;
 
-    public function __construct(protected Registrar $registrar, protected string $name, protected string $controller)
-    {
-    }
+    /**
+     * @param Registrar $registrar
+     * @param string $name
+     * @param string $controller
+     */
+    public function __construct(protected Registrar $registrar, protected string $name, protected string $controller) {}
 
+    /**
+     * Set route name
+     *
+     * @param string $name
+     * @return static
+     */
     public function name(string $name): static
     {
         $this->routeName = $name;
@@ -38,6 +57,12 @@ abstract class Resource
         return $this;
     }
 
+    /**
+     * Set permission name
+     *
+     * @param string $name
+     * @return static
+     */
     public function permissionName(string $name): static
     {
         $this->permissionName = $name;
@@ -45,6 +70,13 @@ abstract class Resource
         return $this;
     }
 
+    /**
+     * Set permissions for a method
+     *
+     * @param string $method
+     * @param array $permissions
+     * @return static
+     */
     public function permissions(string $method, array $permissions): static
     {
         $this->permissions[$method] = $permissions;
@@ -52,6 +84,13 @@ abstract class Resource
         return $this;
     }
 
+    /**
+     * Set middleware for a method
+     *
+     * @param string $method
+     * @param array $middleware
+     * @return static
+     */
     public function middleware(string $method, array $middleware): static
     {
         $this->middleware[$method] = $middleware;
@@ -59,6 +98,12 @@ abstract class Resource
         return $this;
     }
 
+    /**
+     * Set methods to register
+     *
+     * @param array $methods
+     * @return static
+     */
     public function methods(array $methods): static
     {
         $this->methods = $methods;
@@ -66,6 +111,12 @@ abstract class Resource
         return $this;
     }
 
+    /**
+     * Only register specific methods
+     *
+     * @param array $methods
+     * @return static
+     */
     public function only(array $methods): static
     {
         $this->methods($methods);
@@ -73,6 +124,12 @@ abstract class Resource
         return $this;
     }
 
+    /**
+     * Register all methods except specific ones
+     *
+     * @param array $methods
+     * @return static
+     */
     public function except(array $methods): static
     {
         $this->methods(array_diff($this->methods, $methods));
@@ -80,11 +137,22 @@ abstract class Resource
         return $this;
     }
 
+    /**
+     * Disable permission check
+     *
+     * @return static
+     */
     public function noPermission(): static
     {
         return $this->withoutPermission();
     }
 
+    /**
+     * Set without permission
+     *
+     * @param bool $withoutPermission
+     * @return static
+     */
     public function withoutPermission(bool $withoutPermission = true): static
     {
         $this->withoutPermission = $withoutPermission;
@@ -92,11 +160,22 @@ abstract class Resource
         return $this;
     }
 
+    /**
+     * Get permission name
+     *
+     * @return string
+     */
     public function getPermissionName(): string
     {
         return $this->permissionName ?? $this->name;
     }
 
+    /**
+     * Get permissions for a method
+     *
+     * @param string $method
+     * @return array
+     */
     public function getPermissions(string $method): array
     {
         if ($this->withoutPermission) {
@@ -114,14 +193,24 @@ abstract class Resource
             default => $method,
         };
 
-        return [$this->getPermissionName().".{$permission}"];
+        return [$this->getPermissionName() . ".{$permission}"];
     }
 
+    /**
+     * Get route name
+     *
+     * @return string
+     */
     public function getRouteName(): string
     {
         return $this->routeName ?? "admin.{$this->name}";
     }
 
+    /**
+     * Register routes
+     *
+     * @return void
+     */
     abstract public function register(): void;
 
     public function __destruct()

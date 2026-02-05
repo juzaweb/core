@@ -16,6 +16,11 @@ class AdminResource extends Resource
 {
     protected array $methods = ['index', 'edit', 'create', 'store', 'update', 'destroy', 'bulk'];
 
+    /**
+     * Register routes
+     *
+     * @return void
+     */
     public function register(): void
     {
         $this->registered = true;
@@ -100,6 +105,12 @@ class AdminResource extends Resource
         }
     }
 
+    /**
+     * Get middleware for a method
+     *
+     * @param string $method
+     * @return array
+     */
     public function getMiddleware(string $method): array
     {
         if (isset($this->middleware[$method])) {
