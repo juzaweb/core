@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -26,6 +27,7 @@ use Juzaweb\Modules\Core\Contracts\MenuBox;
 use Juzaweb\Modules\Core\Contracts\NavMenu;
 use Juzaweb\Modules\Core\Contracts\PageBlock;
 use Juzaweb\Modules\Core\Contracts\PageTemplate;
+use Juzaweb\Modules\Core\Contracts\PermissionManager;
 use Juzaweb\Modules\Core\Contracts\RouteResource;
 use Juzaweb\Modules\Core\Contracts\Setting;
 use Juzaweb\Modules\Core\Contracts\Sidebar;
@@ -49,6 +51,7 @@ use Juzaweb\Modules\Core\Support\MenuRepository;
 use Juzaweb\Modules\Core\Support\NavMenuRepository;
 use Juzaweb\Modules\Core\Support\PageBlockRepository;
 use Juzaweb\Modules\Core\Support\PageTemplateRepository;
+use Juzaweb\Modules\Core\Support\PermissionManager as PermissionManagerSupport;
 use Juzaweb\Modules\Core\Support\RouteResourceRepository;
 use Juzaweb\Modules\Core\Support\SettingRepository;
 use Juzaweb\Modules\Core\Support\SidebarRepository;
@@ -269,6 +272,11 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->singleton(
             Sitemap::class,
             fn($app) => new SitemapRepository()
+        );
+
+        $this->app->singleton(
+            PermissionManager::class,
+            fn($app) => new PermissionManagerSupport()
         );
     }
 
