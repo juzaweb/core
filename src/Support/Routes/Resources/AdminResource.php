@@ -25,18 +25,45 @@ class AdminResource extends Resource
             $this->registrar->get($this->name, [$this->controller, 'index'])
                 ->middleware($this->getMiddleware('index'))
                 ->name("{$routeName}.index");
+
+            PermissionManager::make(
+                "{$this->name}.index",
+                fn() => [
+                    'name' => "Index {$this->name}",
+                    'group' => $this->name,
+                    'code' => "{$this->name}.index",
+                ]
+            );
         }
 
         if (in_array('edit', $this->methods)) {
             $this->registrar->get("{$this->name}/{id}/edit", [$this->controller, 'edit'])
                 ->middleware($this->getMiddleware('edit'))
                 ->name("{$routeName}.edit");
+
+            PermissionManager::make(
+                "{$this->name}.edit",
+                fn() => [
+                    'name' => "Edit {$this->name}",
+                    'group' => $this->name,
+                    'code' => "{$this->name}.edit",
+                ]
+            );
         }
 
         if (in_array('create', $this->methods)) {
             $this->registrar->get("{$this->name}/create", [$this->controller, 'create'])
                 ->middleware($this->getMiddleware('create'))
                 ->name("{$routeName}.create");
+
+            PermissionManager::make(
+                "{$this->name}.create",
+                fn() => [
+                    'name' => "Create {$this->name}",
+                    'group' => $this->name,
+                    'code' => "{$this->name}.create",
+                ]
+            );
         }
 
         if (in_array('store', $this->methods)) {
@@ -55,48 +82,7 @@ class AdminResource extends Resource
             $this->registrar->delete("{$this->name}/{id}", [$this->controller, 'destroy'])
                 ->middleware($this->getMiddleware('destroy'))
                 ->name("{$routeName}.destroy");
-        }
 
-        if (in_array('bulk', $this->methods)) {
-            $this->registrar->post("{$this->name}/bulk", [$this->controller, 'bulk'])
-                ->middleware($this->getMiddleware('bulk'))
-                ->name("{$routeName}.bulk");
-        }
-
-        if (in_array('index', $this->methods)) {
-            PermissionManager::make(
-                "{$this->name}.index",
-                fn() => [
-                    'name' => "Index {$this->name}",
-                    'group' => $this->name,
-                    'code' => "{$this->name}.index",
-                ]
-            );
-        }
-
-        if (in_array('create', $this->methods)) {
-            PermissionManager::make(
-                "{$this->name}.create",
-                fn() => [
-                    'name' => "Create {$this->name}",
-                    'group' => $this->name,
-                    'code' => "{$this->name}.create",
-                ]
-            );
-        }
-
-        if (in_array('edit', $this->methods)) {
-            PermissionManager::make(
-                "{$this->name}.edit",
-                fn() => [
-                    'name' => "Edit {$this->name}",
-                    'group' => $this->name,
-                    'code' => "{$this->name}.edit",
-                ]
-            );
-        }
-
-        if (in_array('destroy', $this->methods)) {
             PermissionManager::make(
                 "{$this->name}.delete",
                 fn() => [
@@ -105,6 +91,12 @@ class AdminResource extends Resource
                     'code' => "{$this->name}.delete",
                 ]
             );
+        }
+
+        if (in_array('bulk', $this->methods)) {
+            $this->registrar->post("{$this->name}/bulk", [$this->controller, 'bulk'])
+                ->middleware($this->getMiddleware('bulk'))
+                ->name("{$routeName}.bulk");
         }
     }
 
