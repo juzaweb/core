@@ -41,7 +41,6 @@ Widget::make('recent_posts', function () {
         'description' => 'Display recent posts.',
         'view' => 'theme::widgets.recent_posts.show',
         'form' => 'theme::widgets.recent_posts.form',
-        'handler' => \App\Widgets\RecentPosts::class, // if using a class handler
     ];
 });
 ```
