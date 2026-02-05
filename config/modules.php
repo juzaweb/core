@@ -35,7 +35,7 @@ return [
             // 'views/index' => 'resources/views/index.blade.php',
             // 'views/master' => 'resources/views/layouts/master.blade.php',
             'scaffold/config' => 'config/config.php',
-            // 'composer' => 'composer.json',
+            'composer' => 'composer.json',
             'webpack' => 'assets/webpack.mix.js',
             'package' => 'package.json',
             'gitignore' => '.gitignore',
