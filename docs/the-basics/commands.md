@@ -58,3 +58,25 @@ php artisan language:make en
 
 **Arguments:**
 - `code`: The code of the language (e.g., `en`, `vi`).
+
+## Theme Management
+
+### `theme:download-template`
+Download a template html from a URL and save it as a blade view.
+
+**Usage:**
+```bash
+php artisan theme:download-template theme_name
+```
+**Arguments:**
+- `theme`: The name of the theme.
+
+### `theme:download-style`
+Download assets (CSS/JS) from a URL and configure Laravel Mix.
+
+**Usage:**
+```bash
+php artisan theme:download-style theme_name
+```
+**Arguments:**
+- `theme`: The name of the theme.
