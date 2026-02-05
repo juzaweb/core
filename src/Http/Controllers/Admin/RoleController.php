@@ -12,6 +12,7 @@ use Juzaweb\Modules\Core\Http\DataTables\RolesDataTable;
 use Juzaweb\Modules\Core\Http\Requests\RoleRequest;
 use Juzaweb\Modules\Core\Permissions\Models\Permission;
 use Juzaweb\Modules\Core\Permissions\Models\Role;
+use Juzaweb\Modules\Core\Facades\PermissionManager;
 
 class RoleController extends AdminController
 {
@@ -28,7 +29,7 @@ class RoleController extends AdminController
         Breadcrumb::add(__('core::translation.add_role'));
 
         $model = new Role();
-        $permissions = Permission::get()->groupBy('group');
+        $permissions = collect(PermissionManager::getPermissions())->groupBy('group');
 
         return view(
             'core::admin.role.form',
@@ -59,7 +60,7 @@ class RoleController extends AdminController
         Breadcrumb::add(__('core::translation.roles'), admin_url('roles'));
         Breadcrumb::add(__('core::translation.edit_role'));
 
-        $permissions = Permission::get()->groupBy('group');
+        $permissions = collect(PermissionManager::getPermissions())->groupBy('group');
         $model = $role;
 
         return view(

@@ -3,9 +3,10 @@
 @section('title', $model->exists ? __('core::translation.edit_role') : __('core::translation.add_role'))
 
 @section('content')
-    <form action="{{ $model->exists ? admin_url('roles/' . $model->id) : admin_url('roles') }}" method="post" class="form-ajax">
+    <form action="{{ $model->exists ? admin_url('roles/' . $model->id) : admin_url('roles') }}" method="post"
+        class="form-ajax">
         @csrf
-        @if($model->exists)
+        @if ($model->exists)
             @method('PUT')
         @endif
 
@@ -33,21 +34,21 @@
             </div>
 
             <div class="col-md-8">
-                @foreach($permissions as $group => $items)
+                @foreach ($permissions as $group => $items)
                     <div class="card mb-3">
                         <div class="card-header">
                             <h5 class="card-title text-capitalize">{{ $group }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                @foreach($items as $permission)
+                                @foreach ($items as $permission)
                                     <div class="col-md-4">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $permission->id }}" id="perm-{{ $permission->id }}"
-                                                @if($model->exists && $model->hasPermissionTo($permission->id)) checked @endif
-                                            >
-                                            <label class="form-check-label" for="perm-{{ $permission->id }}">
-                                                {{ $permission->description ?: $permission->name }}
+                                            <input class="form-check-input" type="checkbox" name="permissions[]"
+                                                value="{{ $permission['code'] }}" id="perm-{{ $permission['code'] }}"
+                                                @if ($model->exists && $model->hasPermissionTo($permission['code'])) checked @endif>
+                                            <label class="form-check-label" for="perm-{{ $permission['code'] }}">
+                                                {{ $permission['name'] }}
                                             </label>
                                         </div>
                                     </div>
