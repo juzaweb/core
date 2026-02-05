@@ -70,11 +70,11 @@ class ThemeGeneratorCommand extends Command
      */
     protected function init(): void
     {
-        $createdThemePath = $this->themePath . '/' . Str::studly($this->theme['name']);
+        $createdThemePath = $this->themePath . '/' . Str::kebab($this->theme['name']);
         $force = $this->option('force');
 
         if (!$force && File::isDirectory($createdThemePath)) {
-            $this->error('Sorry, ' . Str::studly($this->theme['name']) . ' Theme Folder Already Exist !!!');
+            $this->error('Sorry, ' . Str::kebab($this->theme['name']) . ' Theme Folder Already Exist !!!');
             exit();
         }
 
@@ -93,9 +93,9 @@ class ThemeGeneratorCommand extends Command
 
         $this->info(ucfirst($this->theme['name']) . ' Theme Folder Successfully Generated !!!');
 
-        // if ($this->confirm('Are you want to activate this theme?', true)) {
-        //     $this->call('theme:active', ['theme' => $this->theme['name']]);
-        // }
+        if ($this->confirm('Are you want to activate this theme?', true)) {
+            $this->call('theme:active', ['theme' => $this->theme['name']]);
+        }
     }
 
     /**
@@ -147,7 +147,7 @@ class ThemeGeneratorCommand extends Command
                 );
             }
 
-            $storePath = str_replace('[NAME]', Str::slug($this->theme['name'], '-'), $storePath);
+            $storePath = str_replace('[NAME]', Str::kebab($this->theme['name']), $storePath);
 
             $themeStubFile = $this->themeStubPath . '/' . $filename . '.stub';
             $filePath = $createdThemePath . '/' . $storePath;
@@ -199,7 +199,7 @@ class ThemeGeneratorCommand extends Command
         ];
 
         $replaceString = [
-            Str::slug($this->theme['name'], '-'),
+            Str::kebab($this->theme['name']),
             $this->theme['title'],
             $this->theme['description'],
             $this->theme['author'],
