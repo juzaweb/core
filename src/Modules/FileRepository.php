@@ -156,7 +156,7 @@ class FileRepository implements RepositoryInterface, Countable
                     'type' => 'module',
                     'key' => $namespace,
                     'namespace' => $namespace,
-                    'lang_path' => $module->getPath(). '/resources/lang',
+                    'lang_path' => $module->getPath() . '/resources/lang',
                     'src_path' => $module->getPath('/'),
                     'publish_path' => resource_path("lang/vendor/{$namespace}"),
                 ]);
@@ -397,7 +397,7 @@ class FileRepository implements RepositoryInterface, Countable
         try {
             return $this->findOrFail($module)->getPath() . '/';
         } catch (ModuleNotFoundException $e) {
-            return $this->getPath() . '/' . Str::studly($module) . '/';
+            return $this->getPath() . '/' . Str::snake($module, '-') . '/';
         }
     }
 
