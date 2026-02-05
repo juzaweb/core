@@ -59,7 +59,7 @@ php artisan language:make en
 **Arguments:**
 - `code`: The code of the language (e.g., `en`, `vi`).
 
-## Theme Management
+## Theme Assets Download
 
 ### `theme:download-template`
 Download a template html from a URL and save it as a blade view.
