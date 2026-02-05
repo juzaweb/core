@@ -27,7 +27,7 @@ class MakeViewCommand extends GenerateCommand
         }
 
         Stub::setBasePath(config('themes.stubs.path') . '/');
-        $viewPath = $theme->path("resources/views/$name.blade.php");
+        $viewPath = $theme->path("src/resources/views/$name.blade.php");
 
         if (file_exists($viewPath) && !$this->option('force')) {
             $this->error("View {$name} already exists!");

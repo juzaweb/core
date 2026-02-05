@@ -31,6 +31,11 @@ return [
             'lang' => 'src/resources/lang/en/translation.php',
             'routes/admin' => 'src/routes/admin.php',
             'routes/web' => 'src/routes/web.php',
+            'gitignore' => '.gitignore',
+            'composer' => 'composer.json',
+            'phpunit' => 'phpunit.xml',
+            'config' => 'config/[NAME].php',
+            'test-case' => 'tests/TestCase.php',
         ],
         'folders' => [
             'assets/js' => 'assets/js',
@@ -41,6 +46,9 @@ return [
             // 'Http/Middleware' => 'src/Http/Middleware',
             // 'Http/Requests' => 'src/Http/Requests',
             'Providers' => 'src/Providers',
+            'database/seeders' => 'database/seeders',
+            'tests/Feature' => 'tests/Feature',
+            'tests/Unit' => 'tests/Unit',
         ],
     ],
 

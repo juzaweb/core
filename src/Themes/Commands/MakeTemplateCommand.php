@@ -28,7 +28,7 @@ class MakeTemplateCommand extends GenerateCommand
         }
 
         Stub::setBasePath(config('themes.stubs.path') . '/');
-        $templatePath = $theme->path("resources/views/templates/$name.blade.php");
+        $templatePath = $theme->path("src/resources/views/templates/$name.blade.php");
 
         if (file_exists($templatePath) && !$this->option('force')) {
             $this->error("Block {$name} already exists!");

@@ -1,16 +1,31 @@
 {
-    "name": "$VENDOR$/$LOWER_NAME$",
+    "name": "juzaweb/[NAME]",
     "type": "juzaweb-theme",
-    "description": "$STUDLY_NAME$ Theme",
-    "authors": [
-        {
-            "name": "$AUTHOR_NAME$",
-            "email": "$AUTHOR_EMAIL$"
-        }
-    ],
+    "description": "[DESCRIPTION]",
+    "keywords": [],
+    "license": "MIT",
+    "homepage": "https://juzaweb.com",
+    "require": {
+        "php": "^8.2"
+    },
     "autoload": {
         "psr-4": {
-            "$MODULE_NAMESPACE$\\$STUDLY_NAME$\\": "src/"
+            "Juzaweb\\Themes\\[NAMESPACE_SHORT]\\": "src/",
+            "Juzaweb\\Themes\\[NAMESPACE_SHORT]\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "sort-packages": true
+    },
+    "require-dev": {
+        "juzaweb/core": "dev-master",
+        "orchestra/testbench": "^9.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Juzaweb\\Themes\\[NAMESPACE_SHORT]\\Tests\\": "tests/"
         }
     }
 }

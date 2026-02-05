@@ -1,0 +1,37 @@
+<?php
+
+namespace Juzaweb\Themes\[NAMESPACE_SHORT]\Tests;
+
+use Juzaweb\Modules\Core\Providers\CoreServiceProvider;
+use Juzaweb\Themes\[NAMESPACE_SHORT]\Providers\ThemeServiceProvider;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+
+abstract class TestCase extends OrchestraTestCase
+{
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Juzaweb\Hooks\HooksServiceProvider::class,
+            CoreServiceProvider::class,
+            ThemeServiceProvider::class,
+        ];
+    }
+
+    protected function getPackageAliases($app)
+    {
+        return [
+            'Theme' => \Juzaweb\Modules\Core\Facades\Theme::class,
+            'Field' => \Juzaweb\Modules\Core\Facades\Field::class,
+            'Module' => \Juzaweb\Modules\Core\Facades\Module::class,
+            'Widget' => \Juzaweb\Modules\Core\Facades\Widget::class,
+            'Sidebar' => \Juzaweb\Modules\Core\Facades\Sidebar::class,
+            'PageTemplate' => \Juzaweb\Modules\Core\Facades\PageTemplate::class,
+            'PageBlock' => \Juzaweb\Modules\Core\Facades\PageBlock::class,
+            'Chart' => \Juzaweb\Modules\Core\Facades\Chart::class,
+            'Breadcrumb' => \Juzaweb\Modules\Core\Facades\Breadcrumb::class,
+            'Menu' => \Juzaweb\Modules\Core\Facades\Menu::class,
+            'NavMenu' => \Juzaweb\Modules\Core\Facades\NavMenu::class,
+            'Thumbnail' => \Juzaweb\Modules\Core\Facades\Thumbnail::class,
+        ];
+    }
+}
