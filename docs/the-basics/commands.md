@@ -45,3 +45,16 @@ Send a test email to verify mail configuration.
 ```bash
 php artisan mail:test --email=admin@example.com
 ```
+
+## Localization
+
+### `language:make`
+Create a new language. The language code must exist in the `locales` configuration.
+
+**Usage:**
+```bash
+php artisan language:make en
+```
+
+**Arguments:**
+- `code`: The code of the language (e.g., `en`, `vi`).
