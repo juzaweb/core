@@ -862,3 +862,16 @@ function model_translate(Translatable $model, string $sourceLocale, string $targ
 
     return $history;
 }
+
+function cloud(bool $write = false)
+{
+    $disk = Storage::disk('cloud');
+    $config = config("filesystems.disks.cloud");
+
+    if ($write && $config && !empty($config['write_endpoint'])) {
+        $config['endpoint'] = $config['write_endpoint'];
+        $disk = Storage::build($config);
+    }
+
+    return $disk;
+}

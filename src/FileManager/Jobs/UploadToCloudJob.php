@@ -10,7 +10,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Juzaweb\Modules\Admin\Networks\Facades\Network;
 use Juzaweb\Modules\Core\Models\Media;
 
 class UploadToCloudJob implements ShouldQueue
@@ -48,10 +47,9 @@ class UploadToCloudJob implements ShouldQueue
     public function __construct(
         protected Media $media,
         protected string $sourceDisk = 'public',
-        protected string $targetDisk = 'cloud_write',
+        protected string $targetDisk = 'cloud',
         protected bool $trash = false,
-    ) {
-    }
+    ) {}
 
     /**
      * Execute the job.
@@ -61,8 +59,6 @@ class UploadToCloudJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Network::init($this->media->website);
-
         try {
             $path = $this->media->path;
 
@@ -76,8 +72,10 @@ class UploadToCloudJob implements ShouldQueue
                 return;
             }
 
+            $disk = cloud(true);
+
             // Check if file already exists on cloud or already marked as uploaded
-            if ($this->media->in_cloud || Storage::disk($this->targetDisk)->exists($path)) {
+            if ($this->media->in_cloud || $disk->exists($path)) {
                 throw new \RuntimeException("File already exists on cloud storage or marked as uploaded");
             }
 
@@ -85,7 +83,7 @@ class UploadToCloudJob implements ShouldQueue
             $fileContents = Storage::disk($this->sourceDisk)->get($path);
 
             // Upload to cloud disk
-            $uploaded = Storage::disk($this->targetDisk)->put($path, $fileContents, [
+            $uploaded = $disk->put($path, $fileContents, [
                 'visibility' => 'public',
                 'ContentType' => $this->media->mime_type,
                 'overwrite' => false,
@@ -110,13 +108,6 @@ class UploadToCloudJob implements ShouldQueue
                 throw new \RuntimeException("Failed to upload file to cloud storage");
             }
         } catch (Exception $e) {
-            Log::error("Cloud upload error", [
-                'media_id' => $this->media->id,
-                'path' => $this->media->path,
-                'error' => $e->getMessage(),
-                'attempt' => $this->attempts(),
-            ]);
-
             // Re-throw the exception to trigger retry mechanism
             throw $e;
         }
