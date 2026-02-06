@@ -177,6 +177,7 @@ mix.combine([
             $fullPath = base_path(trim($cssPath, "'"));
 
             if (!File::exists($fullPath)) {
+                $this->warn("File {$fullPath} don't exists.");
                 continue;
             }
 
