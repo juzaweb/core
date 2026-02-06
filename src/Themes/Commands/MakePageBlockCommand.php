@@ -31,8 +31,8 @@ class MakePageBlockCommand extends Command
 
         Stub::setBasePath(config('themes.stubs.path') . '/');
 
-        $formPath = $theme->path("resources/views/components/blocks/{$name}/form.blade.php");
-        $viewPath = $theme->path("resources/views/components/blocks/{$name}/view.blade.php");
+        $formPath = $theme->path("src/resources/views/components/blocks/{$name}/form.blade.php");
+        $viewPath = $theme->path("src/resources/views/components/blocks/{$name}/view.blade.php");
 
         if (file_exists($formPath) || file_exists($viewPath)) {
             if (!$this->option('force')) {
@@ -59,7 +59,7 @@ class MakePageBlockCommand extends Command
 
         $this->info("Generated {$viewPath}");
 
-        $providerFile = $theme->path('Providers/StyleServiceProvider.php');
+        $providerFile = $theme->path('src/Providers/StyleServiceProvider.php');
         if (!file_exists($providerFile)) {
             $content = $this->generateContents(
                 'provider.stub',

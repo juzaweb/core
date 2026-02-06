@@ -42,7 +42,7 @@ class MakeControllerCommand extends GenerateCommand
         }
 
         Stub::setBasePath(config('themes.stubs.path') . '/');
-        $controllerPath = $theme->path("Http/Controllers/{$controllerName}.php");
+        $controllerPath = $theme->path("src/Http/Controllers/{$controllerName}.php");
 
         if (file_exists($controllerPath) && !$this->option('force')) {
             $this->error("Controller {$controllerName} already exists!");
