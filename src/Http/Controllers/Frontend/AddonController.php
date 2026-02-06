@@ -78,7 +78,7 @@ class AddonController extends Controller
         $img = $manager->create($width, $height)->fill($bgColor);
 
         $shorterSide = min($width, $height);
-        $fontSize = (int) ($shorterSide * 0.5);
+        $fontSize = (int) ($shorterSide * (mb_strlen($char) > 1 ? 0.38 : 0.5));
 
         $img->text($char, $width / 2, $height / 2, function ($font) use ($fontSize) {
             $font->filename(__DIR__ . '/../../../resources/fonts/arial.ttf');
