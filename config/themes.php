@@ -36,6 +36,10 @@ return [
             'phpunit' => 'phpunit.xml',
             'config' => 'config/[NAME].php',
             'test-case' => 'tests/TestCase.php',
+            'changelog' => 'changelog.md',
+            'package' => 'package.json',
+            'webpack' => 'webpack.mix.js',
+            'readme' => 'README.md',
         ],
         'folders' => [
             'assets/js' => 'assets/js',
