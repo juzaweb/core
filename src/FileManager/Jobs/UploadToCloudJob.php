@@ -59,57 +59,52 @@ class UploadToCloudJob implements ShouldQueue
      */
     public function handle(): void
     {
-        try {
-            $path = $this->media->path;
+        $path = $this->media->path;
 
-            // Check if source file exists
-            if (!Storage::disk($this->sourceDisk)->exists($path)) {
-                Log::warning("Cloud upload failed: Source file not found", [
-                    'media_id' => $this->media->id,
-                    'path' => $path,
-                    'source_disk' => $this->sourceDisk,
-                ]);
-                return;
-            }
-
-            $disk = cloud(true);
-
-            // Check if file already exists on cloud or already marked as uploaded
-            if ($this->media->in_cloud || $disk->exists($path)) {
-                throw new \RuntimeException("File already exists on cloud storage or marked as uploaded");
-            }
-
-            // Get file contents from source disk
-            $fileContents = Storage::disk($this->sourceDisk)->get($path);
-
-            // Upload to cloud disk
-            $uploaded = $disk->put($path, $fileContents, [
-                'visibility' => 'public',
-                'ContentType' => $this->media->mime_type,
-                'overwrite' => false,
+        // Check if source file exists
+        if (!Storage::disk($this->sourceDisk)->exists($path)) {
+            Log::warning("Cloud upload failed: Source file not found", [
+                'media_id' => $this->media->id,
+                'path' => $path,
+                'source_disk' => $this->sourceDisk,
             ]);
+            return;
+        }
 
-            if ($uploaded) {
-                $this->media->update(['in_cloud' => true]);
+        $disk = cloud(true);
 
-                if ($this->trash) {
-                    if (!Storage::disk('trash')->exists(dirname($path))) {
-                        Storage::disk('trash')->makeDirectory(dirname($path));
-                    }
+        // Check if file already exists on cloud or already marked as uploaded
+        if ($this->media->in_cloud || $disk->exists($path)) {
+            throw new \RuntimeException("File already exists on cloud storage or marked as uploaded");
+        }
 
-                    File::move(
-                        Storage::disk($this->sourceDisk)->path($path),
-                        Storage::disk('trash')->path($path)
-                    );
-                } else {
-                    Storage::disk($this->sourceDisk)->delete($path);
+        // Get file contents from source disk
+        $fileContents = Storage::disk($this->sourceDisk)->get($path);
+
+        // Upload to cloud disk
+        $uploaded = $disk->put($path, $fileContents, [
+            'visibility' => 'public',
+            'ContentType' => $this->media->mime_type,
+            'overwrite' => false,
+        ]);
+
+        if ($uploaded) {
+            $this->media->update(['in_cloud' => true]);
+
+            if ($this->trash) {
+                if (!Storage::disk('trash')->exists(dirname($path))) {
+                    Storage::disk('trash')->makeDirectory(dirname($path));
                 }
+
+                File::move(
+                    Storage::disk($this->sourceDisk)->path($path),
+                    Storage::disk('trash')->path($path)
+                );
             } else {
-                throw new \RuntimeException("Failed to upload file to cloud storage");
+                Storage::disk($this->sourceDisk)->delete($path);
             }
-        } catch (Exception $e) {
-            // Re-throw the exception to trigger retry mechanism
-            throw $e;
+        } else {
+            throw new \RuntimeException("Failed to upload file to cloud storage");
         }
     }
 }
