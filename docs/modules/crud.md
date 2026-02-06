@@ -27,7 +27,7 @@ Make model for your feature:
 php artisan module:make-model Post ModuleName
 ```
 
-Make CRUD in Admin panel and API:
+Make CRUD in Admin panel:
 
 ```bash
 php artisan module:make-crud Post ModuleName
