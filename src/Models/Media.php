@@ -354,9 +354,9 @@ class Media extends Model
 
         $path = $this->getPath($conversion);
 
-        // if (is_url($path)) {
-        //     return $path;
-        // }
+        if (is_url($path)) {
+            return $path;
+        }
         //
         // return $this->filesystem()->url($path);
 
