@@ -33,11 +33,18 @@ trait HasThumbnail
 
     public function getThumbnailAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('thumbnail') ?? self::$defaultThumbnail;
+        return $this->getFirstMediaUrl('thumbnail')
+            ?? $this->getDefaultThumbnail()
+            ?? self::$defaultThumbnail;
     }
 
     public function setThumbnail(Media|string|null $thumbnail): void
     {
         $this->attachOrUpdateMedia($thumbnail, 'thumbnail');
+    }
+
+    public function getDefaultThumbnail(): ?string
+    {
+        return null;
     }
 }
