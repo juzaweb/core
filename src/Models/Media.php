@@ -357,10 +357,19 @@ class Media extends Model
         if (is_url($path)) {
             return $path;
         }
-        //
+
         // return $this->filesystem()->url($path);
 
         return upload_url($path);
+    }
+
+    public function temporaryUrl($expiration, array $options = []): string
+    {
+        return $this->filesystem()->temporaryUrl(
+            $this->path,
+            $expiration,
+            $options
+        );
     }
 
     /**
@@ -513,7 +522,7 @@ class Media extends Model
     public function filesystem(): Filesystem|FilesystemAdapter
     {
         if ($this->in_cloud) {
-            return Storage::disk('cloud_write');
+            return cloud(true);
         }
 
         return $this->filesystem ??= Storage::disk($this->disk);
