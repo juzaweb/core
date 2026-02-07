@@ -103,7 +103,7 @@
                             class="alert alert-{{ session()->get('status') != 'error' ? session()->get('status') : 'danger' }} jw-message">
                         {{ session()->get('message') }}
 
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <button type="button" class="close close-message" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>

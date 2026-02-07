@@ -863,7 +863,7 @@ function model_translate(Translatable $model, string $sourceLocale, string $targ
     return $history;
 }
 
-function cloud(bool $write = false)
+function cloud(bool $write = false): \Illuminate\Contracts\Filesystem\Filesystem
 {
     $disk = Storage::disk('cloud');
     $config = config("filesystems.disks.cloud");
@@ -874,4 +874,10 @@ function cloud(bool $write = false)
     }
 
     return $disk;
+}
+
+function admin_message(string $message, string $status = 'error'): void
+{
+    session()->flash('message', $message);
+    session()->flash('status', $status);
 }

@@ -318,10 +318,8 @@ class Module
                 ->load($this->get('providers', []));
         } catch (Throwable $e) {
             report($e);
-
             if (! app()->runningInConsole()) {
-                $this->app['session']->flash('message', "Module {$this->getName()} Provider Error: " . $e->getMessage());
-                $this->app['session']->flash('status', 'error');
+                admin_message("Module {$this->getName()} Provider Error: " . $e->getMessage());
             }
         }
     }
