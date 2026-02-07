@@ -532,7 +532,7 @@ class Media extends Model
     public function download(string $filename)
     {
         if ($this->in_cloud) {
-            return $this->streamFromCloud(request(), $this->path);
+            return $this->streamFromCloud(request(), $filename);
         }
 
         return $this->filesystem()->download($this->path, basename($filename));
