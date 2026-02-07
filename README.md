@@ -12,6 +12,13 @@ Core package for Juzaweb CMS.
 - PHP >= 8.2
 - Laravel >= 11.0
 
+## Documentation
+View all [Juzaweb CMS documentation](https://juzaweb.com/documentation/juzaweb/cms/5.x)
+
+## Contributing
+- Contributions are welcome, and are accepted via pull requests. Please review these guidelines before submitting any pull requests.
+[https://github.com/juzaweb/cms/blob/master/CONTRIBUTING.md](https://github.com/juzaweb/cms/blob/master/CONTRIBUTING.md)
+
 ## Features
 - [x] File manager
 - [ ] Modules manager
