@@ -156,9 +156,8 @@ class ThemeRepository implements ThemeContract
             $module = $moduleRepository->find($moduleName);
 
             if ($module === null) {
-                throw new \RuntimeException(
-                    "Required module '{$moduleName}' for theme '{$theme->name()}' not found."
-                );
+                admin_message("Required module '{$moduleName}' for theme '{$theme->name()}' not found.");
+                continue;
             }
 
             if ($module->isUserEnabled()) {
