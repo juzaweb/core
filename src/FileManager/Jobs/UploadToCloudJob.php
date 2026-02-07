@@ -42,12 +42,10 @@ class UploadToCloudJob implements ShouldQueue
      *
      * @param Media $media The media file to upload to cloud
      * @param string $sourceDisk The source disk where the file is stored
-     * @param string $targetDisk The target cloud disk to upload to
      */
     public function __construct(
         protected Media $media,
         protected string $sourceDisk = 'public',
-        protected string $targetDisk = 'cloud',
         protected bool $trash = false,
     ) {}
 
