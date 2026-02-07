@@ -10,16 +10,13 @@
 
 use Juzaweb\Modules\Core\Http\Controllers\AddonController;
 
-if (config('filesystems.disks.cloud.url')) {
+if (config('filesystems.disks.cloud.stream_route', false)) {
+    // If cloud disk is configured, register route to serve media from cloud storage
     $cloudDomain = parse_url(config('filesystems.disks.cloud.url'), PHP_URL_HOST);
 
-    Route::domain($cloudDomain)->group(
-        function () {
-            Route::get('/media/{path}', [AddonController::class, 'showFromCloud'])
-                ->where('path', '.*')
-                ->name('media.cloud.show');
-        }
-    );
+    Route::get('/media/{path}', [AddonController::class, 'showFromCloud'])
+        ->where('path', '.*')
+        ->name('media.cloud.show');
 }
 
 Route::get('storage/{path}', [AddonController::class, 'storageProxy'])
