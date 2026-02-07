@@ -8,7 +8,7 @@
  * @license    GNU V2
  */
 
-use Juzaweb\Modules\Core\Http\Controllers\Frontend\AddonController;
+use Juzaweb\Modules\Core\Http\Controllers\AddonController;
 
 if (config('filesystems.disks.cloud.url')) {
     $cloudDomain = parse_url(config('filesystems.disks.cloud.url'), PHP_URL_HOST);

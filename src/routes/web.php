@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Juzaweb\Modules\Core\Facades\Locale;
 use Juzaweb\Modules\Core\FileManager\Http\Controllers\UploadController;
-use Juzaweb\Modules\Core\Http\Controllers\Frontend\AddonController;
+use Juzaweb\Modules\Core\Http\Controllers\AddonController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\NotificationSubscribeController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\SitemapController;
 

@@ -9,6 +9,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Juzaweb\Modules\Admin\Http\Controllers\DashboardController;
+use Juzaweb\Modules\Core\Http\Controllers\AddonController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\ChartController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\LanguageController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\LoadDataController;
@@ -29,7 +30,7 @@ Route::get('/setup', [SetupController::class, 'index'])->name('admin.setup');
 Route::post('/setup', [SetupController::class, 'setup'])->name('admin.setup.process');
 Route::get('/dashboard/online', [DashboardController::class, 'online'])
     ->name('admin.dashboard.online-count');
-Route::post('/remove-message', [DashboardController::class, 'removeMessage'])
+Route::post('/remove-message', [AddonController::class, 'removeMessage'])
     ->name('admin.dashboard.remove-message');
 
 Route::get('load-data', [LoadDataController::class, 'load'])

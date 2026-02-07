@@ -9,17 +9,15 @@
  * @license    GNU V2
  */
 
-namespace Juzaweb\Modules\Core\Http\Controllers\Frontend;
+namespace Juzaweb\Modules\Core\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
 use Juzaweb\Modules\Admin\Models\Guest;
 use Juzaweb\Modules\Core\Contracts\Viewable;
-use Juzaweb\Modules\Core\Http\Controllers\Controller;
 use Juzaweb\Modules\Core\Services\ImgProxyService;
 
 class AddonController extends Controller
@@ -95,7 +93,7 @@ class AddonController extends Controller
 
     public function showFromCloud(string $path, Request $request)
     {
-        $disk = Storage::disk('cloud_write');
+        $disk = cloud(true);
 
         if (!$disk->exists($path)) {
             abort(404);
@@ -193,30 +191,6 @@ class AddonController extends Controller
             $statusCode,
             $headers
         );
-    }
-
-    /**
-     * Hàm hỗ trợ lấy MimeType
-     */
-    private function getMimeType(string $extension): string
-    {
-        return match (strtolower($extension)) {
-            'jpg', 'jpeg' => 'image/jpeg',
-            'png'         => 'image/png',
-            'gif'         => 'image/gif',
-            'webp'        => 'image/webp',
-            'svg'         => 'image/svg+xml',
-            'mp4'         => 'video/mp4',
-            'pdf'         => 'application/pdf',
-            'css'         => 'text/css',
-            'js'          => 'application/javascript',
-            'woff'        => 'font/woff',
-            'woff2'       => 'font/woff2',
-            'ttf'         => 'font/ttf',
-            'otf'         => 'font/otf',
-            'eot'         => 'application/vnd.ms-fontobject',
-            default       => 'application/octet-stream',
-        };
     }
 
     /**
@@ -394,6 +368,34 @@ class AddonController extends Controller
         $filePath = public_path("vendor/{$path}");
 
         return $this->serveStaticFile($request, $filePath, $path);
+    }
+
+    public function removeMessage(): JsonResponse
+    {
+        session()->forget(['message', 'status']);
+
+        return response()->json(['status' => 'success']);
+    }
+
+    private function getMimeType(string $extension): string
+    {
+        return match (strtolower($extension)) {
+            'jpg', 'jpeg' => 'image/jpeg',
+            'png'         => 'image/png',
+            'gif'         => 'image/gif',
+            'webp'        => 'image/webp',
+            'svg'         => 'image/svg+xml',
+            'mp4'         => 'video/mp4',
+            'pdf'         => 'application/pdf',
+            'css'         => 'text/css',
+            'js'          => 'application/javascript',
+            'woff'        => 'font/woff',
+            'woff2'       => 'font/woff2',
+            'ttf'         => 'font/ttf',
+            'otf'         => 'font/otf',
+            'eot'         => 'application/vnd.ms-fontobject',
+            default       => 'application/octet-stream',
+        };
     }
 
     /**
