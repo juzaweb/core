@@ -251,7 +251,7 @@ class Module
      *
      * @return array|string|null
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, $default = null): array|string|null
     {
         return $this->json()->get($key, $default);
     }
@@ -368,6 +368,11 @@ class Module
         return $this->activator->hasStatus($this, $status);
     }
 
+    public function isUserEnabled(): bool
+    {
+        return $this->activator->hasStatus($this, true);
+    }
+
     /**
      * Determine whether the current module activated.
      *
@@ -377,7 +382,7 @@ class Module
     {
         $requiredModules = $this->app[Theme::class]->current()?->getRequiredModules() ?? [];
 
-        return in_array($this->name, $requiredModules) || $this->activator->hasStatus($this, true);
+        return in_array($this->name, $requiredModules) || $this->isUserEnabled();
     }
 
     /**

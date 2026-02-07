@@ -161,7 +161,7 @@ class ThemeRepository implements ThemeContract
                 );
             }
 
-            if ($module->isEnabled()) {
+            if ($module->isUserEnabled()) {
                 // Already logged in register method
                 continue;
             }

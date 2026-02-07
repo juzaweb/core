@@ -177,6 +177,7 @@ class CoreServiceProvider extends ServiceProvider
 
     protected function registerProviders(): void
     {
+        $this->app->register(ConsoleServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(PerformanceServiceProvider::class);
         $this->app->register(HelperServiceProvider::class);

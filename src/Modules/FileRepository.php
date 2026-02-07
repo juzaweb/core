@@ -133,7 +133,7 @@ class FileRepository implements RepositoryInterface, Countable
      *
      * @return array
      */
-    public function scan()
+    public function scan(): array
     {
         $paths = $this->getScanPaths();
 
@@ -156,8 +156,8 @@ class FileRepository implements RepositoryInterface, Countable
                     'type' => 'module',
                     'key' => $namespace,
                     'namespace' => $namespace,
-                    'lang_path' => $module->getPath() . '/resources/lang',
-                    'src_path' => $module->getPath('/'),
+                    'lang_path' => $module->getPath() . 'src/resources/lang',
+                    'src_path' => $module->getPath() . '/src',
                     'publish_path' => resource_path("lang/vendor/{$namespace}"),
                 ]);
             }
@@ -207,9 +207,14 @@ class FileRepository implements RepositoryInterface, Countable
      */
     public function getCached()
     {
-        return $this->cache->store($this->config->get('modules.cache.driver'))->remember($this->config('cache.key'), $this->config('cache.lifetime'), function () {
-            return $this->toCollection()->toArray();
-        });
+        return $this->cache->store($this->config->get('modules.cache.driver'))
+        ->remember(
+            $this->config('cache.key'),
+            $this->config('cache.lifetime'),
+            function () {
+                return $this->toCollection()->toArray();
+            }
+        );
     }
 
     /**
@@ -350,7 +355,7 @@ class FileRepository implements RepositoryInterface, Countable
             }
         }
 
-        return;
+        return null;
     }
 
     /**
