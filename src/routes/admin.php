@@ -29,6 +29,8 @@ Route::get('/setup', [SetupController::class, 'index'])->name('admin.setup');
 Route::post('/setup', [SetupController::class, 'setup'])->name('admin.setup.process');
 Route::get('/dashboard/online', [DashboardController::class, 'online'])
     ->name('admin.dashboard.online-count');
+Route::post('/remove-message', [DashboardController::class, 'removeMessage'])
+    ->name('admin.dashboard.remove-message');
 
 Route::get('load-data', [LoadDataController::class, 'load'])
     ->name('admin.load-data');

@@ -4,6 +4,7 @@ namespace Juzaweb\Modules\Core\Modules;
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\ProviderRepository;
@@ -13,6 +14,7 @@ use Illuminate\Support\Traits\Macroable;
 use Illuminate\Translation\Translator;
 use Juzaweb\Modules\Core\Modules\Contracts\ActivatorInterface;
 use Juzaweb\Modules\Core\Modules\Support\Json;
+use Throwable;
 
 class Module
 {
@@ -21,9 +23,9 @@ class Module
     /**
      * The laravel|lumen application instance.
      *
-     * @var Container
+     * @var Application
      */
-    protected Container $app;
+    protected Application|Container $app;
 
     /**
      * The module name.
@@ -62,11 +64,11 @@ class Module
 
     /**
      * The constructor.
-     * @param Container $app
+     * @param Application|Container $app
      * @param $name
      * @param $path
      */
-    public function __construct(Container $app, string $name, $path)
+    public function __construct(Application $app, string $name, $path)
     {
         $this->name = $name;
         $this->path = $path;
@@ -299,7 +301,7 @@ class Module
     {
         // This checks if we are running on a Laravel Vapor managed instance
         // and sets the path to a writable one (services path is not on a writable storage in Vapor).
-        if (!is_null(env('VAPOR_MAINTENANCE_MODE', null))) {
+        if (!is_null(env('VAPOR_MAINTENANCE_MODE'))) {
             return Str::replaceLast('config.php', $this->getSnakeName() . '_module.php', $this->app->getCachedConfigPath());
         }
 
@@ -311,8 +313,17 @@ class Module
      */
     public function registerProviders(): void
     {
-        (new ProviderRepository($this->app, new Filesystem(), $this->getCachedServicesPath()))
-            ->load($this->get('providers', []));
+        try {
+            (new ProviderRepository($this->app, new Filesystem(), $this->getCachedServicesPath()))
+                ->load($this->get('providers', []));
+        } catch (Throwable $e) {
+            report($e);
+
+            if (! app()->runningInConsole()) {
+                $this->app['session']->flash('message', "Module {$this->getName()} Provider Error: " . $e->getMessage());
+                $this->app['session']->flash('status', 'error');
+            }
+        }
     }
 
     /**

@@ -649,6 +649,17 @@ $(function () {
     });
 
     initCurrencyInput('body');
+
+    $(document).on('close.bs.alert', '.jw-message', function () {
+        $.ajax({
+            url: juzaweb.adminUrl + '/remove-message',
+            type: 'POST',
+            data: {},
+            success: function (response) {
+                //
+            }
+        });
+    });
 });
 
 function initCurrencyInput(parent = 'body') {
