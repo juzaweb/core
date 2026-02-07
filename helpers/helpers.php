@@ -11,6 +11,7 @@
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Juzaweb\Modules\Admin\Models\Guest;
@@ -863,13 +864,15 @@ function model_translate(Translatable $model, string $sourceLocale, string $targ
     return $history;
 }
 
-function cloud(bool $write = false): \Illuminate\Contracts\Filesystem\Filesystem
+function cloud(bool $write = false): Filesystem
 {
     $disk = Storage::disk('cloud');
     $config = config("filesystems.disks.cloud");
 
     if ($write && $config && !empty($config['write_endpoint'])) {
         $config['endpoint'] = $config['write_endpoint'];
+        $config['use_path_style_endpoint'] = true;
+        unset($config['bucket_endpoint']);
         $disk = Storage::build($config);
     }
 
