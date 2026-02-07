@@ -15,10 +15,9 @@ class ThemePublishCommand extends Command
     public function handle(): void
     {
         $name = $this->argument('theme');
-
         $type = $this->argument('type') ?? 'assets';
 
-        $theme = Theme::find($name);
+        $theme = $name ? Theme::find($name) : Theme::current();
 
         if (! $theme) {
             $this->error('Theme not found');
@@ -79,7 +78,7 @@ class ThemePublishCommand extends Command
     protected function getArguments(): array
     {
         return [
-            ['theme', InputArgument::REQUIRED, 'Theme publish name.', null],
+            ['theme', InputArgument::OPTIONAL, 'Theme publish name.', null],
             ['type', InputArgument::OPTIONAL, 'Type: assets, views, lang'],
         ];
     }
