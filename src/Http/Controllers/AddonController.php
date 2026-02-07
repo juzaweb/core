@@ -91,7 +91,7 @@ class AddonController extends Controller
             ->header('Cache-Control', 'public, max-age=31536000');
     }
 
-    public function showFromCloud(string $path, Request $request)
+    public function showFromCloud(Request $request, string $path)
     {
         $disk = cloud(true);
 
@@ -178,7 +178,9 @@ class AddonController extends Controller
                     $toRead = min($bufferSize, $remaining);
                     $chunk = fread($stream, $toRead);
 
-                    if ($chunk === false) break;
+                    if ($chunk === false) {
+                        break;
+                    }
 
                     echo $chunk;
                     $remaining -= strlen($chunk);

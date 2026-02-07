@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Juzaweb\Modules\Admin\Database\Factories\MediaFactory;
@@ -526,5 +527,120 @@ class Media extends Model
         }
 
         return $this->filesystem ??= Storage::disk($this->disk);
+    }
+
+    public function download(string $filename)
+    {
+        if ($this->in_cloud) {
+            return $this->streamFromCloud(request(), $this->path);
+        }
+
+        return $this->filesystem()->download($this->path, basename($filename));
+    }
+
+    public function streamFromCloud(Request $request, string $filename)
+    {
+        $disk = cloud(true);
+        $path = $this->path;
+
+        if (!$disk->exists($path)) {
+            abort(404);
+        }
+
+        $size = $disk->size($path);
+        $lastModified = $disk->lastModified($path);
+
+        // Xác định MimeType
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $mimeType = $this->getMimeType($extension);
+
+        $etag = md5($path . $lastModified);
+
+        // 1. Xử lý Cache - Tiết kiệm băng thông
+        if ($request->header('If-None-Match') === $etag) {
+            return response('', 304);
+        }
+
+        // 2. Thiết lập các thông số Range mặc định
+        $start = 0;
+        $end = $size - 1;
+        $statusCode = 200;
+
+        // 3. Xử lý Range Request (Hữu ích cho Video/Audio và ảnh lớn)
+        if (($rangeHeader = $request->header('Range'))
+            && preg_match('/bytes=(\d+)-(\d*)/', $rangeHeader, $matches)
+        ) {
+            $start = (int) $matches[1];
+            if (!empty($matches[2])) {
+                $end = (int) $matches[2];
+            }
+
+            // Giới hạn phạm vi hợp lệ
+            $end = min($end, $size - 1);
+            if ($start <= $end) {
+                $statusCode = 206;
+            } else {
+                // Range không hợp lệ (ví dụ start > size)
+                return response('', 416, ['Content-Range' => "bytes */{$size}"]);
+            }
+        }
+
+        $contentLength = $end - $start + 1;
+
+        $headers = [
+            'Content-Type' => $mimeType,
+            'Content-Length' => $contentLength,
+            'Accept-Ranges' => 'bytes',
+            'Cache-Control' => 'public, max-age=31536000',
+            'ETag' => $etag,
+            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified) . ' GMT',
+            'Content-Disposition' => "inline; filename=\"{$filename}\"",
+        ];
+
+        if ($statusCode === 206) {
+            $headers['Content-Range'] = "bytes {$start}-{$end}/{$size}";
+        }
+
+        return response()->stream(
+            function () use ($disk, $path, $start, $contentLength) {
+                // Xóa mọi output buffer đang tồn tại để tránh hỏng dữ liệu binary
+                while (ob_get_level() > 0) {
+                    ob_end_clean();
+                }
+
+                $stream = $disk->readStream($path);
+                if (!is_resource($stream)) {
+                    return;
+                }
+
+                // Nếu không phải bắt đầu từ đầu, ta cần di chuyển con trỏ
+                if ($start > 0) {
+                    // Với S3, fseek có thể không hoạt động tùy thuộc vào driver
+                    // Cách an toàn nhất là đọc và bỏ qua phần đầu (hoặc dùng S3 Range Get)
+                    fseek($stream, $start);
+                }
+
+                $bufferSize = 8192; // 8KB mỗi lần đọc
+                $remaining = $contentLength;
+
+                while (!feof($stream) && $remaining > 0) {
+                    $toRead = min($bufferSize, $remaining);
+                    $chunk = fread($stream, $toRead);
+
+                    if ($chunk === false) {
+                        break;
+                    }
+
+                    echo $chunk;
+                    $remaining -= strlen($chunk);
+
+                    flush(); // Đẩy dữ liệu về trình duyệt ngay lập tức
+                }
+
+                fclose($stream);
+            },
+            $statusCode,
+            $headers
+        );
     }
 }
