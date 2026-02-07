@@ -19,6 +19,12 @@ main:
         url: /the-basics/translation
       - title: Permissions
         url: /the-basics/permissions
+      - title: Breadcrumb
+        url: /the-basics/breadcrumb
+      - title: Thumbnails
+        url: /the-basics/thumbnails
+      - title: Sitemap
+        url: /the-basics/sitemap
       - title: Commands
         url: /the-basics/commands
       - title: Dashboard Analytics Setup
