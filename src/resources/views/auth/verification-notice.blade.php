@@ -20,7 +20,7 @@
                 @endforeach
             @endif
 
-            <form action="{{ route('user.login') }}" class="form-ajax" method="post">
+            <form action="" class="form-ajax" method="post">
                 @csrf
 
                 <div class="row">
