@@ -53,12 +53,12 @@
                     checkbox.prop('disabled', false);
 
                     if (response.status === false) {
-                        show_message(response.data.message);
+                        show_message(response.message);
                         checkbox.prop('checked', !status); // Revert status
                         return false;
                     }
 
-                    show_message(response.data.message);
+                    show_message(response.message);
                     setTimeout(function() {
                         window.location.reload();
                     }, 1000);

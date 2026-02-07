@@ -9,12 +9,6 @@ use Juzaweb\Modules\Core\Http\Controllers\AdminController;
 
 class ModuleController extends AdminController
 {
-    public function __construct()
-    {
-        $this->middleware('permission:modules.index')->only(['index']);
-        $this->middleware('permission:modules.edit')->only(['toggle']);
-    }
-
     public function index()
     {
         Breadcrumb::add(__('core::translation.modules'));

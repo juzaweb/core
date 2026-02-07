@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Translation\Translator;
+use Juzaweb\Modules\Core\Contracts\Theme;
 use Juzaweb\Modules\Core\Modules\Contracts\ActivatorInterface;
 use Juzaweb\Modules\Core\Modules\Support\Json;
 use Throwable;
@@ -374,7 +375,9 @@ class Module
      */
     public function isEnabled(): bool
     {
-        return $this->activator->hasStatus($this, true);
+        $requiredModules = $this->app[Theme::class]->current()?->getRequiredModules() ?? [];
+
+        return in_array($this->name, $requiredModules) || $this->activator->hasStatus($this, true);
     }
 
     /**
