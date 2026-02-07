@@ -884,3 +884,24 @@ function admin_message(string $message, string $status = 'error'): void
     session()->flash('message', $message);
     session()->flash('status', $status);
 }
+
+function mime_type_from_extension(string $extension): string
+{
+    return match (strtolower($extension)) {
+        'jpg', 'jpeg' => 'image/jpeg',
+        'png'         => 'image/png',
+        'gif'         => 'image/gif',
+        'webp'        => 'image/webp',
+        'svg'         => 'image/svg+xml',
+        'mp4'         => 'video/mp4',
+        'pdf'         => 'application/pdf',
+        'css'         => 'text/css',
+        'js'          => 'application/javascript',
+        'woff'        => 'font/woff',
+        'woff2'       => 'font/woff2',
+        'ttf'         => 'font/ttf',
+        'otf'         => 'font/otf',
+        'eot'         => 'application/vnd.ms-fontobject',
+        default       => 'application/octet-stream',
+    };
+}

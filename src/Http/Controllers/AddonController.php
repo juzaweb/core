@@ -104,7 +104,7 @@ class AddonController extends Controller
 
         // Xác định MimeType
         $extension = pathinfo($path, PATHINFO_EXTENSION);
-        $mimeType = $this->getMimeType($extension);
+        $mimeType = mime_type_from_extension($extension);
 
         $etag = md5($path . $lastModified);
 
@@ -253,7 +253,7 @@ class AddonController extends Controller
 
         // Get MIME type
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-        $mimeType = $this->getMimeType($extension);
+        $mimeType = mime_type_from_extension($extension);
 
         $etag = md5($path . $lastModified);
 
@@ -379,27 +379,6 @@ class AddonController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    private function getMimeType(string $extension): string
-    {
-        return match (strtolower($extension)) {
-            'jpg', 'jpeg' => 'image/jpeg',
-            'png'         => 'image/png',
-            'gif'         => 'image/gif',
-            'webp'        => 'image/webp',
-            'svg'         => 'image/svg+xml',
-            'mp4'         => 'video/mp4',
-            'pdf'         => 'application/pdf',
-            'css'         => 'text/css',
-            'js'          => 'application/javascript',
-            'woff'        => 'font/woff',
-            'woff2'       => 'font/woff2',
-            'ttf'         => 'font/ttf',
-            'otf'         => 'font/otf',
-            'eot'         => 'application/vnd.ms-fontobject',
-            default       => 'application/octet-stream',
-        };
-    }
-
     /**
      * Serve static file with caching and range support
      */
@@ -414,7 +393,7 @@ class AddonController extends Controller
 
         // Get MIME type
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-        $mimeType = $this->getMimeType($extension);
+        $mimeType = mime_type_from_extension($extension);
 
         $etag = md5($path . $lastModified);
 

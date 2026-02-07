@@ -552,7 +552,7 @@ class Media extends Model
 
         // Xác định MimeType
         $extension = pathinfo($path, PATHINFO_EXTENSION);
-        $mimeType = $this->getMimeType($extension);
+        $mimeType = mime_type_from_extension($extension);
 
         $etag = md5($path . $lastModified);
 
