@@ -270,7 +270,7 @@ class FileRepositoryTest extends TestCase
 
         // For non-existent module, it returns predicted path
         $pathNew = $this->repository->getModulePath('NewMod');
-        $this->assertStringContainsString('NewMod', $pathNew);
+        $this->assertStringContainsString('new-mod', $pathNew);
     }
 
     public function testAssetPath()
