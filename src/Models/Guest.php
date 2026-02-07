@@ -12,7 +12,6 @@ namespace Juzaweb\Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Notifications\Notifiable;
-use Juzaweb\Modules\Core\Models\Model;
 
 class Guest extends Model
 {
