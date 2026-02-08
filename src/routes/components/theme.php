@@ -10,6 +10,7 @@
  */
 
 use Juzaweb\Modules\Core\Facades\RouteResource;
+use Juzaweb\Modules\Core\Http\Controllers\Admin\InstallThemeController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\MenuController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\ThemeController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\WidgetController;
@@ -25,7 +26,7 @@ Route::post('themes/activate', [ThemeController::class, 'activate'])
     ->name('admin.themes.activate')
     ->middleware(['permission:themes.edit']);
 
-Route::post('themes/install-from-zip', [ThemeController::class, 'installFromZip'])
+Route::post('themes/install-from-zip', [InstallThemeController::class, 'installFromZip'])
     ->name('admin.themes.install-from-zip')
     ->middleware(['permission:themes.edit']);
 
