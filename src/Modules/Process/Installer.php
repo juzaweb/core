@@ -14,49 +14,49 @@ class Installer
      *
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * The version of module being installed.
      *
      * @var string
      */
-    protected $version;
+    protected ?string $version;
 
     /**
      * The module repository instance.
      * @var \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface
      */
-    protected $repository;
+    protected RepositoryInterface $repository;
 
     /**
      * The console command instance.
      *
      * @var \Illuminate\Console\Command
      */
-    protected $console;
+    protected Command $console;
 
     /**
      * The destionation path.
      *
      * @var string
      */
-    protected $path;
+    protected string $path;
 
     /**
      * The process timeout.
      *
      * @var int
      */
-    protected $timeout = 3360;
+    protected int $timeout = 3360;
     /**
      * @var null|string
      */
-    private $type;
+    private ?string $type;
     /**
      * @var bool
      */
-    private $tree;
+    private bool $tree;
 
     /**
      * The constructor.
@@ -139,11 +139,9 @@ class Installer
 
         $process->setTimeout($this->timeout);
 
-        if ($this->console instanceof Command) {
-            $process->run(function ($type, $line) {
-                $this->console->line($line);
-            });
-        }
+        $process->run(function ($type, $line) {
+            $this->console->line($line);
+        });
 
         return $process;
     }

@@ -52,12 +52,10 @@ class UpdateCommand extends Command
         foreach ($modules as $module) {
             $this->updateModule($module);
         }
-
     }
 
     protected function updateModule($name)
     {
-
         if ($name instanceof Module) {
             $module = $name;
         }else {
@@ -68,7 +66,6 @@ class UpdateCommand extends Command
             $this->laravel['modules']->update($module);
         });
         $this->laravel['modules']->update($name);
-
     }
 
     /**

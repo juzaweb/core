@@ -25,14 +25,6 @@ class InstallCommand extends Command
     protected $description = 'Install the specified module by given package name (vendor/name).';
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      */
     public function handle(): int
@@ -122,7 +114,7 @@ class InstallCommand extends Command
      *
      * @return array
      */
-    protected function getArguments()
+    protected function getArguments(): array
     {
         return [
             ['name', InputArgument::OPTIONAL, 'The name of module will be installed.'],
@@ -135,7 +127,7 @@ class InstallCommand extends Command
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['timeout', null, InputOption::VALUE_OPTIONAL, 'The process timeout.', null],
