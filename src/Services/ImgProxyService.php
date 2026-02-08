@@ -31,7 +31,9 @@ class ImgProxyService extends BaseService
 
         // Create cache directory if not exists
         if (!is_dir($this->cacheDir)) {
-            mkdir($this->cacheDir, 0777, true);
+            if (!mkdir($concurrentDirectory = $this->cacheDir, 0777, true) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+            }
         }
 
         // Initialize S3 client if cloud storage is configured
@@ -43,7 +45,7 @@ class ImgProxyService extends BaseService
             $this->s3Client = new S3Client([
                 'version' => 'latest',
                 'region' => $cloudConfig['region'] ?? 'us-east-1',
-                'endpoint' => $cloudConfig['endpoint'] ?? null,
+                'endpoint' => $cloudConfig['write_endpoint'] ?? $cloudConfig['endpoint'] ?? null,
                 'use_path_style_endpoint' => !empty($cloudConfig['endpoint']),
                 'credentials' => [
                     'key' => $cloudConfig['key'],
@@ -120,6 +122,7 @@ class ImgProxyService extends BaseService
     {
         $cloudConfig = config('filesystems.disks.cloud');
         $cloudUrl = $cloudConfig['url'] ?? $cloudConfig['endpoint'] ?? null;
+
         // Check if image is from cloud storage (S3)
         if (isset($cloudUrl) && str_contains($url, $cloudUrl)) {
             return $this->getImageFromS3($url);
@@ -169,9 +172,10 @@ class ImgProxyService extends BaseService
         }
 
         $cloudConfig = config('filesystems.disks.cloud');
+        $cloudUrl = $cloudConfig['url'] ?? $cloudConfig['endpoint'] ?? null;
 
         // Extract path from cloud URL
-        $path = str_replace($cloudConfig['url'], '', $url);
+        $path = str_replace($cloudUrl, '', $url);
         $key = ltrim($path, '/');
 
         // Generate cache path for S3 image

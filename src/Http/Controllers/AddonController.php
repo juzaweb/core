@@ -229,9 +229,11 @@ class AddonController extends Controller
                 ->header('X-Accel-Buffering', 'no')
                 ->header('Cache-Control', 'public, max-age=31536000');
         } catch (\InvalidArgumentException $e) {
+            report($e);
             return response('Error: ' . $e->getMessage(), 400)
                 ->header('Content-Type', 'text/plain');
         } catch (\Throwable $e) {
+            report($e);
             return response('Error: ' . $e->getMessage(), 500)
                 ->header('Content-Type', 'text/plain');
         }
