@@ -30,18 +30,34 @@ Before installing Juzaweb CMS, ensure the target system meets the minimum requir
 
 Juzaweb CMS is a PHP web application that uses Composer to manage its dependencies. Ensure that Composer is installed before you begin. Ensure that Composer is installed before you begin.
 
+### License Key and Marketplace
+
+The License Key is required to install themes/modules from the Marketplace. You can obtain a license key from the page [API Keys](https://juzaweb.com/profile/api-keys).
+
+During the installation process the installer will ask you for your license key. If you don't want to repeat this action, you can set it up once and for all using the command:
+
+```bash
+composer config http-basic.juzaweb.com your-email your-api-key
+```
+
+If your license can be used for multiple projects, you may consider adding the `--global` option to the command to make it available for all projects:
+
+```bash
+composer config --global http-basic.juzaweb.com your-email your-api-key
+```
+
 ### Create Project
 
 To install the platform, initialize a project using the `create-project` command in the terminal.
 
 ```bash
-composer create-project juzaweb/cms juzaweb
+composer create-project juzaweb/cms blog
 ```
 
 Go to project folder
 
 ```bash
-cd juzaweb
+cd blog
 ```
 
 Run the installation command:
@@ -60,6 +76,8 @@ php artisan juzaweb:install
     *   **Environment**: Configure database connection and app settings.
 4.  Click **Install** to complete the setup.
 5.  After installation, you can log in to the Admin Panel with the account you created.
+
+## Publish Resources (OPTIONAL)
 
 ### Publish config
 
@@ -83,20 +101,4 @@ php artisan vendor:publish --tag=core-views
 
 ```bash
 php artisan vendor:publish --tag=core-lang
-```
-
-## License Key and Marketplace
-
-The License Key is required to install themes/modules from the Marketplace. You can obtain a license key from the page [API Keys](https://juzaweb.com/profile/api-keys).
-
-During the installation process the installer will ask you for your license key. If you don't want to repeat this action, you can set it up once and for all using the command:
-
-```bash
-composer config http-basic.juzaweb.com your-email your-api-key
-```
-
-If your license can be used for multiple projects, you may consider adding the `--global` option to the command to make it available for all projects:
-
-```bash
-composer config --global http-basic.juzaweb.com your-email your-api-key
 ```
