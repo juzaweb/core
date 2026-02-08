@@ -3,7 +3,7 @@
     "description": "$STUDLY_NAME$ Module",
     "type": "juzaweb-module",
     "keywords": [],
-    "license": "MIT",
+    "license": "GPL-2.0",
     "authors": [
         {
             "name": "$AUTHOR_NAME$",

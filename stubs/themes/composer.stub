@@ -3,7 +3,7 @@
     "type": "juzaweb-theme",
     "description": "[DESCRIPTION]",
     "keywords": [],
-    "license": "MIT",
+    "license": "GPL-2.0",
     "homepage": "https://juzaweb.com",
     "require": {
         "php": "^8.2"
