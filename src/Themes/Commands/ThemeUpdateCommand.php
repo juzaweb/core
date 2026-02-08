@@ -7,6 +7,7 @@ use Juzaweb\Modules\Core\Modules\Process\Updater;
 use Juzaweb\Modules\Core\Themes\Support\ThemeRepositoryAdapter;
 use Juzaweb\Modules\Core\Themes\Theme;
 use Symfony\Component\Console\Input\InputArgument;
+use Juzaweb\Modules\Core\Contracts\Theme as ThemeContract;
 
 class ThemeUpdateCommand extends Command
 {
@@ -44,7 +45,7 @@ class ThemeUpdateCommand extends Command
 
     protected function updateAllTheme()
     {
-        $themes = $this->laravel['themes']->all();
+        $themes = $this->laravel[ThemeContract::class]->all();
 
         foreach ($themes as $theme) {
             $this->updateTheme($theme);
@@ -55,7 +56,7 @@ class ThemeUpdateCommand extends Command
     {
         // Create adapter to make ThemeRepository compatible with Updater
         $adapter = new ThemeRepositoryAdapter(
-            $this->laravel['themes'],
+            $this->laravel[ThemeContract::class],
             $this->laravel['files']
         );
 
@@ -63,7 +64,7 @@ class ThemeUpdateCommand extends Command
             $theme = $name;
             $name = $theme->name();
         } else {
-            $theme = $this->laravel['themes']->findOrFail($name);
+            $theme = $this->laravel[ThemeContract::class]->findOrFail($name);
         }
 
         $this->components->task("Updating {$theme->name()} theme", function () use ($adapter, $name) {

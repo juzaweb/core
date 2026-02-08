@@ -4,10 +4,10 @@ namespace Juzaweb\Modules\Core\Themes\Commands;
 
 use Illuminate\Console\Command;
 use Juzaweb\Modules\Core\Modules\Process\Installer;
-use Juzaweb\Modules\Core\Modules\Support\Json;
 use Juzaweb\Modules\Core\Themes\Support\ThemeRepositoryAdapter;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Juzaweb\Modules\Core\Contracts\Theme as ThemeContract;
 
 class ThemeInstallCommand extends Command
 {
@@ -30,10 +30,6 @@ class ThemeInstallCommand extends Command
      */
     public function handle(): int
     {
-        if (is_null($this->argument('name'))) {
-            return $this->installFromFile();
-        }
-
         $this->install(
             $this->argument('name'),
             $this->argument('version'),
@@ -45,46 +41,18 @@ class ThemeInstallCommand extends Command
     }
 
     /**
-     * Install themes from themes.json file.
-     */
-    protected function installFromFile(): int
-    {
-        if (!file_exists($path = base_path('composer.json'))) {
-            $this->error("File 'themes.json' does not exist in your project root.");
-
-            return E_ERROR;
-        }
-
-        $themes = Json::make($path);
-
-        $dependencies = $themes->get('require', []);
-
-        foreach ($dependencies as $theme) {
-            $theme = collect($theme);
-
-            $this->install(
-                $theme->get('name'),
-                $theme->get('version'),
-                $theme->get('type')
-            );
-        }
-
-        return 0;
-    }
-
-    /**
      * Install the specified theme.
      *
-     * @param string $name
-     * @param string $version
-     * @param string $type
-     * @param bool   $tree
+     * @param  string  $name
+     * @param  string  $version
+     * @param  string  $type
+     * @param  bool  $tree
      */
-    protected function install($name, $version = 'dev-master', $type = 'composer', $tree = false)
+    protected function install(string $name, string $version = 'dev-master', string $type = 'composer', bool $tree = false)
     {
         // Create adapter to make ThemeRepository compatible with Installer
         $adapter = new ThemeRepositoryAdapter(
-            $this->laravel['themes'],
+            $this->laravel[ThemeContract::class],
             $this->laravel['files']
         );
 
@@ -124,7 +92,7 @@ class ThemeInstallCommand extends Command
     protected function getArguments(): array
     {
         return [
-            ['name', InputArgument::OPTIONAL, 'The name of theme will be installed.'],
+            ['name', InputArgument::REQUIRED, 'The name of theme will be installed.'],
             ['version', InputArgument::OPTIONAL, 'The version of theme will be installed.'],
         ];
     }

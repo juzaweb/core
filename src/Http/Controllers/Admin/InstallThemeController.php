@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
+use ZipArchive;
 
 class InstallThemeController extends AdminController
 {
