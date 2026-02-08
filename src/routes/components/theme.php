@@ -29,6 +29,14 @@ Route::post('themes/install-from-zip', [ThemeController::class, 'installFromZip'
     ->name('admin.themes.install-from-zip')
     ->middleware(['permission:themes.edit']);
 
+Route::get('themes/marketplace', [ThemeController::class, 'marketplace'])
+    ->name('admin.themes.marketplace')
+    ->middleware(['permission:themes.index']);
+
+Route::get('themes/marketplace/get-data', [ThemeController::class, 'loadMarketplaceData'])
+    ->name('admin.themes.marketplace.get-data')
+    ->middleware(['permission:themes.index']);
+
 Route::group(
     ['prefix' => 'widgets'],
     function () {

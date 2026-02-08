@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Juzaweb\Modules\Core\Facades\Breadcrumb;
 use Juzaweb\Modules\Core\Facades\Theme;
@@ -97,7 +98,7 @@ class ThemeController extends AdminController
             $fullPath = Storage::disk($disk)->path($path);
 
             // Create temporary extraction directory
-            $tempDir = storage_path('app/tmp/' . uniqid('theme_extract_'));
+            $tempDir = storage_path('app/tmp/' . uniqid('theme_extract_', true));
             File::makeDirectory($tempDir, 0755, true);
 
             // Extract zip file
@@ -197,6 +198,52 @@ class ThemeController extends AdminController
                 Storage::disk($disk)->delete($path);
             }
 
+            return $this->error($e->getMessage());
+        }
+    }
+
+    public function marketplace()
+    {
+        Breadcrumb::add(__('core::translation.themes'));
+        Breadcrumb::add(__('core::translation.marketplace'));
+
+        return view('core::admin.theme.marketplace');
+    }
+
+    public function loadMarketplaceData(Request $request): JsonResponse
+    {
+        $page = $request->input('page', 1);
+        $limit = $request->input('limit', 10);
+
+        if ($limit > 20) {
+            $limit = 20;
+        }
+
+        try {
+            $response = Http::timeout(10)->get('https://juzaweb.com/api/themes', [
+                'page' => $page,
+                'per_page' => $limit,
+            ]);
+
+            if (!$response->successful()) {
+                return $this->error(__('core::translation.failed_to_fetch_marketplace_data'));
+            }
+
+            $data = $response->json();
+            $themes = $data['data'] ?? [];
+
+            $total = $data['meta']['total'] ?? 0;
+
+            return $this->success(
+                [
+                    'html' => view(
+                        'core::admin.theme.components.marketplace-list',
+                        compact('themes')
+                    )->render(),
+                    'total' => $total,
+                ]
+            );
+        } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
     }

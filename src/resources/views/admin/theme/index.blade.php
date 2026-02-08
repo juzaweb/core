@@ -17,10 +17,34 @@
         #theme-list .theme-list-item .height-200 {
             height: 200px;
         }
+
+        .nav-tabs {
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            color: #6c757d;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .nav-tabs .nav-link:hover {
+            border: none;
+            color: #007bff;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #007bff;
+            border: none;
+            border-bottom: 3px solid #007bff;
+            background-color: transparent;
+        }
     </style>
 @endsection
 
 @section('content')
+
     <div class="row mb-3">
         <div class="col-md-12">
             <div class="float-right">
@@ -32,6 +56,21 @@
             </div>
         </div>
     </div>
+
+    <ul class="nav nav-tabs mb-3" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ route('admin.themes.index') }}">
+                <i class="fa fa-laptop"></i> {{ __('core::translation.installed_themes') }}
+            </a>
+        </li>
+        @if (config('themes.upload_enabled'))
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.themes.marketplace') }}">
+                <i class="fa fa-store"></i> {{ __('core::translation.marketplace') }}
+            </a>
+        </li>
+        @endif
+    </ul>
 
     <div class="row" id="theme-list">
         <div class="col-md-4 p-2 theme-list-item">
