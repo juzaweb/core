@@ -2,7 +2,7 @@
     "name": "juzaweb/core",
     "description": "Juzaweb CMS Core",
     "keywords": [],
-    "license": "MIT",
+    "license": "GPL-2.0",
     "homepage": "https://juzaweb.com",
     "require": {
         "php": "^8.2",
