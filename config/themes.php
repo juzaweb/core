@@ -11,6 +11,8 @@
 return [
     'enable' => env('JW_THEME_ENABLE', true),
 
+    'upload_enabled' => env('JW_THEME_UPLOAD_ENABLED', true),
+
     'path' => base_path('themes'),
 
     'stubs' => [

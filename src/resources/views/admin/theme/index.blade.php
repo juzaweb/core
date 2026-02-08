@@ -24,9 +24,11 @@
     <div class="row mb-3">
         <div class="col-md-12">
             <div class="float-right">
-                <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#upload-theme-modal">
-                    <i class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload_theme') }}
-                </a>
+                @if (config('themes.upload_enabled'))
+                    <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#upload-theme-modal">
+                        <i class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload_theme') }}
+                    </a>
+                @endif
             </div>
         </div>
     </div>
