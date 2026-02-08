@@ -45,17 +45,15 @@ trait HasThumbnail
 
     public function getThumbnail(string $size = null): ?string
     {
-        $url = $this->getFirstMediaUrl('thumbnail')
-            ?? $this->getDefaultThumbnail()
-            ?? self::$defaultThumbnail;
+        $url = $this->getFirstMediaUrl('thumbnail');
 
-        $size = $size ?? self::$thumbnailSize;
+        if ($url) {
+            $size = $size ?? self::$thumbnailSize;
 
-        if ($size) {
-            return proxy_image($url, ...explode('x', self::$thumbnailSize));
+            return proxy_image($url, ...explode('x', $size));
         }
 
-        return $url;
+        return $this->getDefaultThumbnail() ?? self::$defaultThumbnail;
     }
 
     public function setThumbnail(Media|string|null $thumbnail): void

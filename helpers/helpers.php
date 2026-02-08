@@ -711,7 +711,6 @@ if (!function_exists('custom_var_export')) {
      * @param mixed $expression  The variable to be exported.
      * @return string The formatted string representation of the variable.
      */
-
     function custom_var_export($expression): string
     {
         $export = var_export($expression, true);
