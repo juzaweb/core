@@ -3,6 +3,7 @@
 namespace Juzaweb\Modules\Core\Modules\Process;
 
 use Juzaweb\Modules\Core\Modules\Module;
+use Juzaweb\Modules\Core\Themes\Theme;
 
 class Updater extends Runner
 {
@@ -18,7 +19,7 @@ class Updater extends Runner
         chdir(base_path());
 
         $this->installRequires($module);
-        $this->installDevRequires($module);
+        // $this->installDevRequires($module);
         $this->copyScriptsToMainComposerJson($module);
     }
 
@@ -33,9 +34,9 @@ class Updater extends Runner
     }
 
     /**
-     * @param Module $module
+     * @param  Module|Theme  $module
      */
-    private function installRequires(Module $module)
+    private function installRequires(Module|Theme $module)
     {
         $packages = $module->getComposerAttr('require', []);
 
@@ -52,9 +53,9 @@ class Updater extends Runner
     }
 
     /**
-     * @param Module $module
+     * @param Module|Theme $module
      */
-    private function installDevRequires(Module $module)
+    private function installDevRequires(Module|Theme $module)
     {
         $devPackages = $module->getComposerAttr('require-dev', []);
         $phpPath = get_php_binary_path();
@@ -70,9 +71,9 @@ class Updater extends Runner
     }
 
     /**
-     * @param Module $module
+     * @param Module|Theme $module
      */
-    private function copyScriptsToMainComposerJson(Module $module)
+    private function copyScriptsToMainComposerJson(Module|Theme $module)
     {
         $scripts = $module->getComposerAttr('scripts', []);
 
@@ -89,6 +90,7 @@ class Updater extends Runner
 
                 continue;
             }
+
             $composer['scripts'] = array_merge($composer['scripts'], [$key => $script]);
         }
 

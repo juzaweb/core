@@ -48,7 +48,7 @@ class ThemeInstallCommand extends Command
      * @param  string  $type
      * @param  bool  $tree
      */
-    protected function install(string $name, string $version = 'dev-master', string $type = 'composer', bool $tree = false)
+    protected function install(string $name, ?string $version = 'dev-master', ?string $type = 'composer', bool $tree = false)
     {
         // Create adapter to make ThemeRepository compatible with Installer
         $adapter = new ThemeRepositoryAdapter(
@@ -82,6 +82,15 @@ class ThemeInstallCommand extends Command
                 'theme' => $installer->getModuleName(),
             ]);
         }
+
+        // Run migration
+        $this->call('migrate', [
+            '--force' => true,
+        ]);
+
+        $this->call('theme:publish', [
+            'theme' => $installer->getModuleName(),
+        ]);
     }
 
     /**
