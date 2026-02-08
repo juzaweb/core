@@ -31,16 +31,18 @@
                         data-target="#marketplace-modal-{{ $theme['id'] }}">
                         <i class="fa fa-info-circle"></i> {{ __('core::translation.details') }}
                     </a>
-                    @if ($theme['is_free'])
-                        <button class="btn btn-sm btn-success install-theme" data-theme-id="{{ $theme['id'] }}"
-                            data-theme-name="{{ $theme['name'] }}">
-                            <i class="fa fa-download"></i> {{ __('core::translation.install') }}
-                        </button>
-                    @else
+
+                    <a href="javascript:void(0)" class="btn btn-sm btn-success" data-toggle="modal"
+                        data-target="#install-modal-{{ $theme['id'] }}">
+                        <i class="fa fa-download"></i> {{ __('core::translation.install') }}
+                    </a>
+
+                    @if (isset($theme['demo_url']))
                         <a href="{{ $theme['demo_url'] ?? '#' }}" class="btn btn-sm btn-primary" target="_blank">
                             <i class="fa fa-eye"></i> {{ __('core::translation.view_demo') }}
                         </a>
                     @endif
+
                 </div>
             </div>
         </div>
@@ -62,7 +64,12 @@
                         <!-- Thumbnail -->
                         <div class="col-md-4 text-center mb-3">
                             <img src="{{ $theme['thumbnail'] ?? 'https://placehold.co/400x300?text=' . urlencode($theme['title']) }}"
-                                alt="{{ $theme['title'] }}" class="img-fluid rounded shadow">
+                                alt="{{ $theme['title'] }}" class="img-fluid rounded shadow mb-3">
+
+                            <a href="{{ $theme['url'] ?? '' }}"
+                                class="btn btn-primary btn-sm btn-block" target="_blank">
+                                <i class="fa fa-external-link-alt"></i> {{ __('core::translation.view_more') }}
+                            </a>
                         </div>
 
                         <!-- Info -->
@@ -119,16 +126,50 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    @if ($theme['is_free'])
-                        <button type="button" class="btn btn-success install-theme" data-theme-id="{{ $theme['id'] }}"
-                            data-theme-name="{{ $theme['name'] }}">
-                            <i class="fa fa-download"></i> {{ __('core::translation.install') }}
+                    <a href="javascript:void(0)" class="btn btn-success" data-dismiss="modal" data-toggle="modal"
+                        data-target="#install-modal-{{ $theme['id'] }}">
+                        <i class="fa fa-download"></i> {{ __('core::translation.install') }}
+                    </a>
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        {{ __('core::translation.close') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Installation Guide Modal -->
+    <div class="modal fade" id="install-modal-{{ $theme['id'] }}" tabindex="-1"
+        aria-labelledby="install-modal-{{ $theme['id'] }}Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="install-modal-{{ $theme['id'] }}Label">
+                        <i class="fa fa-download"></i> {{ __('core::translation.install_theme') }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="mb-3">{{ __('core::translation.installation_instructions') }}</h6>
+                    <p class="text-muted">{{ __('core::translation.run_command_in_terminal') }}:</p>
+
+                    <div class="alert alert-secondary d-flex justify-content-between align-items-center mb-0">
+                        <code class="text-dark mb-0" id="install-command-{{ $theme['id'] }}">php artisan theme:install {{ $theme['name'] }}</code>
+                        <button type="button" class="btn btn-sm btn-outline-primary ml-2 copy-command"
+                            data-command="php artisan theme:install {{ $theme['name'] }}">
+                            <i class="fa fa-copy"></i> {{ __('core::translation.copy') }}
                         </button>
-                    @else
-                        <a href="#" class="btn btn-primary">
-                            <i class="fa fa-shopping-cart"></i> {{ __('core::translation.buy_now') }}
-                        </a>
-                    @endif
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        <i class="fa fa-info-circle"></i>
+                        <small>{{ __('core::translation.install_theme_note') }}</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         {{ __('core::translation.close') }}
                     </button>

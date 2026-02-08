@@ -159,5 +159,22 @@
                 }
             });
         });
+
+        // Copy command to clipboard
+        $(document).on('click', '.copy-command', function() {
+            const command = $(this).data('command');
+            const btn = $(this);
+            const originalHtml = btn.html();
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(command).then(function() {
+                btn.html('<i class="fa fa-check"></i> {{ __('core::translation.copied') }}');
+                setTimeout(function() {
+                    btn.html(originalHtml);
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Failed to copy:', err);
+            });
+        });
     </script>
 @endsection
