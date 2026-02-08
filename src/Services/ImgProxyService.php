@@ -119,9 +119,9 @@ class ImgProxyService extends BaseService
     protected function getImage(string $url): array
     {
         $cloudConfig = config('filesystems.disks.cloud');
-
+        $cloudUrl = $cloudConfig['url'] ?? $cloudConfig['endpoint'] ?? null;
         // Check if image is from cloud storage (S3)
-        if (!empty($cloudConfig['url']) && str_contains($url, $cloudConfig['url'])) {
+        if (isset($cloudUrl) && str_contains($url, $cloudUrl)) {
             return $this->getImageFromS3($url);
         }
 
