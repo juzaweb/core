@@ -32,13 +32,23 @@
                         <i class="fa fa-info-circle"></i> {{ __('core::translation.details') }}
                     </a>
 
-                    <a href="javascript:void(0)" class="btn btn-sm btn-success" data-toggle="modal"
-                        data-target="#install-modal-{{ $theme['id'] }}">
-                        <i class="fa fa-download"></i> {{ __('core::translation.install') }}
-                    </a>
+                    @php
+                        $isInstalled = in_array($theme['name'], $installedThemes ?? []);
+                    @endphp
+
+                    @if ($isInstalled)
+                        <button type="button" class="btn btn-sm btn-secondary" disabled>
+                            <i class="fa fa-check"></i> {{ __('core::translation.installed') }}
+                        </button>
+                    @else
+                        <a href="javascript:void(0)" class="btn btn-sm btn-success" data-toggle="modal"
+                            data-target="#install-modal-{{ $theme['id'] }}">
+                            <i class="fa fa-download"></i> {{ __('core::translation.install') }}
+                        </a>
+                    @endif
 
                     @if (isset($theme['demo_url']))
-                        <a href="{{ $theme['demo_url'] ?? '#' }}" class="btn btn-sm btn-primary" target="_blank">
+                        <a href="{{ $theme['demo_url'] }}" class="btn btn-sm btn-primary" target="_blank">
                             <i class="fa fa-eye"></i> {{ __('core::translation.view_demo') }}
                         </a>
                     @endif
@@ -115,7 +125,7 @@
                                 </table>
                             </div>
 
-                            @if ($theme['demo_url'])
+                            @if (isset($theme['demo_url']))
                                 <div class="mb-2">
                                     <a href="{{ $theme['demo_url'] }}" class="btn btn-primary btn-sm" target="_blank">
                                         <i class="fa fa-external-link-alt"></i> {{ __('core::translation.view_demo') }}
@@ -126,10 +136,20 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="javascript:void(0)" class="btn btn-success" data-dismiss="modal" data-toggle="modal"
-                        data-target="#install-modal-{{ $theme['id'] }}">
-                        <i class="fa fa-download"></i> {{ __('core::translation.install') }}
-                    </a>
+                    @php
+                        $isInstalled = in_array($theme['name'], $installedThemes ?? []);
+                    @endphp
+
+                    @if ($isInstalled)
+                        <button type="button" class="btn btn-secondary" disabled>
+                            <i class="fa fa-check"></i> {{ __('core::translation.installed') }}
+                        </button>
+                    @else
+                        <a href="javascript:void(0)" class="btn btn-success" data-dismiss="modal" data-toggle="modal"
+                            data-target="#install-modal-{{ $theme['id'] }}">
+                            <i class="fa fa-download"></i> {{ __('core::translation.install') }}
+                        </a>
+                    @endif
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         {{ __('core::translation.close') }}

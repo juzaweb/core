@@ -204,7 +204,8 @@ class ThemeController extends AdminController
 
     public function marketplace()
     {
-        Breadcrumb::add(__('core::translation.themes'));
+        Breadcrumb::add(__('core::translation.themes'), action([self::class, 'index']));
+
         Breadcrumb::add(__('core::translation.marketplace'));
 
         return view('core::admin.theme.marketplace');
@@ -234,11 +235,16 @@ class ThemeController extends AdminController
 
             $total = $data['meta']['total'] ?? 0;
 
+            // Get all installed themes
+            $installedThemes = collect(Theme::all())->map(
+                fn ($theme) => $theme->composer()['name']
+            )->toArray();
+
             return $this->success(
                 [
                     'html' => view(
                         'core::admin.theme.components.marketplace-list',
-                        compact('themes')
+                        compact('themes', 'installedThemes')
                     )->render(),
                     'total' => $total,
                 ]

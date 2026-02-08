@@ -2,29 +2,6 @@
 
 @section('head')
     <style>
-        .nav-tabs {
-            border-bottom: 2px solid #dee2e6;
-        }
-
-        .nav-tabs .nav-link {
-            border: none;
-            color: #6c757d;
-            font-weight: 500;
-            padding: 0.75rem 1.5rem;
-        }
-
-        .nav-tabs .nav-link:hover {
-            border: none;
-            color: #007bff;
-        }
-
-        .nav-tabs .nav-link.active {
-            color: #007bff;
-            border: none;
-            border-bottom: 3px solid #007bff;
-            background-color: transparent;
-        }
-
         #marketplace-list .marketplace-item .card-bottom {
             position: absolute;
             background: rgb(255 255 255 / 88%);
@@ -51,18 +28,6 @@
 @endsection
 
 @section('content')
-    <ul class="nav nav-tabs mb-3" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.themes.index') }}">
-                <i class="fa fa-laptop"></i> {{ __('core::translation.installed_themes') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="{{ route('admin.themes.marketplace') }}">
-                <i class="fa fa-store"></i> {{ __('core::translation.marketplace') }}
-            </a>
-        </li>
-    </ul>
 
     <div class="row mb-3">
         <div class="col-md-12">

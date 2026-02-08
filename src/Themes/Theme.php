@@ -141,6 +141,11 @@ class Theme implements Arrayable
         return $this->json()->get($key, $default);
     }
 
+    public function composer()
+    {
+        return $this->json('composer.json');
+    }
+
     /**
      * Get json contents from the cache, setting as needed.
      *

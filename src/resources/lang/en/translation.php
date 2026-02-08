@@ -610,4 +610,5 @@ return [
     'install_theme_note' => 'This will download and install the theme from the marketplace. Make sure you have composer installed and configured properly.',
     'install_theme' => 'Install Theme',
     'view_more' => 'View More',
+    'installed' => 'Installed',
 ];

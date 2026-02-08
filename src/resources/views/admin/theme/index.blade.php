@@ -17,29 +17,6 @@
         #theme-list .theme-list-item .height-200 {
             height: 200px;
         }
-
-        .nav-tabs {
-            border-bottom: 2px solid #dee2e6;
-        }
-
-        .nav-tabs .nav-link {
-            border: none;
-            color: #6c757d;
-            font-weight: 500;
-            padding: 0.75rem 1.5rem;
-        }
-
-        .nav-tabs .nav-link:hover {
-            border: none;
-            color: #007bff;
-        }
-
-        .nav-tabs .nav-link.active {
-            color: #007bff;
-            border: none;
-            border-bottom: 3px solid #007bff;
-            background-color: transparent;
-        }
     </style>
 @endsection
 
@@ -52,29 +29,19 @@
                     <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#upload-theme-modal">
                         <i class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload_theme') }}
                     </a>
+
+                    <a class="btn btn-primary" href="{{ route('admin.themes.marketplace') }}">
+                        <i class="fa fa-store"></i> {{ __('core::translation.marketplace') }}
+                    </a>
                 @endif
             </div>
         </div>
     </div>
 
-    <ul class="nav nav-tabs mb-3" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" href="{{ route('admin.themes.index') }}">
-                <i class="fa fa-laptop"></i> {{ __('core::translation.installed_themes') }}
-            </a>
-        </li>
-        @if (config('themes.upload_enabled'))
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.themes.marketplace') }}">
-                <i class="fa fa-store"></i> {{ __('core::translation.marketplace') }}
-            </a>
-        </li>
-        @endif
-    </ul>
-
     <div class="row" id="theme-list">
         <div class="col-md-4 p-2 theme-list-item">
             @component('core::admin.theme.components.theme-item', ['theme' => $currentTheme, 'active' => true])
+
             @endcomponent
         </div>
     </div>
@@ -181,13 +148,6 @@
                                             window.location.reload();
                                         }, 1500);
                                     } else {
-                                        /*show_notify({
-                                            success: false,
-                                            message: installResponse
-                                                .message ||
-                                                '{{ __('core::translation.theme_installation_failed') }}'
-                                        });*/
-
                                         // Mark file as error in Dropzone
                                         dropzoneInstance.emit('error', file,
                                             installResponse.message ||
