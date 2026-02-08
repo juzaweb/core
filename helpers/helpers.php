@@ -905,3 +905,36 @@ function mime_type_from_extension(string $extension): string
         default       => 'application/octet-stream',
     };
 }
+
+/**
+ * Get the path to the PHP binary.
+ *
+ * @return string|false The path to the PHP binary or false if not found.
+ */
+function get_php_binary_path() {
+    // 1. Priority: Use the modern PHP_BINARY constant (Available since PHP 5.4)
+    if (defined('PHP_BINARY') && !empty(PHP_BINARY)) {
+        return PHP_BINARY;
+    }
+
+    // 2. Fallback: Use PHP_BINDIR to construct the path
+    if (defined('PHP_BINDIR') && !empty(PHP_BINDIR)) {
+        $suffix = (stripos(PHP_OS, 'WIN') === 0) ? '.exe' : '';
+        $path = PHP_BINDIR . DIRECTORY_SEPARATOR . 'php' . $suffix;
+
+        if (is_executable($path)) {
+            return $path;
+        }
+    }
+
+    // 3. Fallback: Check environment variables (common in CLI)
+    if (isset($_SERVER['_'])) {
+        return $_SERVER['_'];
+    }
+
+    // 4. Ultimate Fallback: Try to find it via 'which' or 'where' command
+    $command = (stripos(PHP_OS, 'WIN') === 0) ? 'where php' : 'which php';
+    $path = shell_exec($command);
+
+    return $path ? trim($path) : false;
+}

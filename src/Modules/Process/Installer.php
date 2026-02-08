@@ -296,8 +296,10 @@ class Installer
      */
     public function installViaComposer()
     {
+        $phpPath = get_php_binary_path();
+
         return Process::fromShellCommandline(sprintf(
-            'cd %s && php composer.phar require %s',
+            "cd %s && {$phpPath} composer.phar require %s",
             base_path(),
             $this->getPackageName()
         ));

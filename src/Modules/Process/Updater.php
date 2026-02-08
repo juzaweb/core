@@ -9,9 +9,9 @@ class Updater extends Runner
     /**
      * Update the dependencies for the specified module by given the module name.
      *
-     * @param string $module
+     * @param  string  $module
      */
-    public function update($module)
+    public function update(string $module)
     {
         $module = $this->module->findOrFail($module);
 
@@ -44,8 +44,10 @@ class Updater extends Runner
             $concatenatedPackages .= "\"{$name}:{$version}\" ";
         }
 
+        $phpPath = get_php_binary_path();
+
         if (!empty($concatenatedPackages)) {
-            $this->run("composer require {$concatenatedPackages}{$this->isComposerSilenced()}");
+            $this->run("{$phpPath} composer.phar require {$concatenatedPackages}{$this->isComposerSilenced()}");
         }
     }
 
@@ -55,6 +57,7 @@ class Updater extends Runner
     private function installDevRequires(Module $module)
     {
         $devPackages = $module->getComposerAttr('require-dev', []);
+        $phpPath = get_php_binary_path();
 
         $concatenatedPackages = '';
         foreach ($devPackages as $name => $version) {
@@ -62,7 +65,7 @@ class Updater extends Runner
         }
 
         if (!empty($concatenatedPackages)) {
-            $this->run("composer require --dev {$concatenatedPackages}{$this->isComposerSilenced()}");
+            $this->run("{$phpPath} composer.phar require --dev {$concatenatedPackages}{$this->isComposerSilenced()}");
         }
     }
 
@@ -73,7 +76,12 @@ class Updater extends Runner
     {
         $scripts = $module->getComposerAttr('scripts', []);
 
-        $composer = json_decode(file_get_contents(base_path('composer.json')), true);
+        $composer = json_decode(
+            file_get_contents(base_path('composer.json')),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
 
         foreach ($scripts as $key => $script) {
             if (array_key_exists($key, $composer['scripts'])) {
@@ -84,6 +92,7 @@ class Updater extends Runner
             $composer['scripts'] = array_merge($composer['scripts'], [$key => $script]);
         }
 
-        file_put_contents(base_path('composer.json'), json_encode($composer, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+        file_put_contents(base_path('composer.json'),
+            json_encode($composer, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     }
 }
