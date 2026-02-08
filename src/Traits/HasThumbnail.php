@@ -21,21 +21,29 @@ trait HasThumbnail
 {
     protected static ?string $defaultThumbnail = null;
 
-    public function initializeHasThumbnail()
-    {
-        $this->appends[] = 'thumbnail';
-    }
+    protected ?string $thumbnailSize = null;
 
     public static function defaultThumbnail(string $url): void
     {
         self::$defaultThumbnail = $url;
     }
 
+    public function initializeHasThumbnail()
+    {
+        $this->appends[] = 'thumbnail';
+    }
+
     public function getThumbnailAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('thumbnail')
+        $url = $this->getFirstMediaUrl('thumbnail')
             ?? $this->getDefaultThumbnail()
             ?? self::$defaultThumbnail;
+
+        if ($this->thumbnailSize) {
+            return proxy_image($url, ...explode('x', $this->thumbnailSize));
+        }
+
+        return $url;
     }
 
     public function setThumbnail(Media|string|null $thumbnail): void
