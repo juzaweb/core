@@ -1,9 +1,9 @@
 <li class="media-item col-6 col-md-2 col-lg-2 mb-1" title="{{ $item->name }}">
     <a href="{{ $item->isDirectory() ? route('admin.media.folder', [$item->id]) : 'javascript:void(0)' }}"
-        class="media-item-info @if ($item->isFile()) media-file-item @endif" data-id="{{ $item->id }}">
+       class="media-item-info @if ($item->isFile()) media-file-item @endif" data-id="{{ $item->id }}">
         @php
             $arr = $item->toArray();
-            $arr['url'] = $item->path ? get_full_url(upload_url($item->path), url('/')) : '';
+            $arr['url'] = proxy_image($item->getUrl());
             $arr['updated'] = $item->updated_at?->toUserTimezone()->format('d/m/Y H:i');
             $arr['size'] = format_size_units($item->size);
             $arr['is_file'] = $item->isFile();
@@ -19,9 +19,9 @@
                     @else
                         @if ($item->isImage())
                             <img class="lazyload"
-                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                data-src="{{ proxy_image(upload_url($item->path), 150, 150) }}"
-                                alt="{{ $item->name }}" />
+                                 src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                 data-src="{{ proxy_image(upload_url($item->path), 150, 150) }}"
+                                 alt="{{ $item->name }}"/>
                         @elseif($item->isVideo())
                             <div class="file-icon-wrapper text-center p-3">
                                 <i class="fa fa-file-video fa-4x text-danger"></i>
@@ -34,7 +34,7 @@
                             </div>
                         @elseif($item->isDocument())
                             <div class="file-icon-wrapper text-center p-3">
-                                @if (in_array($item->extension, ['pdf']))
+                                @if ($item->extension == 'pdf')
                                     <i class="fa fa-file-pdf fa-4x text-danger"></i>
                                 @else
                                     <i class="fa fa-file-alt fa-4x text-primary"></i>
