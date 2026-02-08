@@ -85,7 +85,7 @@ class ThemeController extends AdminController
 
         try {
             // Validate input
-            if (empty($path)) {
+            if (! $path) {
                 return $this->error(__('core::translation.file_path_required'));
             }
 
