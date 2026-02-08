@@ -297,7 +297,7 @@ class Installer
     public function installViaComposer()
     {
         return Process::fromShellCommandline(sprintf(
-            'cd %s && composer require %s',
+            'cd %s && php composer.phar require %s',
             base_path(),
             $this->getPackageName()
         ));
