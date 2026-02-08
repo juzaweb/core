@@ -21,9 +21,11 @@ use Juzaweb\Modules\Core\Themes\Commands\MakeViewCommand;
 use Juzaweb\Modules\Core\Themes\Commands\MakeWidgetCommand;
 use Juzaweb\Modules\Core\Themes\Commands\ThemeActiveCommand;
 use Juzaweb\Modules\Core\Themes\Commands\ThemeGeneratorCommand;
+use Juzaweb\Modules\Core\Themes\Commands\ThemeInstallCommand;
 use Juzaweb\Modules\Core\Themes\Commands\ThemeListCommand;
 use Juzaweb\Modules\Core\Themes\Commands\ThemePublishCommand;
 use Juzaweb\Modules\Core\Themes\Commands\ThemeSeedCommand;
+use Juzaweb\Modules\Core\Themes\Commands\ThemeUpdateCommand;
 use Juzaweb\Modules\Core\Themes\Contracts\ThemeActivatorInterface;
 use Juzaweb\Modules\Core\Themes\ThemeRepository;
 
@@ -37,6 +39,8 @@ class ThemeServiceProvider extends ServiceProvider
                 ThemeActiveCommand::class,
                 ThemePublishCommand::class,
                 ThemeGeneratorCommand::class,
+                ThemeInstallCommand::class,
+                ThemeUpdateCommand::class,
                 MakePageBlockCommand::class,
                 MakeTemplateCommand::class,
                 MakeViewCommand::class,

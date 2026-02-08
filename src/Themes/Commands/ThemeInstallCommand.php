@@ -1,28 +1,29 @@
 <?php
 
-namespace Juzaweb\Modules\Core\Modules\Commands;
+namespace Juzaweb\Modules\Core\Themes\Commands;
 
 use Illuminate\Console\Command;
 use Juzaweb\Modules\Core\Modules\Process\Installer;
 use Juzaweb\Modules\Core\Modules\Support\Json;
+use Juzaweb\Modules\Core\Themes\Support\ThemeRepositoryAdapter;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class InstallCommand extends Command
+class ThemeInstallCommand extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:install';
+    protected $name = 'theme:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install the specified module by given package name (vendor/name).';
+    protected $description = 'Install the specified theme by given package name (vendor/name).';
 
     /**
      * Execute the console command.
@@ -44,26 +45,27 @@ class InstallCommand extends Command
     }
 
     /**
-     * Install modules from modules.json file.
+     * Install themes from themes.json file.
      */
     protected function installFromFile(): int
     {
         if (!file_exists($path = base_path('composer.json'))) {
-            $this->error("File 'composer.json' does not exist in your project root.");
+            $this->error("File 'themes.json' does not exist in your project root.");
+
             return E_ERROR;
         }
 
-        $modules = Json::make($path);
+        $themes = Json::make($path);
 
-        $dependencies = $modules->get('require', []);
+        $dependencies = $themes->get('require', []);
 
-        foreach ($dependencies as $module) {
-            $module = collect($module);
+        foreach ($dependencies as $theme) {
+            $theme = collect($theme);
 
             $this->install(
-                $module->get('name'),
-                $module->get('version'),
-                $module->get('type')
+                $theme->get('name'),
+                $theme->get('version'),
+                $theme->get('type')
             );
         }
 
@@ -71,7 +73,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Install the specified module.
+     * Install the specified theme.
      *
      * @param string $name
      * @param string $version
@@ -80,6 +82,12 @@ class InstallCommand extends Command
      */
     protected function install($name, $version = 'dev-master', $type = 'composer', $tree = false)
     {
+        // Create adapter to make ThemeRepository compatible with Installer
+        $adapter = new ThemeRepositoryAdapter(
+            $this->laravel['themes'],
+            $this->laravel['files']
+        );
+
         $installer = new Installer(
             $name,
             $version,
@@ -87,7 +95,7 @@ class InstallCommand extends Command
             $tree ?: $this->option('tree')
         );
 
-        $installer->setRepository($this->laravel['modules']);
+        $installer->setRepository($adapter);
 
         $installer->setConsole($this);
 
@@ -102,8 +110,8 @@ class InstallCommand extends Command
         $installer->run();
 
         if (!$this->option('no-update')) {
-            $this->call('module:update', [
-                'module' => $installer->getModuleName(),
+            $this->call('theme:update', [
+                'theme' => $installer->getModuleName(),
             ]);
         }
     }
@@ -116,8 +124,8 @@ class InstallCommand extends Command
     protected function getArguments(): array
     {
         return [
-            ['name', InputArgument::OPTIONAL, 'The name of module will be installed.'],
-            ['version', InputArgument::OPTIONAL, 'The version of module will be installed.'],
+            ['name', InputArgument::OPTIONAL, 'The name of theme will be installed.'],
+            ['version', InputArgument::OPTIONAL, 'The version of theme will be installed.'],
         ];
     }
 
@@ -132,7 +140,7 @@ class InstallCommand extends Command
             ['timeout', null, InputOption::VALUE_OPTIONAL, 'The process timeout.', null],
             ['path', null, InputOption::VALUE_OPTIONAL, 'The installation path.', null],
             ['type', null, InputOption::VALUE_OPTIONAL, 'The type of installation.', null],
-            ['tree', null, InputOption::VALUE_NONE, 'Install the module as a git subtree', null],
+            ['tree', null, InputOption::VALUE_NONE, 'Install the theme as a git subtree', null],
             ['no-update', null, InputOption::VALUE_NONE, 'Disables the automatic update of the dependencies.', null],
         ];
     }
