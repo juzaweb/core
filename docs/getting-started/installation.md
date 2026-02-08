@@ -84,3 +84,19 @@ php artisan vendor:publish --tag=core-views
 ```bash
 php artisan vendor:publish --tag=core-lang
 ```
+
+## License Key and Marketplace
+
+The License Key is required to install themes/modules from the Marketplace. You can obtain a license key from the page [API Keys](https://juzaweb.com/profile/api-keys).
+
+During the installation process the installer will ask you for your license key. If you don't want to repeat this action, you can set it up once and for all using the command:
+
+```bash
+composer config http-basic.juzaweb.com your-email your-api-key
+```
+
+If your license can be used for multiple projects, you may consider adding the `--global` option to the command to make it available for all projects:
+
+```bash
+composer config --global http-basic.juzaweb.com your-email your-api-key
+```
