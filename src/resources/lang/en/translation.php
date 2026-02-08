@@ -591,7 +591,7 @@ return [
     'accepted_file_types' => 'Accepted file types',
     'marketplace' => 'Marketplace',
     'installed_themes' => 'Installed Themes',
-    'marketplace_description' => 'Browse and install themes from the JuzaWeb marketplace.',
+    'marketplace_description' => 'Browse and install themes from the Juzaweb marketplace.',
     'no_themes_found' => 'No themes found in the marketplace.',
     'failed_to_load_marketplace' => 'Failed to load marketplace data. Please try again later.',
     'failed_to_fetch_marketplace_data' => 'Failed to fetch data from marketplace.',
