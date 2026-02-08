@@ -62,7 +62,7 @@ trait HasRestResponses
 
             if ($model && method_exists(get_class($model), 'makeCollectionResource')) {
                 return get_class($model)::makeCollectionResource($data)
-                    ->additional(array_merge(['message' => $message], $additional))
+                    ->additional(array_merge(['message' => $message, 'success' => true], $additional))
                     ->response()
                     ->setStatusCode($status);
             }
@@ -78,25 +78,28 @@ trait HasRestResponses
 
             if ($model && method_exists(get_class($model), 'makeCollectionResource')) {
                 return get_class($model)::makeCollectionResource($data)
-                    ->additional(array_merge(['message' => $message], $additional))
+                    ->additional(array_merge(['message' => $message, 'success' => true], $additional))
                     ->response()
                     ->setStatusCode($status);
             }
 
-            return ModelCollectionResource::make($data)->additional(['message' => $message])->response()->setStatusCode($status);
+            return ModelCollectionResource::make($data)
+                ->additional(['message' => $message, 'success' => true])
+                ->response()
+                ->setStatusCode($status);
         }
 
         // Handle case where $data is a Model
         if ($data instanceof \Illuminate\Database\Eloquent\Model) {
             if (method_exists(get_class($data), 'makeResource')) {
                 return get_class($data)::makeResource($data)
-                    ->additional(array_merge(['message' => $message], $additional))
+                    ->additional(array_merge(['message' => $message, 'success' => true], $additional))
                     ->response()
                     ->setStatusCode($status);
             }
 
             return ModelResource::make($data)
-                ->additional(array_merge(['message' => $message], $additional))
+                ->additional(array_merge(['message' => $message, 'success' => true], $additional))
                 ->response()
                 ->setStatusCode($status);
         }
