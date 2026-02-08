@@ -21,11 +21,16 @@ trait HasThumbnail
 {
     protected static ?string $defaultThumbnail = null;
 
-    protected ?string $thumbnailSize = null;
+    protected static ?string $thumbnailSize = null;
 
     public static function defaultThumbnail(string $url): void
     {
         self::$defaultThumbnail = $url;
+    }
+
+    public static function thumbnailSize(string $size): void
+    {
+        self::$thumbnailSize = $size;
     }
 
     public function initializeHasThumbnail()
@@ -35,12 +40,19 @@ trait HasThumbnail
 
     public function getThumbnailAttribute(): ?string
     {
+        return $this->getThumbnail();
+    }
+
+    public function getThumbnail(string $size = null): ?string
+    {
         $url = $this->getFirstMediaUrl('thumbnail')
             ?? $this->getDefaultThumbnail()
             ?? self::$defaultThumbnail;
 
-        if ($this->thumbnailSize) {
-            return proxy_image($url, ...explode('x', $this->thumbnailSize));
+        $size = $size ?? self::$thumbnailSize;
+
+        if ($size) {
+            return proxy_image($url, ...explode('x', self::$thumbnailSize));
         }
 
         return $url;
