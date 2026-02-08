@@ -9,13 +9,7 @@ class $CLASS$ extends ServiceProvider
 {
     public function boot(): void
     {
-        //
-
-        $this->booted(
-            function () {
-                $this->registerMenus();
-            }
-        );
+        $this->registerMenus();
     }
 
     public function register(): void
@@ -29,19 +23,15 @@ class $CLASS$ extends ServiceProvider
 
     protected function registerMenus(): void
     {
-        if (File::missing(storage_path('app/installed'))) {
-            return;
-        }
-
         //
     }
 
     protected function registerConfig(): void
     {
         $this->publishes([
-            __DIR__ . '/../$PATH_CONFIG$/config.php' => config_path('$KEBAB_SINGULAR_TITLE$.php'),
+            __DIR__ . '/../../$PATH_CONFIG$/config.php' => config_path('$KEBAB_SINGULAR_TITLE$.php'),
         ], '$KEBAB_SINGULAR_TITLE$-config');
-        $this->mergeConfigFrom(__DIR__ . '/../$PATH_CONFIG$/config.php', '$KEBAB_SINGULAR_TITLE$');
+        $this->mergeConfigFrom(__DIR__ . '/../../$PATH_CONFIG$/config.php', '$KEBAB_SINGULAR_TITLE$');
     }
 
     protected function registerTranslations(): void
@@ -54,7 +44,7 @@ class $CLASS$ extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/$KEBAB_SINGULAR_TITLE$');
 
-        $sourcePath = __DIR__ . '/../$PATH_VIEWS$';
+        $sourcePath = __DIR__ . '/../resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
