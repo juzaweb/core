@@ -588,4 +588,5 @@ return [
     'invalid_composer_json_format' => 'Invalid composer.json format',
     'theme_installed_successfully' => 'Theme :name installed successfully',
     'installing_theme' => 'Installing theme...',
+    'accepted_file_types' => 'Accepted file types',
 ];
