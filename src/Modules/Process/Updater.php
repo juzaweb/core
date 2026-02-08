@@ -20,7 +20,7 @@ class Updater extends Runner
 
         $this->installRequires($module);
         // $this->installDevRequires($module);
-        $this->copyScriptsToMainComposerJson($module);
+        // $this->copyScriptsToMainComposerJson($module);
     }
 
     /**

@@ -61,12 +61,12 @@ class Installer
     /**
      * The constructor.
      *
-     * @param string $name
-     * @param string $version
-     * @param string $type
-     * @param bool   $tree
+     * @param  string  $name
+     * @param  string|null  $version
+     * @param  string|null  $type
+     * @param  bool  $tree
      */
-    public function __construct($name, $version = null, $type = null, $tree = false)
+    public function __construct(string $name, ?string $version = null, ?string $type = null, bool $tree = false)
     {
         $this->name = $name;
         $this->version = $version;
@@ -77,11 +77,11 @@ class Installer
     /**
      * Set destination path.
      *
-     * @param string $path
+     * @param  string  $path
      *
      * @return $this
      */
-    public function setPath($path)
+    public function setPath(string $path)
     {
         $this->path = $path;
 
@@ -90,7 +90,7 @@ class Installer
 
     /**
      * Set the module repository instance.
-     * @param \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface $repository
+     * @param  \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface  $repository
      * @return $this
      */
     public function setRepository(RepositoryInterface $repository)
@@ -103,7 +103,7 @@ class Installer
     /**
      * Set console command instance.
      *
-     * @param \Illuminate\Console\Command $console
+     * @param  \Illuminate\Console\Command  $console
      *
      * @return $this
      */
@@ -117,11 +117,11 @@ class Installer
     /**
      * Set process timeout.
      *
-     * @param int $timeout
+     * @param  int  $timeout
      *
      * @return $this
      */
-    public function setTimeout($timeout)
+    public function setTimeout(int $timeout)
     {
         $this->timeout = $timeout;
 
@@ -195,13 +195,10 @@ class Installer
             case 'gitlab':
                 return "git@gitlab.com:{$this->name}.git";
 
-                break;
-
             case 'bitbucket':
                 return "git@bitbucket.org:{$this->name}.git";
 
             default:
-
                 // Check of type 'scheme://host/path'
                 if (filter_var($this->type, FILTER_VALIDATE_URL)) {
                     return $this->type;
@@ -212,9 +209,7 @@ class Installer
                     return "{$this->type}:{$this->name}.git";
                 }
 
-                return;
-
-                break;
+                return null;
         }
     }
 
@@ -248,10 +243,10 @@ class Installer
     public function getPackageName()
     {
         if (is_null($this->version)) {
-            return $this->name . ':dev-master';
+            return $this->name;
         }
 
-        return $this->name . ':' . $this->version;
+        return $this->name.':'.$this->version;
     }
 
     /**
