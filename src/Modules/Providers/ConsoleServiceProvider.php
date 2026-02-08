@@ -25,7 +25,7 @@ class ConsoleServiceProvider extends ServiceProvider
         \Juzaweb\Modules\Core\Modules\Commands\NotificationMakeCommand::class,
         \Juzaweb\Modules\Core\Modules\Commands\ProviderMakeCommand::class,
         \Juzaweb\Modules\Core\Modules\Commands\RouteProviderMakeCommand::class,
-        \Juzaweb\Modules\Core\Modules\Commands\InstallCommand::class,
+        \Juzaweb\Modules\Core\Modules\Commands\ModuleInstallCommand::class,
         \Juzaweb\Modules\Core\Modules\Commands\ListCommand::class,
         \Juzaweb\Modules\Core\Modules\Commands\ModuleDeleteCommand::class,
         \Juzaweb\Modules\Core\Modules\Commands\ModuleMakeCommand::class,

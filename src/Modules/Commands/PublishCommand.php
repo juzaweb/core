@@ -54,9 +54,9 @@ class PublishCommand extends Command
     /**
      * Publish assets from the specified module.
      *
-     * @param string $name
+     * @param  string|Module  $name
      */
-    public function publish($name)
+    public function publish(string|Module $name)
     {
         if ($name instanceof Module) {
             $module = $name;

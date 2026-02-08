@@ -4,11 +4,10 @@ namespace Juzaweb\Modules\Core\Modules\Commands;
 
 use Illuminate\Console\Command;
 use Juzaweb\Modules\Core\Modules\Process\Installer;
-use Juzaweb\Modules\Core\Modules\Support\Json;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class InstallCommand extends Command
+class ModuleInstallCommand extends Command
 {
     /**
      * The console command name.
@@ -29,43 +28,12 @@ class InstallCommand extends Command
      */
     public function handle(): int
     {
-        if (is_null($this->argument('name'))) {
-            return $this->installFromFile();
-        }
-
         $this->install(
             $this->argument('name'),
             $this->argument('version'),
             $this->option('type'),
             $this->option('tree')
         );
-
-        return 0;
-    }
-
-    /**
-     * Install modules from modules.json file.
-     */
-    protected function installFromFile(): int
-    {
-        if (!file_exists($path = base_path('composer.json'))) {
-            $this->error("File 'composer.json' does not exist in your project root.");
-            return E_ERROR;
-        }
-
-        $modules = Json::make($path);
-
-        $dependencies = $modules->get('require', []);
-
-        foreach ($dependencies as $module) {
-            $module = collect($module);
-
-            $this->install(
-                $module->get('name'),
-                $module->get('version'),
-                $module->get('type')
-            );
-        }
 
         return 0;
     }
@@ -78,7 +46,7 @@ class InstallCommand extends Command
      * @param  string  $type
      * @param  bool  $tree
      */
-    protected function install(string $name, string $version = 'dev-master', string $type = 'composer', bool $tree = false)
+    protected function install(string $name, ?string $version = 'dev-master', ?string $type = 'composer', bool $tree = false)
     {
         $installer = new Installer(
             $name,
@@ -106,6 +74,15 @@ class InstallCommand extends Command
                 'module' => $installer->getModuleName(),
             ]);
         }
+
+        // Run migration
+        $this->call('migrate', [
+            '--force' => true,
+        ]);
+
+        $this->call('module:publish', [
+            'module' => $installer->getModuleName(),
+        ]);
     }
 
     /**
@@ -116,7 +93,7 @@ class InstallCommand extends Command
     protected function getArguments(): array
     {
         return [
-            ['name', InputArgument::OPTIONAL, 'The name of module will be installed.'],
+            ['name', InputArgument::REQUIRED, 'The name of module will be installed.'],
             ['version', InputArgument::OPTIONAL, 'The version of module will be installed.'],
         ];
     }
