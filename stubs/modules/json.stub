@@ -1,6 +1,7 @@
 {
     "name": "$STUDLY_NAME$",
     "alias": "$KEBAB_SINGULAR_TITLE$",
+    "title": "$STUDLY_NAME$",
     "description": "",
     "keywords": [],
     "priority": 0,
