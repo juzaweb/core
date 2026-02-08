@@ -77,7 +77,7 @@ php artisan juzaweb:install
 4.  Click **Install** to complete the setup.
 5.  After installation, you can log in to the Admin Panel with the account you created.
 
-## Publish Resources (OPTIONAL)
+## Publish (OPTIONAL)
 
 ### Publish config
 

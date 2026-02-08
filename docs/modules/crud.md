@@ -4,6 +4,8 @@ This guide details the process of creating a CRUD entity in Juzaweb, strictly ad
 
 ### 1. Create Migration
 
+**Skip this step if you already have a migration file.**
+
 Run the command to generate a migration:
 
 ```bash
@@ -20,7 +22,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
@@ -53,6 +56,8 @@ return new class extends Migration {
 ```
 
 ### 2. Make Model
+
+**Skip this step if you already have a model file.**
 
 Generate the model for your module:
 
@@ -165,7 +170,7 @@ class PostController extends BackendController
 
 ### 5. Register Route
 
-Ensure your route follows the resource pattern in `modules/ModuleName/src/routes/admin.php`:
+Ensure your route follows the resource pattern in `modules/module-name/src/routes/admin.php`:
 
 ```php
 use Juzaweb\Modules\ModuleName\Http\Controllers\PostController;

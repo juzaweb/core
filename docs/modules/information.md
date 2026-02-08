@@ -5,12 +5,27 @@ Module is a package created to manage your large application using Modules. A Mo
 ### Make a Module
 
 ```bash
-php artisan module:make Blog
+php artisan module:make name
 ```
 
-* Require module with composer (use in locale)
+If you want to use the module in the locale, you must require it with composer:
 
+First, add custom repository in `composer.json`
+
+```json
+{
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./modules/name"
+        }
+    ]
+}
 ```
+
+Then, require the module:
+
+```bash
 composer require vendor/name:@dev
 ```
 
