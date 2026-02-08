@@ -286,16 +286,6 @@ class Module
     }
 
     /**
-     * Register the module event.
-     *
-     * @param string $event
-     */
-    protected function fireEvent($event): void
-    {
-        $this->app['events']->dispatch(sprintf('modules.%s.' . $event, $this->getLowerName()), [$this]);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getCachedServicesPath(): string
@@ -333,16 +323,6 @@ class Module
         $loader = AliasLoader::getInstance();
         foreach ($this->get('aliases', []) as $aliasName => $aliasClass) {
             $loader->alias($aliasName, $aliasClass);
-        }
-    }
-
-    /**
-     * Register the files from this module.
-     */
-    protected function registerFiles(): void
-    {
-        foreach ($this->get('files', []) as $file) {
-            include $this->path . '/' . $file;
         }
     }
 
@@ -484,5 +464,25 @@ class Module
     protected function loadTranslationsFrom(string $path, string $namespace): void
     {
         $this->translator->addNamespace($namespace, $path);
+    }
+
+    /**
+     * Register the files from this module.
+     */
+    protected function registerFiles(): void
+    {
+        foreach ($this->get('files', []) as $file) {
+            include $this->path . '/' . $file;
+        }
+    }
+
+    /**
+     * Register the module event.
+     *
+     * @param  string  $event
+     */
+    protected function fireEvent(string $event): void
+    {
+        $this->app['events']->dispatch(sprintf('modules.%s.' . $event, $this->getLowerName()), [$this]);
     }
 }

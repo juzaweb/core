@@ -5,6 +5,8 @@ use Juzaweb\Modules\Core\Modules\Activators\FileActivator;
 
 return [
 
+    'upload_enabled' => env('JW_MODULE_UPLOAD_ENABLED', true),
+
     /*
     |--------------------------------------------------------------------------
     | Module Namespace

@@ -236,9 +236,7 @@ class ThemeController extends AdminController
             $total = $data['meta']['total'] ?? 0;
 
             // Get all installed themes
-            $installedThemes = collect(Theme::all())->map(
-                fn ($theme) => $theme->composer()['name']
-            )->toArray();
+            $installedThemes = collect(Theme::all())->map(fn ($theme) => $theme->getComposerAttr('name'))->toArray();
 
             return $this->success(
                 [

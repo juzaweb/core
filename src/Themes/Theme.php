@@ -147,6 +147,19 @@ class Theme implements Arrayable
     }
 
     /**
+     * Get a specific data from composer.json file by given the key.
+     *
+     * @param string $key
+     * @param null $default
+     *
+     * @return array|string|null
+     */
+    public function getComposerAttr(string $key, $default = null): array|string|null
+    {
+        return $this->json('composer.json')->get($key, $default);
+    }
+
+    /**
      * Get json contents from the cache, setting as needed.
      *
      * @param string|null $file

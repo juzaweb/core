@@ -66,12 +66,10 @@
             <div class="container-fluid">
                 <div class="row mb-2">
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <h1>{{ $title }}</h1>
-                    </div>
 
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
+                        <ol class="breadcrumb mt-2">
                             @if ($breadcrumbs)
                                 <li class="breadcrumb-item">
                                     <a href="{{ admin_url() }}">{{ __('core::translation.dashboard') }}</a>

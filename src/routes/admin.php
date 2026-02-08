@@ -59,6 +59,14 @@ Route::post('modules/toggle', [ModuleController::class, 'toggle'])
     ->name('admin.modules.toggle')
     ->middleware(['permission:modules.edit']);
 
+Route::get('modules/marketplace', [ModuleController::class, 'marketplace'])
+    ->name('admin.modules.marketplace')
+    ->middleware(['permission:modules.index']);
+
+Route::get('modules/marketplace/get-data', [ModuleController::class, 'loadMarketplaceData'])
+    ->name('admin.modules.marketplace.get-data')
+    ->middleware(['permission:modules.index']);
+
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations')
     ->middleware(['permission:languages.index']);

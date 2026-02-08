@@ -1,6 +1,22 @@
 @extends('core::layouts.admin')
 
 @section('content')
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="float-right">
+                @if (config('modules.upload_enabled'))
+                    {{--<a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#upload-theme-modal">
+                        <i class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload_theme') }}
+                    </a>--}}
+
+                    <a class="btn btn-primary" href="{{ route('admin.modules.marketplace') }}">
+                        <i class="fa fa-store"></i> {{ __('core::translation.marketplace') }}
+                    </a>
+                @endif
+            </div>
+        </div>
+    </div>
+
     <div class="row" id="module-list">
         @foreach($modules as $module)
             <div class="col-md-4 col-lg-3 p-2 module-list-item">
