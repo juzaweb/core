@@ -50,7 +50,11 @@ trait HasThumbnail
         if ($url) {
             $size = $size ?? self::$thumbnailSize;
 
-            return proxy_image($url, ...explode('x', $size));
+            if ($size) {
+                return proxy_image($url, ...explode('x', $size));
+            }
+
+            return $url;
         }
 
         return $this->getDefaultThumbnail() ?? self::$defaultThumbnail;
