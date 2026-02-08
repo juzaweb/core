@@ -7,7 +7,7 @@
         @endif
 
         <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-            data-src="{{ $theme['thumbnail'] ?? 'https://via.placeholder.com/400x300?text=' . urlencode($theme['title']) }}"
+            data-src="{{ $theme['thumbnail'] ?? 'https://placehold.co/530x300?text=' . urlencode($theme['title']) }}"
             alt="{{ $theme['title'] }}" class="lazyload w-100 h-100">
     </div>
 
@@ -61,7 +61,7 @@
                     <div class="row">
                         <!-- Thumbnail -->
                         <div class="col-md-4 text-center mb-3">
-                            <img src="{{ $theme['thumbnail'] ?? 'https://via.placeholder.com/400x300?text=' . urlencode($theme['title']) }}"
+                            <img src="{{ $theme['thumbnail'] ?? 'https://placehold.co/400x300?text=' . urlencode($theme['title']) }}"
                                 alt="{{ $theme['title'] }}" class="img-fluid rounded shadow">
                         </div>
 

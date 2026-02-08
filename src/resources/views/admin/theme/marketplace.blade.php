@@ -105,8 +105,6 @@
                         loading = false;
                         $('#loading-indicator').hide();
 
-                        console.log('Marketplace Response:', response);
-
                         if (response.success) {
                             total = response.total || 0;
 
