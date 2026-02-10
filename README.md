@@ -12,6 +12,10 @@ Juzaweb Core is the kernel of the Juzaweb CMS ecosystem, providing the essential
 - PHP >= 8.2
 - Laravel >= 11.0
 
+## Documentation
+
+- [Juzaweb CMS Documentation](https://juzaweb.com/documentation/juzaweb/core/5.x/getting-started/installation)
+
 ## Features
 
 - **Modular Architecture**: Built-in support for modular development, allowing you to organize your application into independent modules.
@@ -135,6 +139,36 @@ The package includes several Artisan commands for maintenance and development:
 - `juzaweb:make-user`: Create a new user via command line.
 - `juzaweb:test-mail`: Send a test email to verify mail configuration.
 - `juzaweb:cache-size`: Check the size of the cache.
+
+## Development
+
+### Testing
+
+Run the test suite:
+
+```bash
+composer test
+```
+
+Run tests with coverage:
+
+```bash
+composer test-coverage
+```
+
+### Code Formatting
+
+Format code using Laravel Pint:
+
+```bash
+composer format
+```
+
+Check code formatting without making changes:
+
+```bash
+composer format -- --test
+```
 
 ## Contributing
 
