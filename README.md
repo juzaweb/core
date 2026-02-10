@@ -5,89 +5,141 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/juzaweb/core?style=social)](https://github.com/juzaweb/core)
 [![GitHub followers](https://img.shields.io/github/followers/juzaweb?style=social)](https://github.com/juzaweb)
 
-Core package for Juzaweb CMS.
+Juzaweb Core is the kernel of the Juzaweb CMS ecosystem, providing the essential building blocks for modular web applications. It handles the core logic for Modules, Themes, Hooks, Settings, and User Management, following a robust Facade-Contract-Repository architecture.
 
 ## Requirements
 
 - PHP >= 8.2
 - Laravel >= 11.0
 
-## Documentation
-View all [Juzaweb CMS documentation](https://juzaweb.com/documentation/juzaweb/cms/5.x)
-
-## Contributing
-- Contributions are welcome, and are accepted via pull requests. Please review these guidelines before submitting any pull requests.
-[https://github.com/juzaweb/cms/blob/master/CONTRIBUTING.md](https://github.com/juzaweb/cms/blob/master/CONTRIBUTING.md)
-
 ## Features
-- [x] File manager
-- [ ] Modules manager
-- [ ] Themes manager
-- [x] Theme Widgets
-- [x] Page blocks
-- [ ] Upload themes and run composer require command from admin panel (show process bar)
-- [ ] Upload Modules and run composer require command from admin panel (show process bar)
-- [x] Social login
-    - [x] Google
-    - [x] Facebook
-    - [x] Tweater
-    - [x] Github
-    - [x] Instagram
-- [x] User Permission
-  - [x] Role management
-  - [x] Assign permissions to roles
-  - [x] Assign roles to users
-  - [x] User management
-- [x] Media manager admin page
-- [ ] Short Code
-- [ ] Quick edit pages
+
+- **Modular Architecture**: Built-in support for modular development, allowing you to organize your application into independent modules.
+- **Theme System**: Powerful theme management system with support for theme settings, widgets, and templates.
+- **Hook System**: Extensible hook system (actions and filters) powered by `juzaweb/hooks` for plugin-like extensibility.
+- **User Management**: Comprehensive role-based access control (RBAC) with user roles and permissions.
+- **Media Manager**: Integrated file manager for handling uploads and media assets.
+- **Settings API**: Global settings management with support for different storage drivers and caching.
+- **Social Login**: Built-in support for social authentication (Google, Facebook, Twitter, Github, Instagram).
+- **Security**: Secure by default with features like ReCaptcha validation and strict permission checks.
 
 ## Installation
+
+Install the package via Composer:
 
 ```bash
 composer require juzaweb/core
 ```
 
-## Development
-
-### Testing
-
-Run the test suite:
+Publish the configuration files:
 
 ```bash
-composer test
+php artisan vendor:publish --tag=core-config
 ```
 
-Run tests with coverage:
+This will publish the following config files to your `config/` directory:
+- `core.php`
+- `media.php`
+- `modules.php`
+- `themes.php`
+- `translator.php`
+
+Publish the assets:
 
 ```bash
-composer test-coverage
+php artisan vendor:publish --tag=core-assets
 ```
 
-### Code Formatting
+## Architecture
 
-Format code using Laravel Pint:
+This package follows a strict **Facade -> Contract -> Repository** pattern for its core components. This ensures loose coupling and makes the system highly testable and extensible.
 
-```bash
-composer format
+Key components include:
+- `GlobalData`: Central registry for global application data.
+- `Setting`: Manages global settings.
+- `Theme`: Handles theme registration and management.
+- `Module`: Manages application modules.
+- `Hook`: Manages actions and filters.
+
+Most functionalities are exposed via Facades (e.g., `Juzaweb\Modules\Core\Facades\Theme`) which resolve to their respective Contracts and Repositories.
+
+## Usage
+
+### Registering Admin Menus
+
+You can register new admin menu items using the `Menu` facade.
+
+```php
+use Juzaweb\Modules\Core\Facades\Menu;
+
+Menu::make('my-plugin', function () {
+    return [
+        'title' => 'My Plugin',
+        'icon' => 'fa fa-plug',
+        'position' => 20,
+        'parent' => null,
+    ];
+});
 ```
 
-Check code formatting without making changes:
+### Registering Sidebars
 
-```bash
-composer format -- --test
+Register custom sidebars for your theme or module using the `Sidebar` facade.
+
+```php
+use Juzaweb\Modules\Core\Facades\Sidebar;
+
+Sidebar::make('main_sidebar', function () {
+    return [
+        'label' => __('Main Sidebar'),
+        'description' => __('The main sidebar for the theme.'),
+    ];
+});
 ```
+
+### Registering Widgets
+
+Register custom widgets that can be added to sidebars using the `Widget` facade.
+
+```php
+use Juzaweb\Modules\Core\Facades\Widget;
+
+Widget::make('recent_posts', function () {
+    return [
+        'label' => __('Recent Posts'),
+        'description' => __('Display recent posts.'),
+        'view' => 'theme::widgets.recent_posts',
+        'form' => 'theme::widgets.recent_posts_form',
+    ];
+});
+```
+
+## Blade Components
+
+The package provides several Blade components for rapid development:
+
+- `<x-card>`: A standard card container.
+- `<x-form>`: Form wrapper.
+- `<x-seo-meta>`: Renders SEO meta tags.
+- `<x-js-var>`: Output PHP variables to JavaScript.
+- `<x-theme-js-var>`: Output theme-specific JS variables.
+- `<x-repeater>`: A repeater field component.
+- `<x-language-card>`: A card component for multi-language content.
+- `<x-cookie-consent>`: A cookie consent banner.
+
+## Commands
+
+The package includes several Artisan commands for maintenance and development:
+
+- `juzaweb:clear-log`: Clear application log files.
+- `juzaweb:make-user`: Create a new user via command line.
+- `juzaweb:test-mail`: Send a test email to verify mail configuration.
+- `juzaweb:cache-size`: Check the size of the cache.
 
 ## Contributing
 
-When contributing to this package:
-
-1. Write tests for new features
-2. Ensure all tests pass: `composer test`
-3. Format your code: `composer format`
-4. Follow PSR-2 coding standards
-5. Update documentation as needed
+Contributions are welcome! Please see [CONTRIBUTING.md](https://github.com/juzaweb/cms/blob/master/CONTRIBUTING.md) for details.
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The Juzaweb Core package is open-sourced software licensed under the [GPL-2.0 license](LICENSE).
