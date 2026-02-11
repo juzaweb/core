@@ -2,6 +2,7 @@
     "name": "$VENDOR$/$LOWER_NAME$",
     "description": "$STUDLY_NAME$ Module",
     "type": "juzaweb-module",
+    "homepage": "https://juzaweb.com/cms",
     "keywords": [],
     "license": "GPL-2.0",
     "authors": [
@@ -11,10 +12,10 @@
         }
     ],
     "require": {
-        "php": "^8.2"
+        "php": "^8.2",
+        "juzaweb/core": "^5.0"
     },
     "require-dev": {
-        "juzaweb/core": "dev-master",
         "orchestra/testbench": "^8.0|^9.0",
         "phpunit/phpunit": "^10.0"
     },

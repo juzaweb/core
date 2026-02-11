@@ -4,16 +4,10 @@
  *
  * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://cms.juzaweb.com
+ * @link       https://juzaweb.com/cms
  * @license    GNU V2
  */
 
 return [
-    'socials' => [
-        'facebook',
-        'x',
-        'instagram',
-        'youtube',
-        'linkedin',
-    ]
+    //
 ];

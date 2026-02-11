@@ -4,14 +4,16 @@
     "description": "[DESCRIPTION]",
     "keywords": [],
     "license": "GPL-2.0",
-    "homepage": "https://juzaweb.com",
+    "homepage": "https://juzaweb.com/cms",
     "require": {
-        "php": "^8.2"
+        "php": "^8.2",
+        "juzaweb/core": "^5.0"
     },
     "autoload": {
         "psr-4": {
             "Juzaweb\\Themes\\[NAMESPACE_SHORT]\\": "src/",
-            "Juzaweb\\Themes\\[NAMESPACE_SHORT]\\Database\\Seeders\\": "database/seeders/"
+            "Juzaweb\\Themes\\[NAMESPACE_SHORT]\\Database\\Seeders\\": "database/seeders/",
+            "Juzaweb\\Themes\\[NAMESPACE_SHORT]\\Database\\Factories\\": "database/factories/"
         }
     },
     "minimum-stability": "dev",
@@ -19,7 +21,6 @@
         "sort-packages": true
     },
     "require-dev": {
-        "juzaweb/core": "dev-master",
         "orchestra/testbench": "^9.0",
         "phpunit/phpunit": "^11.0"
     },

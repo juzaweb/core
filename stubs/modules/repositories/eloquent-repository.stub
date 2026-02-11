@@ -4,7 +4,7 @@
  *
  * @package    juzaweb/cms
  * @author     The Anh Dang
- * @link       https://cms.juzaweb.com
+ * @link       https://juzaweb.com/cms
  */
 
 namespace $CLASS_NAMESPACE$;
