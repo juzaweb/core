@@ -73,7 +73,13 @@ class UploadToCloudJob implements ShouldQueue
 
         // Check if file already exists on cloud or already marked as uploaded
         if ($this->media->in_cloud || $disk->exists($path)) {
-            throw new \RuntimeException("File already exists on cloud storage or marked as uploaded: {$path}");
+            Log::warning("Cloud upload skipped: File already exists on cloud", [
+                'media_id' => $this->media->id,
+                'path' => $path,
+                'in_cloud' => $this->media->in_cloud,
+            ]);
+
+            return;
         }
 
         // Get file contents from source disk
