@@ -13,7 +13,7 @@ use Juzaweb\Modules\Core\Models\Media;
 
 class UploadFileSuccess
 {
-    public function __construct(public Media $media)
+    public function __construct(public Media $media, public bool $overwrite = false)
     {
     }
 }

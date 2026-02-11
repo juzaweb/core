@@ -39,6 +39,6 @@ class UploadToCloudListener
         }
 
         // Dispatch the upload job
-        UploadToCloudJob::dispatch($event->media, $sourceDisk);
+        UploadToCloudJob::dispatch($event->media, $sourceDisk, false, $event->overwrite);
     }
 }

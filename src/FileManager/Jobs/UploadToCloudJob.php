@@ -47,6 +47,7 @@ class UploadToCloudJob implements ShouldQueue
         protected Media $media,
         protected string $sourceDisk = 'public',
         protected bool $trash = false,
+        protected bool $overwrite = false,
     ) {}
 
     /**
@@ -72,7 +73,7 @@ class UploadToCloudJob implements ShouldQueue
         $disk = cloud(true);
 
         // Check if file already exists on cloud or already marked as uploaded
-        if ($this->media->in_cloud || $disk->exists($path)) {
+        if (!$this->overwrite && ($this->media->in_cloud || $disk->exists($path))) {
             Log::warning("Cloud upload skipped: File already exists on cloud", [
                 'media_id' => $this->media->id,
                 'path' => $path,
@@ -89,7 +90,7 @@ class UploadToCloudJob implements ShouldQueue
         $uploaded = $disk->put($path, $fileContents, [
             'visibility' => 'public',
             'ContentType' => $this->media->mime_type,
-            'overwrite' => false,
+            'overwrite' => $this->overwrite,
         ]);
 
         if ($uploaded) {

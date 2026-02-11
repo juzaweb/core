@@ -83,6 +83,8 @@ class MediaUploader
 
     protected bool $uploaded = false;
 
+    protected bool $overwrite = false;
+
     /**
      * Creates a new instance of MediaUploader with the given arguments.
      *
@@ -194,6 +196,19 @@ class MediaUploader
     public function forcePath(string $path): static
     {
         $this->forcedPath = $path;
+
+        return $this;
+    }
+
+    /**
+     * Set whether to overwrite existing files.
+     *
+     * @param  bool  $value
+     * @return $this
+     */
+    public function overwrite(bool $value = true): static
+    {
+        $this->overwrite = $value;
 
         return $this;
     }
@@ -324,7 +339,7 @@ class MediaUploader
             throw $e;
         }
 
-        event(new UploadFileSuccess($media));
+        event(new UploadFileSuccess($media, $this->overwrite));
 
         return $media;
     }
