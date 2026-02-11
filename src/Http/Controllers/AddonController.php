@@ -79,7 +79,7 @@ class AddonController extends Controller
         $fontSize = (int) ($shorterSide * (mb_strlen($char) > 1 ? 0.38 : 0.5));
 
         $img->text($char, $width / 2, $height / 2, function ($font) use ($fontSize) {
-            $font->filename(__DIR__ . '/../../../resources/fonts/arial.ttf');
+            $font->filename(__DIR__ . '/../../resources/fonts/arial.ttf');
             $font->size($fontSize);
             $font->color('#ffffff');
             $font->align('center');

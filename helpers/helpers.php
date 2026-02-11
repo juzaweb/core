@@ -444,7 +444,10 @@ function upload_path_format(?string $path): ?string
         return null;
     }
 
-    $path = str_replace(Storage::disk('cloud')->url('/'), '', $path);
+    if (config('media.cloud_upload_enabled')) {
+        $cloudUrl = config('filesystems.disks.cloud.url') ?? config('filesystems.disks.cloud.endpoint');
+        $path = str_replace($cloudUrl, '', $path);
+    }
 
     if ($proxyUrl = config('filesystems.disks.cloud.proxy_url')) {
         $path = str_replace($proxyUrl, '', $path);
