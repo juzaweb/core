@@ -28,7 +28,7 @@ class UploadToCloudListener
         }
 
         // Get the cloud disk name from configuration
-        $cloudDisk = 'cloud_write';
+        $cloudDisk = 'cloud';
 
         // Get the source disk from the media or use configured default
         $sourceDisk = $event->media->disk ?? config('juzaweb.filemanager.disk', 'public');
