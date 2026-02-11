@@ -12,7 +12,6 @@ use Juzaweb\Modules\Core\FileManager\Contracts\Media;
 use Juzaweb\Modules\Core\FileManager\Exceptions\MediaException;
 use Juzaweb\Modules\Core\Models\Media as MediaModel;
 use Symfony\Component\Mime\MimeTypes;
-use function Juzaweb\Modules\Admin\FileManager\website;
 
 class MediaRepository implements Media
 {

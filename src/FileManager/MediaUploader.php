@@ -269,7 +269,7 @@ class MediaUploader
             }
 
             // Optimize the image if the image optimization is enabled.
-            if (config('media.image-optimize')) {
+            if (config('media.image-optimize') && app(MediaContract::class)->isImage($this->source)) {
                 OptimizerChainFactory::create()->optimize(
                     $this->source->getRealPath()
                 );
