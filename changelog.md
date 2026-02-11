@@ -1,3 +1,15 @@
+### v5.0.1 
+* ♻️ refactor(Media): Remove unused website function import and enhance image optimization condition
+* ♻️ refactor(upload): Add overwrite option for media uploads and update related event handling
+* ♻️ refactor(UploadToCloudListener): Update cloud disk name from 'cloud_write' to 'cloud'
+* ♻️ refactor(UploadToCloudJob): Improve logging for skipped cloud uploads when file exists
+* ♻️ refactor(UploadToCloudJob): Include file path in exception message for existing uploads
+* ♻️ refactor(controller): Remove websiteId parameter from controller methods for cleaner routing
+* chore: update homepage link and add juzaweb/core dependency in composer.stub and related stubs
+* chore: update font path in AddonController and enhance cloud path handling in helpers
+* Remove usage examples and commands from README
+* Improve README.md with comprehensive documentation
+
 ### v5.0.0 
 * docs: improve clarity and consistency in installation and CRUD guides by clarifying optional steps, correcting module path casing, and simplifying headings.
 * docs(installation): update example URL in installation guide
