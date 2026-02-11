@@ -23,7 +23,7 @@ class RouteServiceProvider extends ServiceProvider
                 $adminPrefix = $this->app['config']->get('core.admin_prefix');
 
                 Route::middleware(['admin'])
-                    ->prefix("{$adminPrefix}/{websiteId}")
+                    ->prefix($adminPrefix)
                     ->group(__DIR__ . '/../routes/admin.php');
 
                 Route::middleware(['theme'])

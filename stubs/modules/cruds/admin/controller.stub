@@ -12,11 +12,11 @@ use $DATATABLE_NAMESPACE$;
 
 class $CLASS$ extends AdminController
 {
-    public function index($DATATABLE_CLASS$ $dataTable, string $websiteId)
+    public function index($DATATABLE_CLASS$ $dataTable)
     {
         Breadcrumb::add(__('$TITLE$'));
 
-        $createUrl = action([static::class, 'create'], [$websiteId]);
+        $createUrl = action([static::class, 'create']);
 
         return $dataTable->render(
             '$RESOURCE_NAMESPCAE$::$KEBAB_SINGULAR_TITLE$.index',
@@ -24,44 +24,44 @@ class $CLASS$ extends AdminController
         );
     }
 
-    public function create(string $websiteId)
+    public function create()
     {
         Breadcrumb::add(__('$TITLE$'), admin_url('$URL_PREFIX$'));
 
         Breadcrumb::add(__('Create $SINGULAR_TITLE$'));
 
-        $backUrl = action([static::class, 'index'], [$websiteId]);
+        $backUrl = action([static::class, 'index']);
 
         return view(
             '$RESOURCE_NAMESPCAE$::$KEBAB_SINGULAR_TITLE$.form',
             [
                 'model' => new $MODEL_CLASS$(),
-                'action' => action([static::class, 'store'], [$websiteId]),
+                'action' => action([static::class, 'store']),
                 'backUrl' => $backUrl,
             ]
         );
     }
 
-    public function edit(string $websiteId, string $id)
+    public function edit(string $id)
     {
         Breadcrumb::add(__('$TITLE$'), admin_url('$URL_PREFIX$'));
 
         Breadcrumb::add(__('Create $TITLE$'));
 
         $model = $MODEL_CLASS$::findOrFail($id);
-        $backUrl = action([static::class, 'index'], [$websiteId]);
+        $backUrl = action([static::class, 'index']);
 
         return view(
             '$RESOURCE_NAMESPCAE$::$KEBAB_SINGULAR_TITLE$.form',
             [
-                'action' => action([static::class, 'update'], [$websiteId, $id]),
+                'action' => action([static::class, 'update'], [$id]),
                 'model' => $model,
                 'backUrl' => $backUrl,
             ]
         );
     }
 
-    public function store($MODEL_CLASS$Request $request, string $websiteId)
+    public function store($MODEL_CLASS$Request $request)
     {
         $model = DB::transaction(
             function () use ($request) {
@@ -72,12 +72,12 @@ class $CLASS$ extends AdminController
         );
 
         return $this->success([
-            'redirect' => action([static::class, 'index'], [$websiteId]),
+            'redirect' => action([static::class, 'index']),
             'message' => __('$MODEL_CLASS$ :name created successfully', ['name' => $model->name]),
         ]);
     }
 
-    public function update($MODEL_CLASS$Request $request, string $websiteId, string $id)
+    public function update($MODEL_CLASS$Request $request, string $id)
     {
         $model = $MODEL_CLASS$::findOrFail($id);
 
@@ -92,12 +92,12 @@ class $CLASS$ extends AdminController
         );
 
         return $this->success([
-            'redirect' => action([static::class, 'index'], [$websiteId]),
+            'redirect' => action([static::class, 'index']),
             'message' => __('$MODEL_CLASS$ :name updated successfully', ['name' => $model->name]),
         ]);
     }
 
-    public function bulk($MODEL_CLASS$ActionsRequest $request, string $websiteId)
+    public function bulk($MODEL_CLASS$ActionsRequest $request)
     {
         $action = $request->input('action');
         $ids = $request->input('ids', []);
