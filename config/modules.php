@@ -49,6 +49,7 @@ return [
         'key' => 'juzaweb-modules',
         'lifetime' => 60,
     ],
+
     /*
     |--------------------------------------------------------------------------
     | Choose what laravel-modules will register as custom namespaces.
@@ -66,6 +67,41 @@ return [
          * @example boot|register
          */
         'files' => 'register',
+    ],
+
+    'paths' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Modules path
+        |--------------------------------------------------------------------------
+        |
+        | This path used for save the generated module. This path also will be added
+        | automatically to list of scanned folders.
+        |
+        */
+
+        'modules' => base_path('modules'),
+        /*
+        |--------------------------------------------------------------------------
+        | Modules assets path
+        |--------------------------------------------------------------------------
+        |
+        | Here you may update the modules assets path.
+        |
+        */
+
+        'assets' => public_path('modules'),
+        /*
+        |--------------------------------------------------------------------------
+        | The migrations path
+        |--------------------------------------------------------------------------
+        |
+        | Where you run 'module:publish-migration' command, where do you publish the
+        | the migration files?
+        |
+        */
+
+        'migration' => base_path('database/migrations'),
     ],
 
     /*

@@ -381,11 +381,11 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Get all modules as laravel collection instance.
      *
-     * @param $status
+     * @param  int  $status
      *
      * @return Collection
      */
-    public function collections($status = 1): Collection
+    public function collections(int $status = 1): Collection
     {
         return new Collection($this->getByStatus($status));
     }
@@ -393,7 +393,7 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Get module path for a specific module.
      *
-     * @param $module
+     * @param string $module
      *
      * @return string
      */
@@ -518,7 +518,10 @@ class FileRepository implements RepositoryInterface, Countable
     }
 
     /**
-     * @inheritDoc
+     * Determine whether the given module is enabled.
+     *
+     * @param string $name
+     * @return bool
      */
     public function isEnabled(string $name): bool
     {
@@ -526,7 +529,11 @@ class FileRepository implements RepositoryInterface, Countable
     }
 
     /**
-     * @inheritDoc
+     * Determine whether the given module is disabled.
+     *
+     * @param string $name
+     *
+     * @return bool
      */
     public function isDisabled(string $name): bool
     {
@@ -535,28 +542,32 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Enabling a specific module.
-     * @param string $name
+     * @param  string  $name
      * @return void
      * @throws ModuleNotFoundException
      */
-    public function enable($name): void
+    public function enable(string $name): void
     {
         $this->findOrFail($name)->enable();
     }
 
     /**
      * Disabling a specific module.
-     * @param string $name
+     * @param  string  $name
      * @return void
      * @throws ModuleNotFoundException
      */
-    public function disable($name): void
+    public function disable(string $name): void
     {
         $this->findOrFail($name)->disable();
     }
 
     /**
-     * @inheritDoc
+     * Delete the specified module.
+     *
+     * @param  string  $name
+     * @return bool
+     * @throws ModuleNotFoundException
      */
     public function delete(string $name): bool
     {
@@ -566,9 +577,9 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Update dependencies for the specified module.
      *
-     * @param string $module
+     * @param  string  $module
      */
-    public function update($module)
+    public function update(string $module)
     {
         with(new Updater($this))->update($module);
     }
@@ -576,18 +587,16 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Install the specified module.
      *
-     * @param string $name
-     * @param string $version
-     * @param string $type
-     * @param bool   $subtree
+     * @param  string  $name
+     * @param  string  $version
+     * @param  string  $type
+     * @param  bool  $subtree
      *
      * @return Process
      */
-    public function install($name, $version = 'dev-master', $type = 'composer', $subtree = false)
+    public function install(string $name, string $version = 'dev-master', string $type = 'composer', bool $subtree = false)
     {
-        $installer = new Installer($name, $version, $type, $subtree);
-
-        return $installer->run();
+        return (new Installer($name, $version, $type, $subtree))->run();
     }
 
     /**

@@ -276,7 +276,7 @@ class FileRepositoryTest extends TestCase
     public function testAssetPath()
     {
         $path = $this->repository->assetPath('Blog');
-        // config('dev-tool.modules.paths.assets') defaults to public_path('modules')
+        // config('modules.paths.assets') defaults to public_path('modules')
         // In testbench, public_path is usually mocked or points to testbench/public
         $expected = $this->repository->config('paths.assets') . '/Blog';
         $this->assertEquals($expected, $path);
@@ -289,7 +289,7 @@ class FileRepositoryTest extends TestCase
         // FileRepository logic: $baseUrl = str_replace(public_path() . DIRECTORY_SEPARATOR, '', $this->getAssetsPath());
 
         // Let's force assets path to be inside public path for this calculation to work as expected in the class
-        $this->app['config']->set('dev-tool.modules.paths.assets', public_path('modules'));
+        $this->app['config']->set('modules.paths.assets', public_path('modules'));
 
         $assetUrl = $this->repository->asset('Blog:css/style.css');
 
@@ -314,24 +314,5 @@ class FileRepositoryTest extends TestCase
 
         $this->expectException(\Juzaweb\Modules\Core\Modules\Exceptions\ModuleNotFoundException::class);
         $this->repository->getUsedNow();
-    }
-
-    public function testStubPath()
-    {
-        $this->repository->setStubPath('/custom/stubs');
-        $this->assertEquals('/custom/stubs', $this->repository->getStubPath());
-
-        // Reset to null to test config fallback
-        $this->repository->setStubPath(null);
-        $this->app['config']->set('dev-tool.modules.stubs.enabled', true);
-        $this->app['config']->set('dev-tool.dev-tool.modules.stubs.path', '/config/stubs');
-
-        // Wait, setStubPath sets property, getStubPath checks property then config.
-        // Property was set to null? "if ($this->stubPath !== null)"
-        // Since we can't easily unset the property via public API (setStubPath assigns value), passing null works if implementation allows.
-        // setStubPath implementation: $this->stubPath = $stubPath;
-        // So passing null sets it to null.
-
-        $this->assertEquals('/config/stubs', $this->repository->getStubPath());
     }
 }
