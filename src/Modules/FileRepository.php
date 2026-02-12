@@ -30,49 +30,49 @@ class FileRepository implements RepositoryInterface, Countable
      *
      * @var Application
      */
-    protected $app;
+    protected Application|Container $app;
 
     /**
      * The module path.
      *
      * @var string|null
      */
-    protected $path;
+    protected ?string $path;
 
     /**
      * The scanned paths.
      *
      * @var array
      */
-    protected $paths = [];
+    protected array $paths = [];
 
     /**
-     * @var string
+     * @var ?string
      */
-    protected $stubPath;
+    protected ?string $stubPath;
     /**
      * @var UrlGenerator
      */
-    private $url;
+    private mixed $url;
     /**
      * @var ConfigRepository
      */
-    private $config;
+    private mixed $config;
     /**
      * @var Filesystem
      */
-    private $files;
+    private mixed $files;
     /**
      * @var CacheManager
      */
-    private $cache;
+    private mixed $cache;
 
     /**
      * The constructor.
      * @param Container $app
-     * @param string|null $path
+     * @param  string|null  $path
      */
-    public function __construct(Container $app, $path = null)
+    public function __construct(Container $app, ?string $path = null)
     {
         $this->app = $app;
         $this->path = $path;
@@ -85,11 +85,11 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Add other module location.
      *
-     * @param string $path
+     * @param  string  $path
      *
      * @return $this
      */
-    public function addLocation($path)
+    public function addLocation(string $path)
     {
         $this->paths[] = $path;
 
@@ -183,11 +183,11 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Format the cached data as array of modules.
      *
-     * @param array $cached
+     * @param  array  $cached
      *
      * @return array
      */
-    protected function formatCached($cached)
+    protected function formatCached(array $cached)
     {
         $modules = [];
 
@@ -594,7 +594,7 @@ class FileRepository implements RepositoryInterface, Countable
      *
      * @return Process
      */
-    public function install(string $name, string $version = 'dev-master', string $type = 'composer', bool $subtree = false)
+    public function install(string $name, ?string $version = null, string $type = 'composer', bool $subtree = false)
     {
         return (new Installer($name, $version, $type, $subtree))->run();
     }
@@ -620,11 +620,11 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Set stub path.
      *
-     * @param string $stubPath
+     * @param  string  $stubPath
      *
      * @return $this
      */
-    public function setStubPath($stubPath)
+    public function setStubPath(string $stubPath)
     {
         $this->stubPath = $stubPath;
 
@@ -632,7 +632,9 @@ class FileRepository implements RepositoryInterface, Countable
     }
 
     /**
-     * {@inheritdoc}
+     * Create a new Module instance.
+     *
+     * @param  mixed  ...$args
      */
     protected function createModule(...$args)
     {
