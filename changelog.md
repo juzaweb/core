@@ -1,3 +1,7 @@
+### v5.0.2 
+* feat(core): introduce PublishCoreCommand and register it in ConsoleServiceProvider
+* feat(core-assets): add default thumbnail image asset
+
 ### v5.0.1 
 * ♻️ refactor(Media): Remove unused website function import and enhance image optimization condition
 * ♻️ refactor(upload): Add overwrite option for media uploads and update related event handling
