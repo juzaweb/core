@@ -177,6 +177,8 @@ class CoreServiceProvider extends ServiceProvider
 
     protected function registerProviders(): void
     {
+        $this->app->register(\Juzaweb\Modules\Core\Translations\TranslationsServiceProvider::class);
+        $this->app->register(\Juzaweb\Modules\Core\Permissions\PermissionServiceProvider::class);
         $this->app->register(ConsoleServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(PerformanceServiceProvider::class);
