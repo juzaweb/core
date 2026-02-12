@@ -25,13 +25,13 @@ use Juzaweb\Modules\Core\Translations\Jobs\ModelTranslateJob;
 use Juzaweb\Modules\Core\Translations\Models\Language;
 use Juzaweb\Modules\Core\Translations\Models\TranslateHistory;
 
-require __DIR__ . '/media.php';
-require __DIR__ . '/modules.php';
-require __DIR__ . '/permission.php';
-require __DIR__ . '/functions.php';
-require __DIR__ . '/themes.php';
+require __DIR__.'/media.php';
+require __DIR__.'/modules.php';
+require __DIR__.'/permission.php';
+require __DIR__.'/functions.php';
+require __DIR__.'/themes.php';
 
-if (! function_exists('client_ip')) {
+if (!function_exists('client_ip')) {
     /**
      * Get client ip
      *
@@ -44,11 +44,11 @@ if (! function_exists('client_ip')) {
     }
 }
 
-if (! function_exists('is_json')) {
+if (!function_exists('is_json')) {
     /**
      * Rerutn true if string is a json
      *
-     * @param string $string
+     * @param  string  $string
      * @return bool
      */
     function is_json(mixed $string): bool
@@ -63,12 +63,12 @@ if (! function_exists('is_json')) {
     }
 }
 
-if (! function_exists('setting')) {
+if (!function_exists('setting')) {
     /**
      * Get or set a setting value
      *
-     * @param string|null $key The setting key
-     * @param string|array|null $default The default value if the setting doesn't exist
+     * @param  string|null  $key  The setting key
+     * @param  string|array|null  $default  The default value if the setting doesn't exist
      * @return string|array|null|Setting A setting value or the Setting instance if no key is provided
      */
     function setting(?string $key = null, string|array|null $default = null): null|string|array|Setting
@@ -83,18 +83,18 @@ if (! function_exists('setting')) {
     }
 }
 
-if (! function_exists('cache_prefix')) {
+if (!function_exists('cache_prefix')) {
     function cache_prefix(string $key): string
     {
         return "juzaweb_{$key}";
     }
 }
 
-if (! function_exists('title_from_key')) {
+if (!function_exists('title_from_key')) {
     /**
      * Generate a title from the given key.
      *
-     * @param string $key The key to generate a title from.
+     * @param  string  $key  The key to generate a title from.
      * @return string The generated title.
      */
     function title_from_key(string $key): string
@@ -111,12 +111,12 @@ if (! function_exists('title_from_key')) {
     }
 }
 
-if (! function_exists('key_from_string')) {
+if (!function_exists('key_from_string')) {
     /**
      * Convert a string into a key-friendly format by replacing slashes with spaces,
      * and then converting it into a slug with underscores as separators.
      *
-     * @param string $str The input string to be converted.
+     * @param  string  $str  The input string to be converted.
      * @return string The key-friendly formatted string.
      */
     function key_from_string(string $str): string
@@ -125,11 +125,11 @@ if (! function_exists('key_from_string')) {
     }
 }
 
-if (! function_exists('home_url')) {
+if (!function_exists('home_url')) {
     /**
      * Generate a home URL from the given URI.
      *
-     * @param string|null $uri The URI to generate a URL for.
+     * @param  string|null  $uri  The URI to generate a URL for.
      *
      * @return string The generated URL.
      */
@@ -142,39 +142,39 @@ if (! function_exists('home_url')) {
 
         if ($multipleLanguage === 'prefix') {
             if ($language === $locale) {
-                return $url . ($uri ? '/' . trim($uri, '/') : '');
+                return $url.($uri ? '/'.trim($uri, '/') : '');
             }
 
-            return rtrim($url . '/' . $locale, '/') . ($uri ? '/' . trim($uri, '/') : '');
+            return rtrim($url.'/'.$locale, '/').($uri ? '/'.trim($uri, '/') : '');
         }
 
-        return $url . ($uri ? '/' . trim($uri, '/') : '');
+        return $url.($uri ? '/'.trim($uri, '/') : '');
     }
 }
 
-if (! function_exists('admin_url')) {
+if (!function_exists('admin_url')) {
     /**
      * Generate an admin URL from the given URI.
      *
-     * @param string $uri the URI to generate a URL for
+     * @param  string  $uri  the URI to generate a URL for
      *
      * @return string the generated URL
      */
     function admin_url(?string $uri = null): string
     {
         return url(rtrim(
-            '/' . config('core.admin_prefix')
-                . '/' . ltrim($uri, '/'),
+            '/'.config('core.admin_prefix')
+            .'/'.ltrim($uri, '/'),
             '/'
         ));
     }
 }
 
-if (! function_exists('is_super_admin')) {
+if (!function_exists('is_super_admin')) {
     /**
      * Check if user is super admin
      *
-     * @param User|null $user
+     * @param  User|null  $user
      * @return bool
      */
     function is_super_admin(?User $user = null): bool
@@ -191,7 +191,7 @@ if (! function_exists('is_super_admin')) {
     }
 }
 
-if (! function_exists('languages')) {
+if (!function_exists('languages')) {
     /**
      * Get all languages.
      *
@@ -203,14 +203,14 @@ if (! function_exists('languages')) {
     }
 }
 
-if (! function_exists('used_recaptcha')) {
+if (!function_exists('used_recaptcha')) {
     function used_recaptcha(): bool
     {
         return config('larabiz.recaptcha.secret') !== null;
     }
 }
 
-if (! function_exists('date_range')) {
+if (!function_exists('date_range')) {
     /**
      * Returns an array of strings representing the dates in the given range.
      *
@@ -231,13 +231,13 @@ if (! function_exists('date_range')) {
     }
 }
 
-if (! function_exists('month_range')) {
+if (!function_exists('month_range')) {
     /**
      * Returns an array of strings representing the months in the given date range.
      *
-     * @param Carbon $from The start date of the range.
-     * @param Carbon $to The end date of the range.
-     * @param string $format The format for the month strings (default is d/m).
+     * @param  Carbon  $from  The start date of the range.
+     * @param  Carbon  $to  The end date of the range.
+     * @param  string  $format  The format for the month strings (default is d/m).
      * @return array An array of strings in d/m format, representing each month in the range.
      */
     function month_range(Carbon $from, Carbon $to, string $format = 'm/Y'): array
@@ -259,12 +259,12 @@ if (! function_exists('month_range')) {
     }
 }
 
-if (! function_exists('array_to_array_string')) {
+if (!function_exists('array_to_array_string')) {
     /**
      * Converts an array to a string, similar to var_export.
      * This method is useful for debugging and logging.
      *
-     * @param array $array The array to convert.
+     * @param  array  $array  The array to convert.
      * @return string The string representation of the array.
      *
      * Example:
@@ -278,7 +278,7 @@ if (! function_exists('array_to_array_string')) {
     }
 }
 
-if (! function_exists('default_language')) {
+if (!function_exists('default_language')) {
     function default_language(): string
     {
         return config('app.locale');
@@ -289,7 +289,7 @@ if (!function_exists('is_url')) {
     /**
      * Return true if string is a url
      *
-     * @param string|null $url
+     * @param  string|null  $url
      * @return bool
      */
     function is_url(?string $url): bool
@@ -312,7 +312,7 @@ if (!function_exists('is_admin_page')) {
     {
         // Check if the current page is an admin page by checking if the
         // current URL matches the prefix defined in the config.
-        return request()->is(config('core.admin_prefix') . '*');
+        return request()->is(config('core.admin_prefix').'*');
     }
 }
 
@@ -320,7 +320,7 @@ if (!function_exists('get_error_by_exception')) {
     /**
      * Extracts error information from the given exception.
      *
-     * @param  Throwable  $e The exception to extract information from.
+     * @param  Throwable  $e  The exception to extract information from.
      * @return array An associative array containing the error information.
      *               The keys in the array are:
      *               - message: The error message.
@@ -345,8 +345,8 @@ if (!function_exists('get_domain_by_url')) {
     /**
      * Extracts the domain from a given URL.
      *
-     * @param string $url The URL to extract the domain from.
-     * @param bool $noneWWW If true, remove 'www.' from the domain.
+     * @param  string  $url  The URL to extract the domain from.
+     * @param  bool  $noneWWW  If true, remove 'www.' from the domain.
      * @return string|bool The extracted domain or false if the URL is invalid.
      */
     function get_domain_by_url(string $url, bool $noneWWW = false): string|bool
@@ -374,7 +374,7 @@ if (!function_exists('number_human_format')) {
     /**
      * Formats a given number as a human-readable string.
      *
-     * @param int $number The number to format.
+     * @param  int  $number  The number to format.
      * @return string The formatted number as a string.
      */
     function number_human_format(int $number): string
@@ -386,29 +386,29 @@ if (!function_exists('number_human_format')) {
 
         // If the number is between 100k and 1M, use 'k' as the suffix
         if ($number < 1000000) {
-            return number_format($number / 1000, 2) . 'K';
+            return number_format($number / 1000, 2).'K';
         }
 
         // If the number is between 1M and 1B, use 'M' as the suffix
         if ($number < 1000000000) {
-            return number_format($number / 1000000, 2) . 'M';
+            return number_format($number / 1000000, 2).'M';
         }
 
         // If the number is between 1B and 1T, use 'B' as the suffix
         if ($number < 1000000000000) {
-            return number_format($number / 1000000000, 2) . 'B';
+            return number_format($number / 1000000000, 2).'B';
         }
 
         // If the number is greater than 1T, use 'T' as the suffix
-        return number_format($number / 1000000000000, 2) . 'T';
+        return number_format($number / 1000000000000, 2).'T';
     }
 }
 
-if (! function_exists('upload_url')) {
+if (!function_exists('upload_url')) {
     /**
      * Get the URL of the uploaded file.
      *
-     * @param string $path The path to the uploaded file.
+     * @param  string  $path  The path to the uploaded file.
      * @return string The URL of the uploaded file.
      */
     function upload_url(?string $path = null): ?string
@@ -456,7 +456,7 @@ function upload_path_format(?string $path): ?string
     return ltrim(str_replace(upload_url('/'), '', $path), '/');
 }
 
-if (! function_exists('map_params')) {
+if (!function_exists('map_params')) {
     /**
      * Replace placeholders in a string with values from an associative array.
      *
@@ -465,8 +465,8 @@ if (! function_exists('map_params')) {
      * provided associative array. If a placeholder does not exist in the array,
      * it remains unchanged in the text.
      *
-     * @param string $text The text containing placeholders to replace.
-     * @param array $params An associative array of placeholder names and their replacement values.
+     * @param  string  $text  The text containing placeholders to replace.
+     * @param  array  $params  An associative array of placeholder names and their replacement values.
      * @return string The text with placeholders replaced by values from the array.
      */
     function map_params(string $text, array $params): string
@@ -474,7 +474,7 @@ if (! function_exists('map_params')) {
         return preg_replace_callback(
             '/\{(\w+)\}/',
             function ($matches) use ($params) {
-                if (! isset($params[$matches[1]])) {
+                if (!isset($params[$matches[1]])) {
                     throw new RuntimeException("Param {$matches[1]} not found");
                 }
 
@@ -486,7 +486,7 @@ if (! function_exists('map_params')) {
     }
 }
 
-if (! function_exists('theme_path')) {
+if (!function_exists('theme_path')) {
     /**
      * Get the path to the theme directory.
      *
@@ -494,11 +494,11 @@ if (! function_exists('theme_path')) {
      */
     function theme_path(?string $path = null): string
     {
-        return config('themes.path') . ($path ? '/' . ltrim($path, '/') : '');
+        return config('themes.path').($path ? '/'.ltrim($path, '/') : '');
     }
 }
 
-if (! function_exists('theme_asset')) {
+if (!function_exists('theme_asset')) {
     /**
      * Get the path to the theme directory.
      *
@@ -508,7 +508,7 @@ if (! function_exists('theme_asset')) {
     {
         $theme = $theme ?? Theme::current()->name();
 
-        return asset("themes/{$theme}/" . ($path ? ltrim($path, '/') : ''));
+        return asset("themes/{$theme}/".($path ? ltrim($path, '/') : ''));
     }
 }
 
@@ -519,7 +519,7 @@ if (!function_exists('get_youtube_id')) {
      * This function uses a regular expression to match the YouTube video ID
      * from various formats of YouTube URLs, including standard and shortened URLs.
      *
-     * @param  string  $url The YouTube URL from which to extract the video ID.
+     * @param  string  $url  The YouTube URL from which to extract the video ID.
      * @return string|null The extracted video ID, or null if no valid ID is found.
      */
     function get_youtube_id(string $url): ?string
@@ -545,7 +545,7 @@ if (!function_exists('get_vimeo_id')) {
      * This function uses a regular expression to match the Vimeo video ID
      * from various formats of Vimeo URLs, including standard and player URLs.
      *
-     * @param string $url The Vimeo URL from which to extract the video ID.
+     * @param  string  $url  The Vimeo URL from which to extract the video ID.
      * @return string|null The extracted video ID, or an empty string if no valid ID is found.
      */
     function get_vimeo_id(string $url): ?string
@@ -554,8 +554,8 @@ if (!function_exists('get_vimeo_id')) {
         $id = '';
         if (preg_match(
             '%^https?:\/\/(?:www\.|player\.)?vimeo.com\/'
-                . '(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)'
-                . '(\d+)(?:$|\/|\?)(?:[?]?.*)$%im',
+            .'(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)'
+            .'(\d+)(?:$|\/|\?)(?:[?]?.*)$%im',
             $url,
             $regs
         )) {
@@ -574,7 +574,7 @@ if (!function_exists('get_google_drive_id')) {
      * https://drive.google.com/file/d/FILE_ID/view?usp=sharing
      * and extracts the FILE_ID part from it.
      *
-     * @param string $url The Google Drive URL from which to extract the file ID.
+     * @param  string  $url  The Google Drive URL from which to extract the file ID.
      * @return string The extracted file ID.
      */
     function get_google_drive_id(string $url): string
@@ -589,7 +589,7 @@ if (!function_exists('convert_linux_path')) {
      *
      * This function replaces backslashes with forward slashes in the given path.
      *
-     * @param string $path The Windows-style path to be converted.
+     * @param  string  $path  The Windows-style path to be converted.
      * @return string The converted Linux-style path.
      */
     function convert_linux_path(string $path): string
@@ -606,7 +606,7 @@ if (!function_exists('remove_zero_width_space_string')) {
     /**
      * Remove zero width space string
      *
-     * @param string $string
+     * @param  string  $string
      * @return string
      */
     function remove_zero_width_space_string(string $string): string
@@ -624,8 +624,8 @@ if (!function_exists('seo_string')) {
      * decodes HTML entities, and truncates the string to a specified length
      * without cutting off in the middle of a word.
      *
-     * @param  string  $string The input string to be processed.
-     * @param  int  $chars The maximum length of the resulting string (default is 70).
+     * @param  string  $string  The input string to be processed.
+     * @param  int  $chars  The maximum length of the resulting string (default is 70).
      * @return string The processed SEO-friendly string.
      */
     function seo_string(?string $string, int $chars = 70): string
@@ -645,9 +645,9 @@ if (!function_exists('sub_char')) {
     /**
      * Truncate a string to a specified length, ensuring it does not cut off in the middle of a word.
      *
-     * @param  string  $str The input string to be truncated.
-     * @param  int  $n The maximum length of the truncated string.
-     * @param  string  $end The string to append at the end if truncation occurs (default is '...').
+     * @param  string  $str  The input string to be truncated.
+     * @param  int  $n  The maximum length of the truncated string.
+     * @param  string  $end  The string to append at the end if truncation occurs (default is '...').
      * @return string The truncated string, or the original string if it is shorter than $n.
      */
     function sub_char(string $str, int $n, string $end = '...'): string
@@ -658,7 +658,7 @@ if (!function_exists('sub_char')) {
 
         $html = mb_substr($str, 0, $n);
         $html = mb_substr($html, 0, mb_strrpos($html, ' '));
-        return $html . $end;
+        return $html.$end;
     }
 }
 
@@ -669,7 +669,7 @@ if (!function_exists('str_slug')) {
      * This function replaces spaces and special characters with hyphens,
      * converts the string to lowercase, and removes any leading or trailing hyphens.
      *
-     * @param  string  $string The input string to be converted to a slug.
+     * @param  string  $string  The input string to be converted to a slug.
      * @return string The generated slug.
      */
     function str_slug(string $string): string
@@ -711,10 +711,10 @@ if (!function_exists('custom_var_export')) {
      * This function formats the output of var_export to use square brackets
      * for arrays and adds indentation for better readability.
      *
-     * @param mixed $expression  The variable to be exported.
+     * @param  mixed  $expression  The variable to be exported.
      * @return string The formatted string representation of the variable.
      */
-    function custom_var_export($expression): string
+    function custom_var_export(mixed $expression): string
     {
         $export = var_export($expression, true);
         $export = preg_replace("/^([ ]*)(.*)/m", '$1$1$2', $export);
@@ -741,7 +741,7 @@ if (!function_exists('proxy_image')) {
         $method = $crop ? 'crop' : 'cover';
 
         if ($width > 0 || $height > 0) {
-            $size = ($width ?? 'auto') . 'x' . ($height ?? 'auto');
+            $size = ($width ?? 'auto').'x'.($height ?? 'auto');
             return "{$baseUrl}/images/{$method}:{$size}/{$hash}/{$filename}";
         }
 
@@ -749,10 +749,17 @@ if (!function_exists('proxy_image')) {
     }
 }
 
-if (! function_exists('csp_script_nonce')) {
+if (!function_exists('csp_script_nonce')) {
     function csp_script_nonce(): ?string
     {
         return request()->attributes->get('cspNonce');
+    }
+}
+
+if (!function_exists('theme')) {
+    function theme(): \Juzaweb\Modules\Core\Contracts\Theme
+    {
+        return app()->make(\Juzaweb\Modules\Core\Contracts\Theme::class);
     }
 }
 
@@ -779,9 +786,9 @@ function encrypt_deterministic(string $plaintext, string $key): string
 {
     $method = 'aes-256-cbc';
     $key = hash('sha256', $key, true);
-    $iv = substr(hash('sha256', $plaintext . $key, true), 0, 16);
+    $iv = substr(hash('sha256', $plaintext.$key, true), 0, 16);
     $cipher = openssl_encrypt($plaintext, $method, $key, OPENSSL_RAW_DATA, $iv);
-    return base64url_encode($iv . $cipher);
+    return base64url_encode($iv.$cipher);
 }
 
 function decrypt_deterministic(string $token, string $key): ?string
@@ -891,20 +898,20 @@ function mime_type_from_extension(string $extension): string
 {
     return match (strtolower($extension)) {
         'jpg', 'jpeg' => 'image/jpeg',
-        'png'         => 'image/png',
-        'gif'         => 'image/gif',
-        'webp'        => 'image/webp',
-        'svg'         => 'image/svg+xml',
-        'mp4'         => 'video/mp4',
-        'pdf'         => 'application/pdf',
-        'css'         => 'text/css',
-        'js'          => 'application/javascript',
-        'woff'        => 'font/woff',
-        'woff2'       => 'font/woff2',
-        'ttf'         => 'font/ttf',
-        'otf'         => 'font/otf',
-        'eot'         => 'application/vnd.ms-fontobject',
-        default       => 'application/octet-stream',
+        'png' => 'image/png',
+        'gif' => 'image/gif',
+        'webp' => 'image/webp',
+        'svg' => 'image/svg+xml',
+        'mp4' => 'video/mp4',
+        'pdf' => 'application/pdf',
+        'css' => 'text/css',
+        'js' => 'application/javascript',
+        'woff' => 'font/woff',
+        'woff2' => 'font/woff2',
+        'ttf' => 'font/ttf',
+        'otf' => 'font/otf',
+        'eot' => 'application/vnd.ms-fontobject',
+        default => 'application/octet-stream',
     };
 }
 
@@ -913,7 +920,8 @@ function mime_type_from_extension(string $extension): string
  *
  * @return string|false The path to the PHP binary or false if not found.
  */
-function get_php_binary_path() {
+function get_php_binary_path()
+{
     // 1. Priority: Use the modern PHP_BINARY constant (Available since PHP 5.4)
     if (defined('PHP_BINARY') && !empty(PHP_BINARY)) {
         return PHP_BINARY;
@@ -922,7 +930,7 @@ function get_php_binary_path() {
     // 2. Fallback: Use PHP_BINDIR to construct the path
     if (defined('PHP_BINDIR') && !empty(PHP_BINDIR)) {
         $suffix = (stripos(PHP_OS, 'WIN') === 0) ? '.exe' : '';
-        $path = PHP_BINDIR . DIRECTORY_SEPARATOR . 'php' . $suffix;
+        $path = PHP_BINDIR.DIRECTORY_SEPARATOR.'php'.$suffix;
 
         if (is_executable($path)) {
             return $path;

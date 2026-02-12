@@ -19,6 +19,7 @@ class ConsoleServiceProvider extends ServiceProvider
                 \Juzaweb\Modules\Core\Commands\CacheSizeCommand::class,
                 \Juzaweb\Modules\Core\Commands\ClearLogCommand::class,
                 \Juzaweb\Modules\Core\Commands\MakeUserCommand::class,
+                \Juzaweb\Modules\Core\Commands\PublishCoreCommand::class,
                 \Juzaweb\Modules\Core\Commands\TestMailCommand::class,
             ]);
         }
