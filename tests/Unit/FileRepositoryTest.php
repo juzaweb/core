@@ -24,7 +24,7 @@ class FileRepositoryTest extends TestCase
         File::makeDirectory($this->testModulePath);
 
         // Configure modules path
-        $this->app['config']->set('modules.paths.modules', $this->testModulePath);
+        $this->app['config']->set('dev-tool.modules.paths.modules', $this->testModulePath);
         $this->app['config']->set('modules.scan.enabled', false);
         $this->app['config']->set('modules.scan.paths', []);
 
@@ -276,7 +276,7 @@ class FileRepositoryTest extends TestCase
     public function testAssetPath()
     {
         $path = $this->repository->assetPath('Blog');
-        // config('modules.paths.assets') defaults to public_path('modules')
+        // config('dev-tool.modules.paths.assets') defaults to public_path('modules')
         // In testbench, public_path is usually mocked or points to testbench/public
         $expected = $this->repository->config('paths.assets') . '/Blog';
         $this->assertEquals($expected, $path);
@@ -289,7 +289,7 @@ class FileRepositoryTest extends TestCase
         // FileRepository logic: $baseUrl = str_replace(public_path() . DIRECTORY_SEPARATOR, '', $this->getAssetsPath());
 
         // Let's force assets path to be inside public path for this calculation to work as expected in the class
-        $this->app['config']->set('modules.paths.assets', public_path('modules'));
+        $this->app['config']->set('dev-tool.modules.paths.assets', public_path('modules'));
 
         $assetUrl = $this->repository->asset('Blog:css/style.css');
 
@@ -323,8 +323,8 @@ class FileRepositoryTest extends TestCase
 
         // Reset to null to test config fallback
         $this->repository->setStubPath(null);
-        $this->app['config']->set('modules.stubs.enabled', true);
-        $this->app['config']->set('dev-tool.modules.stubs.path', '/config/stubs');
+        $this->app['config']->set('dev-tool.modules.stubs.enabled', true);
+        $this->app['config']->set('dev-tool.dev-tool.modules.stubs.path', '/config/stubs');
 
         // Wait, setStubPath sets property, getStubPath checks property then config.
         // Property was set to null? "if ($this->stubPath !== null)"

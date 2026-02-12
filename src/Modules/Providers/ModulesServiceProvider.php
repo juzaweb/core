@@ -58,7 +58,7 @@ class ModulesServiceProvider extends ServiceProvider
     protected function registerServices()
     {
         $this->app->singleton(RepositoryInterface::class, function ($app) {
-            $path = $app['config']->get('modules.paths.modules');
+            $path = $app['config']->get('dev-tool.modules.paths.modules');
 
             return new FileRepository($app, $path);
         });
