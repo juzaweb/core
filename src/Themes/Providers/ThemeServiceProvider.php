@@ -12,20 +12,6 @@ namespace Juzaweb\Modules\Core\Themes\Providers;
 
 use Juzaweb\Modules\Core\Contracts\Theme;
 use Juzaweb\Modules\Core\Providers\ServiceProvider;
-use Juzaweb\Modules\Core\Themes\Commands\DownloadStyleCommand;
-use Juzaweb\Modules\Core\Themes\Commands\DownloadTemplateCommand;
-use Juzaweb\Modules\Core\Themes\Commands\MakeControllerCommand;
-use Juzaweb\Modules\Core\Themes\Commands\MakePageBlockCommand;
-use Juzaweb\Modules\Core\Themes\Commands\MakeTemplateCommand;
-use Juzaweb\Modules\Core\Themes\Commands\MakeViewCommand;
-use Juzaweb\Modules\Core\Themes\Commands\MakeWidgetCommand;
-use Juzaweb\Modules\Core\Themes\Commands\ThemeActiveCommand;
-use Juzaweb\Modules\Core\Themes\Commands\ThemeGeneratorCommand;
-use Juzaweb\Modules\Core\Themes\Commands\ThemeInstallCommand;
-use Juzaweb\Modules\Core\Themes\Commands\ThemeListCommand;
-use Juzaweb\Modules\Core\Themes\Commands\ThemePublishCommand;
-use Juzaweb\Modules\Core\Themes\Commands\ThemeSeedCommand;
-use Juzaweb\Modules\Core\Themes\Commands\ThemeUpdateCommand;
 use Juzaweb\Modules\Core\Themes\Contracts\ThemeActivatorInterface;
 use Juzaweb\Modules\Core\Themes\ThemeRepository;
 
@@ -33,25 +19,6 @@ class ThemeServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->commands(
-            [
-                ThemeListCommand::class,
-                ThemeActiveCommand::class,
-                ThemePublishCommand::class,
-                ThemeGeneratorCommand::class,
-                ThemeInstallCommand::class,
-                ThemeUpdateCommand::class,
-                MakePageBlockCommand::class,
-                MakeTemplateCommand::class,
-                MakeViewCommand::class,
-                MakeControllerCommand::class,
-                MakeWidgetCommand::class,
-                DownloadStyleCommand::class,
-                DownloadTemplateCommand::class,
-                ThemeSeedCommand::class,
-            ]
-        );
-
         if ($this->app['config']->get('themes.enable')) {
             $this->app[Theme::class]->init();
         }
