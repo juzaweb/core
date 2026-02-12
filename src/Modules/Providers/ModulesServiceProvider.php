@@ -6,7 +6,6 @@ use Juzaweb\Modules\Core\Modules\Contracts\ActivatorInterface;
 use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
 use Juzaweb\Modules\Core\Modules\Exceptions\InvalidActivatorClass;
 use Juzaweb\Modules\Core\Modules\FileRepository;
-use Juzaweb\Modules\Core\Modules\Support\Stub;
 use Juzaweb\Modules\Core\Providers\RouteServiceProvider;
 use Juzaweb\Modules\Core\Providers\ServiceProvider;
 
@@ -17,8 +16,6 @@ class ModulesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->setupStubPath();
-        $this->registerNamespaces();
         $this->registerModules();
     }
 
@@ -32,42 +29,12 @@ class ModulesServiceProvider extends ServiceProvider
     }
 
     /**
-     * Setup stub path.
-     */
-    public function setupStubPath()
-    {
-        $path = $this->app['config']->get('modules.stubs.path');
-
-        Stub::setBasePath($path);
-
-        // $this->app->booted(function ($app) {
-        //     /** @var RepositoryInterface $moduleRepository */
-        //     $moduleRepository = $app[RepositoryInterface::class];
-        //     if ($moduleRepository->config('stubs.enabled') === true) {
-        //         Stub::setBasePath($moduleRepository->config('stubs.path'));
-        //     }
-        // });
-    }
-
-    /**
      * Register all modules.
      */
     protected function registerModules()
     {
         $this->app->register(BootstrapServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
-    }
-
-    /**
-     * Register package's namespaces.
-     */
-    protected function registerNamespaces()
-    {
-        $stubsPath = dirname(__DIR__, 2) . '/stubs';
-
-        $this->publishes([
-            $stubsPath => base_path('stubs/nwidart-stubs'),
-        ], 'stubs');
     }
 
     /**
@@ -85,7 +52,6 @@ class ModulesServiceProvider extends ServiceProvider
      */
     protected function registerProviders()
     {
-        $this->app->register(ConsoleServiceProvider::class);
         $this->app->register(ContractsServiceProvider::class);
     }
 
