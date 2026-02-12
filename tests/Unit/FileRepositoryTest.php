@@ -324,7 +324,7 @@ class FileRepositoryTest extends TestCase
         // Reset to null to test config fallback
         $this->repository->setStubPath(null);
         $this->app['config']->set('modules.stubs.enabled', true);
-        $this->app['config']->set('modules.stubs.path', '/config/stubs');
+        $this->app['config']->set('dev-tool.modules.stubs.path', '/config/stubs');
 
         // Wait, setStubPath sets property, getStubPath checks property then config.
         // Property was set to null? "if ($this->stubPath !== null)"

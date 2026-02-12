@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Modules\Core\Modules\Commands;
+namespace Juzaweb\Modules\Core\Commands;
 
 use Illuminate\Console\Command;
 use Juzaweb\Modules\Core\Modules\Process\Installer;

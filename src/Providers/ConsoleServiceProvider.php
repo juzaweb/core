@@ -21,6 +21,7 @@ class ConsoleServiceProvider extends ServiceProvider
                 \Juzaweb\Modules\Core\Commands\MakeUserCommand::class,
                 \Juzaweb\Modules\Core\Commands\PublishCoreCommand::class,
                 \Juzaweb\Modules\Core\Commands\TestMailCommand::class,
+                \Juzaweb\Modules\Core\Commands\ModuleInstallCommand::class,
             ]);
         }
     }
