@@ -57,7 +57,7 @@ Route::get('modules', [ModuleController::class, 'index'])
     ->middleware(['permission:modules.index']);
 Route::post('modules/toggle', [ModuleController::class, 'toggle'])
     ->name('admin.modules.toggle')
-    ->middleware(['permission:modules.edit']);
+    ->permission('modules.edit');
 
 Route::get('modules/marketplace', [ModuleController::class, 'marketplace'])
     ->name('admin.modules.marketplace')
@@ -75,7 +75,7 @@ Route::get('/languages/{language}/translations/get-data', [TranslationController
     ->middleware(['permission:languages.index']);
 Route::put('/languages/{language}/translations', [TranslationController::class, 'update'])
     ->name('admin.languages.translations.update')
-    ->middleware(['permission:languages.edit']);
+    ->permission(['languages.edit']);
 
 Route::post('translations/translate-model', [TranslationController::class, 'translateModel'])
     ->name('admin.translations.translate-model');

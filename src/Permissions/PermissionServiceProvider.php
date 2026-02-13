@@ -5,7 +5,9 @@ namespace Juzaweb\Modules\Core\Permissions;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
+use Juzaweb\Modules\Core\Facades\PermissionManager;
 use Juzaweb\Modules\Core\Permissions\Contracts\Permission as PermissionContract;
 use Juzaweb\Modules\Core\Permissions\Contracts\Role as RoleContract;
 use Juzaweb\Modules\Core\Permissions\Middleware\PermissionMiddleware;
@@ -199,6 +201,23 @@ class PermissionServiceProvider extends ServiceProvider
                 $permissions = implode('|', Arr::wrap($permissions));
 
                 $this->middleware("permission:$permissions");
+
+                $array = explode('|', $permissions);
+
+                foreach ($array as $permission) {
+                    $permission = trim($permission);
+                    $group = explode('.', $permission)[0];
+                    $name = Str::title(Str::replace(['.', '-', '_'], ' ', $permission));
+
+                    PermissionManager::make(
+                        $permission,
+                        fn() => [
+                            'name' => $name,
+                            'group' => $group,
+                            'code' => $permission,
+                        ]
+                    );
+                }
 
                 return $this;
             }
