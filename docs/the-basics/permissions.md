@@ -97,13 +97,6 @@ Route::get('/admin/settings', [SettingsController::class, 'index'])
     ->permission(['settings.view', 'settings.edit']);
 ```
 
-You can also use the standard Laravel `can` middleware if needed:
-
-```php
-Route::get('/users/create', [UserController::class, 'create'])
-    ->middleware('can:users.create');
-```
-
 ### Using `@can` Directive in Blade
 
 In Blade templates, use the `@can` directive to conditionally display content:
