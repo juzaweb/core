@@ -614,4 +614,7 @@ return [
     'install_module' => 'Install Module',
     'install_module_note' => 'This will download and install the module from the marketplace. Make sure you have composer installed and configured properly.',
     'no_modules_found' => 'No modules found in the marketplace.',
+    'code' => 'Code',
+    'version' => 'Version',
+    'add_role' => 'Add Role',
 ];
