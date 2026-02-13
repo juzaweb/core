@@ -90,11 +90,6 @@ class CoreServiceProvider extends ServiceProvider
                     return true;
                 }
 
-                // Supper admin of website has all permission of website
-                if ($user->isWebsiteAdmin()) {
-                    return true;
-                }
-
                 // Super admin has all permission
                 /** @var User $user */
                 if ($user->hasRoleAllPermissions()) {

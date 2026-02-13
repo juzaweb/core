@@ -2,14 +2,25 @@
 <nav class="mt-2">
     @php
         $menus = \Juzaweb\Modules\Core\Facades\Menu::getByPosition($menu);
-        $roots = $menus->whereNull('parent')->sortBy('priority');
+        $user = auth()->user();
+        $roots = $menus->whereNull('parent')
+            ->filter(
+                function ($item) use ($user) {
+                    return $user->hasAnyPermission($item['permission']);
+                }
+            )
+            ->sortBy('priority');
         $dashboardPath = request()->is('network/*') ? '/network' : parse_url(admin_url(), PHP_URL_PATH);
     @endphp
 
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         @foreach ($roots as $root)
             @php
-                $children = $menus->where('parent', $root['key'])->sortBy('priority');
+                $children = $menus->where('parent', $root['key'])
+                    ->filter(function ($item) use ($user) {
+                        return $user->hasAnyPermission($item['permission']);
+                    })
+                    ->sortBy('priority');
 
                 // Extract path from URL for comparison
                 $rootPath = ltrim(parse_url($root['url'], PHP_URL_PATH) ?: '', '/');

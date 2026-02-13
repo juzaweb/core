@@ -62,6 +62,11 @@ class MenuRepository implements MenuContract
                 $data['priority'] = $data['priority'] ?? 20;
                 $data['parent'] = $data['parent'] ?? null;
                 $data['position'] = $data['position'] ?? null;
+                $data['permission'] = $data['permission'] ?? ['super-admin'];
+
+                if (! is_array($data['permission'])) {
+                    $data['permission'] = [$data['permission']];
+                }
 
                 return $data;
             }
