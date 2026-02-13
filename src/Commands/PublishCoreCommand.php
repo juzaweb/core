@@ -14,7 +14,7 @@ use Illuminate\Console\Command;
 
 class PublishCoreCommand extends Command
 {
-    protected $signature = 'core:publish {--force : Overwrite any existing files}';
+    protected $name = 'core:publish';
 
     protected $description = 'Publish core assets to public directory';
 
@@ -40,5 +40,12 @@ class PublishCoreCommand extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    protected function getOptions()
+    {
+        return [
+            ['force', null, 'Overwrites any existing files.'],
+        ];
     }
 }
