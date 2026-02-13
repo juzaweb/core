@@ -25,7 +25,9 @@ use Juzaweb\Modules\Core\Http\Controllers\Admin\UserController;
 require __DIR__ . '/components/media.php';
 require __DIR__ . '/components/theme.php';
 
-Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/', [DashboardController::class, 'index'])
+    ->name('admin.dashboard')
+    ->permission('dashboard.index');
 Route::get('/setup', [SetupController::class, 'index'])->name('admin.setup');
 Route::post('/setup', [SetupController::class, 'setup'])->name('admin.setup.process');
 Route::get('/dashboard/online', [DashboardController::class, 'online'])

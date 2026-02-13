@@ -54,6 +54,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.dashboard'),
                 'icon' => 'fas fa-tachometer-alt',
+                'permission' => ['dashboard.index'],
             ];
         });
 

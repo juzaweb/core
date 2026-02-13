@@ -147,6 +147,10 @@ trait HasPermissions
      */
     public function hasPermissionTo($permission, string $guardName = null): bool
     {
+        if (method_exists($this, 'isSuperAdmin') && $this->isSuperAdmin()) {
+            return true;
+        }
+
         // return $this->hasWildcardPermission($permission, $guardName);
         $permissionClass = $this->getPermissionClass();
 
