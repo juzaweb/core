@@ -45,7 +45,7 @@ class PermissionRegistrar
     /** @var string */
     public static string $teamsKey = 'team_id';
 
-    /** @var int|string */
+    /** @var int|string|null */
     protected int|string|null $teamId = null;
 
     /** @var string */
