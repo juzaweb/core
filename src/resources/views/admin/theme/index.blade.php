@@ -26,13 +26,16 @@
         <div class="col-md-12">
             <div class="float-right">
                 @if (config('themes.upload_enabled'))
-                    <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#upload-theme-modal">
-                        <i class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload_theme') }}
-                    </a>
+                    @can('themes.create')
+                        <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal"
+                            data-target="#upload-theme-modal">
+                            <i class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload_theme') }}
+                        </a>
 
-                    <a class="btn btn-primary" href="{{ route('admin.themes.marketplace') }}">
-                        <i class="fa fa-store"></i> {{ __('core::translation.marketplace') }}
-                    </a>
+                        <a class="btn btn-primary" href="{{ route('admin.themes.marketplace') }}">
+                            <i class="fa fa-store"></i> {{ __('core::translation.marketplace') }}
+                        </a>
+                    @endcan
                 @endif
             </div>
         </div>
