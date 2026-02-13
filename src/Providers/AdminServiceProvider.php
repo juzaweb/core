@@ -140,10 +140,24 @@ abstract class AdminServiceProvider extends ServiceProvider
             ];
         });
 
+        Menu::make('users-roles', function () {
+            return [
+                'title' => __('Users and Roles'),
+                'priority' => 90,
+            ];
+        });
+
         Menu::make('users', function () {
             return [
                 'title' => __('core::translation.users'),
-                'parent' => 'settings',
+                'parent' => 'users-roles',
+            ];
+        });
+
+        Menu::make('roles', function () {
+            return [
+                'title' => __('core::translation.roles'),
+                'parent' => 'users-roles',
             ];
         });
 

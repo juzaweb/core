@@ -25,5 +25,5 @@
 @endsection
 
 @section('scripts')
-    {{ $dataTable->scripts() }}
+    {{ $dataTable->scripts(null, ['nonce' => csp_script_nonce()]) }}
 @endsection

@@ -13,7 +13,6 @@ namespace Juzaweb\Modules\Core\Providers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Juzaweb\Modules\Admin\Providers\Network;
 
 class HelperServiceProvider extends ServiceProvider
 {

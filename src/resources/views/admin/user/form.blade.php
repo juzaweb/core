@@ -33,7 +33,9 @@
                             'label' => __('core::translation.roles'),
                             'placeholder' => __('core::translation.select_a_role'),
                             'multiple' => true,
-                        ])->dropDownList($roles, 'id', 'name') }}
+                        ])
+                            ->autocomplete()
+                            ->dropDownList($roles, 'id', 'name') }}
 
                         <hr class="my-4">
 

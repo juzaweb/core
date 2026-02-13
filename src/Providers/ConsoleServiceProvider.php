@@ -25,7 +25,7 @@ class ConsoleServiceProvider extends ServiceProvider
                 \Juzaweb\Modules\Core\Commands\ModuleDisableCommand::class,
                 \Juzaweb\Modules\Core\Commands\ModuleEnableCommand::class,
                 \Juzaweb\Modules\Core\Commands\ModuleListCommand::class,
-                \Juzaweb\Modules\Core\Commands\UpdateCommand::class,
+                \Juzaweb\Modules\Core\Commands\ModuleUpdateCommand::class,
                 \Juzaweb\Modules\Core\Commands\ModuleLinkCommand::class,
                 // Theme commands
                 \Juzaweb\Modules\Core\Commands\ThemeInstallCommand::class,
