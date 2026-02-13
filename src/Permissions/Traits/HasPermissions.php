@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Juzaweb\Modules\Core\Models\User;
 use Juzaweb\Modules\Core\Permissions\Contracts\Permission;
 use Juzaweb\Modules\Core\Permissions\Contracts\Role;
 use Juzaweb\Modules\Core\Permissions\Exceptions\GuardDoesNotMatch;
@@ -147,7 +148,7 @@ trait HasPermissions
      */
     public function hasPermissionTo($permission, string $guardName = null): bool
     {
-        if (method_exists($this, 'isSuperAdmin') && $this->isSuperAdmin()) {
+        if ($this instanceof User && $this->isSuperAdmin()) {
             return true;
         }
 
