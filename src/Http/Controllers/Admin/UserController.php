@@ -83,7 +83,10 @@ class UserController extends AdminController
         $model->syncRoles($request->input('roles', []));
 
         return $this->success(
-            __('core::translation.user_name_created_successfully', ['name' => $model->name]),
+            [
+                'message' => __('core::translation.user_name_created_successfully', ['name' => $model->name]),
+                'redirect' => admin_url('users'),
+            ]
         );
     }
 
