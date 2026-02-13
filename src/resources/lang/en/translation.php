@@ -617,4 +617,5 @@ return [
     'code' => 'Code',
     'version' => 'Version',
     'add_role' => 'Add Role',
+    'edit_role' => 'Edit Role',
 ];

@@ -29,6 +29,13 @@ class Select extends Field
         return $this;
     }
 
+    public function value(string|int|array|null $value): static
+    {
+        $this->options['value'] = $value;
+
+        return $this;
+    }
+
     public function selected(string|int|array|null $value): static
     {
         $this->options['value'] = $value;

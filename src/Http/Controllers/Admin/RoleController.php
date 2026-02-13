@@ -53,20 +53,21 @@ class RoleController extends AdminController
         );
 
         return $this->success(
-            __('core::translation.created_successfully'),
-            ['redirect' => admin_url('roles')]
+            [
+                'redirect' => admin_url('roles'),
+                'message' => __('core::translation.created_successfully'),
+            ]
         );
     }
 
-    public function edit($id): View
+    public function edit(int $id): View
     {
-        $role = Role::findOrFail($id);
+        $model = Role::findOrFail($id);
 
         Breadcrumb::add(__('core::translation.roles'), admin_url('roles'));
-        Breadcrumb::add(__('core::translation.edit_role'));
+        Breadcrumb::add(__('core::translation.edit_role') . ': ' . $model->name);
 
         $permissions = collect(PermissionManager::getPermissions())->groupBy('group');
-        $model = $role;
 
         return view(
             'core::admin.role.form',
@@ -74,7 +75,7 @@ class RoleController extends AdminController
         );
     }
 
-    public function update(RoleRequest $request, $id): JsonResponse|RedirectResponse
+    public function update(RoleRequest $request, int $id): JsonResponse|RedirectResponse
     {
         $role = Role::findOrFail($id);
 

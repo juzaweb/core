@@ -29,13 +29,15 @@
 
                         {!! Field::text($model, 'email') !!}
 
-                        {{ Field::select($model, 'roles', [
+                        {{ Field::select(__('Roles'), 'roles[]', [
                             'label' => __('core::translation.roles'),
                             'placeholder' => __('core::translation.select_a_role'),
                             'multiple' => true,
                         ])
                             ->autocomplete()
-                            ->dropDownList($roles, 'id', 'name') }}
+                            ->dropDownList($roles, 'id', 'name')
+                            ->value($model->roles->pluck('id')->toArray())
+                        }}
 
                         <hr class="my-4">
 

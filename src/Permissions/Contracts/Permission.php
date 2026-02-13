@@ -26,6 +26,18 @@ interface Permission
     public static function findByName(string $name, $guardName): ?self;
 
     /**
+     * Find a permission by its code.
+     *
+     * @param string $code
+     * @param string|null $guardName
+     *
+     * @return Permission
+     * @throws \Juzaweb\Modules\Core\Permissions\Exceptions\PermissionDoesNotExist
+     *
+     */
+    public static function findByCode(string $code, ?string $guardName): ?self;
+
+    /**
      * Find a permission by its id.
      *
      * @param int $id

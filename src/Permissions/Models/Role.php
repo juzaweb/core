@@ -209,26 +209,26 @@ class Role extends Model implements RoleContract
      */
     public function hasPermissionTo($permission): bool
     {
-        return $this->hasWildcardPermission($permission, $this->getDefaultGuardName());
+        // return $this->hasWildcardPermission($permission, $this->getDefaultGuardName());
 
-        // $permissionClass = $this->getPermissionClass();
-        //
-        // if (is_string($permission)) {
-        //     $permission = $permissionClass->findByName($permission, $this->getDefaultGuardName());
-        // }
-        //
-        // if (is_int($permission)) {
-        //     $permission = $permissionClass->findById($permission, $this->getDefaultGuardName());
-        // }
-        //
-        // if (!$permission) {
-        //     return false;
-        // }
-        //
-        // if (!$this->getGuardNames()->contains($permission->guard_name)) {
-        //     throw GuardDoesNotMatch::create($permission->guard_name, $this->getGuardNames());
-        // }
-        //
-        // return $this->permissions->contains('id', $permission->id);
+        $permissionClass = $this->getPermissionClass();
+
+        if (is_string($permission)) {
+            $permission = $permissionClass->findByCode($permission, $this->getDefaultGuardName());
+        }
+
+        if (is_int($permission)) {
+            $permission = $permissionClass->findById($permission, $this->getDefaultGuardName());
+        }
+
+        if (!$permission) {
+            return false;
+        }
+
+        if (!$this->getGuardNames()->contains($permission->guard_name)) {
+            throw GuardDoesNotMatch::create($permission->guard_name, $this->getGuardNames());
+        }
+
+        return $this->permissions->contains('id', $permission->id);
     }
 }
