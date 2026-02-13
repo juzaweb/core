@@ -44,6 +44,10 @@ class SocialLoginController extends AdminController
             return $this->error(__('core::translation.invalid_credentials_provided'));
         }
 
+        if (($redirect = request('redirect')) && is_internal_url($redirect)) {
+            session()->put('auth_redirect', $redirect);
+        }
+
         return $socialite->redirect();
     }
 
@@ -136,9 +140,14 @@ class SocialLoginController extends AdminController
     {
         Auth::login($user, true);
 
+        $redirect = home_url();
+        if (($redirectUrl = session()->pull('auth_redirect')) && is_internal_url($redirectUrl)) {
+            $redirect = $redirectUrl;
+        }
+
         return $this->success(
             [
-                'redirect' => home_url(),
+                'redirect' => $redirect,
                 'message' => __('core::translation.login_successful'),
             ]
         );

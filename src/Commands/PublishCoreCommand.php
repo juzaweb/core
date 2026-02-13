@@ -11,6 +11,7 @@
 namespace Juzaweb\Modules\Core\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputOption;
 
 class PublishCoreCommand extends Command
 {
@@ -45,7 +46,7 @@ class PublishCoreCommand extends Command
     protected function getOptions()
     {
         return [
-            ['force', null, 'Overwrites any existing files.'],
+            ['force', null, InputOption::VALUE_NONE, 'Overwrites any existing files.'],
         ];
     }
 }

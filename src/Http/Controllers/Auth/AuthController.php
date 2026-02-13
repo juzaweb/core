@@ -34,6 +34,10 @@ class AuthController extends AdminController
 
     public function login()
     {
+        if (($redirect = request('redirect')) && is_internal_url($redirect)) {
+            session()->put('auth_redirect', $redirect);
+        }
+
         $socialLogins = social_login_providers();
 
         return view($this->getViewName('login'),
@@ -68,6 +72,10 @@ class AuthController extends AdminController
 
         $redirectUrl = apply_filters('auth.affter_login_redirect_url', home_url());
 
+        if (($redirect = session()->pull('auth_redirect')) && is_internal_url($redirect)) {
+            $redirectUrl = $redirect;
+        }
+
         return $this->success(
             [
                 'message' => trans('core::translation.login_successfully'),
@@ -79,6 +87,10 @@ class AuthController extends AdminController
     public function register()
     {
         abort_if(setting('user_registration') === false, 403, __('core::translation.user_registration_is_disabled'));
+
+        if (($redirect = request('redirect')) && is_internal_url($redirect)) {
+            session()->put('auth_redirect', $redirect);
+        }
 
         $socialLogins = social_login_providers();
 

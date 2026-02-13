@@ -948,3 +948,22 @@ function get_php_binary_path()
 
     return $path ? trim($path) : false;
 }
+
+if (!function_exists('is_internal_url')) {
+    /**
+     * Check if the URL is internal (same domain)
+     *
+     * @param string $url
+     * @return bool
+     */
+    function is_internal_url(string $url): bool
+    {
+        $appUrl = parse_url(url('/'));
+        $targetUrl = parse_url($url);
+
+        // Check if URL has same host as app URL
+        return isset($targetUrl['host']) &&
+            isset($appUrl['host']) &&
+            $targetUrl['host'] === $appUrl['host'];
+    }
+}
