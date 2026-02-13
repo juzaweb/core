@@ -10,9 +10,11 @@ use Juzaweb\Modules\Core\Facades\Breadcrumb;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
 use Juzaweb\Modules\Core\Http\DataTables\RolesDataTable;
 use Juzaweb\Modules\Core\Http\Requests\RoleRequest;
+use Juzaweb\Modules\Core\Http\Requests\BulkActionsRequest;
 use Juzaweb\Modules\Core\Permissions\Models\Permission;
 use Juzaweb\Modules\Core\Permissions\Models\Role;
 use Juzaweb\Modules\Core\Facades\PermissionManager;
+use Juzaweb\Modules\Core\Permissions\PermissionRegistrar;
 
 class RoleController extends AdminController
 {
@@ -55,8 +57,10 @@ class RoleController extends AdminController
         );
     }
 
-    public function edit(Role $role): View
+    public function edit($id): View
     {
+        $role = Role::findOrFail($id);
+
         Breadcrumb::add(__('core::translation.roles'), admin_url('roles'));
         Breadcrumb::add(__('core::translation.edit_role'));
 
@@ -69,8 +73,10 @@ class RoleController extends AdminController
         );
     }
 
-    public function update(RoleRequest $request, Role $role): JsonResponse|RedirectResponse
+    public function update(RoleRequest $request, $id): JsonResponse|RedirectResponse
     {
+        $role = Role::findOrFail($id);
+
         DB::transaction(
             function () use ($request, $role) {
                 $role->update($request->safe()->all());
@@ -84,12 +90,28 @@ class RoleController extends AdminController
         );
     }
 
-    public function destroy(Role $role): JsonResponse|RedirectResponse
+    public function destroy($id): JsonResponse|RedirectResponse
     {
+        $role = Role::findOrFail($id);
         $role->delete();
 
         return $this->success(
             __('core::translation.deleted_successfully')
         );
+    }
+
+    public function bulk(BulkActionsRequest $request): JsonResponse|RedirectResponse
+    {
+        $action = $request->input('action');
+        $ids = $request->input('ids', []);
+
+        switch ($action) {
+            case 'delete':
+                Role::whereIn('id', $ids)->delete();
+                app(PermissionRegistrar::class)->forgetCachedPermissions();
+                return $this->success(__('core::translation.deleted_successfully'));
+        }
+
+        return $this->error(__('core::translation.invalid_action'));
     }
 }

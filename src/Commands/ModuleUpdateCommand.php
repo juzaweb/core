@@ -7,7 +7,7 @@ use Juzaweb\Modules\Core\Modules\Module;
 use Juzaweb\Modules\Core\Modules\Traits\ModuleCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 
-class UpdateCommand extends Command
+class ModuleUpdateCommand extends Command
 {
     use ModuleCommandTrait;
 
