@@ -9,9 +9,11 @@
                         <i class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload_theme') }}
                     </a>--}}
 
-                    <a class="btn btn-primary" href="{{ route('admin.modules.marketplace') }}">
-                        <i class="fa fa-store"></i> {{ __('core::translation.marketplace') }}
-                    </a>
+                    @can('modules.create')
+                        <a class="btn btn-primary" href="{{ route('admin.modules.marketplace') }}">
+                            <i class="fa fa-store"></i> {{ __('core::translation.marketplace') }}
+                        </a>
+                    @endcan
                 @endif
             </div>
         </div>

@@ -27,11 +27,14 @@
 
             <div class="col-md-4">
                 <div class="btn-group float-right">
-                    <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal"
-                        data-target="#add-folder-modal"><i class="fas fa-plus"></i>
-                        {{ __('core::translation.add_folder') }}</a>
-                    <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#upload-modal"><i
-                            class="fas fa-cloud-upload-alt"></i> {{ __('core::translation.upload') }}</a>
+                    @can('media.create')
+                        <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal"
+                            data-target="#add-folder-modal"><i class="fas fa-plus"></i>
+                            {{ __('core::translation.add_folder') }}</a>
+                        <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal"
+                            data-target="#upload-modal"><i class="fas fa-cloud-upload-alt"></i>
+                            {{ __('core::translation.upload') }}</a>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -64,10 +67,12 @@
                 <li class="context-menu-item" data-action="view-detail">
                     <i class="fas fa-info-circle"></i> {{ __('core::translation.view_detail') }}
                 </li>
-                <li class="context-menu-item" data-action="delete">
-                    <i class="fas fa-trash text-danger"></i> <span
-                        class="text-danger">{{ __('core::translation.delete') }}</span>
-                </li>
+                @can('media.delete')
+                    <li class="context-menu-item" data-action="delete">
+                        <i class="fas fa-trash text-danger"></i> <span
+                            class="text-danger">{{ __('core::translation.delete') }}</span>
+                    </li>
+                @endcan
             </ul>
         </div>
     </div>
@@ -85,8 +90,10 @@
                 <i class="fa fa-download"></i> {{ __('core::translation.download') }}
             </a>
 
-            <a href="#" class="btn btn-danger delete-file" data-id="{id}" data-is_file="{is_file}"
-                data-name="{name}"><i class="fa fa-trash"></i> {{ __('core::translation.delete') }}</a>
+            @can('media.delete')
+                <a href="#" class="btn btn-danger delete-file" data-id="{id}" data-is_file="{is_file}"
+                    data-name="{name}"><i class="fa fa-trash"></i> {{ __('core::translation.delete') }}</a>
+            @endcan
         </div>
 
         <form action="{{ str_replace('__ID__', '{id}', route('admin.media.update', ['__ID__'])) }}" method="post"
@@ -116,7 +123,9 @@
                 </tbody>
             </table>
 
-            <button type="submit" class="btn btn-primary mb-2">{{ __('core::translation.save') }}</button>
+            @can('media.edit')
+                <button type="submit" class="btn btn-primary mb-2">{{ __('core::translation.save') }}</button>
+            @endcan
         </form>
     </template>
 

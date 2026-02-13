@@ -82,7 +82,8 @@ class LanguagesDataTable extends DataTable
                 __('core::translation.phrases'),
                 route('admin.languages.translations', [$model->code]),
                 'fas fa-language'
-            ),
+            )
+                ->can('languages.edit'),
         ];
 
         if ($model->code !== $defaultLanguage) {
@@ -93,10 +94,13 @@ class LanguagesDataTable extends DataTable
             )
                 ->type('action')
                 ->action('set-default')
-                ->color('warning');
+                ->color('warning')
+                ->can('languages.edit');
         }
 
-        $actions[] = Action::delete()->disabled($model->code == config('app.fallback_locale') || $model->code == $defaultLanguage);
+        $actions[] = Action::delete()
+            ->disabled($model->code == config('app.fallback_locale') || $model->code == $defaultLanguage)
+            ->can('languages.delete');
 
         return $actions;
     }
@@ -104,7 +108,7 @@ class LanguagesDataTable extends DataTable
     public function bulkActions(): array
     {
         return [
-            BulkAction::delete(),
+            BulkAction::delete()->can('languages.delete'),
         ];
     }
 }
