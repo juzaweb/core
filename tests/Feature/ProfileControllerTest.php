@@ -164,6 +164,6 @@ class ProfileControllerTest extends TestCase
             'name' => 'Updated Name',
         ]);
 
-        $response->assertStatus(403);
+        $response->assertStatus(401);
     }
 }

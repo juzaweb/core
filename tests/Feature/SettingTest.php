@@ -73,6 +73,6 @@ class SettingTest extends TestCase
 
         $response = $this->putJson(route('admin.settings.update'), $data);
 
-        $response->assertStatus(403);
+        $response->assertStatus(401);
     }
 }
