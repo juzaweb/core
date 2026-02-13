@@ -41,11 +41,11 @@ class MenuRepository implements MenuContract
                     return null;
                 }
 
-                // Merge key vào data
+                // Merge key to data
                 $data['key'] = $key;
                 $prefix = $data['prefix'] ?? 'admin';
             
-                // Build URL nếu chưa có
+                // Build URL if not set
                 if (!isset($data['url'])) {
                     if ($key === 'dashboard') {
                         $data['url'] = url($prefix ?: '');
@@ -53,7 +53,9 @@ class MenuRepository implements MenuContract
                         $data['url'] = url($prefix ? "{$prefix}/{$key}" : $key);
                     }
                 } else {
-                    $data['url'] = isset($data['prefix']) ? url($data['prefix'] .'/'. ltrim($data['url'], '/')) : admin_url($data['url']);
+                    $data['url'] = isset($data['prefix'])
+                        ? url($data['prefix'] .'/'. ltrim($data['url'], '/'))
+                        : admin_url($data['url']);
                 }
 
                 // Set default values

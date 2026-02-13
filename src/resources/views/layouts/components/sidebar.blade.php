@@ -3,13 +3,7 @@
     @php
         $menus = \Juzaweb\Modules\Core\Facades\Menu::getByPosition($menu);
         $user = auth()->user();
-        $roots = $menus->whereNull('parent')
-            ->filter(
-                function ($item) use ($user) {
-                    return $user->hasAnyPermission($item['permission']);
-                }
-            )
-            ->sortBy('priority');
+        $roots = $menus->whereNull('parent')->sortBy('priority');
         $dashboardPath = request()->is('network/*') ? '/network' : parse_url(admin_url(), PHP_URL_PATH);
     @endphp
 
@@ -35,6 +29,11 @@
                         })
                         ->isNotEmpty();
             @endphp
+
+            @if($children->isEmpty() && !$user->hasAnyPermission($root['permission']))
+                @continue
+            @endif
+
             <li class="nav-item @if ($active) menu-is-opening menu-open @endif">
                 <a href="{{ $root['url'] }}" target="{{ $root['target'] }}"
                    class="nav-link @if ($active) active @endif">
