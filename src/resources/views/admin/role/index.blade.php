@@ -6,9 +6,11 @@
     <div class="row mb-3">
         <div class="col-md-12">
             <div class="btn-group">
-                <a href="{{ admin_url('roles/create') }}" class="btn btn-success">
-                    <i class="fa fa-plus"></i> {{ __('core::translation.add_role') }}
-                </a>
+                @can('roles.create')
+                    <a href="{{ admin_url('roles/create') }}" class="btn btn-success">
+                        <i class="fa fa-plus"></i> {{ __('core::translation.add_role') }}
+                    </a>
+                @endcan
             </div>
         </div>
     </div>

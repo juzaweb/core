@@ -57,7 +57,7 @@ class PagesDataTable extends DataTable
     public function bulkActions(): array
     {
         return [
-            BulkAction::delete(),
+            BulkAction::delete()->can('pages.delete'),
             BulkAction::make(__('core::translation.translate'), null, 'fas fa-language')
                 ->type('url')
                 ->action('translate')
@@ -71,8 +71,9 @@ class PagesDataTable extends DataTable
             Action::link(__('core::translation.view_online'), $model->getUrl(), 'fas fa-eye')
                 ->color('info')
                 ->target('_blank'),
-            Action::edit(admin_url("pages/{$model->id}/edit")),
-            Action::delete(),
+            Action::edit(admin_url("pages/{$model->id}/edit"))
+                ->can('pages.edit'),
+            Action::delete()->can('pages.delete'),
         ];
     }
 

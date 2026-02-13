@@ -16,9 +16,11 @@
                         {{ __('core::translation.or') }}
                     @endif
 
-                    <a href="javascript:void(0)" class="ml-1 text-primary btn-add-menu">
-                        <i class="fa fa-plus"></i> {{ __('core::translation.create_new_menu') }}
-                    </a>
+                    @can('menus.create')
+                        <a href="javascript:void(0)" class="ml-1 text-primary btn-add-menu">
+                            <i class="fa fa-plus"></i> {{ __('core::translation.create_new_menu') }}
+                        </a>
+                    @endcan
                 </div>
             </div>
 
@@ -99,9 +101,11 @@
                                 @component('core::admin.menu.components.custom-box')
                                 @endcomponent
 
-                                <button type="submit" class="btn btn-primary btn-sm mt-2 px-3">
-                                    <i class="fa fa-plus"></i> {{ __('core::translation.add_to_menu') }}
-                                </button>
+                                @can('menus.edit')
+                                    <button type="submit" class="btn btn-primary btn-sm mt-2 px-3">
+                                        <i class="fa fa-plus"></i> {{ __('core::translation.add_to_menu') }}
+                                    </button>
+                                @endcan
                             </form>
                         </div>
                     </div>
@@ -178,15 +182,19 @@
 
                             <div class="card-footer">
                                 <div class="btn-group">
-                                    <a href="javascript:void(0)" class="text-danger delete-menu"
-                                        data-id="{{ $menu->id }}"
-                                        data-name="{{ $menu->name }}">{{ __('core::translation.delete_menu') }}</a>
+                                    @can('menus.delete')
+                                        <a href="javascript:void(0)" class="text-danger delete-menu"
+                                            data-id="{{ $menu->id }}"
+                                            data-name="{{ $menu->name }}">{{ __('core::translation.delete_menu') }}</a>
+                                    @endcan
                                 </div>
 
                                 <div class="btn-group float-right">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-save"></i> {{ __('core::translation.save') }}
-                                    </button>
+                                    @can('menus.edit')
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-save"></i> {{ __('core::translation.save') }}
+                                        </button>
+                                    @endcan
                                 </div>
                             </div>
 

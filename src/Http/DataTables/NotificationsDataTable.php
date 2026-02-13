@@ -41,14 +41,14 @@ class NotificationsDataTable extends DataTable
     public function bulkActions(): array
     {
         return [
-            BulkAction::delete(),
+            BulkAction::delete()->can('notifications.delete'),
         ];
     }
 
     public function actions(Model $model): array
     {
         return [
-            Action::delete(),
+            Action::delete()->can('notifications.delete'),
         ];
     }
 }
