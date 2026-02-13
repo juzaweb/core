@@ -54,25 +54,25 @@ Route::admin('roles', RoleController::class);
 
 Route::get('modules', [ModuleController::class, 'index'])
     ->name('admin.modules.index')
-    ->middleware(['permission:modules.index']);
+    ->permission('modules.index');
 Route::post('modules/toggle', [ModuleController::class, 'toggle'])
     ->name('admin.modules.toggle')
     ->permission('modules.edit');
 
 Route::get('modules/marketplace', [ModuleController::class, 'marketplace'])
     ->name('admin.modules.marketplace')
-    ->middleware(['permission:modules.index']);
+    ->permission('modules.index');
 
 Route::get('modules/marketplace/get-data', [ModuleController::class, 'loadMarketplaceData'])
     ->name('admin.modules.marketplace.get-data')
-    ->middleware(['permission:modules.index']);
+    ->permission('modules.index');
 
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations')
-    ->middleware(['permission:languages.index']);
+    ->permission('languages.index');
 Route::get('/languages/{language}/translations/get-data', [TranslationController::class, 'getDataCollection'])
     ->name('admin.languages.translations.get-data')
-    ->middleware(['permission:languages.index']);
+    ->permission('languages.index');
 Route::put('/languages/{language}/translations', [TranslationController::class, 'update'])
     ->name('admin.languages.translations.update')
     ->permission(['languages.edit']);
@@ -83,19 +83,20 @@ Route::post('translations/translate-status', [TranslationController::class, 'tra
 
 Route::get('/settings/general', [SettingController::class, 'index'])
     ->name('admin.settings.general')
-    ->middleware(['permission:settings.general.edit']);
+    ->permission('settings.general.edit');
 
 Route::put('/settings', [SettingController::class, 'update'])
     ->name('admin.settings.update')
-    ->middleware(['permission:settings.general.edit']);
+    ->permission('settings.general.edit');
 
 Route::get('/settings/social-login', [SettingController::class, 'socialLogin'])
     ->name('admin.settings.social-login')
-    ->middleware(['permission:settings.social-login.index']);
+    ->permission('settings.social-login.index');
 
 Route::get('/settings/email', [SettingController::class, 'email'])
     ->name('admin.settings.email')
-    ->middleware(['permission:settings.email.index']);
+    ->permission('settings.email.index');
 Route::post('/settings/test-email', [SettingController::class, 'testEmail'])
     ->name('admin.settings.test-email')
-    ->middleware(['permission:settings.email.index', 'throttle:5,1']);
+    ->permission('settings.email.index')
+    ->middleware(['throttle:5,1']);
