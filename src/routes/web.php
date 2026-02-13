@@ -45,7 +45,7 @@ Route::get('notification/{channel}/verify', [NotificationSubscribeController::cl
 
 Route::group([
     'middleware' => [
-        ...config('core.auth_middleware'),
+        'auth',
         'verified',
     ]
 ], function() {

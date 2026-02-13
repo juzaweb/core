@@ -14,11 +14,6 @@ return [
      */
     'admin_prefix' => env('JW_ADMIN_PREFIX', 'admin'),
 
-    /**
-     * Default Authentication middleware
-     */
-    'auth_middleware' => ['auth'],
-
     'query_cache' => [
         /**
          * Enable query cache
