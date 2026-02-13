@@ -93,7 +93,7 @@ class PermissionRegistrar
     {
         // the 'default' fallback here is from the permission.php config file,
         // where 'default' means to use config(cache.default)
-        $cacheDriver = config('app.permission.cache.store', 'default');
+        $cacheDriver = config('cache.default', 'default');
 
         // when 'default' is specified, no action is required since we already have the default instance
         if ($cacheDriver === 'default') {
