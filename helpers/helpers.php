@@ -961,9 +961,17 @@ if (!function_exists('is_internal_url')) {
         $appUrl = parse_url(url('/'));
         $targetUrl = parse_url($url);
 
+        if ($targetUrl === false) {
+             return false;
+        }
+
         // Check if URL has same host as app URL
-        return isset($targetUrl['host']) &&
-            isset($appUrl['host']) &&
-            $targetUrl['host'] === $appUrl['host'];
+        if (isset($targetUrl['host']) && isset($appUrl['host'])) {
+            return $targetUrl['host'] === $appUrl['host'];
+        }
+
+        // If no host, it's relative (internal), but reject invalid schemes (e.g. javascript:)
+        return !isset($targetUrl['host']) &&
+            (!isset($targetUrl['scheme']) || in_array($targetUrl['scheme'], ['http', 'https']));
     }
 }
