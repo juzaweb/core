@@ -69,11 +69,11 @@ class ModuleInstallCommand extends Command
 
         $installer->run();
 
-        if (!$this->option('no-update')) {
-            $this->call('module:update', [
-                'module' => $installer->getModuleName(),
-            ]);
-        }
+        // if (!$this->option('no-update')) {
+        //     $this->call('module:update', [
+        //         'module' => $installer->getModuleName(),
+        //     ]);
+        // }
 
         // Run migration
         $this->call('migrate', [
@@ -110,7 +110,7 @@ class ModuleInstallCommand extends Command
             ['path', null, InputOption::VALUE_OPTIONAL, 'The installation path.', null],
             ['type', null, InputOption::VALUE_OPTIONAL, 'The type of installation.', null],
             ['tree', null, InputOption::VALUE_NONE, 'Install the module as a git subtree', null],
-            ['no-update', null, InputOption::VALUE_NONE, 'Disables the automatic update of the dependencies.', null],
+            // ['no-update', null, InputOption::VALUE_NONE, 'Disables the automatic update of the dependencies.', null],
         ];
     }
 }
