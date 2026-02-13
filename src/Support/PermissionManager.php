@@ -31,4 +31,9 @@ class PermissionManager implements PermissionManagerContract
 
         return $results;
     }
+
+    public function collection(): \Illuminate\Support\Collection
+    {
+        return collect($this->getPermissions());
+    }
 }

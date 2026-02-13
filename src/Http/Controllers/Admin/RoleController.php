@@ -45,6 +45,7 @@ class RoleController extends AdminController
             function () use ($request) {
                 $role = Role::create($request->safe()->all());
 
+                $this->createPermissionsIfNotExists($request->input('permissions', []));
                 $role->syncPermissions($request->input('permissions', []));
 
                 return $role;
@@ -81,6 +82,7 @@ class RoleController extends AdminController
             function () use ($request, $role) {
                 $role->update($request->safe()->all());
 
+                $this->createPermissionsIfNotExists($request->input('permissions', []));
                 $role->syncPermissions($request->input('permissions', []));
             }
         );
@@ -113,5 +115,39 @@ class RoleController extends AdminController
         }
 
         return $this->error(__('core::translation.invalid_action'));
+    }
+
+    /**
+     * Create permissions from PermissionManager if they don't exist in database
+     *
+     * @param array $permissionCodes
+     * @return void
+     */
+    protected function createPermissionsIfNotExists(array $permissionCodes): void
+    {
+        $allPermissions = PermissionManager::collection();
+
+        // Get existing permission codes from database
+        $existingCodes = Permission::whereIn('code', $permissionCodes)
+            ->pluck('code')
+            ->toArray();
+
+        // Filter out codes that already exist
+        $newCodes = array_diff($permissionCodes, $existingCodes);
+
+        foreach ($newCodes as $code) {
+            $permissionData = $allPermissions->get($code);
+
+            if (!$permissionData) {
+                throw new \RuntimeException("Permission with code '{$code}' not found in PermissionManager");
+            }
+
+            Permission::create([
+                'code' => $code,
+                'name' => $permissionData['name'] ?? $code,
+                'group' => $permissionData['group'] ?? null,
+                'description' => $permissionData['description'] ?? null,
+            ]);
+        }
     }
 }

@@ -27,4 +27,11 @@ interface PermissionManager
      * @return array
      */
     public function getPermissions(): array;
+
+    /**
+     * Get all registered permissions as a Collection.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function collection(): \Illuminate\Support\Collection;
 }
