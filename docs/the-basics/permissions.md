@@ -82,19 +82,26 @@ public function create()
 }
 ```
 
-### Using Middleware
+### Using In Route
 
-Protect routes using the `can` middleware:
+Juzaweb provides a convenient `permission()` macro for protecting routes. This macro automatically registers the permission in the `PermissionManager` and applies the permission middleware:
 
 ```php
 use Illuminate\Support\Facades\Route;
 
 Route::get('/users/create', [UserController::class, 'create'])
-    ->middleware('can:users.create');
+    ->permission('users.create');
 
 // Multiple permissions (user must have all)
 Route::get('/admin/settings', [SettingsController::class, 'index'])
-    ->middleware(['can:settings.view', 'can:settings.edit']);
+    ->permission(['settings.view', 'settings.edit']);
+```
+
+You can also use the standard Laravel `can` middleware if needed:
+
+```php
+Route::get('/users/create', [UserController::class, 'create'])
+    ->middleware('can:users.create');
 ```
 
 ### Using `@can` Directive in Blade
