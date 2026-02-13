@@ -66,10 +66,12 @@ class AuthController extends AdminController
 
         do_action('login.success', $user);
 
+        $redirectUrl = apply_filters('auth.affter_login_redirect_url', home_url());
+
         return $this->success(
             [
                 'message' => trans('core::translation.login_successfully'),
-                'redirect' => home_url(),
+                'redirect' => $redirectUrl,
             ]
         );
     }
