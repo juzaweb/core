@@ -62,6 +62,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.media'),
                 'icon' => 'fas fa-photo-video',
+                'permission' => ['media.index'],
             ];
         });
 
@@ -69,6 +70,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.pages'),
                 'icon' => 'fas fa-layer-group',
+                'permission' => ['pages.index'],
             ];
         });
 
@@ -84,6 +86,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.themes'),
                 'parent' => 'appearance',
+                'permission' => ['themes.index'],
             ];
         });
 
@@ -91,6 +94,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.widgets'),
                 'parent' => 'appearance',
+                'permission' => ['themes.index'],
             ];
         });
 
@@ -98,6 +102,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.menus'),
                 'parent' => 'appearance',
+                'permission' => ['menus.index'],
             ];
         });
 
@@ -106,6 +111,7 @@ abstract class AdminServiceProvider extends ServiceProvider
                 'title' => __('core::translation.modules'),
                 'icon' => 'fas fa-cubes',
                 'priority' => 90,
+                'permission' => ['modules.index'],
             ];
         });
 
@@ -122,6 +128,7 @@ abstract class AdminServiceProvider extends ServiceProvider
                 'title' => __('core::translation.general'),
                 'url' => 'settings/general',
                 'parent' => 'settings',
+                'permission' => ['settings.general.edit'],
             ];
         });
 
@@ -130,6 +137,7 @@ abstract class AdminServiceProvider extends ServiceProvider
                 'title' => __('core::translation.social_login'),
                 'url' => 'settings/social-login',
                 'parent' => 'settings',
+                'permission' => ['settings.social-login.index'],
             ];
         });
 
@@ -138,6 +146,7 @@ abstract class AdminServiceProvider extends ServiceProvider
                 'title' => __('core::translation.email'),
                 'url' => 'settings/email',
                 'parent' => 'settings',
+                'permission' => ['settings.email.index'],
             ];
         });
 
@@ -152,6 +161,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.users'),
                 'parent' => 'users-roles',
+                'permission' => ['users.index'],
             ];
         });
 
@@ -159,6 +169,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.roles'),
                 'parent' => 'users-roles',
+                'permission' => ['roles.index'],
             ];
         });
 
@@ -166,6 +177,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('core::translation.languages'),
                 'parent' => 'settings',
+                'permission' => ['languages.index'],
             ];
         });
     }
