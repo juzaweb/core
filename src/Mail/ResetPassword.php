@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Modules\Core\Notifications;
+namespace Juzaweb\Modules\Core\Mail;
 
 use Illuminate\Auth\Notifications\ResetPassword as BaseResetPassword;
 use Illuminate\Bus\Queueable;

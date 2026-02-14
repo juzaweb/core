@@ -17,7 +17,7 @@ use Juzaweb\Modules\Admin\Models\Guest;
 use Juzaweb\Modules\Core\Http\Controllers\ThemeController;
 use Juzaweb\Modules\Core\Http\Requests\NotificationSubscribeRequest;
 use Juzaweb\Modules\Core\Models\NotificationSubscription;
-use Juzaweb\Modules\Core\Notifications\SubscriptionVerifyEmail;
+use Juzaweb\Modules\Notification\Mail\SubscriptionVerifyEmail;
 
 class NotificationSubscribeController extends ThemeController
 {

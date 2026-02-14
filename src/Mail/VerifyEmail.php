@@ -1,6 +1,6 @@
 <?php
 
-namespace Juzaweb\Modules\Core\Notifications;
+namespace Juzaweb\Modules\Core\Mail;
 
 use Illuminate\Auth\Notifications\VerifyEmail as BaseVerifyEmail;
 use Illuminate\Bus\Queueable;

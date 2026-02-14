@@ -2,14 +2,13 @@
 
 namespace Juzaweb\Modules\Core\Tests\Feature;
 
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
-use Juzaweb\Modules\Core\Tests\TestCase;
-use Juzaweb\Modules\Core\Notifications\SubscriptionVerifyEmail;
-use Juzaweb\Modules\Core\Models\NotificationSubscription;
-use Juzaweb\Modules\Core\Translations\Models\Language;
-use Illuminate\Support\Facades\Notification;
 use Juzaweb\Modules\Core\Models\Guest;
+use Juzaweb\Modules\Core\Tests\TestCase;
+use Juzaweb\Modules\Core\Translations\Models\Language;
+use Juzaweb\Modules\Notification\Mail\SubscriptionVerifyEmail;
 
 class TestRouteServiceProvider extends \Illuminate\Support\ServiceProvider
 {
