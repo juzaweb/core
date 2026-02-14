@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="profile-usertitle">
-                        <div class="profile-userbuttons mt-2">
+                        <div class="profile-userbuttons mb-2">
                             <button type="button" class="btn btn-success btn-sm btn-change-avatar">
                                 {{ __('Change Avatar') }}
                             </button>
@@ -73,6 +73,15 @@
 
         fileInput.addEventListener('change', function () {
             if (this.files && this.files[0]) {
+                if (this.files[0].size > 1024 * 1000) {
+                    show_notify({
+                        message: '{{ __("File size must be less than 1MB") }}',
+                        success: false
+                    });
+                    this.value = '';
+                    return;
+                }
+
                 const formData = new FormData();
                 formData.append('avatar', this.files[0]);
                 // Add CSRF token
@@ -91,15 +100,25 @@
                     .then(data => {
                         if (data.status === 'success') {
                             avatarImg.src = data.file_path;
+                            avatarImg.data_src = data.file_path;
                             avatarImg.srcset = data.file_path + ' 2x';
-                            show_notify('success', data.message);
+                            show_notify({
+                                message: data.message,
+                                success: true
+                            });
                         } else {
-                            show_notify('error', 'Upload failed');
+                            show_notify({
+                                message: 'Upload failed',
+                                success: false
+                            });
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        show_notify('error', 'An error occurred');
+                        show_notify({
+                            message: 'An error occurred',
+                            success: false
+                        });
                     });
             }
         });
