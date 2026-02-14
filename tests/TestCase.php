@@ -116,6 +116,7 @@ abstract class TestCase extends Orchestra
             'PageBlock' => \Juzaweb\Modules\Core\Facades\PageBlock::class,
             'Chart' => \Juzaweb\Modules\Core\Facades\Chart::class,
             'DataTables' => \Yajra\DataTables\Facades\DataTables::class,
+            'Menu' => \Juzaweb\Modules\Core\Facades\Menu::class,
         ];
     }
 
