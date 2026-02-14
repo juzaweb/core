@@ -12,8 +12,12 @@
             <a href="{{ url('/') }}" class="nav-link text-primary"
                 target="_blank">{{ __('core::translation.view_website') }}</a>
         </li>
-
     </ul>
+
+    @php
+        $user = auth()->user();
+        $user->loadMedia('avatar');
+    @endphp
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -88,16 +92,16 @@
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
                 <span class="badge badge-warning navbar-badge">
-                    {{ auth()->user()->unreadNotifications()->count() }}
+                    {{ $user->unreadNotifications()->count() }}
                 </span>
             </a>
 
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">
-                    {{ __('core::translation.num_notifications', ['num' => auth()->user()->notifications()->count()]) }}
+                    {{ __('core::translation.num_notifications', ['num' => $user->notifications()->count()]) }}
                 </span>
 
-                @foreach (auth()->user()->notifications()->limit(5)->get() as $notification)
+                @foreach ($user->notifications()->limit(5)->get() as $notification)
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                         <i class="fas fa-{{ $notification->data['icon'] ?? 'info' }} mr-2"></i> 4 new messages
@@ -114,9 +118,10 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
-                <img src="{{ auth()->user()->avatar }}"
+                <img src="{{ $user->avatar }}"
                     alt="User Avatar" class="img-size-32 img-circle">
             </a>
+
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="{{ admin_url('/profile') }}" class="dropdown-item">
                     <i class="fas fa-user-cog mr-2"></i> {{ __('core::translation.profile') }}
