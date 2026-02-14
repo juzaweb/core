@@ -4,7 +4,9 @@ namespace Juzaweb\Modules\Core\Http\Controllers\Admin;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\Console\Output\StreamOutput;
 use Juzaweb\Modules\Core\Facades\Breadcrumb;
 use Juzaweb\Modules\Core\Facades\Module;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
@@ -25,6 +27,28 @@ class ModuleController extends AdminController
         );
     }
 
+    public function install(Request $request)
+    {
+        $request->validate(['module' => 'required']);
+
+        $module = Module::find($request->input('module'));
+
+        if (!$module) {
+            return $this->error(__('Module :name not found', ['name' => $request->input('module')]));
+        }
+
+        return response()->stream(function () use ($module) {
+            $stream = fopen('php://output', 'w');
+            $output = new StreamOutput($stream);
+            Artisan::call('module:install', ['name' => $module->getComposerAttr('name')], $output);
+            $output->write('Module enabled successfully.');
+        }, 200, [
+            'Content-Type' => 'text/event-stream',
+            'X-Accel-Buffering' => 'no',
+            'Cache-Control' => 'no-cache',
+        ]);
+    }
+
     public function toggle(Request $request)
     {
         $request->validate(
@@ -40,6 +64,14 @@ class ModuleController extends AdminController
         try {
             if ($status == 1) {
                 Module::enable($module);
+
+                Artisan::call('module:publish', [
+                    'module' => $module,
+                ]);
+
+                Artisan::call('migrate', [
+                    '--force' => true,
+                ]);
             } else {
                 Module::disable($module);
             }

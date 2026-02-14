@@ -920,11 +920,21 @@ function mime_type_from_extension(string $extension): string
  *
  * @return string|false The path to the PHP binary or false if not found.
  */
-function get_php_binary_path()
+function get_php_binary_path(): false|string
 {
     // 1. Priority: Use the modern PHP_BINARY constant (Available since PHP 5.4)
     if (defined('PHP_BINARY') && !empty(PHP_BINARY)) {
-        return PHP_BINARY;
+        $valid = true;
+        foreach (['fpm', 'cgi', 'apache'] as $needle) {
+            if (strpos(PHP_BINARY, $needle) !== false) {
+                $valid = false;
+                break;
+            }
+        }
+
+        if ($valid) {
+            return PHP_BINARY;
+        }
     }
 
     // 2. Fallback: Use PHP_BINDIR to construct the path

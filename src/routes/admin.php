@@ -60,14 +60,16 @@ Route::get('modules', [ModuleController::class, 'index'])
 Route::post('modules/toggle', [ModuleController::class, 'toggle'])
     ->name('admin.modules.toggle')
     ->permission('modules.edit');
+Route::post('modules/install', [ModuleController::class, 'install'])
+    ->name('admin.modules.install')
+    ->permission('modules.edit');
 
 Route::get('modules/marketplace', [ModuleController::class, 'marketplace'])
     ->name('admin.modules.marketplace')
-    ->permission('modules.index');
-
+    ->permission('modules.edit');
 Route::get('modules/marketplace/get-data', [ModuleController::class, 'loadMarketplaceData'])
     ->name('admin.modules.marketplace.get-data')
-    ->permission('modules.index');
+    ->permission('modules.edit');
 
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations')

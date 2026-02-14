@@ -46,7 +46,7 @@ class ModuleInstallCommand extends Command
      * @param  string  $type
      * @param  bool  $tree
      */
-    protected function install(string $name, ?string $version = 'dev-master', ?string $type = 'composer', bool $tree = false)
+    protected function install(string $name, ?string $version = 'dev-master', ?string $type = 'composer', bool $tree = false): void
     {
         $installer = new Installer(
             $name,
@@ -74,15 +74,6 @@ class ModuleInstallCommand extends Command
         //         'module' => $installer->getModuleName(),
         //     ]);
         // }
-
-        // Run migration
-        $this->call('migrate', [
-            '--force' => true,
-        ]);
-
-        $this->call('module:publish', [
-            'module' => $installer->getModuleName(),
-        ]);
     }
 
     /**

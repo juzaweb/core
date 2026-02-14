@@ -59,6 +59,32 @@
 
                 checkbox.prop('disabled', true);
 
+                if (status === 1) {
+                    $.ajax({
+                        url: "{{ route('admin.modules.install') }}",
+                        method: 'POST',
+                        data: {module: module},
+                        xhr: function () {
+                            let xhr = new XMLHttpRequest();
+                            xhr.onprogress = function (e) {
+                                console.log(e.currentTarget.response);
+                            };
+                            return xhr;
+                        }
+                    }).done(function (response) {
+                        // toggleModule(module, status, checkbox);
+                    }).fail(function (response) {
+                        checkbox.prop('disabled', false);
+                        checkbox.prop('checked', !status);
+                        show_message(response);
+                    });
+                    return;
+                }
+
+                toggleModule(module, status, checkbox);
+            });
+
+            function toggleModule(module, status, checkbox) {
                 $.ajax({
                     type: 'POST',
                     url: "{{ route('admin.modules.toggle') }}",
@@ -77,9 +103,9 @@
                     }
 
                     show_message(response.message);
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 1000);
+                    // setTimeout(function() {
+                    //     window.location.reload();
+                    // }, 1000);
 
                 }).fail(function (response) {
                     checkbox.prop('disabled', false);
@@ -87,7 +113,7 @@
                     show_message(response);
                     return false;
                 });
-            });
+            }
         });
     </script>
 @endsection
