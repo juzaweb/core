@@ -6,8 +6,8 @@
                     <!-- SIDEBAR USERPIC -->
                     <div class="profile-userpic">
                         <img alt="Avatar"
-                             src='https://1.gravatar.com/avatar/7162c5aa667c497c4d1b90b36c60eaea?s=200&#038;d=mm&#038;r=g'
-                             srcset='https://1.gravatar.com/avatar/7162c5aa667c497c4d1b90b36c60eaea?s=400&#038;d=mm&#038;r=g 2x'
+                             src='{{ auth()->user()->getAvatarUrl(200) }}'
+                             srcset='{{ auth()->user()->getAvatarUrl(400) }} 2x'
                              class='avatar avatar-200 photo'/>
                     </div>
 

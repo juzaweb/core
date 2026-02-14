@@ -19,6 +19,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Juzaweb\Modules\Admin\Database\Factories\UserFactory;
 use Juzaweb\Modules\Admin\Enums\UserStatus;
+use Juzaweb\Modules\Core\FileManager\Traits\HasMedia;
 use Juzaweb\Modules\Core\Permissions\Models\Role;
 use Juzaweb\Modules\Core\Permissions\Traits\HasPermissions;
 use Juzaweb\Modules\Core\Permissions\Traits\HasRoles;
@@ -37,7 +38,8 @@ class User extends Authenticatable implements MustVerifyEmail
         HasSocialConnection,
         HasUuids,
         Notifiable,
-        QueryCacheable;
+        QueryCacheable,
+        HasMedia;
 
     protected $table = 'users';
 
@@ -86,6 +88,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $sortDefault = ['id' => 'DESC'];
 
+    public $mediaChannels = ['avatar'];
+
     protected $appends = [
         'avatar',
     ];
@@ -105,18 +109,24 @@ class User extends Authenticatable implements MustVerifyEmail
         return $builder->where('status', UserStatus::ACTIVE);
     }
 
-    public function getAvatarAttribute(): ?Media
+    public function getAvatarAttribute(): ?string
     {
         if (! $this->relationLoaded('media')) {
             return null;
         }
 
-        return $this->getFirstMedia('avatar');
+        return $this->getAvatarUrl();
     }
 
     public function passwordResets(): HasMany
     {
         return $this->hasMany(PasswordReset::class, 'email', 'email');
+    }
+
+    public function getAvatarUrl(int $size = 32): string
+    {
+        return $this->getFirstMedia('avatar')?->url
+            ?? "https://1.gravatar.com/avatar/". md5($this->email) ."?s={$size}&d=mm&r=g";
     }
 
     public function hasPasswordReset(): bool

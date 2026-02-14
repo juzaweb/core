@@ -114,20 +114,12 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
-                <img src="https://1.gravatar.com/avatar/7162c5aa667c497c4d1b90b36c60eaea?s=32&d=mm&r=g"
+                <img src="{{ auth()->user()->avatar }}"
                     alt="User Avatar" class="img-size-32 img-circle">
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="{{ admin_url('/profile') }}" class="dropdown-item">
                     <i class="fas fa-user-cog mr-2"></i> {{ __('core::translation.profile') }}
-                </a>
-
-                <a href="{{ admin_url('my-support-tickets') }}" class="dropdown-item">
-                    <i class="fas fa-ticket-alt mr-2"></i> {{ __('core::translation.support_tickets') }}
-                </a>
-
-                <a href="{{ admin_url('my-referrals') }}" class="dropdown-item">
-                    <i class="fas fa-user-friends mr-2"></i> {{ __('core::translation.my_referrals') }}
                 </a>
 
                 <div class="dropdown-divider"></div>
