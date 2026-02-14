@@ -181,6 +181,16 @@ abstract class AdminServiceProvider extends ServiceProvider
                 'permission' => ['languages.index'],
             ];
         });
+
+        Menu::make('profile', function () {
+            return [
+                'title' => __('core::translation.profile'),
+                'icon' => 'fas fa-user-cog',
+                'url' => 'profile',
+                'position' => 'admin-top-profile',
+                'priority' => 10,
+            ];
+        });
     }
 
     protected function registerMenuBoxs(): void

@@ -123,9 +123,11 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="{{ admin_url('/profile') }}" class="dropdown-item">
-                    <i class="fas fa-user-cog mr-2"></i> {{ __('core::translation.profile') }}
-                </a>
+                @foreach(Menu::getByPosition('admin-top-profile')->sortBy('priority') as $item)
+                    <a href="{{ $item['url'] }}" class="dropdown-item">
+                        <i class="{{ $item['icon'] }} mr-2"></i> {{ $item['title'] }}
+                    </a>
+                @endforeach
 
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-danger logout-link" href="javascript:void(0)">
