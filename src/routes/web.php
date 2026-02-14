@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use Juzaweb\Modules\Core\Facades\Locale;
 use Juzaweb\Modules\Core\FileManager\Http\Controllers\UploadController;
 use Juzaweb\Modules\Core\Http\Controllers\AddonController;
-use Juzaweb\Modules\Core\Http\Controllers\Frontend\NotificationSubscribeController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\SitemapController;
 
 if (!Theme::current()) {
@@ -34,14 +33,6 @@ Route::post('verify/recaptcha', [AddonController::class, 'recaptcha'])
     ->name('addon.recaptcha');
 Route::get('generator/thumbnail', [AddonController::class, 'thumbnail'])
     ->name('generate.thumbnail');
-
-Route::post('notification/{channel}/subscribe', [NotificationSubscribeController::class, 'subscribe'])
-    ->name('notification.subscribe')
-    ->middleware(['throttle:5,1']);
-
-Route::get('notification/{channel}/verify', [NotificationSubscribeController::class, 'verify'])
-    ->name('notification.verify')
-    ->middleware(['signed']);
 
 Route::group([
     'middleware' => [
