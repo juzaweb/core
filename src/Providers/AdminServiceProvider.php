@@ -191,6 +191,26 @@ abstract class AdminServiceProvider extends ServiceProvider
                 'priority' => 10,
             ];
         });
+
+        Menu::make('profile-sidebar-info', function () {
+            return [
+                'title' => __('core::translation.profile'),
+                'icon' => 'fas fa-user',
+                'url' => 'profile',
+                'position' => 'admin-sidebar-profile',
+                'priority' => 10,
+            ];
+        });
+
+        Menu::make('profile-sidebar-notifications', function () {
+            return [
+                'title' => __('core::translation.notifications'),
+                'icon' => 'fas fa-bell',
+                'url' => 'profile/notifications',
+                'position' => 'admin-sidebar-profile',
+                'priority' => 20,
+            ];
+        });
     }
 
     protected function registerMenuBoxs(): void

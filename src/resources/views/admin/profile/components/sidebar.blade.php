@@ -33,18 +33,16 @@
 
                     <div class="profile-usermenu">
                         <ul class="nav flex-column">
-                            <li
-                                    class="nav-item {{ request()->is(config('core.admin_prefix') . '/profile') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ admin_url('profile') }}">
-                                    <i class="fas fa-user"></i> {{ __('core::translation.profile') }}
-                                </a>
-                            </li>
-                            <li
-                                    class="nav-item {{ request()->is(config('core.admin_prefix') . '/profile/notifications') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ admin_url('profile/notifications') }}">
-                                    <i class="fas fa-bell"></i> {{ __('core::translation.notifications') }}
-                                </a>
-                            </li>
+                            @foreach(\Juzaweb\Modules\Core\Facades\Menu::getByPosition('admin-sidebar-profile')->sortBy('priority') as $item)
+                                @php
+                                    $itemPath = ltrim(parse_url($item['url'], PHP_URL_PATH) ?: '', '/');
+                                @endphp
+                                <li class="nav-item {{ request()->is($itemPath) ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ $item['url'] }}">
+                                        <i class="{{ $item['icon'] }}"></i> {{ $item['title'] }}
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
 
