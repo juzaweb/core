@@ -10,15 +10,18 @@
 
 namespace Juzaweb\Modules\Core\Models;
 
+use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Juzaweb\Modules\Admin\Database\Factories\UserFactory;
 use Juzaweb\Modules\Admin\Enums\UserStatus;
+use Juzaweb\Modules\Core\FileManager\MediaUploader;
 use Juzaweb\Modules\Core\FileManager\Traits\HasMedia;
 use Juzaweb\Modules\Core\Permissions\Models\Role;
 use Juzaweb\Modules\Core\Permissions\Traits\HasPermissions;
@@ -125,8 +128,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getAvatarUrl(int $size = 32): string
     {
-        return $this->getFirstMedia('avatar')?->url
-            ?? "https://1.gravatar.com/avatar/". md5($this->email) ."?s={$size}&d=mm&r=g";
+        if ($url = $this->getFirstMedia('avatar')?->url) {
+            return proxy_image($url, $size, $size);
+        }
+
+        return "https://1.gravatar.com/avatar/". md5($this->email) ."?s={$size}&d=mm&r=g";
     }
 
     public function hasPasswordReset(): bool
@@ -183,5 +189,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function routeNotificationForFcm(Notification $notification): array|string|null
     {
         return $this->subscribedData('fcm', 'token');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function changeAvatar(UploadedFile $file): static
+    {
+        $media = (new MediaUploader($file))->upload();
+
+        $this->attachOrUpdateMedia($media, 'avatar');
+
+        return $this;
     }
 }

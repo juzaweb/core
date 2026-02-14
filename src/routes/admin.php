@@ -47,6 +47,7 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('admin.profile
 Route::get('/profile/notifications', [ProfileController::class, 'notification'])
     ->name('admin.profile.notification');
 Route::post('/profile', [ProfileController::class, 'update']);
+Route::post('/profile/change-avatar', [ProfileController::class, 'changeAvatar'])->name('admin.profile.change-avatar');
 
 Route::admin('languages', LanguageController::class)
     ->except(['edit', 'update', 'create']);

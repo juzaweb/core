@@ -50,7 +50,7 @@
 
             <div class="dropdown-menu dropdown-menu-right">
                 @php
-                    $languages = collect(config('app.languages', []))
+                    $languages = collect(config('core.languages', []))
                         ->map(function ($code) {
                             $localeConfig = config("locales.{$code}");
                             if (!$localeConfig) {

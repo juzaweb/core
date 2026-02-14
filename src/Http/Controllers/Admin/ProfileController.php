@@ -72,4 +72,23 @@ class ProfileController extends AdminController
             __('core::translation.profile_updated_successfully'),
         );
     }
+
+    public function changeAvatar(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate(['avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
+
+        $user = $request->user();
+
+        DB::transaction(fn() => $user->changeAvatar($request->file('avatar')));
+
+        $user->loadMedia('avatar');
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'file_path' => $user->getAvatarUrl(),
+                'message' => __('core::translation.profile_updated_successfully'),
+            ]
+        );
+    }
 }
