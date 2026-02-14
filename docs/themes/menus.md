@@ -2,33 +2,6 @@
 
 Juzaweb CMS provides contracts to manage menus in both the Admin Panel and the Frontend.
 
-## Admin Menu (`Menu`)
-
-The `Juzaweb\Modules\Core\Contracts\Menu` contract allows you to manage the Admin Panel's sidebar menu.
-
-### Usage
-
-```php
-use Juzaweb\Modules\Core\Facades\Menu;
-
-// Register a new menu item
-Menu::make('posts', function () {
-    return [
-        'title' => 'Posts',
-        'icon' => 'fa fa-edit',
-        'url' => 'posts',
-        'priority' => 20,
-    ];
-});
-```
-
-### Methods
-
-- `make(string $key, callable $callback)`: Register a menu item. Callback must return an array.
-- `get(string $key)`: Get a specific menu item configuration.
-- `getByPosition(string $position)`: Get menus by position (key).
-- `all()`: Get all registered menus.
-
 ## Navigation Menu (`NavMenu`)
 
 The `Juzaweb\Modules\Core\Contracts\NavMenu` contract manages frontend navigation menu locations (e.g., Primary Menu, Footer Menu).

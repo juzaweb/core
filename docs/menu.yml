@@ -19,6 +19,8 @@ main:
         url: /the-basics/translation
       - title: Permissions
         url: /the-basics/permissions
+      - title: Admin menus
+        url: /the-basics/menus
       - title: Breadcrumb
         url: /the-basics/breadcrumb
       - title: Thumbnails
@@ -61,7 +63,7 @@ main:
         url: /themes/helpers
       - title: Theme Configs
         url: /themes/settings
-      - title: Menus
+      - title: Nav Menus
         url: /themes/menus
       - title: Templates & Blocks
         url: /themes/templates
