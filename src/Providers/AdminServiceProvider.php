@@ -154,6 +154,7 @@ abstract class AdminServiceProvider extends ServiceProvider
             return [
                 'title' => __('Users and Roles'),
                 'priority' => 90,
+                'icon' => 'fas fa-users-cog',
             ];
         });
 
@@ -190,15 +191,6 @@ abstract class AdminServiceProvider extends ServiceProvider
                 'icon' => 'fas fa-layer-group',
                 'priority' => 1,
                 'field' => 'title',
-            ];
-        });
-
-        MenuBox::make('post-categories', Category::class, function () {
-            return [
-                'label' => __('core::translation.categories'),
-                'icon' => 'fas fa-newspaper',
-                'priority' => 1,
-                'field' => 'name',
             ];
         });
     }
