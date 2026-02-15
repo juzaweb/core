@@ -1,3 +1,67 @@
+### v5.0.3 
+* fix(theme-loading): wrap theme booting, provider registration, and file inclusion in a try-catch block to handle exceptions.
+* feat(notifications): Use UUIDs for polymorphic notifiable relationships and display dynamic notification titles in the navbar.
+* refactor(notification): remove NotificationSubscription model
+* chore(core): remove notification subscriptions table migration
+* feat: remove NotificationSubscribeControllerTest.php
+* chore: Remove notification subscription routes for cleanup and maintenance
+* refactor: Move notification classes to Mail namespace for better organization
+* feat: Add Menu facade to TestCase for improved accessibility in tests
+* refactor(database): change personal_access_tokens table primary key from UUID to auto-incrementing ID.
+* docs(menus): Create dedicated documentation for admin menus and refine navigation links.
+* feat(admin-profile): dynamically register and render profile sidebar menu items
+* feat(admin-menu): dynamically render profile menu items in the admin top navbar.
+* refactor(navbar): optimize user authentication and notification handling
+* feat(sidebar): add file size validation for avatar upload and improve notification messages
+* feat(profile): add avatar change functionality and update profile UI
+* feat(user-avatar): update avatar handling to use media library and improve image retrieval
+* refactor(index.blade.php): comment out unused AJAX installation logic and reorder reload functionality
+* feat(modules): add install route and controller method for module installation
+* feat(blog): add post categories to MenuBox and update AdminServiceProvider icon
+* Add unit test for module:update command using juzaweb/blog as subject
+* ♻️ refactor(ThemeInstallCommand): Comment out theme update option and related code for clarity
+* Add unit test for module:install command
+* ♻️ refactor(ModuleInstallCommand): Comment out 'no-update' option and related logic for clarity
+* ♻️ refactor(tests): Update response status assertions in ProfileControllerTest and SettingTest to reflect correct authentication errors
+* ♻️ refactor: Introduce custom Authenticate middleware and streamline authentication handling in Admin routes
+* fix(core): enhance internal URL validation by handling parse_url failures and restricting relative URL schemes.
+* feat: Implement internal URL redirection handling in authentication flow and add is_internal_url helper function
+* feat: Introduce a filter for post-login redirect URLs and remove the custom `RedirectIfAuthenticated` middleware.
+* feat: Add permission keys for various admin menu items in AdminServiceProvider
+* ♻️ refactor(PublishCoreCommand): Update command signature and move options to getOptions method for clarity
+* ♻️ refactor(PermissionRegistrar): Update cache driver configuration to use 'cache.default' for improved clarity
+* ♻️ refactor(PermissionRegistrar): Update teamId property type to allow null values
+* ♻️ refactor(HasPermissions): Update hasPermissionTo method to check if instance is User for super admin validation
+* ♻️ refactor: Enhance permission handling for dashboard access and clean up service provider
+* ♻️ refactor(MenuRepository, sidebar): Improve code readability by updating comments and simplifying menu filtering logic
+* feat: Enhance menu permissions handling and add Menu facade to composer.json
+* fix(core): add missing permission checks to admin views and datatables
+* feat: Enhance user creation response with redirect URL and structured message
+* feat: Implement permission lookup by code, enhance role selection in user form, and refine role management UI.
+* feat(roles): automatically create missing permissions when assigning to roles and add a collection method to the permission manager.
+* docs(permissions): remove example for Laravel `can` middleware usage
+* Add tests for Role management and fix related issues
+* docs: Update route permission documentation to introduce the `permission()` macro and clarify middleware usage.
+* refactor(routes): replace permission middleware array with dedicated permission method
+* feat(permissions): automatically register permissions when using the route macro and update admin routes to use it
+* feat: Add new translation strings for module installation and role management
+* feat: Enhance user roles menu structure, update command naming, and improve form autocomplete functionality
+* chore: Remove jules environment setup script
+* chore: Ignore `setup.sh` in `.gitignore`.
+* feat: Add argument parsing for PHP version and make Node.js installation optional.
+* feat(setup): add jules environment setup script for PHP and Node.js installation
+* feat(core): register Translations and Permission Service Providers.
+* ♻️ refactor(FileRepository): Update property types for better type safety and clarity
+* ♻️ refactor(FileRepository): Improve type hinting and update parameter descriptions in method docblocks
+* refactor(modules): remove composer output configuration and enforce quiet mode for composer commands
+* refactor(config): Update module configuration keys to use the 'dev-tool' prefix.
+* ♻️ feat(commands): Add module and theme management commands for enabling, disabling, listing, and updating
+* fix(core): Correct ModuleInstallCommand namespace, register it, and update modules stub path config in tests.
+* refactor(modules): remove module generator classes.
+* ♻️ refactor: Remove unused stubs configuration from modules.php and themes.php
+* ♻️ refactor(Stub, ThemeServiceProvider): Update property types and remove unused command registrations
+* ♻️ refactor(ModulesServiceProvider): Remove unused stub setup and namespace registration methods
+
 ### v5.0.2 
 * feat(core): introduce PublishCoreCommand and register it in ConsoleServiceProvider
 * feat(core-assets): add default thumbnail image asset
