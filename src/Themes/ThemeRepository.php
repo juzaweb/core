@@ -125,14 +125,18 @@ class ThemeRepository implements ThemeContract
         }
 
         // Register and boot required modules for this theme
-        $this->bootRequiredModules($theme);
+        try {
+            $this->bootRequiredModules($theme);
 
-        foreach ($theme->get('providers', []) as $provider) {
-            $this->app->register($provider);
-        }
+            foreach ($theme->get('providers', []) as $provider) {
+                $this->app->register($provider);
+            }
 
-        foreach ($theme->get('files', []) as $file) {
-            require($theme->path($file));
+            foreach ($theme->get('files', []) as $file) {
+                require($theme->path($file));
+            }
+        } catch (\Throwable $e) {
+            report($e);
         }
     }
 
