@@ -104,7 +104,7 @@
                 @foreach ($user->notifications()->limit(5)->get() as $notification)
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
-                        <i class="fas fa-{{ $notification->data['icon'] ?? 'info' }} mr-2"></i> 4 new messages
+                        <i class="fas fa-{{ $notification->data['icon'] ?? 'info' }} mr-2"></i> {{ $notification->data['title'] ?? '' }}
                         <span class="float-right text-muted text-sm">
                             {{ $notification->created_at?->diffForHumans() }}
                         </span>

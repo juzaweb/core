@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('type');
-            $table->morphs('notifiable');
+            $table->uuidMorphs('notifiable');
             $table->json('data');
             $table->datetime('read_at')->nullable();
             $table->string('title', 250)->nullable()
