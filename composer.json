@@ -7,7 +7,6 @@
     "require": {
         "php": "^8.2",
         "astrotomic/laravel-translatable": "^11.13",
-        "darkaonline/l5-swagger": "^8.6",
         "doctrine/dbal": "^4.2",
         "hassankhan/config": "^2.2",
         "intervention/image": "^3.11",
