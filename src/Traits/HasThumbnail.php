@@ -33,7 +33,7 @@ trait HasThumbnail
         self::$thumbnailSize = $size;
     }
 
-    public function initializeHasThumbnail()
+    public function initializeHasThumbnail(): void
     {
         $this->appends[] = 'thumbnail';
     }
@@ -68,5 +68,10 @@ trait HasThumbnail
     public function getDefaultThumbnail(): ?string
     {
         return null;
+    }
+
+    public function hasThumbnail(): bool
+    {
+        return $this->hasMedia('thumbnail');
     }
 }

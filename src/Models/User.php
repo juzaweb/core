@@ -114,10 +114,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getAvatarAttribute(): ?string
     {
-        if (! $this->relationLoaded('media')) {
-            return null;
-        }
-
         return $this->getAvatarUrl();
     }
 
