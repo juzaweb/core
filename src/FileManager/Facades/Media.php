@@ -8,7 +8,7 @@ use Intervention\Image\Image;
 use Juzaweb\Modules\Core\Models\Media as MediaModel;
 
 /**
- * @method static string upload(string|UploadedFile $source = null, string $disk = 'public', string $name = null)
+ * @method static MediaUploader upload(string|UploadedFile $source = null, string $disk = 'public', string $name = null)
  * @method static string guessExtension(string $mimeType)
  * @method static string readableSize(int $bytes, int $precision = 1)
  * @method static string sanitizeFileName(string $fileName)
