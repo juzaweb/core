@@ -14,7 +14,7 @@
 <link rel="shortcut icon" href="{{ $favicon ? upload_url($favicon) : asset("favicon.ico") }}"/>
 <link href="{{ url()->current() }}" rel="canonical"/>
 
-<!-- Metadata for Open Graph protocol. See http://ogp.me/. -->
+<!-- Metadata for Open Graph protocol. See https://ogp.me/. -->
 @if(isset($ogType))
     <meta content="{{ $ogType }}" property="og:type"/>
 @endif
