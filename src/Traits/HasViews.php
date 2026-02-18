@@ -13,18 +13,19 @@
 namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Cache;
 use Juzaweb\Modules\Core\Models\DailyView;
 use Juzaweb\Modules\Core\Models\PageViewHistory;
 
 trait HasViews
 {
-    public function dailyViews()
+    public function dailyViews(): MorphMany
     {
         return $this->morphMany(DailyView::class, 'viewable');
     }
 
-    public function pageViewHistories()
+    public function pageViewHistories(): MorphMany
     {
         return $this->morphMany(
             PageViewHistory::class,
@@ -32,14 +33,14 @@ trait HasViews
         );
     }
 
-    public function getViewPageToken()
+    public function getViewPageToken(): string
     {
         return base64url_encode(encrypt([static::class, $this->id]));
     }
 
     public function incrementViews($viewer, ?string $ip, int $count = 1): void
     {
-        if (! $ip) {
+        if (!$ip) {
             return;
         }
 
