@@ -43,7 +43,7 @@ trait HasCreator
         return $this->morphTo(__FUNCTION__, 'created_type', 'created_by');
     }
 
-    public function scopeWhereCreator(Builder $builder, $user = null)
+    public function scopeWhereCreator(Builder $builder, $user = null): Builder
     {
         $user = $user ?: current_actor();
 
