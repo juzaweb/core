@@ -69,6 +69,7 @@ use Juzaweb\Modules\Core\View\Components\Repeater;
 use Juzaweb\Modules\Core\View\Components\SeoMeta;
 use Juzaweb\Modules\Core\View\Components\ThemeInit;
 use Juzaweb\Modules\Core\View\Components\ThemeJsVar;
+use Juzaweb\Modules\Core\View\Components\Img;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -366,6 +367,11 @@ class CoreServiceProvider extends ServiceProvider
         Blade::component(
             'cookie-consent',
             CookieConsent::class
+        );
+
+        Blade::component(
+            'img',
+            Img::class
         );
     }
 
