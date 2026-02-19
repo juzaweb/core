@@ -813,3 +813,7 @@ a, button, .nav-link, .btn, .card, .info-box {
 .elevation-4 {
     box-shadow: var(--shadow-xl) !important;
 }
+
+.custom-switch {
+  margin-bottom: 1rem;
+}
