@@ -14,8 +14,6 @@ use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Juzaweb\Modules\Admin\Models\Website;
-use Juzaweb\Modules\Admin\Networks\Facades\Network;
 use Juzaweb\Modules\Core\Translations\Contracts\Translatable;
 
 class ModelTranslateJob implements ShouldQueue
