@@ -13,6 +13,8 @@ class MediaObserve
      */
     public function forceDeleted(Model $media): void
     {
+        $media->filesystem()->delete($media->path);
+
         collect($media->conversions ?? [])->each(
             fn($conversion) => $media->filesystem()->delete($conversion)
         );

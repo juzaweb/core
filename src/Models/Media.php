@@ -5,6 +5,7 @@ namespace Juzaweb\Modules\Core\Models;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,7 +22,7 @@ use Juzaweb\Modules\Core\Traits\UsedInFrontend;
 
 class Media extends Model
 {
-    use HasAPI, HasFactory, HasUuids, UsedInFrontend;
+    use HasAPI, HasFactory, HasUuids, UsedInFrontend, SoftDeletes;
 
     protected Filesystem $filesystem;
 
@@ -504,15 +505,6 @@ class Media extends Model
         );
 
         return $this;
-    }
-
-    public function delete(): ?bool
-    {
-        if ($this->filesystem()->delete($this->path)) {
-            return parent::delete();
-        }
-
-        throw new \RuntimeException('Cannot delete file, please check permission!');
     }
 
     /**

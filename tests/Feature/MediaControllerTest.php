@@ -94,7 +94,7 @@ class MediaControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $this->assertDatabaseMissing('media', [
+        $this->assertSoftDeleted('media', [
             'id' => $media->id,
         ]);
     }
