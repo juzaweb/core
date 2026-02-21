@@ -133,11 +133,21 @@ h6, .h6 { font-size: var(--font-size-sm); font-weight: 600; }
 .main-sidebar {
     background: linear-gradient(180deg, var(--gray-800) 0%, var(--gray-900) 100%) !important;
     box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+    height: 100vh !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
 }
 
 .main-sidebar .sidebar {
+    flex: 1 !important;
+    min-height: 0 !important;
+    height: auto !important;
     overflow-y: auto !important;
-    height: calc(100vh - 86px) !important;
 }
 
 .nav-sidebar {
@@ -149,6 +159,7 @@ h6, .h6 { font-size: var(--font-size-sm); font-weight: 600; }
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
     padding: 1.25rem 1rem !important;
     transition: background var(--transition-base);
+    flex: 0 0 auto !important;
 }
 
 .brand-link:hover {
