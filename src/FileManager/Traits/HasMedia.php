@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Str;
 use Juzaweb\Modules\Core\FileManager\Jobs\PerformConversions;
+use Juzaweb\Modules\Core\FileManager\MediaUploader;
 use Juzaweb\Modules\Core\Models\Media;
 
 /**
@@ -316,6 +317,13 @@ trait HasMedia
     public function hasMediaChannel(string $channel): bool
     {
         return in_array($channel, $this->mediaChannels);
+    }
+
+    public function addMediaFromUrl(string $url, string $channel = 'default'): void
+    {
+        $uploader = MediaUploader::make($url);
+
+        $this->attachMedia($uploader->upload(), $channel);
     }
 
     /**
