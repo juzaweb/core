@@ -19,7 +19,8 @@ class Repeater extends Component
     public function __construct(
         protected string $name,
         protected string $view,
-        protected ?Arrayable $items = null
+        protected ?Arrayable $items = null,
+        protected array $params = []
     ) {
     }
 
@@ -32,6 +33,7 @@ class Repeater extends Component
                 'name' => $this->name,
                 'view' => $this->view,
                 'items' => $this->items ?? collect([]),
+                'params' => $this->params,
             ]
         );
     }

@@ -8,6 +8,7 @@
                 @component($view, [
                     'marker' => $index,
                     'item' => $item,
+                    ...$params,
                 ])
                 @endcomponent
             @endcomponent
@@ -24,6 +25,7 @@
     ])
             @component($view, [
                 'marker' => '__marker__',
+                ...$params,
             ])
             @endcomponent
         @endcomponent
