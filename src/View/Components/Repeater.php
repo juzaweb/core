@@ -10,6 +10,7 @@
 
 namespace Juzaweb\Modules\Core\View\Components;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -18,7 +19,7 @@ class Repeater extends Component
     public function __construct(
         protected string $name,
         protected string $view,
-        protected array $items = []
+        protected ?Arrayable $items = null
     ) {
     }
 
@@ -30,7 +31,7 @@ class Repeater extends Component
         return view('core::components.repeater', [
                 'name' => $this->name,
                 'view' => $this->view,
-                'items' => $this->items,
+                'items' => $this->items ?? collect([]),
             ]
         );
     }
