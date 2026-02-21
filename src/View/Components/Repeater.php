@@ -12,6 +12,7 @@ namespace Juzaweb\Modules\Core\View\Components;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class Repeater extends Component
@@ -20,7 +21,7 @@ class Repeater extends Component
         protected string $name,
         protected string $view,
         protected ?Arrayable $items = null,
-        protected array $params = []
+        protected array $params = [],
     ) {
     }
 
@@ -34,6 +35,7 @@ class Repeater extends Component
                 'view' => $this->view,
                 'items' => $this->items ?? collect([]),
                 'params' => $this->params,
+                'label' => Str::title(Str::replace(['_', '-'], ' ', $this->name))
             ]
         );
     }

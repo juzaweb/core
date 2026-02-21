@@ -16,7 +16,7 @@
     </ul>
 
     <button type="button" class="btn btn-info add-repeater-item">
-        <i class="fas fa-plus"></i> {{ __('core::translation.add_name', ['name' => $name]) }}
+        <i class="fas fa-plus"></i> {{ __('core::translation.add_name', ['name' => $label ?? $name]) }}
     </button>
 
     <script type="text/html" nonce="{{ csp_script_nonce() }}">

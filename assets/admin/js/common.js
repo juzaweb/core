@@ -407,6 +407,7 @@ $(function () {
 
         template = template.replace(/__marker__/g, marker);
         $(this).closest('.repeater-component').find('.repeaters').append(template);
+        initSelect2('#repeater-item-' + marker);
     });
 
     $(document).on('click', '.remove-repeater-item', function () {
@@ -709,7 +710,7 @@ function formatCurrency(num, decimals, decimalSep, thousandSep) {
     const fixed = num.toFixed(decimals);
     const parts = fixed.split('.');
 
-    // Add thousand separators
+    // Add a thousand separators
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSep);
 
     return parts.join(decimalSep);

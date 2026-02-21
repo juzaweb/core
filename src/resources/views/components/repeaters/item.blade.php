@@ -1,4 +1,4 @@
-<li>
+<li class="repeater-item-wrapper" id="repeater-item-{{ $marker }}">
     <div class="row repeater-item">
         <div class="col-md-11">
             {{ $slot }}
