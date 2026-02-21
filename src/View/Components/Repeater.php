@@ -20,7 +20,7 @@ class Repeater extends Component
     public function __construct(
         protected string $name,
         protected string $view,
-        protected ?Arrayable $items = null,
+        protected array|Arrayable|null $items = null,
         protected array $params = [],
     ) {
     }
