@@ -976,7 +976,7 @@ if (!function_exists('is_internal_url')) {
         }
 
         // Check if URL has same host as app URL
-        if (isset($targetUrl['host']) && isset($appUrl['host'])) {
+        if (isset($targetUrl['host'], $appUrl['host'])) {
             return $targetUrl['host'] === $appUrl['host'];
         }
 
