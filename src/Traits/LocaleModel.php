@@ -100,7 +100,22 @@ trait LocaleModel
                 $newTranslation->fill($translated);
                 $newTranslation->setAttribute($this->getLocaleKey(), $locale);
 
-                return $newTranslation->save();
+                $saved = $newTranslation->save();
+
+                if ($saved && property_exists($this, 'mediaChannels')) {
+                    $this->media->each(
+                        function ($item) use ($newTranslation) {
+                            $newTranslation->media()->attach(
+                                $item->id,
+                                [
+                                    'channel' => $item->pivot->channel,
+                                ]
+                            );
+                        }
+                    );
+                }
+
+                return $saved;
             }
         );
     }
