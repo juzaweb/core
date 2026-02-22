@@ -28,7 +28,6 @@ class GoogleTranslator implements TranslatorContract
                 'target' => $target,
                 'format' => $isHTML ? 'html' : 'text',
                 'key' => $apiKey,
-                'proxy' => $this->proxy,
             ]
         );
 
