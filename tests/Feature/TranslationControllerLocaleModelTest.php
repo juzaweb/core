@@ -20,7 +20,7 @@ class TranslationControllerLocaleModelTest extends TestCase
         parent::setUp();
 
         $this->loadLaravelMigrations();
-        $this->artisan('migrate', ['--database' => 'testbench'])->run();
+        $this->artisan('migrate')->run();
 
         $this->user = User::factory()->create([
             'is_super_admin' => 1,
@@ -37,6 +37,22 @@ class TranslationControllerLocaleModelTest extends TestCase
             $table->string('slug')->nullable();
             $table->string('locale')->default('en');
             $table->timestamps();
+        });
+
+        Schema::dropIfExists('test_translatables');
+        Schema::create('test_translatables', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
+
+        Schema::dropIfExists('test_translatable_translations');
+        Schema::create('test_translatable_translations', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('test_translatable_id');
+            $table->string('locale')->index();
+            $table->string('title')->nullable();
+            $table->unique(['test_translatable_id', 'locale']);
+            $table->foreign('test_translatable_id')->references('id')->on('test_translatables')->onDelete('cascade');
         });
 
         // Ensure translate_histories table exists
@@ -58,6 +74,8 @@ class TranslationControllerLocaleModelTest extends TestCase
     protected function tearDown(): void
     {
         Schema::dropIfExists('test_posts');
+        Schema::dropIfExists('test_translatable_translations');
+        Schema::dropIfExists('test_translatables');
         parent::tearDown();
     }
 
@@ -85,6 +103,32 @@ class TranslationControllerLocaleModelTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure(['history_ids']);
     }
+
+    public function testTranslateModelWithTranslationsTable()
+    {
+        config(['translator.enable' => true]);
+        config()->set('locales', ['en' => ['name' => 'English'], 'vi' => ['name' => 'Vietnamese']]);
+
+        $this->mock(Translator::class, function ($mock) {
+            $mock->shouldReceive('translate')
+                ->andReturn('Xin chào');
+        });
+
+        $post = TestTranslatable::create([]);
+        $post->translations()->create(['locale' => 'en', 'title' => 'Hello']);
+
+        $payload = [
+            'model' => encrypt(TestTranslatable::class),
+            'ids' => [$post->id],
+            'locale' => 'vi',
+            'source' => 'en',
+        ];
+
+        $response = $this->postJson(route('admin.translations.translate-model'), $payload);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['history_ids']);
+    }
 }
 
 class TestPostLocaleModel extends Model implements CanBeTranslated
@@ -95,4 +139,50 @@ class TestPostLocaleModel extends Model implements CanBeTranslated
     protected $fillable = ['title', 'content', 'slug', 'locale'];
 
     protected $translatedAttributes = ['title'];
+}
+
+class TestTranslatable extends Model implements CanBeTranslated
+{
+    // Simulate a model with translations table (e.g., using Astrotomic/laravel-translatable or similar)
+    // We implement CanBeTranslated methods manually or via trait if available, but here we mock the relationship
+
+    protected $table = 'test_translatables';
+    protected $fillable = [];
+
+    public function translations()
+    {
+        return $this->hasMany(TestTranslatableTranslation::class);
+    }
+
+    public function getTranslatedFields(): array
+    {
+        return ['title'];
+    }
+
+    public function translateTo(string $locale, string $source = 'en', array $options = []): bool
+    {
+        // Minimal implementation for testing Controller logic
+        $translation = $this->translations()->where('locale', $locale)->first();
+        if (!$translation) {
+             $this->translations()->create(['locale' => $locale, 'title' => 'Xin chào']);
+        }
+        return true;
+    }
+
+    public function translateHistories(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(\Juzaweb\Modules\Core\Translations\Models\TranslateHistory::class, 'translateable');
+    }
+
+    public function getTranslateHistory(string $locale): ?\Juzaweb\Modules\Core\Translations\Models\TranslateHistory
+    {
+        return $this->translateHistories()->where('locale', $locale)->first();
+    }
+}
+
+class TestTranslatableTranslation extends Model
+{
+    protected $table = 'test_translatable_translations';
+    protected $fillable = ['locale', 'title', 'test_translatable_id'];
+    public $timestamps = false;
 }
