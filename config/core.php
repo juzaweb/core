@@ -71,6 +71,7 @@ return [
         'https://www.googletagmanager.com',
         'https://www.google-analytics.com',
         'https://cdn.juzaweb.com',
+        ...(env('CSP_SCRIPT_SRC') ? explode(',', env('CSP_SCRIPT_SRC')) : [])
     ],
 
     /*
