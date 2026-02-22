@@ -275,6 +275,7 @@ return [
     'my_websites' => 'My Websites',
     'network' => 'Network',
     'view_website' => 'View Website',
+    'log_view' => 'Log View',
     'view_online' => 'View Online',
     'plan' => 'Plan',
     'upgrade_to_pro' => 'Upgrade to Pro',
