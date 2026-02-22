@@ -93,11 +93,14 @@ trait LocaleModel
         }
 
         return DB::transaction(
-            function () use ($locale, $translated, $translateHistory) {
+            function () use ($locale, $translated, $translateHistory, $attributes) {
                 $translateHistory?->update(['status' => TranslateHistoryStatus::SUCCESS]);
 
                 $newTranslation = $this->replicate();
                 $newTranslation->fill($translated);
+                if (isset($attributes['slug'])) {
+                    $newTranslation->setAttribute('slug', null);
+                }
                 $newTranslation->setAttribute($this->getLocaleKey(), $locale);
 
                 return $newTranslation->save();
