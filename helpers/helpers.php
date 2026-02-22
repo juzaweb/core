@@ -652,12 +652,16 @@ if (!function_exists('sub_char')) {
      */
     function sub_char(string $str, int $n, string $end = '...'): string
     {
-        if (strlen($str) < $n) {
+        if (mb_strlen($str) <= $n) {
             return $str;
         }
 
         $html = mb_substr($str, 0, $n);
-        $html = mb_substr($html, 0, mb_strrpos($html, ' '));
+        $lastSpace = mb_strrpos($html, ' ');
+        if ($lastSpace !== false) {
+            $html = mb_substr($html, 0, $lastSpace);
+        }
+
         return $html.$end;
     }
 }
