@@ -4,9 +4,6 @@
 
 <link href="//dnjs.cloudflare.com" rel="dns-prefetch"/>
 <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
-<link href="//cdn.juzaweb.com" rel="dns-prefetch"/>
-<link href="//img.juzaweb.com" rel="dns-prefetch"/>
-<link href="//img2.juzaweb.com" rel="dns-prefetch"/>
 <link href="//pagead2.googlesyndication.com" rel="dns-prefetch"/>
 <link href="//www.googletagmanager.com" rel="dns-prefetch"/>
 <link href="//www.google-analytics.com" rel="dns-prefetch"/>
