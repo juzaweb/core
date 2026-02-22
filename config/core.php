@@ -53,7 +53,7 @@ return [
     ],
 
     'optimize' => [
-        'minify_views' => env('MINIFY_VIEWS', true),
+        'minify_views' => (bool) env('MINIFY_VIEWS', true),
 
         /**
          * Deny iframe to website
