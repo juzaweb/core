@@ -98,9 +98,17 @@ trait LocaleModel
                 $newTranslation->fill($translated);
                 $newTranslation->setAttribute($this->getLocaleKey(), $locale);
 
-                $save = $newTranslation->save();
+                $saved = $newTranslation->save();
 
-                if ($save) {
+                if ($saved && property_exists($this, 'mediaChannels')) {
+                    $this->media->each(
+                        function ($item) use ($newTranslation) {
+                            $newTranslation->attachMedia($item, $item->pivot->channel);
+                        }
+                    );
+                }
+
+                if ($saved) {
                     $translateHistory?->update([
                         'status' => TranslateHistoryStatus::SUCCESS,
                         'new_model_id' => $newTranslation->getKey(),
@@ -108,7 +116,7 @@ trait LocaleModel
                     ]);
                 }
 
-                return $save;
+                return $saved;
             }
         );
     }

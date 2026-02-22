@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Queue;
 use Juzaweb\Modules\Core\Translations\Models\TranslateHistory;
 use Juzaweb\Modules\Core\Translations\Enums\TranslateHistoryStatus;
+use Juzaweb\Modules\Core\Models\Media;
+use Juzaweb\Modules\Core\FileManager\Traits\HasMedia;
+use Juzaweb\Modules\Core\FileManager\Enums\MediaType;
 
 class LocaleModelTest extends TestCase
 {
@@ -41,6 +44,38 @@ class LocaleModelTest extends TestCase
                 $table->text('error')->nullable();
                 $table->string('new_model_id', 50)->nullable()->index();
                 $table->string('new_model_type')->nullable()->index();
+                $table->timestamps();
+            });
+        }
+
+        // Media tables
+        if (!Schema::hasTable('media')) {
+            Schema::create('media', function (Blueprint $table) {
+                $table->uuid('id')->primary();
+                $table->string('disk', 20)->index()->default('public');
+                $table->nullableUuidMorphs('uploaded_by');
+                $table->string('name');
+                $table->string('type', 5)->index()->default('file');
+                $table->string('path', 190)->nullable();
+                $table->string('mime_type', 100)->index()->nullable();
+                $table->string('extension', 10)->index()->nullable();
+                $table->string('image_size', 20)->nullable();
+                $table->bigInteger('size')->default(0);
+                $table->json('conversions')->nullable();
+                $table->json('metadata')->nullable();
+                $table->uuid('parent_id')->index()->nullable();
+                $table->boolean('in_cloud')->default(false);
+                $table->timestamps();
+            });
+        }
+
+        if (!Schema::hasTable('mediable')) {
+            Schema::create('mediable', function (Blueprint $table) {
+                $table->primary(['media_id', 'mediable_id', 'mediable_type', 'channel']);
+                $table->uuid('media_id')->index();
+                $table->string('mediable_id', 100);
+                $table->string('mediable_type', 150);
+                $table->string('channel', 50)->index();
                 $table->timestamps();
             });
         }
@@ -104,6 +139,40 @@ class LocaleModelTest extends TestCase
         $this->assertNotNull($history->new_model_id);
         $this->assertEquals(TestPost::class, $history->new_model_type);
     }
+
+    public function test_translate_to_replicates_media_channels()
+    {
+        $this->mock(Translator::class, function ($mock) {
+            $mock->shouldReceive('translate')
+                ->andReturn('Xin chào');
+        });
+
+        // Create a media
+        $media = Media::create([
+            'name' => 'test.jpg',
+            'path' => 'test.jpg',
+            'type' => MediaType::FILE,
+            'mime_type' => 'image/jpeg',
+            'extension' => 'jpg',
+            'disk' => 'public',
+        ]);
+
+        $post = TestPostWithMedia::create(['title' => 'Hello', 'locale' => 'en']);
+
+        // Attach media
+        $post->attachMedia($media, 'thumbnail');
+
+        // Translate
+        $post->translateTo('vi', 'en');
+
+        // Check new post
+        $newPost = TestPostWithMedia::where('locale', 'vi')->first();
+        $this->assertNotNull($newPost);
+
+        // Assert media is attached
+        $this->assertTrue($newPost->hasMedia('thumbnail'), 'Media was not replicated to the new translation');
+        $this->assertEquals($media->id, $newPost->getFirstMedia('thumbnail')->id);
+    }
 }
 
 class TestPost extends Model implements CanBeTranslated
@@ -114,4 +183,16 @@ class TestPost extends Model implements CanBeTranslated
     protected $fillable = ['title', 'content', 'slug', 'locale'];
 
     protected $translatedAttributes = ['title'];
+}
+
+class TestPostWithMedia extends Model implements CanBeTranslated
+{
+    use LocaleModel, HasMedia;
+
+    protected $table = 'test_posts';
+    protected $fillable = ['title', 'content', 'slug', 'locale'];
+
+    protected $translatedAttributes = ['title'];
+
+    public $mediaChannels = ['thumbnail'];
 }
