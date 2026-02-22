@@ -105,12 +105,7 @@ trait LocaleModel
                 if ($saved && property_exists($this, 'mediaChannels')) {
                     $this->media->each(
                         function ($item) use ($newTranslation) {
-                            $newTranslation->media()->attach(
-                                $item->id,
-                                [
-                                    'channel' => $item->pivot->channel,
-                                ]
-                            );
+                            $newTranslation->attachMedia($item->id, $item->pivot->channel);
                         }
                     );
                 }
