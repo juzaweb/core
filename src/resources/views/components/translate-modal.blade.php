@@ -2,8 +2,12 @@
     $languages = languages();
 @endphp
 
-<div class="modal fade" id="translate-modal" tabindex="-1" role="dialog" aria-labelledby="translateModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="translate-modal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="translateModalLabel"
+     aria-hidden="true"
+>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,9 +20,9 @@
                 <div class="form-group">
                     <label>{{ __('core::translation.source_language') }}</label>
                     <select name="source_locale" class="form-control" id="translate-source-locale">
-                        @foreach ($languages as $language)
-                            <option value="{{ $language->code }}" @selected($language->code === app()->getLocale())>
-                                {{ $language->name }}
+                        @foreach (config('locales') as $locale)
+                            <option value="{{ $locale['code'] }}" @selected($locale['code'] === app()->getLocale())>
+                                {{ $locale['name'] }}
                             </option>
                         @endforeach
                     </select>
