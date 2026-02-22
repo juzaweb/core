@@ -140,11 +140,17 @@ class TranslationController extends AdminController
 
         DB::transaction(
             function () use ($model, $ids, $locale, $source, $request, &$historyIds) {
-                $posts = $model::with([
-                    'translations' => fn($q) => $q->whereIn('locale', [$locale, $source])
-                ])
-                    ->whereIn('id', $ids)
-                    ->get();
+                $query = $model::query();
+
+                if (method_exists($model, 'translations')) {
+                    $query->with(
+                        [
+                            'translations' => fn($q) => $q->whereIn('locale', [$locale, $source]),
+                        ]
+                    );
+                }
+
+                $posts = $query->whereIn('id', $ids)->get();
 
                 foreach ($posts as $post) {
                     $history = model_translate($post, $source, $locale);
