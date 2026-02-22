@@ -2,7 +2,7 @@
     {{ Field::language($label, 'locale', ['value' => $locale, 'label' => __('core::translation.language')]) }}
 
     @php
-        $translate = config('network.translate_enabled', false);
+        $translate = config('translator.enable', false);
         $fallbackLocale = config('translatable.fallback_locale');
     @endphp
 

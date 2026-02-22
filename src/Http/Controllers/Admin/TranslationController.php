@@ -119,7 +119,7 @@ class TranslationController extends AdminController
 
     public function translateModel(TranslateModelRequest $request): JsonResponse
     {
-        abort_if(!config('network.translate_enabled'), 404, __('core::translation.translation_feature_is_not_enabled'));
+        abort_if(!config('translator.enable'), 404, __('core::translation.translation_feature_is_not_enabled'));
 
         $model = decrypt($request->post('model'));
         $ids = $request->post('ids');
