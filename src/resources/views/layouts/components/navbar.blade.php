@@ -15,7 +15,7 @@
 
         @if(is_super_admin())
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ admin_url('logs') }}" class="nav-link text-primary"
+                <a href="{{ url('log-viewer') }}" class="nav-link text-primary"
                    target="_blank">{{ __('core::translation.log_view') }}</a>
             </li>
         @endif
