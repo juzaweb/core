@@ -989,3 +989,8 @@ if (!function_exists('is_internal_url')) {
             (!isset($targetUrl['scheme']) || in_array($targetUrl['scheme'], ['http', 'https']));
     }
 }
+
+function is_home_page(): bool
+{
+    return request()->routeIs('home');
+}
