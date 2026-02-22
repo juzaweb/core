@@ -14,7 +14,7 @@ use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Juzaweb\Modules\Core\Translations\Contracts\Translatable;
+use Juzaweb\Modules\Core\Translations\Contracts\CanBeTranslated;
 
 class ModelTranslateJob implements ShouldQueue
 {
@@ -25,7 +25,7 @@ class ModelTranslateJob implements ShouldQueue
     public bool $failOnTimeout = true;
 
     public function __construct(
-        protected Translatable $model,
+        protected CanBeTranslated $model,
         protected string $sourceLocale,
         protected string $targetLocale
     ) {

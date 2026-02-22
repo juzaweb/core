@@ -19,7 +19,7 @@ use Juzaweb\Modules\Admin\Models\User;
 use Juzaweb\Modules\Core\Contracts\Setting;
 use Juzaweb\Modules\Core\Facades\Theme;
 use Juzaweb\Modules\Core\Models\Authenticatable;
-use Juzaweb\Modules\Core\Translations\Contracts\Translatable;
+use Juzaweb\Modules\Core\Translations\Contracts\CanBeTranslated;
 use Juzaweb\Modules\Core\Translations\Enums\TranslateHistoryStatus;
 use Juzaweb\Modules\Core\Translations\Jobs\ModelTranslateJob;
 use Juzaweb\Modules\Core\Translations\Models\Language;
@@ -856,7 +856,7 @@ function current_actor(?string $guard = null): Guest|Authenticatable
     );
 }
 
-function model_translate(Translatable $model, string $sourceLocale, string $targetLocale): TranslateHistory
+function model_translate(CanBeTranslated $model, string $sourceLocale, string $targetLocale): TranslateHistory
 {
     if ($sourceLocale === $targetLocale) {
         throw new InvalidArgumentException('Source locale and target locale must be different');
