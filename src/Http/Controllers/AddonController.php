@@ -225,7 +225,7 @@ class AddonController extends Controller
             return response($result['data'])
                 ->header('Content-Type', $result['contentType'])
                 ->header('Content-Length', $result['contentLength'])
-                ->header('X-Content-Type-Options', 'nosniff')
+                // ->header('X-Content-Type-Options', 'nosniff')
                 ->header('X-Accel-Buffering', 'no')
                 ->header('Cache-Control', 'public, max-age=31536000');
         } catch (\InvalidArgumentException $e) {
