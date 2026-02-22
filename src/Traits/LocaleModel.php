@@ -94,8 +94,6 @@ trait LocaleModel
 
         return DB::transaction(
             function () use ($locale, $translated, $translateHistory) {
-                $translateHistory?->update(['status' => TranslateHistoryStatus::SUCCESS]);
-
                 $newTranslation = $this->replicate($this->translateReplicateExcepts ?? []);
                 $newTranslation->fill($translated);
                 $newTranslation->setAttribute($this->getLocaleKey(), $locale);
@@ -108,6 +106,14 @@ trait LocaleModel
                             $newTranslation->attachMedia($item->id, $item->pivot->channel);
                         }
                     );
+                }
+
+                if ($saved) {
+                    $translateHistory?->update([
+                        'status' => TranslateHistoryStatus::SUCCESS,
+                        'new_model_id' => $newTranslation->getKey(),
+                        'new_model_type' => $newTranslation->getMorphClass(),
+                    ]);
                 }
 
                 return $saved;

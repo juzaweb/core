@@ -23,6 +23,8 @@ class TranslateHistory extends Model
         'locale',
         'status',
         'error',
+        'new_model_id',
+        'new_model_type',
     ];
 
     protected $casts = [
