@@ -39,20 +39,20 @@ class TranslationControllerLocaleModelTest extends TestCase
             $table->timestamps();
         });
 
-        Schema::dropIfExists('test_translatables');
-        Schema::create('test_translatables', function (Blueprint $table) {
+        Schema::dropIfExists('test_items');
+        Schema::create('test_items', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
 
-        Schema::dropIfExists('test_translatable_translations');
-        Schema::create('test_translatable_translations', function (Blueprint $table) {
+        Schema::dropIfExists('test_item_translations');
+        Schema::create('test_item_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('test_translatable_id');
+            $table->unsignedBigInteger('test_item_id');
             $table->string('locale')->index();
             $table->string('title')->nullable();
-            $table->unique(['test_translatable_id', 'locale']);
-            $table->foreign('test_translatable_id')->references('id')->on('test_translatables')->onDelete('cascade');
+            $table->unique(['test_item_id', 'locale']);
+            $table->foreign('test_item_id')->references('id')->on('test_items')->onDelete('cascade');
         });
 
         // Ensure translate_histories table exists
@@ -74,8 +74,8 @@ class TranslationControllerLocaleModelTest extends TestCase
     protected function tearDown(): void
     {
         Schema::dropIfExists('test_posts');
-        Schema::dropIfExists('test_translatable_translations');
-        Schema::dropIfExists('test_translatables');
+        Schema::dropIfExists('test_item_translations');
+        Schema::dropIfExists('test_items');
         parent::tearDown();
     }
 
@@ -146,12 +146,12 @@ class TestTranslatable extends Model implements CanBeTranslated
     // Simulate a model with translations table (e.g., using Astrotomic/laravel-translatable or similar)
     // We implement CanBeTranslated methods manually or via trait if available, but here we mock the relationship
 
-    protected $table = 'test_translatables';
+    protected $table = 'test_items';
     protected $fillable = [];
 
     public function translations()
     {
-        return $this->hasMany(TestTranslatableTranslation::class);
+        return $this->hasMany(TestTranslatableTranslation::class, 'test_item_id');
     }
 
     public function getTranslatedFields(): array
@@ -182,7 +182,7 @@ class TestTranslatable extends Model implements CanBeTranslated
 
 class TestTranslatableTranslation extends Model
 {
-    protected $table = 'test_translatable_translations';
-    protected $fillable = ['locale', 'title', 'test_translatable_id'];
+    protected $table = 'test_item_translations';
+    protected $fillable = ['locale', 'title', 'test_item_id'];
     public $timestamps = false;
 }
