@@ -15,7 +15,7 @@ use Juzaweb\Modules\Core\Support\BladeMinify\BladeMinifyCompiler;
 
 class PerformanceServiceProvider extends ServiceProvider
 {
-    public function register(): void
+    public function boot(): void
     {
         if (config('core.optimize.minify_views')) {
             $this->registerBladeCompiler();
