@@ -39,6 +39,8 @@ class LocaleModelTest extends TestCase
                 $table->string('locale');
                 $table->string('status');
                 $table->text('error')->nullable();
+                $table->string('new_model_id', 50)->nullable()->index();
+                $table->string('new_model_type')->nullable()->index();
                 $table->timestamps();
             });
         }
@@ -69,6 +71,15 @@ class LocaleModelTest extends TestCase
 
         $post = TestPost::create(['title' => 'Hello', 'locale' => 'en']);
 
+        $translateHistory = new TranslateHistory();
+        $translateHistory->fill([
+            'translateable_type' => $post->getMorphClass(),
+            'translateable_id' => $post->getKey(),
+            'locale' => 'vi',
+            'status' => TranslateHistoryStatus::PENDING,
+        ]);
+        $translateHistory->save();
+
         // We simulate the call without the job wrapper to test the trait logic directly
         $result = $post->translateTo('vi', 'en');
 
@@ -83,6 +94,15 @@ class LocaleModelTest extends TestCase
             'title' => 'Hello',
             'locale' => 'en',
         ]);
+
+        $this->assertDatabaseHas('translate_histories', [
+            'id' => $translateHistory->id,
+            'status' => TranslateHistoryStatus::SUCCESS,
+        ]);
+
+        $history = TranslateHistory::find($translateHistory->id);
+        $this->assertNotNull($history->new_model_id);
+        $this->assertEquals(TestPost::class, $history->new_model_type);
     }
 }
 
