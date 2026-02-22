@@ -55,9 +55,10 @@ class MakeUserCommand extends Command
                     [
                         'password' => Hash::make($this->user['password']),
                         'is_super_admin' => $this->option('super-admin'),
-                        'email_verified_at' => now(),
                     ]
                 )->all());
+
+                $user->markEmailAsVerified();
 
                 if ($this->option('role')) {
                     $user->assignRole($this->option('role'));
