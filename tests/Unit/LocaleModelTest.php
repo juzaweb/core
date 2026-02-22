@@ -20,6 +20,7 @@ class LocaleModelTest extends TestCase
     {
         parent::setUp();
 
+        Schema::dropIfExists('test_posts');
         Schema::create('test_posts', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
