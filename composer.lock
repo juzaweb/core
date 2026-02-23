@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1124c1bcf69d6342d878124c4a79eeb0",
+    "content-hash": "0adc420e3fbefba6772d5be49b669087",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -9570,7 +9570,7 @@
         },
         {
             "name": "webwizo/laravel-shortcodes",
-            "version": "dev-master",
+            "version": "v1.0.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webwizo/laravel-shortcodes.git",
@@ -9594,7 +9594,6 @@
                 "scrutinizer/ocular": "^1.5",
                 "squizlabs/php_codesniffer": "~2.3|^3.7"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -9635,7 +9634,7 @@
             ],
             "support": {
                 "issues": "https://github.com/webwizo/laravel-shortcodes/issues",
-                "source": "https://github.com/webwizo/laravel-shortcodes/tree/master"
+                "source": "https://github.com/webwizo/laravel-shortcodes/tree/v1.0.27"
             },
             "time": "2025-09-28T00:07:23+00:00"
         },
@@ -13274,9 +13273,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "webwizo/laravel-shortcodes": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
