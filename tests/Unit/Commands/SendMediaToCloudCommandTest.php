@@ -53,6 +53,6 @@ class SendMediaToCloudCommandTest extends TestCase
         // Verify DB update
         $media->refresh();
         $this->assertTrue($media->in_cloud);
-        $this->assertEquals('cloud', $media->disk);
+        $this->assertEquals('public', $media->disk);
     }
 }

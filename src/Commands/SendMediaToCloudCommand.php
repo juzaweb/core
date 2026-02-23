@@ -89,7 +89,6 @@ class SendMediaToCloudCommand extends Command
         }
 
         $media->in_cloud = true;
-        $media->disk = 'cloud';
         $media->save();
     }
 }
