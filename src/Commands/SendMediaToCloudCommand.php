@@ -34,25 +34,27 @@ class SendMediaToCloudCommand extends Command
             $query->where('disk', $disk);
         }
 
-        $ids = $query->pluck('id');
-        $count = $ids->count();
+        $count = $query->count();
 
         $this->info("Found {$count} files to move to cloud.");
 
         $bar = $this->output->createProgressBar($count);
         $bar->start();
 
-        foreach ($ids->chunk(100) as $chunkIds) {
-            $medias = Media::whereIn('id', $chunkIds)->get();
-            foreach ($medias as $media) {
-                try {
-                    $this->moveMedia($media);
-                } catch (\Exception $e) {
-                    $this->error("Failed to move {$media->path}: {$e->getMessage()}");
+        $query->chunkById(
+            100,
+            function ($medias) use ($bar) {
+                foreach ($medias as $media) {
+                    try {
+                        $this->moveMedia($media);
+                    } catch (\Exception $e) {
+                        $this->error("Failed to move {$media->path}: {$e->getMessage()}");
+                    }
+
+                    $bar->advance();
                 }
-                $bar->advance();
             }
-        }
+        );
 
         $bar->finish();
         $this->newLine();
@@ -70,14 +72,18 @@ class SendMediaToCloudCommand extends Command
         }
 
         $stream = $disk->readStream($media->path);
-        cloud(true)->put($media->path, $stream);
+        if (!cloud(true)->put($media->path, $stream)) {
+            throw new \Exception("Failed to upload {$media->path} to cloud.");
+        }
 
         if ($media->conversions) {
             foreach ($media->conversions as $conversion) {
                 $cPath = $conversion['path'];
                 if ($disk->exists($cPath)) {
                     $cStream = $disk->readStream($cPath);
-                    cloud(true)->put($cPath, $cStream);
+                    if (!cloud(true)->put($cPath, $cStream)) {
+                        throw new \Exception("Failed to upload conversion {$cPath} to cloud.");
+                    }
                 }
             }
         }
