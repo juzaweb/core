@@ -10,6 +10,8 @@
 
 namespace Juzaweb\Modules\Core\Traits;
 
+use Webwizo\Shortcodes\Facades\Shortcode;
+
 trait HasContent
 {
     public function renderContent()
@@ -18,10 +20,11 @@ trait HasContent
             return '';
         }
 
-        $html = str_get_html($this->content);
+        $content = Shortcode::compile($this->content);
+        $html = str_get_html($content);
 
         if ($html === false) {
-            return $this->content;
+            return $content;
         }
 
         foreach ($html->find('img') as $item) {
