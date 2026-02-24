@@ -28,6 +28,7 @@ use Juzaweb\Modules\Core\Permissions\Traits\HasPermissions;
 use Juzaweb\Modules\Core\Permissions\Traits\HasRoles;
 use Juzaweb\Modules\Core\Traits\CausesActivity;
 use Juzaweb\Modules\Core\Traits\HasAPI;
+use Juzaweb\Modules\Core\Traits\HasMeta;
 use Juzaweb\Modules\Core\Traits\HasSocialConnection;
 use Juzaweb\QueryCache\QueryCacheable;
 
@@ -42,7 +43,8 @@ class User extends Authenticatable implements MustVerifyEmail
         HasUuids,
         Notifiable,
         QueryCacheable,
-        HasMedia;
+        HasMedia,
+        HasMeta;
 
     protected $table = 'users';
 
@@ -107,6 +109,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return static::whereEmail($email)->first();
     }
 
+    public function metas(): HasMany
+    {
+        return $this->hasMany(UserMeta::class, 'user_id', 'id');
+    }
+
+    public function passwordResets(): HasMany
+    {
+        return $this->hasMany(PasswordReset::class, 'email', 'email');
+    }
+
     public function scopeWhereActive(Builder $builder): Builder
     {
         return $builder->where('status', UserStatus::ACTIVE);
@@ -115,11 +127,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatarAttribute(): ?string
     {
         return $this->getAvatarUrl();
-    }
-
-    public function passwordResets(): HasMany
-    {
-        return $this->hasMany(PasswordReset::class, 'email', 'email');
     }
 
     public function getAvatarUrl(int $size = 32): string
