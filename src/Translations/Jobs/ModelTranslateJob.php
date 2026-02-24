@@ -14,11 +14,13 @@ use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Juzaweb\Modules\Core\Translations\Contracts\CanBeTranslated;
 
 class ModelTranslateJob implements ShouldQueue
 {
-    use Queueable, Dispatchable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $timeout = 300; // 5 minutes
 
