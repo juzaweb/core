@@ -130,6 +130,16 @@ h6, .h6 { font-size: var(--font-size-sm); font-weight: 600; }
    3. SIDEBAR - MODERN DARK THEME
    ======================================== */
 
+@supports not (-webkit-touch-callout: none) {
+  .layout-fixed .wrapper .sidebar {
+    height: calc(100vh - (4.5rem + 1px));
+  }
+
+  .layout-fixed.text-sm .wrapper .sidebar {
+    height: calc(100vh - (2.93725rem + 1px));
+  }
+}
+
 .main-sidebar {
     background: linear-gradient(180deg, var(--gray-800) 0%, var(--gray-900) 100%) !important;
     box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);

@@ -1,8 +1,8 @@
 {
-    "/js/vendor.min.js": "/js/vendor.min.js?id=9d59b45136cfb48c4917166f344d3c99",
-    "/js/datatables.min.js": "/js/datatables.min.js?id=3d19bf1838ef38d95f818108c235a427",
-    "/css/vendor.min.css": "/css/vendor.min.css?id=d428d76aca929007ee3bd63155d42f4d",
-    "/js/init.min.js": "/js/init.min.js?id=d8caa9bfe02406a3487e86ba9054370f",
-    "/js/admin.min.js": "/js/admin.min.js?id=99d4eb367d3b30baea76539072b2a7f0",
-    "/css/admin.min.css": "/css/admin.min.css?id=432bfd862e9551e9f3590e2a7a2a7d90"
+    "/js/vendor.min.js": "/js/vendor.min.js?id=d081cd01ddf0c4ace7f147b262d3f4be",
+    "/js/datatables.min.js": "/js/datatables.min.js?id=48e7338df7644e13a9faed2339f328fc",
+    "/css/vendor.min.css": "/css/vendor.min.css?id=6c12949a87372134df58c166f8df939f",
+    "/js/init.min.js": "/js/init.min.js?id=7252033ad7db56d9c64840897fa8007e",
+    "/js/admin.min.js": "/js/admin.min.js?id=b1c0973d17caccca5dab85b070726e17",
+    "/css/admin.min.css": "/css/admin.min.css?id=c935261a77cc3e53af353cc7c82d0540"
 }
