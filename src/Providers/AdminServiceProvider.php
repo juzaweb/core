@@ -212,21 +212,19 @@ abstract class AdminServiceProvider extends ServiceProvider
             ];
         });
 
-        Menu::make('log-viewer', function () {
-            if (!is_super_admin()) {
-                return [];
-            }
-
-            return [
-                'title' => __('core::translation.log_view'),
-                'icon' => 'fas fa-file-alt',
-                'url' => 'log-viewer',
-                'prefix' => '',
-                'permission' => 'log-viewer.index',
-                'priority' => 999,
-                'target' => '_blank',
-            ];
-        });
+        if (is_super_admin()) {
+            Menu::make('log-viewer', function () {
+                return [
+                    'title' => __('core::translation.log_view'),
+                    'icon' => 'fas fa-file-alt',
+                    'url' => 'log-viewer',
+                    'prefix' => '',
+                    'permission' => 'log-viewer.index',
+                    'priority' => 999,
+                    'target' => '_blank',
+                ];
+            });
+        }
     }
 
     protected function registerMenuBoxs(): void
