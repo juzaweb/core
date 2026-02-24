@@ -213,6 +213,10 @@ abstract class AdminServiceProvider extends ServiceProvider
         });
 
         Menu::make('log-viewer', function () {
+            if (!is_super_admin()) {
+                return [];
+            }
+
             return [
                 'title' => __('core::translation.log_view'),
                 'icon' => 'fas fa-file-alt',

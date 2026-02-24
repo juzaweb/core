@@ -21,14 +21,41 @@ class LogViewerMenuTest extends TestCase
         ]);
     }
 
-    public function test_log_viewer_menu_is_registered()
+    public function test_log_viewer_menu_is_registered_for_super_admin()
     {
-        // This should fail before implementation
+        $user = new \Juzaweb\Modules\Core\Models\User();
+        $user->fill([
+            'name' => 'Super Admin',
+            'email' => 'super@example.com',
+            'password' => 'secret',
+            'is_super_admin' => true,
+        ]);
+        $user->save();
+
+        $this->actingAs($user);
+
         $menu = Menu::get('log-viewer');
-        $this->assertNotNull($menu, 'Log Viewer menu should be registered');
+        $this->assertNotNull($menu, 'Log Viewer menu should be registered for super admin');
         $this->assertEquals('log-viewer', $menu['url']);
         // Verify priority is high (bottom)
         $this->assertGreaterThanOrEqual(99, $menu['priority']);
+    }
+
+    public function test_log_viewer_menu_is_hidden_for_non_super_admin()
+    {
+        $user = new \Juzaweb\Modules\Core\Models\User();
+        $user->fill([
+            'name' => 'Normal User',
+            'email' => 'user@example.com',
+            'password' => 'secret',
+            'is_super_admin' => false,
+        ]);
+        $user->save();
+
+        $this->actingAs($user);
+
+        $menu = Menu::get('log-viewer');
+        $this->assertEmpty($menu, 'Log Viewer menu should not be registered for normal user');
     }
 
     public function test_log_viewer_link_is_removed_from_navbar()
