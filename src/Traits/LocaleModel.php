@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -64,7 +65,8 @@ trait LocaleModel
                     continue;
                 }
 
-                if ($translatedAttribute === 'slug'
+                if (
+                    $translatedAttribute === 'slug'
                     || Arr::get($this->translatedAttributeFormats ?? [], $translatedAttribute) == 'slug'
                 ) {
                     $translated[$translatedAttribute] = null;
@@ -76,7 +78,7 @@ trait LocaleModel
                     $source,
                     $locale,
                     isset($this->translatedAttributeFormats[$translatedAttribute])
-                    && $this->translatedAttributeFormats[$translatedAttribute] === 'html'
+                        && $this->translatedAttributeFormats[$translatedAttribute] === 'html'
                 );
 
                 // Sleep to avoid rate limit
@@ -95,6 +97,7 @@ trait LocaleModel
         return DB::transaction(
             function () use ($locale, $translated, $translateHistory) {
                 $newTranslation = $this->replicate($this->translateReplicateExcepts ?? []);
+                $translated['source_id'] = $this->id;
                 $newTranslation->fill($translated);
                 $newTranslation->setAttribute($this->getLocaleKey(), $locale);
 
