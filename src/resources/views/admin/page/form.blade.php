@@ -27,8 +27,6 @@
                     <div class="card-body">
                         {{ Field::text($model, "title", ['label' => __('core::translation.title'), 'value' => $model->title])->slugSource() }}
 
-                        {{ Field::slug($model, "slug", ['label' => __('core::translation.slug')]) }}
-
                         @if(!isset($template) || !$template->blocks)
                             {{ Field::editor($model, "content", ['label' => __('core::translation.content'), 'value' => $model->content]) }}
                         @endif
@@ -51,6 +49,8 @@
                             ->dropDownList(
                                 \Juzaweb\Modules\Core\Enums\PageStatus::all()
                             ) }}
+
+                        {{ Field::slug($model, "slug", ['label' => __('core::translation.slug')]) }}
                     </div>
                 </div>
 
