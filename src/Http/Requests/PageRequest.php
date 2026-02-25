@@ -30,6 +30,7 @@ class PageRequest extends FormRequest
             'blocks' => ['nullable', 'array'],
             'template' => ['nullable', Rule::in($templates)],
             'title' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:100'],
             'content' => ['nullable', 'string', 'max:50000'],
             'thumbnail' => ['nullable', 'string'],
             'is_home' => ['nullable', 'boolean'],
