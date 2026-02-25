@@ -70,7 +70,10 @@
     },
     "scripts": {
         "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
-        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "prepare": [
+            "@php vendor/bin/testbench package:discover --ansi",
+            "@php vendor/bin/testbench vendor:publish --tag=core-assets --force"
+        ],
         "build": "@php vendor/bin/testbench workbench:build --ansi",
         "serve": [
             "Composer\\Config::disableProcessTimeout",
