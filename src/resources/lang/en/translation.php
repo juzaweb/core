@@ -82,6 +82,7 @@ return [
     'content' => 'Content',
     'thumbnail' => 'Thumbnail',
     'title' => 'Title',
+    'slug' => 'Slug',
     'draft' => 'Draft',
     'published' => 'Published',
     'private' => 'Private',

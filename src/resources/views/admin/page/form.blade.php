@@ -27,6 +27,8 @@
                     <div class="card-body">
                         {{ Field::text($model, "title", ['label' => __('core::translation.title'), 'value' => $model->title]) }}
 
+                        {{ Field::slug($model, "slug", ['label' => __('core::translation.slug')]) }}
+
                         @if(!isset($template) || !$template->blocks)
                             {{ Field::editor($model, "content", ['label' => __('core::translation.content'), 'value' => $model->content]) }}
                         @endif
