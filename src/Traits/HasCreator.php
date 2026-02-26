@@ -20,9 +20,7 @@ trait HasCreator
                 // Check if a user is authenticated
                 if (Auth::check()) {
                     $model->creator()->associate(Auth::user());
-                }
-
-                if (($ip = client_ip()) && $ip != '127.0.0.1') {
+                } else if (($ip = client_ip()) && $ip != '127.0.0.1') {
                     $creator = Guest::firstOrCreate(
                         [
                             'ipv4' => client_ip(),
