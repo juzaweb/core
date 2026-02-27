@@ -28,8 +28,14 @@ trait HasContent
         }
 
         foreach ($html->find('img') as $item) {
-            if (!empty($item->src) && !str_starts_with($item->src, 'http')) {
+            if (empty($item->src)) {
+                continue;
+            }
+
+            if (!str_starts_with($item->src, 'http')) {
                 $item->src = upload_url($item->src);
+            } else {
+                $item->src = proxy_image($item->src);
             }
         }
 
