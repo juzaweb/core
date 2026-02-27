@@ -29,14 +29,19 @@ class ModelTranslateJob implements ShouldQueue
     public function __construct(
         protected CanBeTranslated $model,
         protected string $sourceLocale,
-        protected string $targetLocale
+        protected string $targetLocale,
+        protected array $options = []
     ) {
         $this->onQueue(config('translator.queue', 'default'));
     }
 
     public function handle(): void
     {
-        $this->model->translateTo($this->targetLocale, $this->sourceLocale, ['force' => true]);
+        $this->model->translateTo(
+            $this->targetLocale,
+            $this->sourceLocale,
+            array_merge(['force' => true], $this->options)
+        );
 
         sleep(1);
     }

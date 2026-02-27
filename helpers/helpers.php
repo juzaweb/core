@@ -857,7 +857,7 @@ function current_actor(?string $guard = null): Guest|Authenticatable
     );
 }
 
-function model_translate(CanBeTranslated $model, string $sourceLocale, string $targetLocale): TranslateHistory
+function model_translate(CanBeTranslated $model, string $sourceLocale, string $targetLocale, array $options = []): TranslateHistory
 {
     if ($sourceLocale === $targetLocale) {
         throw new InvalidArgumentException('Source locale and target locale must be different');
@@ -873,7 +873,7 @@ function model_translate(CanBeTranslated $model, string $sourceLocale, string $t
         ]
     );
 
-    ModelTranslateJob::dispatch($model, $sourceLocale, $targetLocale);
+    ModelTranslateJob::dispatch($model, $sourceLocale, $targetLocale, $options);
 
     return $history;
 }

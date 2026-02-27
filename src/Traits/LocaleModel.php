@@ -95,11 +95,15 @@ trait LocaleModel
         }
 
         return DB::transaction(
-            function () use ($locale, $translated, $translateHistory) {
+            function () use ($locale, $translated, $translateHistory, $options) {
                 $newTranslation = $this->replicate($this->translateReplicateExcepts ?? []);
                 $translated['source_id'] = $this->id;
                 $newTranslation->fill($translated);
                 $newTranslation->setAttribute($this->getLocaleKey(), $locale);
+
+                if (isset($options['overwrites']) && is_array($options['overwrites'])) {
+                    $newTranslation->fill($options['overwrites']);
+                }
 
                 $saved = $newTranslation->save();
 
