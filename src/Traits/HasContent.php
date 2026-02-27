@@ -35,7 +35,9 @@ trait HasContent
             if (!str_starts_with($item->src, 'http')) {
                 $item->src = upload_url($item->src);
             } else {
-                $item->src = proxy_image($item->src);
+                if (!str_starts_with($item->src, url('images/'))) {
+                    $item->src = proxy_image($item->src);
+                }
             }
         }
 
