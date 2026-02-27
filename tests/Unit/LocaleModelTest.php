@@ -173,6 +173,56 @@ class LocaleModelTest extends TestCase
         $this->assertTrue($newPost->hasMedia('thumbnail'), 'Media was not replicated to the new translation');
         $this->assertEquals($media->id, $newPost->getFirstMedia('thumbnail')->id);
     }
+
+    public function test_model_translate_with_overwrites()
+    {
+        Queue::fake();
+
+        $post = TestPost::create(['title' => 'Hello', 'locale' => 'en']);
+
+        $options = ['overwrites' => ['content' => 'Overwritten Content']];
+        $history = model_translate($post, 'en', 'vi', $options);
+
+        $this->assertInstanceOf(TranslateHistory::class, $history);
+
+        Queue::assertPushed(ModelTranslateJob::class, function ($job) use ($options) {
+            $reflection = new \ReflectionClass($job);
+            $jobOptions = $reflection->getProperty('options')->getValue($job);
+            return $jobOptions === $options;
+        });
+    }
+
+    public function test_translate_to_with_overwrites()
+    {
+        $this->mock(Translator::class, function ($mock) {
+            $mock->shouldReceive('translate')
+                ->with('Hello', 'en', 'vi', false)
+                ->andReturn('Xin chào');
+        });
+
+        $post = TestPost::create(['title' => 'Hello', 'content' => 'Original Content', 'locale' => 'en']);
+
+        // We simulate the call without the job wrapper to test the trait logic directly
+        $result = $post->translateTo('vi', 'en', [
+            'overwrites' => [
+                'content' => 'Overwritten Content',
+            ]
+        ]);
+
+        $this->assertTrue($result);
+
+        $this->assertDatabaseHas('test_posts', [
+            'title' => 'Xin chào',
+            'content' => 'Overwritten Content',
+            'locale' => 'vi',
+        ]);
+
+        $this->assertDatabaseHas('test_posts', [
+            'title' => 'Hello',
+            'content' => 'Original Content',
+            'locale' => 'en',
+        ]);
+    }
 }
 
 class TestPost extends Model implements CanBeTranslated
