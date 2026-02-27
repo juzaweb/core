@@ -28,7 +28,7 @@ trait HasContent
         }
 
         foreach ($html->find('img') as $item) {
-            if (empty($item->src)) {
+            if (empty($item->src) || str_starts_with($item->src, 'data:')) {
                 continue;
             }
 
@@ -39,6 +39,8 @@ trait HasContent
             }
         }
 
-        return remove_zero_width_space_string($html->save());
+        $content = apply_filters('render_content', $html->save(), $this);
+
+        return remove_zero_width_space_string($content);
     }
 }
