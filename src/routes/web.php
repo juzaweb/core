@@ -29,8 +29,7 @@ Route::get('sitemap/{provider}/page-{page}.xml', [SitemapController::class, 'pro
 
 Route::post('online/statuses', [AddonController::class, 'statuses'])
     ->name('online.statuses');
-Route::post('verify/recaptcha', [AddonController::class, 'recaptcha'])
-    ->name('addon.recaptcha');
+
 Route::get('generator/thumbnail', [AddonController::class, 'thumbnail'])
     ->name('generate.thumbnail');
 
