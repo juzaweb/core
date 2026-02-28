@@ -11,9 +11,10 @@
 namespace Juzaweb\Modules\Core\Translations;
 
 use IP2Location\Database;
+use Juzaweb\Modules\Core\Translations\Contracts\IP2Location;
 use RuntimeException;
 
-class IP2LocationFactory implements \Juzaweb\Modules\Core\Translations\Contracts\IP2Location
+class IP2LocationFactory implements IP2Location
 {
     public function __construct(protected string $dataPath)
     {
@@ -32,7 +33,6 @@ class IP2LocationFactory implements \Juzaweb\Modules\Core\Translations\Contracts
     {
         return $this->lookup($ip, Database::COUNTRY_CODE);
     }
-
 
     /**
      * Lookup the IP address and return the location data.

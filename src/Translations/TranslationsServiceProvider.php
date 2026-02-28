@@ -87,7 +87,7 @@ class TranslationsServiceProvider extends ServiceProvider
         $this->app->singleton(
             IP2Location::class,
             function ($app) {
-                $dataPath = __DIR__ . '/../database/iplocation/IPV6-COUNTRY.BIN';
+                $dataPath = base_path('database/iplocation/IPV6-COUNTRY.BIN');
                 return new IP2LocationFactory($dataPath);
             }
         );
