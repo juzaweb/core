@@ -214,7 +214,7 @@ class AddonController extends Controller
             }
 
             // Handle image via service
-            $result = $imgProxyService->handle($method, $hash, $width, $height);
+            $result = $imgProxyService->handle($method, $hash, $width, $height, $filename);
 
             // Clear any output buffers
             while (ob_get_level() > 0) {

@@ -63,7 +63,7 @@ class ImgProxyService extends BaseService
     /**
      * Handle image proxy request
      */
-    public function handle(string $method, string $hash, ?int $width, ?int $height): array
+    public function handle(string $method, string $hash, ?int $width, ?int $height, ?string $filename = null): array
     {
         // Validate method
         if (!in_array($method, $this->allowedMethods, true)) {
@@ -86,7 +86,7 @@ class ImgProxyService extends BaseService
         $processedImage = $this->processImage($image, $method, $width, $height);
 
         // Determine output format
-        $isWebpRequested = ($extension === 'webp' || str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'image/webp'));
+        $isWebpRequested = ($extension === 'webp' || str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'image/webp') || ($filename && str_ends_with(strtolower($filename), '.webp')));
 
         // Encode image
         $encodedData = $isWebpRequested
