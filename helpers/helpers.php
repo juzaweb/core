@@ -748,7 +748,7 @@ if (!function_exists('proxy_image')) {
             $filename = pathinfo($filename, PATHINFO_FILENAME) . '.webp';
         }
 
-        $method = $crop ? 'crop' : 'cover';
+        $method = $crop ? 'crop' : 'resize';
 
         if ($width > 0 || $height > 0) {
             $size = ($width ?? 'auto').'x'.($height ?? 'auto');
