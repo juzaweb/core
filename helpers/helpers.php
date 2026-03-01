@@ -734,7 +734,7 @@ if (!function_exists('custom_var_export')) {
 }
 
 if (!function_exists('proxy_image')) {
-    function proxy_image(?string $url, ?int $width = null, ?int $height = null, bool $crop = false): string
+    function proxy_image(?string $url, ?int $width = null, ?int $height = null, bool $crop = false, bool $webp = true): string
     {
         if ($url === null) {
             return '';
@@ -743,6 +743,11 @@ if (!function_exists('proxy_image')) {
         $hash = encrypt_deterministic($url, sha1(config('app.key')));
         $baseUrl = url('/');
         $filename = basename($url);
+
+        if ($webp) {
+            $filename = pathinfo($filename, PATHINFO_FILENAME) . '.webp';
+        }
+
         $method = $crop ? 'crop' : 'cover';
 
         if ($width > 0 || $height > 0) {
