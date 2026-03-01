@@ -345,6 +345,10 @@ class AddonController extends Controller
      */
     public function themesProxy(Request $request, string $theme, string $path)
     {
+        if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $theme)) {
+            abort(404);
+        }
+
         $filePath = base_path("themes/{$theme}/assets/public/{$path}");
 
         return $this->serveStaticFile($request, $filePath, $path);
@@ -355,6 +359,10 @@ class AddonController extends Controller
      */
     public function modulesProxy(Request $request, string $module, string $path)
     {
+        if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $module)) {
+            abort(404);
+        }
+
         $filePath = base_path("modules/{$module}/assets/public/{$path}");
 
         return $this->serveStaticFile($request, $filePath, $path);
