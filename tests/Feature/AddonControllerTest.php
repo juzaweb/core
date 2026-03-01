@@ -39,4 +39,22 @@ class AddonControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson(['success' => true]);
     }
+
+    public function test_themes_proxy_prevents_directory_traversal()
+    {
+        $response = $this->get('/jw-styles/themes/..%2F..%2F..%2F.env/assets/public/css/style.css');
+        $response->assertStatus(404);
+
+        $response = $this->get('/jw-styles/themes/invalid..name/assets/public/css/style.css');
+        $response->assertStatus(404);
+    }
+
+    public function test_modules_proxy_prevents_directory_traversal()
+    {
+        $response = $this->get('/jw-styles/modules/..%2F..%2F..%2F.env/assets/public/css/style.css');
+        $response->assertStatus(404);
+
+        $response = $this->get('/jw-styles/modules/invalid..name/assets/public/css/style.css');
+        $response->assertStatus(404);
+    }
 }
