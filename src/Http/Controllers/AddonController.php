@@ -244,9 +244,10 @@ class AddonController extends Controller
      */
     public function storageProxy(Request $request, string $path)
     {
-        $filePath = storage_path('app/public/' . $path);
+        $baseDir = storage_path('app/public');
+        $filePath = $this->resolveSafePath($baseDir, $path);
 
-        if (!file_exists($filePath) || !is_file($filePath)) {
+        if (!$filePath || !is_file($filePath)) {
             abort(404);
         }
 
@@ -349,7 +350,12 @@ class AddonController extends Controller
             abort(404);
         }
 
-        $filePath = base_path("themes/{$theme}/assets/public/{$path}");
+        $baseDir = base_path("themes/{$theme}/assets/public");
+        $filePath = $this->resolveSafePath($baseDir, $path);
+
+        if (!$filePath) {
+            abort(404);
+        }
 
         return $this->serveStaticFile($request, $filePath, $path);
     }
@@ -363,21 +369,36 @@ class AddonController extends Controller
             abort(404);
         }
 
-        $filePath = base_path("modules/{$module}/assets/public/{$path}");
+        $baseDir = base_path("modules/{$module}/assets/public");
+        $filePath = $this->resolveSafePath($baseDir, $path);
+
+        if (!$filePath) {
+            abort(404);
+        }
 
         return $this->serveStaticFile($request, $filePath, $path);
     }
 
     public function juzawebProxy(Request $request, string $path)
     {
-        $filePath = public_path("juzaweb/{$path}");
+        $baseDir = public_path("juzaweb");
+        $filePath = $this->resolveSafePath($baseDir, $path);
+
+        if (!$filePath) {
+            abort(404);
+        }
 
         return $this->serveStaticFile($request, $filePath, $path);
     }
 
     public function vendorProxy(Request $request, string $path)
     {
-        $filePath = public_path("vendor/{$path}");
+        $baseDir = public_path("vendor");
+        $filePath = $this->resolveSafePath($baseDir, $path);
+
+        if (!$filePath) {
+            abort(404);
+        }
 
         return $this->serveStaticFile($request, $filePath, $path);
     }
@@ -387,6 +408,27 @@ class AddonController extends Controller
         session()->forget(['message', 'status']);
 
         return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * Resolve and validate safe path to prevent directory traversal
+     */
+    private function resolveSafePath(string $baseDir, string $path): ?string
+    {
+        $resolvedPath = realpath($baseDir . '/' . ltrim($path, '/'));
+
+        if ($resolvedPath === false) {
+            return null;
+        }
+
+        $realBaseDir = rtrim(realpath($baseDir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        // Check if the resolved path starts exactly with the intended base directory
+        if (!str_starts_with($resolvedPath, $realBaseDir)) {
+            return null;
+        }
+
+        return $resolvedPath;
     }
 
     /**
