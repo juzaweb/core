@@ -734,7 +734,7 @@ if (!function_exists('custom_var_export')) {
 }
 
 if (!function_exists('proxy_image')) {
-    function proxy_image(?string $url, ?int $width = null, ?int $height = null, bool $crop = false, bool $webp = true): string
+    function proxy_image(?string $url, ?int $width = null, ?int $height = null, bool $crop = false, bool $webp = true, bool $rias = false): string
     {
         if ($url === null) {
             return '';
@@ -749,6 +749,10 @@ if (!function_exists('proxy_image')) {
         }
 
         $method = $crop ? 'crop' : 'resize';
+
+        if ($rias) {
+            return "{$baseUrl}/images/{$method}:{width}xauto/{$hash}/{$filename}";
+        }
 
         if ($width > 0 || $height > 0) {
             $size = ($width ?? 'auto').'x'.($height ?? 'auto');
