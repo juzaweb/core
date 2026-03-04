@@ -1,3 +1,80 @@
+### v5.0.4 
+* feat: add `rias` parameter to `proxy_image` helper for responsive image URLs.
+* feat(lazysizes): Update lazysizes library and add RIAS plugin.
+* fix(helpers): change image resizing method from 'cover' to 'resize'
+* feat: add webp support to proxy_image
+* feat(core): enable module scanning
+* Fix path traversal vulnerability with resolveSafePath helper
+* Fix path traversal vulnerability in AddonController proxy methods
+* refactor(translations): update IP2LocationFactory to implement interface and adjust data path
+* feat(core): remove recaptcha verification route
+* Delete HasContentTest.php
+* feat: add overwrite option to model_translate helper and LocaleModel trait
+* Fix double proxying of images in renderContent
+* feat: skip data URI images and add a filter hook for rendered content
+* feat: proxy external image URLs and skip empty `src` attributes.
+* refactor(HasCreator): streamline authentication check logic
+* feat(scripts): Add core asset publishing to prepare script.
+* build(gitignore): ignore composer.lock file
+* feat: move slug input to sidebar
+* feat: add slug input to page management
+* chore: Update and recompile admin CSS assets, including the modern theme.
+* refactor: Add InteractsWithQueue and SerializesModels traits to ModelTranslateJob.
+* Delete tests/Feature/LogViewerMenuTest.php
+* Restrict log-viewer menu to super admins only
+* Fix SendMediaToCloudCommandTest CI failure by using real temporary disk
+* Fix SendMediaToCloudCommandTest failure in CI
+* Move Log View link from navbar to sidebar menu
+* feat(user): Add HasMeta trait and metas relationship to User model.
+* feat(locale): Add source_id to replicated model when creating a new translation.
+* fix(storage): Refine cloud disk write endpoint and path style configuration logic.
+* feat: add shortcode support to renderContent
+* Add media:send-to-cloud command to migrate local files to cloud storage
+* Fix TranslationController for LocaleModel & Fix Test Migrations
+* Fix TranslationController to conditionally load translations relation
+* Fix `translateModel` to support `LocaleModel` (single row) translation strategy
+* fix(translator): update configuration keys for translation feature enabling
+* Fix navbar link for log viewer
+* Fix attachMedia method parameter in LocaleModel
+* feat: replicate media channels when translating models with LocaleModel
+* Add new_model_id and new_model_type to translate_histories table and populate them in LocaleModel trait
+* feat: replicate media channels when translating models with LocaleModel
+* feat: add Log View link to admin navbar for super admins
+* feat(translate-modal): update language selection to use config locales instead of dynamic languages
+* fix: cast MINIFY_VIEWS environment variable to boolean and update package removal in test.yml
+* fix: change boot method to register in PerformanceServiceProvider
+* feat: update translation replication logic to exclude specified attributes
+* feat: allow slug attribute to be null when replicating translations in LocaleModel
+* refactor(google-translator): remove proxy parameter from translation API request
+* refactor(core): rename register method to boot in PerformanceServiceProvider.
+* feat(helpers): Add is_home_page function to check if the current route is the home page
+* feat(user-command): Mark email as verified upon user creation
+* chore: Remove outdated DNS prefetch links and add new ones for Digbly
+* feat(csp): Enhance Content Security Policy by dynamically adding script sources from environment variables
+* chore(http): comment out X-Content-Type-Options header from addon response.
+* fix: drop table before create in LocaleModelTest setup
+* feat: add support for single-table locale models in model_translate
+* test: add unit tests for sub_char helper and fix bugs
+* feat(file-manager): Add `addMediaFromUrl` method to `HasMedia` trait for attaching media from a URL.
+* fix: optimize URL host comparison logic in helpers.php
+* fix: update items property type in Repeater class to support array and Arrayable
+* feat(core): enhance repeater component with dynamic labels and Select2 initialization for new items, and remove theme editor script.
+* feat(repeater): add params property to Repeater class for enhanced component flexibility
+* feat(core): allow Arrayable objects for Repeater component items and default to an empty collection.
+* Add soft delete support to Media table
+* refactor(ModelTranslateJob): remove unused imports to clean up code
+* feat(core): add OpenAPI annotations to APIController and remove redundant PersonalAccessToken and Subscription models.
+* style: Add margin-bottom to custom-switch and reformat CSS selectors in admin styles.
+* chore(migrations): remove personal access tokens table migration file
+* docs(theme-head): update Open Graph protocol URL to HTTPS
+* refactor(traits): add return type hints to `HasViews` trait methods.
+* refactor(traits): add return type declaration to `scopeWhereCreator` method
+* feat(img-component): add srcset support for responsive images to `x-img` component and update its documentation.
+* feat(core): introduce Img Blade component for lazy-loaded images with placeholder and dynamic source handling.
+* fix(FileManager): update Media facade upload method return type to MediaUploader
+* chore(core): remove l5-swagger dependency from composer.json
+* feat(core): add `hasThumbnail` method and `void` return type to `initializeHasThumbnail`.
+
 ### v5.0.3 
 * fix(theme-loading): wrap theme booting, provider registration, and file inclusion in a try-catch block to handle exceptions.
 * feat(notifications): Use UUIDs for polymorphic notifiable relationships and display dynamic notification titles in the navbar.
