@@ -198,7 +198,7 @@ class ThemeRepository implements ThemeContract
                 'type' => 'theme',
                 'key' => $lowerName,
                 'namespace' => $lowerName,
-                'lang_path' => $theme->path('resources/lang'),
+                'lang_path' => $theme->path('src/resources/lang'),
                 'src_path' => $theme->path(),
                 'publish_path' => $langPublishPath,
             ]);
