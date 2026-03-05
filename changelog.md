@@ -1,3 +1,6 @@
+### v5.0.5 
+* fix(themes): Update theme language path to include 'src' directory.
+
 ### v5.0.4 
 * feat: add `rias` parameter to `proxy_image` helper for responsive image URLs.
 * feat(lazysizes): Update lazysizes library and add RIAS plugin.
