@@ -43,7 +43,7 @@ class Updater extends Runner
 
         $concatenatedPackages = '';
         foreach ($packages as $name => $version) {
-            $concatenatedPackages .= "\"{$name}:{$version}\" ";
+            $concatenatedPackages .= escapeshellarg("{$name}:{$version}") . ' ';
         }
 
         $phpPath = get_php_binary_path();
@@ -63,7 +63,7 @@ class Updater extends Runner
 
         $concatenatedPackages = '';
         foreach ($devPackages as $name => $version) {
-            $concatenatedPackages .= "\"{$name}:{$version}\" ";
+            $concatenatedPackages .= escapeshellarg("{$name}:{$version}") . ' ';
         }
 
         if (!empty($concatenatedPackages)) {

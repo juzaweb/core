@@ -4,6 +4,7 @@ namespace Juzaweb\Modules\Core\Modules\Process;
 
 use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
 use Juzaweb\Modules\Core\Modules\Contracts\RunableInterface;
+use Symfony\Component\Process\Process;
 
 class Runner implements RunableInterface
 {
@@ -25,6 +26,10 @@ class Runner implements RunableInterface
      */
     public function run($command)
     {
-        passthru($command);
+        $process = Process::fromShellCommandline($command);
+        $process->setTimeout(3600);
+        $process->run(function ($type, $line) {
+            echo $line;
+        });
     }
 }
