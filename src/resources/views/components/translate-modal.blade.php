@@ -19,7 +19,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>{{ __('core::translation.source_language') }}</label>
-                    <select name="source_locale" class="form-control" id="translate-source-locale">
+                    <select name="source_locale" class="form-control select2-input" id="translate-source-locale" data-width="100%">
                         @foreach (config('locales') as $locale)
                             <option value="{{ $locale['code'] }}" @selected($locale['code'] === app()->getLocale())>
                                 {{ $locale['name'] }}
@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label>{{ __('core::translation.target_language') }}</label>
-                    <select name="target_locale" class="form-control" id="translate-target-locale">
+                    <select name="target_locale" class="form-control select2-input" id="translate-target-locale" data-width="100%">
                         @foreach ($languages as $language)
                             <option value="{{ $language->code }}">{{ $language->name }}</option>
                         @endforeach
