@@ -34,7 +34,7 @@ class Language extends Model
 
     public static function languages(): Collection
     {
-        return self::cacheFor(config('app.query_cache.lifetime'))
+        return self::cacheFor(config('core.query_cache.lifetime'))
             ->get()
             ->map(function ($item) {
                 $item->regional = config("locales.{$item->code}.regional");
