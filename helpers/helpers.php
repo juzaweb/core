@@ -734,8 +734,14 @@ if (!function_exists('custom_var_export')) {
 }
 
 if (!function_exists('proxy_image')) {
-    function proxy_image(?string $url, ?int $width = null, ?int $height = null, bool $crop = false, bool $webp = true, bool $rias = false): string
-    {
+    function proxy_image(
+        ?string $url,
+        ?int $width = null,
+        ?int $height = null,
+        bool $crop = false,
+        bool $webp = true,
+        bool $rias = false
+    ): string {
         if ($url === null) {
             return '';
         }
