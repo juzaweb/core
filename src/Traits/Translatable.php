@@ -21,6 +21,7 @@ use Juzaweb\Modules\Core\Translations\Enums\TranslateHistoryStatus;
 use Juzaweb\Modules\Core\Translations\Exceptions\TranslationDoesNotExistException;
 use Juzaweb\Modules\Core\Translations\Exceptions\TranslationExistException;
 use Juzaweb\Modules\Core\Translations\Models\TranslateHistory;
+use Throwable;
 
 trait Translatable
 {
@@ -125,13 +126,18 @@ trait Translatable
                     continue;
                 }
 
+                $isHtml = isset($this->translatedAttributeFormats[$translatedAttribute])
+                    && $this->translatedAttributeFormats[$translatedAttribute] === 'html';
                 $translated[$translatedAttribute] = app(Translator::class)->translate(
                     $translation->{$translatedAttribute},
                     $source,
                     $locale,
-                    isset($this->translatedAttributeFormats[$translatedAttribute])
-                    && $this->translatedAttributeFormats[$translatedAttribute] === 'html'
+                    $isHtml
                 );
+
+                if ($isHtml) {
+                    $translated[$translatedAttribute] = fix_html($translated[$translatedAttribute]);
+                }
 
                 // Sleep to avoid rate limit
                 usleep(500000); // 0.5 second
