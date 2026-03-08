@@ -73,13 +73,19 @@ trait LocaleModel
                     continue;
                 }
 
+                $isHtml = isset($this->translatedAttributeFormats[$translatedAttribute])
+                    && $this->translatedAttributeFormats[$translatedAttribute] === 'html';
+
                 $translated[$translatedAttribute] = app(Translator::class)->translate(
                     $value,
                     $source,
                     $locale,
-                    isset($this->translatedAttributeFormats[$translatedAttribute])
-                        && $this->translatedAttributeFormats[$translatedAttribute] === 'html'
+                    $isHtml
                 );
+
+                if ($isHtml) {
+                    $translated[$translatedAttribute] = fix_html($translated[$translatedAttribute]);
+                }
 
                 // Sleep to avoid rate limit
                 usleep(500000); // 0.5 second
