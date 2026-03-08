@@ -1,3 +1,10 @@
+### v5.0.7 
+* refactor(HasThumbnail): update getThumbnail method parameter type hint for improved clarity
+* fix(LocaleModel): enhance HTML translation handling and improve readability
+* refactor(helpers): use alias for Theme contract in theme function
+* refactor(helpers): format proxy_image function parameters for improved readability
+* feat(Img): add rias property and update getSrc method to support responsive images
+
 ### v5.0.6 
 * fix(Repeater): ensure params defaults to an empty array if not set
 * fix(translatable): improve HTML translation handling and add error handling
