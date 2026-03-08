@@ -1,3 +1,14 @@
+### v5.0.6 
+* fix(Repeater): ensure params defaults to an empty array if not set
+* fix(translatable): improve HTML translation handling and add error handling
+* Implement HTML reformatting and fixing functions
+* Fix translate modal language select fields to use Select2 plugin
+* Update cache lifetime configuration for languages method
+* 🔒 fix: resolve OS command injection vulnerability in Updater process
+* test: add coverage for NavMenuRepository::all
+* test: add test for LineChart::render method
+* test: add test for Mail\Test::envelope and content
+
 ### v5.0.5 
 * fix(themes): Update theme language path to include 'src' directory.
 
