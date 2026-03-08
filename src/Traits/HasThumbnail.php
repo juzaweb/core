@@ -43,7 +43,7 @@ trait HasThumbnail
         return $this->getThumbnail();
     }
 
-    public function getThumbnail(string $size = null): ?string
+    public function getThumbnail(?string $size = null): ?string
     {
         $url = $this->getFirstMediaUrl('thumbnail');
 
