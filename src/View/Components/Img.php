@@ -16,6 +16,7 @@ class Img extends Component
         public bool|string $thumbnail = false,
         public bool $crop = false,
         public array $srcset = [],
+        public $rias = false
     ) {
     }
 
@@ -26,7 +27,7 @@ class Img extends Component
 
     public function getSrc(): string
     {
-        return proxy_image($this->src, $this->width, $this->height, $this->crop);
+        return proxy_image($this->src, $this->width, $this->height, $this->crop, true, $this->rias);
     }
 
     public function getPlaceHolder(): string
