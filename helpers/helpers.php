@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 use Juzaweb\Modules\Admin\Models\Guest;
 use Juzaweb\Modules\Admin\Models\User;
 use Juzaweb\Modules\Core\Contracts\Setting;
+use Juzaweb\Modules\Core\Contracts\Theme as ThemeContract;
 use Juzaweb\Modules\Core\Facades\Theme;
 use Juzaweb\Modules\Core\Models\Authenticatable;
 use Juzaweb\Modules\Core\Translations\Contracts\CanBeTranslated;
@@ -777,9 +778,9 @@ if (!function_exists('csp_script_nonce')) {
 }
 
 if (!function_exists('theme')) {
-    function theme(): \Juzaweb\Modules\Core\Contracts\Theme
+    function theme(): ThemeContract
     {
-        return app()->make(\Juzaweb\Modules\Core\Contracts\Theme::class);
+        return app()->make(ThemeContract::class);
     }
 }
 
