@@ -976,6 +976,43 @@ function get_php_binary_path(): false|string
     return $path ? trim($path) : false;
 }
 
+if (! function_exists('reformat_html')) {
+    function reformat_html(string $html): string
+    {
+        libxml_use_internal_errors(true);
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $html = mb_convert_encoding($html, 'HTML-ENTITIES', "UTF-8");
+
+        $wrappedHtml = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">' . "<div id='wrapper-html-jw-wrapped'>{$html}</div>";
+
+        // Load and auto-fix HTML
+        $dom->loadHTML($wrappedHtml, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+
+        /** @var DOMElement $body */
+        $body = $dom->getElementById('wrapper-html-jw-wrapped');
+        $output = '';
+        foreach ($body->childNodes as $child) {
+            $output .= $dom->saveHTML($child);
+        }
+
+        return $output;
+    }
+}
+
+if (! function_exists('fix_html')) {
+    function fix_html(string $html): string
+    {
+        $html = str_replace(['&nbsp;', '&nbsp'], ' ', $html);
+
+        $html = remove_zero_width_space_string($html);
+
+        $html = reformat_html($html);
+
+        return str_replace(['<body>', '</body>'], '', $html);
+    }
+}
+
 if (!function_exists('is_internal_url')) {
     /**
      * Check if the URL is internal (same domain)
