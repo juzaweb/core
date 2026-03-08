@@ -34,7 +34,7 @@ class Repeater extends Component
                 'name' => $this->name,
                 'view' => $this->view,
                 'items' => $this->items ?? collect([]),
-                'params' => $this->params,
+                'params' => $this->params ?? [],
                 'label' => Str::title(Str::replace(['_', '-'], ' ', $this->name))
             ]
         );
