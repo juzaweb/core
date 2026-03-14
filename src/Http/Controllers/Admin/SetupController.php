@@ -119,7 +119,10 @@ class SetupController extends AdminController
                     }
 
                     if (!setting('theme')) {
-                        setting()?->set('theme', 'itech');
+                        $theme = Theme::all()->first()?->name();
+                        if ($theme) {
+                            setting()?->set('theme', $theme);
+                        }
                     }
 
                     if (!setting('sitename')) {
