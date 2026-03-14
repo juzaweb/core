@@ -74,11 +74,11 @@ Schema::create('post_translations', function(Blueprint $table) {
 
 In example, columns `title` and `content` are translatable.
 
-In model `Post`, you should use the trait `Juzaweb\Modules\Admin\Translations\Traits\Translatable`. The default convention for the translation model is PostTranslation. The array `$translatedAttributes` contains the names of the fields being translated in the `PostTranslation` model.
+In model `Post`, you should use the trait `Juzaweb\Modules\Core\Traits\Translatable`. The default convention for the translation model is PostTranslation. The array `$translatedAttributes` contains the names of the fields being translated in the `PostTranslation` model.
 
 ```php
-use Juzaweb\Modules\Admin\Translations\Contracts\Translatable as TranslatableContract;
-use Juzaweb\Modules\Admin\Traits\Translatable;
+use Juzaweb\Modules\Core\Translations\Contracts\Translatable as TranslatableContract;
+use Juzaweb\Modules\Core\Traits\Translatable;
 
 class Post extends Model implements TranslatableContract
 {
