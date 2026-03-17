@@ -20,7 +20,7 @@ class WidgetFacadeTest extends TestCase
     {
         Widget::make(
             'test_widget',
-            fn() => [
+            fn () => [
                 'label' => 'Test Widget',
                 'description' => 'Test Description',
             ]
@@ -35,8 +35,8 @@ class WidgetFacadeTest extends TestCase
 
     public function test_all_widgets()
     {
-        Widget::make('widget1', fn() => ['label' => 'Widget 1']);
-        Widget::make('widget2', fn() => ['label' => 'Widget 2']);
+        Widget::make('widget1', fn () => ['label' => 'Widget 1']);
+        Widget::make('widget2', fn () => ['label' => 'Widget 2']);
 
         $widgets = Widget::all();
 

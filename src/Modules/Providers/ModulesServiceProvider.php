@@ -64,7 +64,7 @@ class ModulesServiceProvider extends ServiceProvider
         });
         $this->app->singleton(ActivatorInterface::class, function ($app) {
             $activator = $app['config']->get('modules.activator');
-            $class = $app['config']->get('modules.activators.' . $activator)['class'];
+            $class = $app['config']->get('modules.activators.'.$activator)['class'];
 
             if ($class === null) {
                 throw InvalidActivatorClass::missingConfig();

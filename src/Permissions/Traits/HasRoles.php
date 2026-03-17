@@ -14,7 +14,6 @@ trait HasRoles
 {
     use HasPermissions;
 
-    /** @var Role */
     private Role $roleClass;
 
     public static function bootHasRoles(): void
@@ -53,12 +52,6 @@ trait HasRoles
 
     /**
      * Scope the model query to certain roles only.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param  int|array|\Juzaweb\Modules\Core\Permissions\Contracts\Role|string|\Illuminate\Support\Collection  $roles
-     * @param  string|null  $guard
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeRole(Builder $query, int|array|Role|string|Collection $roles, ?string $guard = null): Builder
     {
@@ -85,8 +78,7 @@ trait HasRoles
     /**
      * Assign the given role to the model.
      *
-     * @param array|string|int|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection ...$roles
-     *
+     * @param  array|string|int|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection  ...$roles
      * @return $this
      */
     public function assignRole(...$roles): static
@@ -140,7 +132,7 @@ trait HasRoles
     /**
      * Revoke the given role from the model.
      *
-     * @param string|int|\Juzaweb\Modules\Core\Permissions\Contracts\Role $role
+     * @param  string|int|\Juzaweb\Modules\Core\Permissions\Contracts\Role  $role
      */
     public function removeRole($role): static
     {
@@ -159,7 +151,6 @@ trait HasRoles
      * Remove all current roles and set the given ones.
      *
      * @param  array|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection|string|int  ...$roles
-     *
      * @return $this
      */
     public function syncRoles(...$roles): static
@@ -171,14 +162,10 @@ trait HasRoles
 
     /**
      * Determine if the model has (one of) the given role(s).
-     *
-     * @param  int|array|\Juzaweb\Modules\Core\Permissions\Contracts\Role|string|\Illuminate\Support\Collection  $roles
-     * @param string|null $guard
-     * @return bool
      */
-    public function hasRole(int|array|Role|string|Collection $roles, string $guard = null): bool
+    public function hasRole(int|array|Role|string|Collection $roles, ?string $guard = null): bool
     {
-        if (is_string($roles) && false !== strpos($roles, '|')) {
+        if (is_string($roles) && strpos($roles, '|') !== false) {
             $roles = $this->convertPipeToArray($roles);
         }
 
@@ -190,7 +177,7 @@ trait HasRoles
 
         if (is_int($roles)) {
             $roleClass = $this->getRoleClass();
-            $key = (new $roleClass())->getKeyName();
+            $key = (new $roleClass)->getKeyName();
 
             return $guard
                 ? $this->roles->where('guard_name', $guard)->contains($key, $roles)
@@ -219,9 +206,7 @@ trait HasRoles
      *
      * Alias to hasRole() but without Guard controls
      *
-     * @param string|int|array|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection $roles
-     *
-     * @return bool
+     * @param  string|int|array|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection  $roles
      */
     public function hasAnyRole(...$roles): bool
     {
@@ -230,14 +215,10 @@ trait HasRoles
 
     /**
      * Determine if the model has all of the given role(s).
-     *
-     * @param  array|string|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection  $roles
-     * @param  string|null  $guard
-     * @return bool
      */
-    public function hasAllRoles(array|string|Role|Collection $roles, string $guard = null): bool
+    public function hasAllRoles(array|string|Role|Collection $roles, ?string $guard = null): bool
     {
-        if (is_string($roles) && false !== strpos($roles, '|')) {
+        if (is_string($roles) && strpos($roles, '|') !== false) {
             $roles = $this->convertPipeToArray($roles);
         }
 
@@ -264,14 +245,10 @@ trait HasRoles
 
     /**
      * Determine if the model has exactly all of the given role(s).
-     *
-     * @param  array|string|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection  $roles
-     * @param  string|null  $guard
-     * @return bool
      */
-    public function hasExactRoles(array|string|Role|Collection $roles, string $guard = null): bool
+    public function hasExactRoles(array|string|Role|Collection $roles, ?string $guard = null): bool
     {
-        if (is_string($roles) && false !== strpos($roles, '|')) {
+        if (is_string($roles) && strpos($roles, '|') !== false) {
             $roles = $this->convertPipeToArray($roles);
         }
 

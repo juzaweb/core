@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -15,7 +17,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Juzaweb\Modules\Admin\Models\User;
-use Juzaweb\Modules\Admin\Networks\Facades\Network;
 
 class EnsureEmailIsVerified extends BaseEnsureEmailIsVerified
 {
@@ -32,7 +33,6 @@ class EnsureEmailIsVerified extends BaseEnsureEmailIsVerified
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @param  string|null  $redirectToRoute
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse|null
      */
@@ -45,7 +45,7 @@ class EnsureEmailIsVerified extends BaseEnsureEmailIsVerified
 
         if (! $user || ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail())) {
 
-            if (!$redirectToRoute) {
+            if (! $redirectToRoute) {
                 $redirectToRoute = $user instanceof User ? 'user.verification.notice' : 'verification.notice';
             }
 

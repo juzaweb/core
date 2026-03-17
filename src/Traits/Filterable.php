@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property array $filterable
+ *
  * @method static static|Builder filter(array $params)
  * @method static static|Builder additionFilter(array $params)
  */
@@ -21,9 +22,7 @@ trait Filterable
      * and the value is the value to filter by.
      * The filterable fields are defined in the model's $filterable property.
      *
-     * @param Builder|static $query
-     * @param array $params
-     * @return Builder
+     * @param  Builder|static  $query
      */
     public function scopeFilter(Builder $query, array $params): Builder
     {
@@ -41,6 +40,7 @@ trait Filterable
             // If the model has a scope{$field}Filterable method, call it
             if (method_exists($this, "scope{$field}Filterable")) {
                 $query->{"{$field}Filterable"}($params);
+
                 continue;
             }
 
@@ -108,8 +108,6 @@ trait Filterable
      * - 'operator': the operator to use for the filter
      * - 'type': the type of the filter (either 'table' or 'relation')
      * - 'field': the field name in the request
-     *
-     * @return array
      */
     public function getFilterable(): array
     {
@@ -123,8 +121,8 @@ trait Filterable
         /**
          * Map the filterable fields to their final form.
          *
-         * @param mixed $value
-         * @param string $key
+         * @param  mixed  $value
+         * @param  string  $key
          * @return array
          */
         return array_values(

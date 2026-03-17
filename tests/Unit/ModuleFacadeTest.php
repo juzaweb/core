@@ -9,7 +9,7 @@ use Juzaweb\Modules\Core\Tests\TestCase;
 
 class ModuleFacadeTest extends TestCase
 {
-    public function testModuleFacadeResolvesToRepositoryInterface()
+    public function test_module_facade_resolves_to_repository_interface()
     {
         $this->assertInstanceOf(
             RepositoryInterface::class,
@@ -17,7 +17,7 @@ class ModuleFacadeTest extends TestCase
         );
     }
 
-    public function testModuleFacadeResolvesToFileRepository()
+    public function test_module_facade_resolves_to_file_repository()
     {
         $this->assertInstanceOf(
             FileRepository::class,
@@ -25,13 +25,13 @@ class ModuleFacadeTest extends TestCase
         );
     }
 
-    public function testModuleAllReturnsArray()
+    public function test_module_all_returns_array()
     {
         $modules = Module::all();
         $this->assertIsArray($modules);
     }
 
-    public function testModuleGetPath()
+    public function test_module_get_path()
     {
         $path = Module::getPath();
         $this->assertNotEmpty($path);

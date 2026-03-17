@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -50,7 +51,7 @@ class AllExist implements InvokableRule
                     continue;
                 }
 
-                return $fail(__("core::translation.the_value_value_of_attribute_does_not_exist_in_table_table_under_column_column",
+                return $fail(__('core::translation.the_value_value_of_attribute_does_not_exist_in_table_table_under_column_column',
                     ['attribute' => $attribute, 'table' => $this->table, 'column' => $this->column, 'value' => $v])
                 );
             }

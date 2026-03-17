@@ -1,9 +1,10 @@
 <?php
+
 /**
  * LARABIZ CMS - Full SPA Laravel CMS
  *
- * @package    larabizcms/larabiz
  * @author     The Anh Dang
+ *
  * @link       https://larabiz.com
  */
 
@@ -23,9 +24,9 @@ class StoreFolderRequest extends FormRequest
                 'string',
                 'max:155',
                 Rule::unique('media')
-                    ->where('type', MediaType::DIRECTORY->value)
+                    ->where('type', MediaType::DIRECTORY->value),
             ],
-            'working_dir' => ['nullable', 'uuid']
+            'working_dir' => ['nullable', 'uuid'],
         ];
     }
 

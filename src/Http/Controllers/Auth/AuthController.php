@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -28,9 +29,7 @@ use Juzaweb\Modules\Core\Http\Requests\Auth\ResetPasswordRequest;
 
 class AuthController extends AdminController
 {
-    public function __construct(protected PasswordBroker $passwordBroker)
-    {
-    }
+    public function __construct(protected PasswordBroker $passwordBroker) {}
 
     public function login()
     {
@@ -280,10 +279,10 @@ class AuthController extends AdminController
     {
         $theme = Theme::current();
 
-        if ($theme && View::exists($theme->name() . '::auth.'. $name)) {
-            return $theme->name() . '::auth.'. $name;
+        if ($theme && View::exists($theme->name().'::auth.'.$name)) {
+            return $theme->name().'::auth.'.$name;
         }
 
-        return 'core::auth.'. $name;
+        return 'core::auth.'.$name;
     }
 }

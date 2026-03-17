@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -16,6 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void make(string $key, callable $callback)
  * @method static \Juzaweb\Modules\Core\Support\Entities\PageBlock|null get(string $key)
  * @method static \Illuminate\Support\Collection all()
+ *
  * @see \Juzaweb\Modules\Core\Support\PageBlockRepository
  */
 class PageBlock extends Facade

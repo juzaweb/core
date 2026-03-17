@@ -23,19 +23,19 @@ class SettingTest extends TestCase
         parent::tearDown();
     }
 
-    public function testSetAndGet()
+    public function test_set_and_get()
     {
         Setting::set('test_key', 'test_value');
 
         $this->assertEquals('test_value', Setting::get('test_key'));
     }
 
-    public function testGetDefault()
+    public function test_get_default()
     {
         $this->assertEquals('default_value', Setting::get('non_existent_key', 'default_value'));
     }
 
-    public function testSets()
+    public function test_sets()
     {
         $settings = [
             'key1' => 'value1',
@@ -48,7 +48,7 @@ class SettingTest extends TestCase
         $this->assertEquals('value2', Setting::get('key2'));
     }
 
-    public function testBoolean()
+    public function test_boolean()
     {
         Setting::set('bool_true', '1');
         Setting::set('bool_false', '0');
@@ -61,7 +61,7 @@ class SettingTest extends TestCase
         $this->assertFalse(Setting::boolean('bool_string_false'));
     }
 
-    public function testInteger()
+    public function test_integer()
     {
         Setting::set('int_val', '123');
 
@@ -69,7 +69,7 @@ class SettingTest extends TestCase
         $this->assertIsInt(Setting::integer('int_val'));
     }
 
-    public function testFloat()
+    public function test_float()
     {
         Setting::set('float_val', '123.45');
 
@@ -77,7 +77,7 @@ class SettingTest extends TestCase
         $this->assertIsFloat(Setting::float('float_val'));
     }
 
-    public function testAll()
+    public function test_all()
     {
         $this->app[GlobalData::class]->set('settings.all_key1', [
             'key' => 'all_key1',
@@ -99,7 +99,7 @@ class SettingTest extends TestCase
         $this->assertEquals('value2', $all['all_key2']);
     }
 
-    public function testArrayValue()
+    public function test_array_value()
     {
         $array = ['a' => 1, 'b' => 2];
         Setting::set('array_key', $array);

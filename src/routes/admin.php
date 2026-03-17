@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -22,8 +23,8 @@ use Juzaweb\Modules\Core\Http\Controllers\Admin\SetupController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\TranslationController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\UserController;
 
-require __DIR__ . '/components/media.php';
-require __DIR__ . '/components/theme.php';
+require __DIR__.'/components/media.php';
+require __DIR__.'/components/theme.php';
 
 Route::get('/', [DashboardController::class, 'index'])
     ->name('admin.dashboard')

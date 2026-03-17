@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -14,48 +16,22 @@ use Illuminate\Support\Str;
 
 class BulkAction
 {
-    /**
-     * @var ?string
-     */
     protected ?string $icon;
 
-    /**
-     * @var ?string
-     */
     protected ?string $url;
 
-    /**
-     * @var string
-     */
     protected string $label;
 
-    /**
-     * @var string
-     */
     protected string $type = 'action';
 
-    /**
-     * @var string
-     */
     protected ?string $color = null;
 
-    /**
-     * @var ?string
-     */
     protected ?string $action = null;
 
-    /**
-     * @var bool
-     */
     protected bool $visible = true;
 
     /**
      * Create a new Action instance.
-     *
-     * @param string $label
-     * @param string|null $url
-     * @param string|null $icon
-     * @return static
      */
     public static function make(string $label, ?string $url = null, ?string $icon = null): static
     {
@@ -80,10 +56,6 @@ class BulkAction
 
     /**
      * Create a new Action instance.
-     *
-     * @param string $label
-     * @param string|null $url
-     * @param string|null $icon
      */
     public function __construct(string $label, ?string $url = null, ?string $icon = null)
     {
@@ -95,11 +67,10 @@ class BulkAction
     /**
      * Set the type of action.
      *
-     * @param string $type
-     *      Supported types are `url` and `action`.
-     *      - `url`: The action will link to the given URL.
-     *      - `action`: The action will trigger the given action.
-     * @return static
+     * @param  string  $type
+     *                        Supported types are `url` and `action`.
+     *                        - `url`: The action will link to the given URL.
+     *                        - `action`: The action will trigger the given action.
      */
     public function type(string $type): static
     {
@@ -111,9 +82,8 @@ class BulkAction
     /**
      * Set the color of the bulk action.
      *
-     * @param string $color
-     *      The color used to represent the bulk action visually.
-     * @return static
+     * @param  string  $color
+     *                         The color used to represent the bulk action visually.
      */
     public function color(string $color): static
     {
@@ -125,9 +95,8 @@ class BulkAction
     /**
      * Set the action for the bulk action.
      *
-     * @param string $action
-     *      The action used to trigger the bulk action.
-     * @return static
+     * @param  string  $action
+     *                          The action used to trigger the bulk action.
      */
     public function action(string $action): static
     {
@@ -146,9 +115,8 @@ class BulkAction
     /**
      * Set the visibility of the bulk action.
      *
-     * @param bool $visible
-     *      Whether the bulk action should be visible or not.
-     * @return static
+     * @param  bool  $visible
+     *                         Whether the bulk action should be visible or not.
      */
     public function visible(bool $visible): static
     {

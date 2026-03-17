@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -47,7 +49,7 @@ Route::group(
         'prefix' => 'file-manager',
     ],
     function () {
-        //Route::post('/{disk}/browser/delete', [BrowserController::class, 'delete']);
+        // Route::post('/{disk}/browser/delete', [BrowserController::class, 'delete']);
 
         Route::post('/{disk}/upload', [UploadController::class, 'upload'])
             ->name('media.upload');

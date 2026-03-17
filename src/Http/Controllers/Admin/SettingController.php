@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -63,7 +64,7 @@ class SettingController extends AdminController
     {
         $email = $request->input('email');
 
-        Mail::to($email)->send(new Test());
+        Mail::to($email)->send(new Test);
 
         return $this->success(__('core::translation.mail_sent_successfully_check_your_inbox'));
     }

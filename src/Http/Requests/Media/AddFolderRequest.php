@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - The Best CMS for Laravel Project
  *
- * @package    juzaweb/cms
  * @author     Juzaweb Team <admin@juzaweb.com>
+ *
  * @link       https://juzaweb.com
+ *
  * @license    MIT
  */
 
@@ -32,7 +34,7 @@ class AddFolderRequest extends FormRequest
                         $q->where('name', '=', $this->input('name'));
                         $q->where('parent_id', '=', $this->input('folder_id'));
                     }
-                )
+                ),
             ],
             'folder_id' => 'nullable|exists:media,id',
         ];

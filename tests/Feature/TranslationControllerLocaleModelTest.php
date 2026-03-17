@@ -56,7 +56,7 @@ class TranslationControllerLocaleModelTest extends TestCase
         });
 
         // Ensure translate_histories table exists
-        if (!Schema::hasTable('translate_histories')) {
+        if (! Schema::hasTable('translate_histories')) {
             Schema::create('translate_histories', function (Blueprint $table) {
                 $table->id();
                 $table->string('translateable_type');
@@ -79,7 +79,7 @@ class TranslationControllerLocaleModelTest extends TestCase
         parent::tearDown();
     }
 
-    public function testTranslateModelWithoutTranslationsTable()
+    public function test_translate_model_without_translations_table()
     {
         config(['translator.enable' => true]);
         config()->set('locales', ['en' => ['name' => 'English'], 'vi' => ['name' => 'Vietnamese']]);
@@ -104,7 +104,7 @@ class TranslationControllerLocaleModelTest extends TestCase
         $response->assertJsonStructure(['history_ids']);
     }
 
-    public function testTranslateModelWithTranslationsTable()
+    public function test_translate_model_with_translations_table()
     {
         config(['translator.enable' => true]);
         config()->set('locales', ['en' => ['name' => 'English'], 'vi' => ['name' => 'Vietnamese']]);
@@ -136,6 +136,7 @@ class TestPostLocaleModel extends Model implements CanBeTranslated
     use LocaleModel;
 
     protected $table = 'test_posts';
+
     protected $fillable = ['title', 'content', 'slug', 'locale'];
 
     protected $translatedAttributes = ['title'];
@@ -147,6 +148,7 @@ class TestTranslatable extends Model implements CanBeTranslated
     // We implement CanBeTranslated methods manually or via trait if available, but here we mock the relationship
 
     protected $table = 'test_items';
+
     protected $fillable = [];
 
     public function translations()
@@ -163,9 +165,10 @@ class TestTranslatable extends Model implements CanBeTranslated
     {
         // Minimal implementation for testing Controller logic
         $translation = $this->translations()->where('locale', $locale)->first();
-        if (!$translation) {
-             $this->translations()->create(['locale' => $locale, 'title' => 'Xin chào']);
+        if (! $translation) {
+            $this->translations()->create(['locale' => $locale, 'title' => 'Xin chào']);
         }
+
         return true;
     }
 
@@ -183,6 +186,8 @@ class TestTranslatable extends Model implements CanBeTranslated
 class TestTranslatableTranslation extends Model
 {
     protected $table = 'test_item_translations';
+
     protected $fillable = ['locale', 'title', 'test_item_id'];
+
     public $timestamps = false;
 }

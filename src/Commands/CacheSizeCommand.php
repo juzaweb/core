@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     Larabiz Team <admin@larabiz.com>
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    MIT
  */
 
@@ -24,6 +26,6 @@ class CacheSizeCommand extends Command
             $fileSize += $file->getSize();
         }
 
-        $this->info("Current cache site: " . format_size_units($fileSize));
+        $this->info('Current cache site: '.format_size_units($fileSize));
     }
 }

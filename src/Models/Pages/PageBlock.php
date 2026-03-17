@@ -9,7 +9,7 @@ use Juzaweb\Modules\Core\Traits\Translatable;
 
 class PageBlock extends Model
 {
-    use Translatable, HasUuids, HasThemeField;
+    use HasThemeField, HasUuids, Translatable;
 
     protected $table = 'page_blocks';
 

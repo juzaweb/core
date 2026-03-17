@@ -26,7 +26,7 @@ return new class extends Migration
             $table->datetimes();
         });
 
-        if (!Schema::hasTable('password_resets')) {
+        if (! Schema::hasTable('password_resets')) {
             Schema::create('password_resets', function (Blueprint $table) {
                 $table->string('email')->primary();
                 $table->string('token');
@@ -34,7 +34,7 @@ return new class extends Migration
             });
         }
 
-        if (!Schema::hasTable('sessions')) {
+        if (! Schema::hasTable('sessions')) {
             Schema::create('sessions', function (Blueprint $table) {
                 $table->string('id')->primary();
                 $table->foreignId('user_id')->nullable()->index();

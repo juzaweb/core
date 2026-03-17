@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -24,6 +26,7 @@ class SendMediaToCloudCommand extends Command
     {
         if (empty(config('filesystems.disks.cloud'))) {
             $this->error('Cloud disk not configured.');
+
             return 1;
         }
 
@@ -66,13 +69,13 @@ class SendMediaToCloudCommand extends Command
     protected function moveMedia(Media $media): void
     {
         $disk = Storage::disk($media->disk);
-        if (!$disk->exists($media->path)) {
+        if (! $disk->exists($media->path)) {
             // $this->warn("File not found: {$media->path}");
             return;
         }
 
         $stream = $disk->readStream($media->path);
-        if (!cloud(true)->put($media->path, $stream)) {
+        if (! cloud(true)->put($media->path, $stream)) {
             throw new \Exception("Failed to upload {$media->path} to cloud.");
         }
 
@@ -81,7 +84,7 @@ class SendMediaToCloudCommand extends Command
                 $cPath = $conversion['path'];
                 if ($disk->exists($cPath)) {
                     $cStream = $disk->readStream($cPath);
-                    if (!cloud(true)->put($cPath, $cStream)) {
+                    if (! cloud(true)->put($cPath, $cStream)) {
                         throw new \Exception("Failed to upload conversion {$cPath} to cloud.");
                     }
                 }

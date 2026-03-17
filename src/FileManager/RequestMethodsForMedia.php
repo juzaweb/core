@@ -14,8 +14,8 @@ class RequestMethodsForMedia
     /**
      * Get the media model from the request input.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  string  $key
+     * @param  mixed  $default
      * @return Media|null
      */
     public function media(): \Closure
@@ -32,8 +32,8 @@ class RequestMethodsForMedia
     /**
      * Get the media models from the request input.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  string  $key
+     * @param  mixed  $default
      * @return \Illuminate\Support\Collection|null
      */
     public function medias(): \Closure
@@ -56,8 +56,8 @@ class RequestMethodsForMedia
     /**
      * Get the media uploader instance from the request input.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  string  $key
+     * @param  mixed  $default
      * @return MediaUploader|null
      */
     public function shouldUpload(): \Closure
@@ -74,10 +74,9 @@ class RequestMethodsForMedia
     /**
      * Get the media uploader instance from the request input which is located in the tmp disk.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  string  $key
+     * @param  mixed  $default
      * @return MediaUploader|null
-     *
      */
     public function uploadedTmpFile(): \Closure
     {

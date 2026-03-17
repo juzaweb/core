@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -17,7 +18,9 @@ use Juzaweb\Modules\Core\Observes\HasSeoMetaObserve;
 
 /**
  * @property SeoMeta $seoMeta
+ *
  * @method static Builder|static withSeoMeta(?string $locale = null)
+ *
  * @mixin Model
  */
 trait HasSeoMeta
@@ -50,10 +53,8 @@ trait HasSeoMeta
 
     /**
      * @param  string<'title', 'description', 'keywords', 'image'>  $key
-     * @param  string|null  $locale
-     * @return null|string
      */
-    public function getSeoMeta(string $key, string $locale = null): ?string
+    public function getSeoMeta(string $key, ?string $locale = null): ?string
     {
         $locale = $locale ?? app()->getLocale();
 
@@ -62,16 +63,14 @@ trait HasSeoMeta
 
     /**
      * @param  array|string<'title', 'description', 'keywords', 'image'>  $key
-     * @param  string|null  $value
-     * @param  string|null  $locale
-     * @return void
      */
-    public function setSeoMeta(array|string $key, ?string $value = null, string $locale = null): void
+    public function setSeoMeta(array|string $key, ?string $value = null, ?string $locale = null): void
     {
         $locale = $locale ?? app()->getLocale();
 
         if (is_array($key)) {
             $this->seoMeta?->translateOrNew($locale)->fill($key)->save();
+
             return;
         }
 

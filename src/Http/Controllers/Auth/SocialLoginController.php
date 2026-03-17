@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -23,7 +25,6 @@ use Juzaweb\Modules\Core\Http\Controllers\AdminController;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\AbstractProvider;
-use function Juzaweb\Modules\Admin\Http\Controllers\Auth\website;
 
 class SocialLoginController extends AdminController
 {
@@ -41,6 +42,7 @@ class SocialLoginController extends AdminController
             return $this->error($e->getMessage());
         } catch (ClientException $e) {
             report($e);
+
             return $this->error(__('core::translation.invalid_credentials_provided'));
         }
 
@@ -71,6 +73,7 @@ class SocialLoginController extends AdminController
             );
         } catch (ClientException $e) {
             report($e);
+
             return $this->error(
                 [
                     'message' => __('core::translation.invalid_credentials_provided'),
@@ -81,8 +84,8 @@ class SocialLoginController extends AdminController
 
         $guard = 'web';
         $provider = config("auth.guards.{$guard}.provider");
-        $model = config('auth.providers.' . $provider . '.model');
-        $connectionModel = config('auth.providers.' . $provider . '.social_connection_model');
+        $model = config('auth.providers.'.$provider.'.model');
+        $connectionModel = config('auth.providers.'.$provider.'.social_connection_model');
         $userSocial = $connectionModel::findByProvider($driver, $socicalUser->getId());
 
         if ($userSocial && ($user = $userSocial->user)) {

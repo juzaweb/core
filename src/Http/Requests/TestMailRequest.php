@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -16,7 +17,7 @@ class TestMailRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'email' => ['required', 'email:rfc'],
-		];
+            'email' => ['required', 'email:rfc'],
+        ];
     }
 }

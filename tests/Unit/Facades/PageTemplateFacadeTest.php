@@ -21,7 +21,7 @@ class PageTemplateFacadeTest extends TestCase
         $key = 'test_template';
         $options = [
             'label' => 'Test Template',
-            'blocks' => ['block1', 'block2']
+            'blocks' => ['block1', 'block2'],
         ];
 
         PageTemplate::make($key, function () use ($options) {
@@ -49,7 +49,7 @@ class PageTemplateFacadeTest extends TestCase
         ];
 
         foreach ($templatesData as $key => $data) {
-            PageTemplate::make($key, fn() => $data);
+            PageTemplate::make($key, fn () => $data);
         }
 
         $allTemplates = PageTemplate::all();

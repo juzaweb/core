@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -12,17 +13,17 @@ namespace Juzaweb\Modules\Core\Support\Routes\Resources;
 class APIResource extends Resource
 {
     /**
-     * @var array $readScopes Read scopes
+     * @var array Read scopes
      */
     protected array $readScopes;
 
     /**
-     * @var array $writeScopes Write scopes
+     * @var array Write scopes
      */
     protected array $writeScopes;
 
     /**
-     * @var array|string[] $methods API methods
+     * @var array|string[] API methods
      */
     protected array $methods = ['index', 'show', 'store', 'update', 'destroy', 'bulk'];
 
@@ -52,9 +53,6 @@ class APIResource extends Resource
 
     /**
      * Set the scope name.
-     *
-     * @param string $name
-     * @return static
      */
     public function scopeName(string $name): static
     {
@@ -65,9 +63,6 @@ class APIResource extends Resource
 
     /**
      * Set the scopes for API methods.
-     *
-     * @param array $scopes
-     * @return static
      */
     public function scopes(array $scopes): static
     {
@@ -78,8 +73,6 @@ class APIResource extends Resource
 
     /**
      * Except the bulk action in the API resource.
-     *
-     * @return static
      */
     public function exceptBulkAction(): static
     {
@@ -107,8 +100,6 @@ class APIResource extends Resource
      *
      * This method registers the API resource routes (index, show, store, update, destroy, bulk)
      * with the given controller and middleware.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -158,11 +149,11 @@ class APIResource extends Resource
         $middleware = [];
 
         if ($scopes = $this->getScopes($method)) {
-            $middleware[] = 'scope:'. implode(',', $scopes);
+            $middleware[] = 'scope:'.implode(',', $scopes);
         }
 
         if ($permissions = $this->getPermissions($method)) {
-            $middleware[] = 'permission:'. implode(',', $permissions);
+            $middleware[] = 'permission:'.implode(',', $permissions);
         }
 
         return $middleware;

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com/cms
+ *
  * @license    GNU V2
  */
 
@@ -15,14 +17,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ModelExists implements Rule
 {
-    /**
-     * @var string
-     */
     private string $modelClass;
 
-    /**
-     * @var string
-     */
     private string $modelAttribute;
 
     /**
@@ -30,22 +26,15 @@ class ModelExists implements Rule
      */
     private $closure;
 
-    /**
-     * @var string
-     */
     private string $attribute;
 
-    /**
-     * @var mixed
-     */
     private mixed $value;
 
-    public function __construct(string $modelClass, string $modelAttribute = 'id', callable $closure = null)
+    public function __construct(string $modelClass, string $modelAttribute = 'id', ?callable $closure = null)
     {
         $this->modelClass = $modelClass;
         $this->modelAttribute = $modelAttribute;
-        $this->closure = $closure ?? function () {
-        };
+        $this->closure = $closure ?? function () {};
     }
 
     public function passes($attribute, $value): bool

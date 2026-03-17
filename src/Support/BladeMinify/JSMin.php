@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://juzaweb.com/cms
+ *
  * @license    GNU V2
  */
 
@@ -17,26 +19,37 @@ use App\Support\BladeMinify\UnterminatedStringException;
 class JSMin
 {
     public const ORD_LF = 10;
+
     public const ORD_SPACE = 32;
+
     public const ACTION_KEEP_A = 1;
+
     public const ACTION_DELETE_A = 2;
+
     public const ACTION_DELETE_A_B = 3;
 
     protected $a = "\n";
+
     protected $b = '';
+
     protected $input = '';
+
     protected $inputIndex = 0;
+
     protected $inputLength = 0;
+
     protected $lookAhead = null;
+
     protected $output = '';
+
     protected $lastByteOut = '';
+
     protected $keptComment = '';
 
     /**
      * Minify Javascript.
      *
-     * @param string $js Javascript to be minified
-     *
+     * @param  string  $js  Javascript to be minified
      * @return string
      */
     public static function minify($js)
@@ -47,7 +60,7 @@ class JSMin
     }
 
     /**
-     * @param string $input
+     * @param  string  $input
      */
     public function __construct($input)
     {
@@ -66,7 +79,7 @@ class JSMin
         }
 
         $mbIntEnc = null;
-        if (function_exists('mb_strlen') && ((int)ini_get('mbstring.func_overload') & 2)) {
+        if (function_exists('mb_strlen') && ((int) ini_get('mbstring.func_overload') & 2)) {
             $mbIntEnc = mb_internal_encoding();
             mb_internal_encoding('8bit');
         }
@@ -95,17 +108,17 @@ class JSMin
                 if ($this->b === ' ') {
                     $command = self::ACTION_DELETE_A_B;
 
-                // in case of mbstring.func_overload & 2, must check for null b,
+                    // in case of mbstring.func_overload & 2, must check for null b,
                     // otherwise mb_strpos will give WARNING
                 } elseif ($this->b === null
-                    || (false === strpos('{[(+-!~', $this->b)
+                    || (strpos('{[(+-!~', $this->b) === false
                         && ! $this->isAlphaNum($this->b))) {
                     $command = self::ACTION_DELETE_A;
                 }
             } elseif (! $this->isAlphaNum($this->a)) {
                 if ($this->b === ' '
                     || ($this->b === "\n"
-                        && (false === strpos('}])+-"\'', $this->a)))) {
+                        && (strpos('}])+-"\'', $this->a) === false))) {
                     $command = self::ACTION_DELETE_A_B;
                 }
             }
@@ -125,7 +138,8 @@ class JSMin
      * ACTION_DELETE_A = Copy B to A. Get the next B.
      * ACTION_DELETE_A_B = Get the next B.
      *
-     * @param int $command
+     * @param  int  $command
+     *
      * @throws UnterminatedRegExpException|UnterminatedStringException
      */
     protected function action($command)
@@ -154,14 +168,14 @@ class JSMin
 
                 $this->lastByteOut = $this->a;
 
-            // fallthrough intentional
-            // no break
+                // fallthrough intentional
+                // no break
             case self::ACTION_DELETE_A: // 2
                 $this->a = $this->b;
                 if ($this->a === "'" || $this->a === '"' || $this->a === '`') { // string/template literal
                     $delimiter = $this->a;
                     $str = $this->a; // in case needed for exception
-                    for (;;) {
+                    for (; ;) {
                         $this->output .= $this->a;
                         $this->lastByteOut = $this->a;
 
@@ -189,18 +203,18 @@ class JSMin
                     }
                 }
 
-            // fallthrough intentional
-            // no break
+                // fallthrough intentional
+                // no break
             case self::ACTION_DELETE_A_B: // 3
                 $this->b = $this->next();
                 if ($this->b === '/' && $this->isRegexpLiteral()) {
-                    $this->output .= $this->a . $this->b;
+                    $this->output .= $this->a.$this->b;
                     $pattern = '/'; // keep entire pattern in case we need to report it in the exception
-                    for (;;) {
+                    for (; ;) {
                         $this->a = $this->get();
                         $pattern .= $this->a;
                         if ($this->a === '[') {
-                            for (;;) {
+                            for (; ;) {
                                 $this->output .= $this->a;
                                 $this->a = $this->get();
                                 $pattern .= $this->a;
@@ -214,8 +228,8 @@ class JSMin
                                 }
                                 if ($this->isEOF($this->a)) {
                                     throw new UnterminatedRegExpException(
-                                        "JSMin: Unterminated set in RegExp at byte "
-                                        . $this->inputIndex .": {$pattern}"
+                                        'JSMin: Unterminated set in RegExp at byte '
+                                        .$this->inputIndex.": {$pattern}"
                                     );
                                 }
                             }
@@ -239,7 +253,7 @@ class JSMin
                     }
                     $this->b = $this->next();
                 }
-            // end case ACTION_DELETE_A_B
+                // end case ACTION_DELETE_A_B
         }
     }
 
@@ -248,7 +262,7 @@ class JSMin
      */
     protected function isRegexpLiteral()
     {
-        if (false !== strpos("(,=:[!&|?+-~*{;", $this->a)) {
+        if (strpos('(,=:[!&|?+-~*{;', $this->a) !== false) {
             // we can't divide after these tokens
             return true;
         }
@@ -263,7 +277,7 @@ class JSMin
 
         // if the "/" follows a keyword, it must be a regexp, otherwise it's best to assume division
 
-        $subject = $this->output . trim($this->a);
+        $subject = $this->output.trim($this->a);
         if (! preg_match('/(?:case|else|in|return|typeof)$/', $subject, $m)) {
             // not a keyword
             return false;
@@ -316,7 +330,7 @@ class JSMin
     /**
      * Does $a indicate end of input?
      *
-     * @param string $a
+     * @param  string  $a
      * @return bool
      */
     protected function isEOF($a)
@@ -339,13 +353,12 @@ class JSMin
     /**
      * Return true if the character is a letter, digit, underscore, dollar sign, or non-ASCII character.
      *
-     * @param string $c
-     *
+     * @param  string  $c
      * @return bool
      */
     protected function isAlphaNum($c)
     {
-        return (preg_match('/^[a-z0-9A-Z_\\$\\\\]$/', $c) || ord($c) > 126);
+        return preg_match('/^[a-z0-9A-Z_\\$\\\\]$/', $c) || ord($c) > 126;
     }
 
     /**
@@ -377,18 +390,18 @@ class JSMin
     {
         $this->get();
         $comment = '';
-        for (;;) {
+        for (; ;) {
             $get = $this->get();
             if ($get === '*') {
                 if ($this->peek() === '/') { // end of comment reached
                     $this->get();
-                    if (0 === strpos($comment, '!')) {
+                    if (strpos($comment, '!') === 0) {
                         // preserved by YUI Compressor
                         if (! $this->keptComment) {
                             // don't prepend a newline if two comments right after one another
                             $this->keptComment = "\n";
                         }
-                        $this->keptComment .= "/*!" . substr($comment, 1) . "*/\n";
+                        $this->keptComment .= '/*!'.substr($comment, 1)."*/\n";
                     } elseif (preg_match('/^@(?:cc_on|if|elif|else|end)\\b/', $comment)) {
                         // IE conditional
                         $this->keptComment .= "/*{$comment}*/";

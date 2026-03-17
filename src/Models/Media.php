@@ -5,11 +5,11 @@ namespace Juzaweb\Modules\Core\Models;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -22,7 +22,7 @@ use Juzaweb\Modules\Core\Traits\UsedInFrontend;
 
 class Media extends Model
 {
-    use HasAPI, HasFactory, HasUuids, UsedInFrontend, SoftDeletes;
+    use HasAPI, HasFactory, HasUuids, SoftDeletes, UsedInFrontend;
 
     protected Filesystem $filesystem;
 
@@ -87,7 +87,7 @@ class Media extends Model
     public static function findByPath(string $path, ?string $disk = 'public', array $columns = ['*']): ?Model
     {
         return static::query()->where('path', $path)
-            ->when($disk, fn($q) => $q->where('disk', $disk))
+            ->when($disk, fn ($q) => $q->where('disk', $disk))
             ->first($columns);
     }
 
@@ -146,7 +146,7 @@ class Media extends Model
 
     public function scopeWhereFileType(Builder $builder, string|array $fileType): Builder
     {
-        if (!is_array($fileType)) {
+        if (! is_array($fileType)) {
             $fileType = [$fileType];
         }
 
@@ -241,8 +241,6 @@ class Media extends Model
 
     /**
      * Get the original media url.
-     *
-     * @return string|null
      */
     public function getUrlAttribute(): ?string
     {
@@ -255,8 +253,6 @@ class Media extends Model
 
     /**
      * Determine if the media is a directory.
-     *
-     * @return bool
      */
     public function getIsDirectoryAttribute(): bool
     {
@@ -344,9 +340,6 @@ class Media extends Model
 
     /**
      * Get the url to the file.
-     *
-     * @param string $conversion
-     * @return string
      */
     public function getUrl(?string $conversion = null): ?string
     {
@@ -376,11 +369,8 @@ class Media extends Model
 
     /**
      * Get the full path to the file.
-     *
-     * @param string|null $conversion
-     * @return string|null
      */
-    public function getFullPath(?string $conversion = null): null|string
+    public function getFullPath(?string $conversion = null): ?string
     {
         return $this->filesystem()->path(
             $this->getPath($conversion)
@@ -389,9 +379,6 @@ class Media extends Model
 
     /**
      * Get the path to the file on disk.
-     *
-     * @param string|null $conversion
-     * @return string|null
      */
     public function getPath(?string $conversion = null): ?string
     {
@@ -405,7 +392,7 @@ class Media extends Model
     /**
      * Get the url of the file by its path.
      *
-     * @param string $path The path of the file
+     * @param  string  $path  The path of the file
      * @return string|null The url of the file, or null if it doesn't exist
      */
     public function getUrlByPath(string $path): ?string
@@ -416,8 +403,6 @@ class Media extends Model
 
     /**
      * Get the collection of conversions.
-     *
-     * @return Collection
      */
     public function collectConversion(): Collection
     {
@@ -426,9 +411,6 @@ class Media extends Model
 
     /**
      * Generate the path for the given conversion.
-     *
-     * @param string $conversion
-     * @return string
      */
     public function generateConversionPath(string $conversion): string
     {
@@ -465,13 +447,14 @@ class Media extends Model
         );
 
         $response = $conversions->mapWithKeys(
-            fn($item, $conversion) => [$conversion => $this->getUrlByPath($item['path'])]
+            fn ($item, $conversion) => [$conversion => $this->getUrlByPath($item['path'])]
         );
 
         $srcset = $response->map(
             function ($url, $conversion) use ($conversions) {
                 $size = $conversions[$conversion]['image_size'] ?? 'autoxauto';
                 $width = explode('x', $size)[0];
+
                 return "{$url} {$width}w";
             }
         )->implode(', ');
@@ -482,8 +465,8 @@ class Media extends Model
     /**
      * Move the media file to a different disk and update its path.
      *
-     * @param string $disk The name of the disk to move the file to.
-     * @param string|null $path The new path for the file, or null to keep the same path.
+     * @param  string  $disk  The name of the disk to move the file to.
+     * @param  string|null  $path  The new path for the file, or null to keep the same path.
      * @return Media The updated media instance.
      */
     public function move(string $disk, ?string $path = null): Media
@@ -497,7 +480,7 @@ class Media extends Model
         $this->save();
 
         $this->collectConversion()->each(
-            function ($conversion, $name) use ($disk, $path) {
+            function ($conversion, $name) {
                 $conversionPath = $this->generateConversionPath($name);
 
                 $this->filesystem()->move($conversion['path'], $conversionPath);
@@ -509,8 +492,6 @@ class Media extends Model
 
     /**
      * Get the filesystem where the associated file is stored.
-     *
-     * @return Filesystem|FilesystemAdapter
      */
     public function filesystem(): Filesystem|FilesystemAdapter
     {
@@ -535,7 +516,7 @@ class Media extends Model
         $disk = cloud(true);
         $path = $this->path;
 
-        if (!$disk->exists($path)) {
+        if (! $disk->exists($path)) {
             abort(404);
         }
 
@@ -546,7 +527,7 @@ class Media extends Model
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $mimeType = mime_type_from_extension($extension);
 
-        $etag = md5($path . $lastModified);
+        $etag = md5($path.$lastModified);
 
         // 1. Xử lý Cache - Tiết kiệm băng thông
         if ($request->header('If-None-Match') === $etag) {
@@ -563,7 +544,7 @@ class Media extends Model
             && preg_match('/bytes=(\d+)-(\d*)/', $rangeHeader, $matches)
         ) {
             $start = (int) $matches[1];
-            if (!empty($matches[2])) {
+            if (! empty($matches[2])) {
                 $end = (int) $matches[2];
             }
 
@@ -585,7 +566,7 @@ class Media extends Model
             'Accept-Ranges' => 'bytes',
             'Cache-Control' => 'public, max-age=31536000',
             'ETag' => $etag,
-            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified) . ' GMT',
+            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified).' GMT',
             'Content-Disposition' => "inline; filename=\"{$filename}\"",
         ];
 
@@ -601,7 +582,7 @@ class Media extends Model
                 }
 
                 $stream = $disk->readStream($path);
-                if (!is_resource($stream)) {
+                if (! is_resource($stream)) {
                     return;
                 }
 
@@ -615,7 +596,7 @@ class Media extends Model
                 $bufferSize = 8192; // 8KB mỗi lần đọc
                 $remaining = $contentLength;
 
-                while (!feof($stream) && $remaining > 0) {
+                while (! feof($stream) && $remaining > 0) {
                     $toRead = min($bufferSize, $remaining);
                     $chunk = fread($stream, $toRead);
 

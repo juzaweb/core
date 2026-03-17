@@ -52,7 +52,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test language store with valid data
      */
-    public function testStoreLanguageWithValidData()
+    public function test_store_language_with_valid_data()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -75,7 +75,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test language store updates existing language
      */
-    public function testStoreLanguageUpdatesExisting()
+    public function test_store_language_updates_existing()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -98,7 +98,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test language store requires code
      */
-    public function testStoreLanguageRequiresCode()
+    public function test_store_language_requires_code()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -113,7 +113,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test language store requires name
      */
-    public function testStoreLanguageRequiresName()
+    public function test_store_language_requires_name()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -128,7 +128,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test language store validates code against locales config
      */
-    public function testStoreLanguageValidatesCodeAgainstConfig()
+    public function test_store_language_validates_code_against_config()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -144,7 +144,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test delete language successfully
      */
-    public function testDeleteLanguage()
+    public function test_delete_language()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -168,7 +168,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test cannot delete fallback locale
      */
-    public function testCannotDeleteFallbackLocale()
+    public function test_cannot_delete_fallback_locale()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
         $fallbackLocale = config('translatable.fallback_locale', 'en');
@@ -188,7 +188,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test cannot delete default language
      */
-    public function testCannotDeleteDefaultLanguage()
+    public function test_cannot_delete_default_language()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -207,7 +207,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test bulk delete languages
      */
-    public function testBulkDeleteLanguages()
+    public function test_bulk_delete_languages()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -231,7 +231,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test bulk set default language
      */
-    public function testBulkSetDefaultLanguage()
+    public function test_bulk_set_default_language()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -255,7 +255,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test bulk set default requires exactly one language
      */
-    public function testBulkSetDefaultRequiresExactlyOne()
+    public function test_bulk_set_default_requires_exactly_one()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -273,7 +273,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test bulk cannot delete fallback locale
      */
-    public function testBulkCannotDeleteFallbackLocale()
+    public function test_bulk_cannot_delete_fallback_locale()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
         $fallbackLocale = config('translatable.fallback_locale', 'en');
@@ -301,7 +301,7 @@ class LanguageControllerTest extends TestCase
     /**
      * Test bulk cannot delete default language
      */
-    public function testBulkCannotDeleteDefaultLanguage()
+    public function test_bulk_cannot_delete_default_language()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 

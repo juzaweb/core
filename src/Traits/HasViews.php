@@ -40,7 +40,7 @@ trait HasViews
 
     public function incrementViews($viewer, ?string $ip, int $count = 1): void
     {
-        if (!$ip) {
+        if (! $ip) {
             return;
         }
 

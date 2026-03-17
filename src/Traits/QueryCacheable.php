@@ -17,10 +17,6 @@ trait QueryCacheable
     /**
      * When invalidating automatically on update, you can specify
      * which tags to invalidate.
-     *
-     * @param  string|null  $relation
-     * @param  Collection|null  $pivotedModels
-     * @return array
      */
     public function getCacheTagsToInvalidateOnUpdate(
         ?string $relation = null,
@@ -30,7 +26,7 @@ trait QueryCacheable
 
         return [
             ...$this->getCacheBaseTags(),
-            $table . ':' . $this->id,
+            $table.':'.$this->id,
         ];
     }
 }

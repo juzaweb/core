@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -71,7 +72,7 @@ class TranslationController extends AdminController
 
     public function getDataCollection(string $locale): JsonResponse
     {
-        $modules = collect(Module::allEnabled())->map(fn($item) => $item->getAliasName())->toArray();
+        $modules = collect(Module::allEnabled())->map(fn ($item) => $item->getAliasName())->toArray();
         $theme = Theme::current();
 
         $collection = $this->translationManager->modules()
@@ -95,21 +96,23 @@ class TranslationController extends AdminController
                         ->map(
                             function ($item) use ($module) {
                                 $item['namespace'] = $module['namespace'] ?? '*';
+
                                 return $item;
                             }
                         );
                 }
             )
-            ->filter(fn($item) => !empty($item))
+            ->filter(fn ($item) => ! empty($item))
             ->flatten(1);
 
         $langs = LanguageLine::get()
-            ->keyBy(fn($item) => "{$item->namespace}-{$item->group}-{$item->key}");
+            ->keyBy(fn ($item) => "{$item->namespace}-{$item->group}-{$item->key}");
 
         $items = $collection->map(
             function ($item) use ($langs, $locale) {
                 $item['trans'] = $langs->get("{$item['namespace']}-{$item['group']}-{$item['key']}")
                     ->text[$locale] ?? $item['trans'];
+
                 return $item;
             }
         );
@@ -119,7 +122,7 @@ class TranslationController extends AdminController
 
     public function translateModel(TranslateModelRequest $request): JsonResponse
     {
-        abort_if(!config('translator.enable'), 404, __('core::translation.translation_feature_is_not_enabled'));
+        abort_if(! config('translator.enable'), 404, __('core::translation.translation_feature_is_not_enabled'));
 
         $model = decrypt($request->post('model'));
         $ids = $request->post('ids');
@@ -139,13 +142,13 @@ class TranslationController extends AdminController
         $historyIds = [];
 
         DB::transaction(
-            function () use ($model, $ids, $locale, $source, $request, &$historyIds) {
+            function () use ($model, $ids, $locale, $source, &$historyIds) {
                 $query = $model::query();
 
                 if (method_exists($model, 'translations')) {
                     $query->with(
                         [
-                            'translations' => fn($q) => $q->whereIn('locale', [$locale, $source]),
+                            'translations' => fn ($q) => $q->whereIn('locale', [$locale, $source]),
                         ]
                     );
                 }
@@ -178,9 +181,9 @@ class TranslationController extends AdminController
         $histories = \Juzaweb\Modules\Core\Translations\Models\TranslateHistory::whereIn('id', $historyIds)
             ->get(['id', 'status', 'error']);
 
-        $pending = $histories->filter(fn($h) => $h->status->isPending())->count();
-        $success = $histories->filter(fn($h) => $h->status->isSuccess())->count();
-        $failed = $histories->filter(fn($h) => $h->status->isFailed())->count();
+        $pending = $histories->filter(fn ($h) => $h->status->isPending())->count();
+        $success = $histories->filter(fn ($h) => $h->status->isSuccess())->count();
+        $failed = $histories->filter(fn ($h) => $h->status->isFailed())->count();
 
         $allCompleted = $pending === 0;
 

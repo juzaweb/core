@@ -11,9 +11,7 @@ trait HasSessionResponses
     /**
      * Handle response
      *
-     * @param array|string $data
-     * @param bool $success
-     * @return JsonResponse|RedirectResponse
+     * @param  bool  $success
      */
     protected function response(array|string $data, string $status = 'success'): JsonResponse|RedirectResponse
     {
@@ -39,7 +37,7 @@ trait HasSessionResponses
         $data['success'] = $status === 'success';
         $data['status'] = $status;
         // Return redirect response
-        if (!empty($data['redirect'])) {
+        if (! empty($data['redirect'])) {
             return redirect()->to($data['redirect'])->withInput()->with($data);
         }
 
@@ -56,9 +54,6 @@ trait HasSessionResponses
 
     /**
      * Response success message
-     *
-     * @param string|array $message
-     * @return JsonResponse|RedirectResponse
      */
     protected function success(string|array $message): JsonResponse|RedirectResponse
     {
@@ -71,9 +66,6 @@ trait HasSessionResponses
 
     /**
      * Response error message
-     *
-     * @param string|array $message
-     * @return JsonResponse|RedirectResponse
      */
     protected function error(string|array $message): JsonResponse|RedirectResponse
     {

@@ -74,6 +74,9 @@ jobs:
         run: |
           composer install --prefer-dist --no-interaction --no-progress
 
+      - name: Run Laravel Pint
+        run: vendor/bin/pint --test
+
       - name: Run Unit Tests
         env:
           DB_CONNECTION: ${{ matrix.database }}
@@ -150,6 +153,9 @@ jobs:
       - name: Install dependencies
         run: |
           composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Run Laravel Pint
+        run: vendor/bin/pint --test
 
       - name: Run Feature Tests
         env:

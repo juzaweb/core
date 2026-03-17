@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/laravel-translations
  * @author     Juzaweb Team <admin@juzaweb.com>
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    MIT
  */
 
@@ -26,8 +28,7 @@ class TranslationImporter
         protected TranslationFinder $translationFinder,
         protected Translation $translationManager,
         protected ?string $replace = null
-    ) {
-    }
+    ) {}
 
     public function run(): int
     {
@@ -59,7 +60,7 @@ class TranslationImporter
                 }
 
                 if ($model->wasRecentlyCreated) {
-                    ++ $total;
+                     $total++;
                 }
             }
         }
@@ -92,7 +93,7 @@ class TranslationImporter
             }
 
             if ($model->wasRecentlyCreated) {
-                ++$total;
+                $total++;
             }
         }
 
@@ -134,14 +135,12 @@ class TranslationImporter
     /**
      * Get all language trans
      *
-     * @param string $locale
-     * @return array
      * @throws \Exception
      */
     protected function getLocalTranslates(string $locale = 'en'): array
     {
         $result = [];
-        $jsonFile = $this->module->get('lang_path') . "/{$locale}.json";
+        $jsonFile = $this->module->get('lang_path')."/{$locale}.json";
         if (File::exists($jsonFile)) {
             $this->mapGroupKeys(
                 json_decode(File::get($jsonFile), true, 512, JSON_THROW_ON_ERROR),
@@ -152,7 +151,7 @@ class TranslationImporter
             );
         }
 
-        $transFolder = $this->module->get('lang_path') . "/{$locale}";
+        $transFolder = $this->module->get('lang_path')."/{$locale}";
 
         if (! is_dir($transFolder)) {
             return $result;
@@ -165,7 +164,7 @@ class TranslationImporter
             ->toArray();
 
         foreach ($files as $file) {
-            $lang = require($file->getRealPath());
+            $lang = require $file->getRealPath();
             $group = str_replace('.php', '', $file->getFilename());
             $this->mapGroupKeys($lang, $group, $result);
         }
@@ -182,9 +181,9 @@ class TranslationImporter
             } else {
                 $result[] = array_merge(
                     [
-                        'key' => $keyPrefix . $key,
+                        'key' => $keyPrefix.$key,
                         'value' => $item,
-                        'group' => $group
+                        'group' => $group,
                     ],
                     $namespace ? ['namespace' => $namespace] : []
                 );

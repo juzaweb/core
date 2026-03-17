@@ -28,12 +28,12 @@ class MediaException extends \Exception
 
     public static function extensionNotSupported(array $extensions): static
     {
-        return new static("File extension not supported, supported extensions: ".implode(', ', $extensions));
+        return new static('File extension not supported, supported extensions: '.implode(', ', $extensions));
     }
 
     public static function maxFileSizeExceeded(int $maxSize): static
     {
-        return new static('Maximum file size exceeded, max size: '. Media::readableSize($maxSize));
+        return new static('Maximum file size exceeded, max size: '.Media::readableSize($maxSize));
     }
 
     public static function storageLimitExceeded(int $currentUsed, int $maxStorage, int $fileSize): static

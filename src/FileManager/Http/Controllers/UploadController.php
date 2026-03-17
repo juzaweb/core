@@ -20,7 +20,7 @@ class UploadController extends FileManagerController
     {
         $folderId = $request->input('working_dir');
 
-        if (!array_key_exists($disk, config('media.disks'))) {
+        if (! array_key_exists($disk, config('media.disks'))) {
             return $this->responseUpload([trans('core::browser.invalid_disk')]);
         }
 
@@ -31,7 +31,7 @@ class UploadController extends FileManagerController
         try {
             $receiver = new FileReceiver('upload', $request, HandlerFactory::classFromRequest($request));
             if ($receiver->isUploaded() === false) {
-                throw new UploadMissingFileException();
+                throw new UploadMissingFileException;
             }
 
             $save = $receiver->receive();
@@ -49,13 +49,14 @@ class UploadController extends FileManagerController
 
             return response()->json(
                 [
-                    "done" => $handler->getPercentageDone(),
+                    'done' => $handler->getPercentageDone(),
                     'status' => true,
                 ]
             );
         } catch (Exception $e) {
             report($e);
             $this->errors[] = $e->getMessage();
+
             return $this->responseUpload($this->errors);
         }
     }
@@ -73,7 +74,7 @@ class UploadController extends FileManagerController
             $folderId = null;
         }
 
-        if (!array_key_exists($disk, config('media.disks'))) {
+        if (! array_key_exists($disk, config('media.disks'))) {
             return response()->json(['success' => false, 'message' => trans('cms::message.invalid_disk')]);
         }
 
@@ -91,6 +92,7 @@ class UploadController extends FileManagerController
         } catch (Exception $e) {
             DB::rollBack();
             report($e);
+
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
 
@@ -104,9 +106,6 @@ class UploadController extends FileManagerController
 
     /**
      * Upload file chunk to tmp disk and return path when finished.
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function uploadTemp(Request $request): JsonResponse
     {
@@ -114,7 +113,7 @@ class UploadController extends FileManagerController
             $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
             if ($receiver->isUploaded() === false) {
-                throw new UploadMissingFileException();
+                throw new UploadMissingFileException;
             }
 
             $save = $receiver->receive();
@@ -124,7 +123,7 @@ class UploadController extends FileManagerController
                 $file = $save->getFile();
 
                 // Generate unique filename
-                $filename = uniqid('tmp_', true) . '_' . $file->getClientOriginalName();
+                $filename = uniqid('tmp_', true).'_'.$file->getClientOriginalName();
 
                 // Store file to tmp disk
                 $path = $file->storeAs('', $filename, 'tmp');

@@ -23,7 +23,7 @@ class MediaRepository implements Media
      *                                            UploadedFile. Defaults to null.
      * @param  string  $disk  The name of the disk to upload to. Defaults to 'public'.
      * @param  string|null  $name  The name of the file. Defaults to null.
-     * @return MediaUploader  The instance of MediaUploader used to upload the file.
+     * @return MediaUploader The instance of MediaUploader used to upload the file.
      */
     public function upload(
         string|UploadedFile|null $source = null,
@@ -39,7 +39,6 @@ class MediaRepository implements Media
      *
      * If the mime type is unknown, returns null.
      *
-     * @param  string  $mimeType
      * @return string|null The guessed extension or null if it cannot be guessed
      *
      * @see MimeTypes
@@ -51,10 +50,6 @@ class MediaRepository implements Media
 
     /**
      * Generate a human-readable byte count string.
-     *
-     * @param  int  $bytes
-     * @param  int  $precision
-     * @return string
      */
     public function readableSize(int $bytes, int $precision = 1): string
     {
@@ -72,9 +67,6 @@ class MediaRepository implements Media
     /**
      * Sanitize the file name.
      *
-     * @param  string  $fileName
-     * @param  string|null  $mimeType
-     * @return string
      * @throws MediaException
      */
     public function sanitizeFileName(string $fileName, ?string $mimeType = null): string
@@ -101,9 +93,8 @@ class MediaRepository implements Media
      * Create an UploadedFile object from absolute path
      *
      * @static
-     * @param  string  $path
+     *
      * @param  bool  $public  default false
-     * @return UploadedFile
      */
     public function pathToUploadedFile(string $path, bool $test = false): UploadedFile
     {
@@ -120,8 +111,8 @@ class MediaRepository implements Media
     /**
      * Determines if the given file is an image.
      *
-     * @param UploadedFile|string $file The file to check. Can be an instance of UploadedFile or a string
-     * representing the path to the file.
+     * @param  UploadedFile|string  $file  The file to check. Can be an instance of UploadedFile or a string
+     *                                     representing the path to the file.
      * @return bool Returns true if the file is an image, false otherwise.
      */
     public function isImage(UploadedFile|string $file): bool
@@ -155,13 +146,13 @@ class MediaRepository implements Media
     public function validateUploadedFile(UploadedFile $file, string $disk): void
     {
         if (($mimeTypes = config("media.disks.{$disk}.mime_types", []))
-            && !in_array($file->getMimeType(), $mimeTypes)
+            && ! in_array($file->getMimeType(), $mimeTypes)
         ) {
             throw MediaException::mimeTypeNotSupported($file->getClientMimeType(), $mimeTypes);
         }
 
         if (($extensions = config("media.disks.{$disk}.extensions", []))
-            && !in_array($file->getClientOriginalExtension(), $extensions)) {
+            && ! in_array($file->getClientOriginalExtension(), $extensions)) {
             throw MediaException::extensionNotSupported($extensions);
         }
 

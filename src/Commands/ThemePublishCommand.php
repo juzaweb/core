@@ -21,6 +21,7 @@ class ThemePublishCommand extends Command
 
         if (! $theme) {
             $this->error('Theme not found');
+
             return;
         }
 
@@ -42,9 +43,9 @@ class ThemePublishCommand extends Command
     protected function publishAssets(ThemeEntity $theme): void
     {
         $sourceFolder = $theme->path('assets/public');
-        $publicFolder = public_path('themes/'. $theme->name());
+        $publicFolder = public_path('themes/'.$theme->name());
 
-        if (!File::isDirectory($publicFolder)) {
+        if (! File::isDirectory($publicFolder)) {
             File::makeDirectory($publicFolder, 0755, true, true);
         }
 
@@ -54,9 +55,9 @@ class ThemePublishCommand extends Command
     protected function publishViews(ThemeEntity $theme): void
     {
         $sourceFolder = $theme->path('src');
-        $publicFolder = resource_path('views/themes/'. $theme->name());
+        $publicFolder = resource_path('views/themes/'.$theme->name());
 
-        if (!File::isDirectory($publicFolder)) {
+        if (! File::isDirectory($publicFolder)) {
             File::makeDirectory($publicFolder, 0755, true, true);
         }
 
@@ -66,9 +67,9 @@ class ThemePublishCommand extends Command
     protected function publishLang(ThemeEntity $theme): void
     {
         $sourceFolder = $theme->path('lang');
-        $publicFolder = resource_path('lang/themes/'. $theme->name());
+        $publicFolder = resource_path('lang/themes/'.$theme->name());
 
-        if (!File::isDirectory($publicFolder)) {
+        if (! File::isDirectory($publicFolder)) {
             File::makeDirectory($publicFolder, 0755, true, true);
         }
 

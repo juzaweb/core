@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -17,6 +19,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string|null get(string $key)
  * @method static mixed make(string $key)
  * @method static array charts()
+ *
  * @see \Juzaweb\Modules\Core\Support\ChartRepository
  */
 class Chart extends Facade

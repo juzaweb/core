@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -17,7 +19,7 @@ interface Widget
 {
     public function make(string $key, callable $callback): void;
 
-    public function get(string $key): null|WidgetEntity;
+    public function get(string $key): ?WidgetEntity;
 
     public function all(): Collection;
 }

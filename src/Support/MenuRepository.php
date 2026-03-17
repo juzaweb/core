@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -37,16 +37,16 @@ class MenuRepository implements MenuContract
             function ($callback, $key) {
                 $data = $callback();
 
-                if (!$data) {
+                if (! $data) {
                     return null;
                 }
 
                 // Merge key to data
                 $data['key'] = $key;
                 $prefix = $data['prefix'] ?? 'admin';
-            
+
                 // Build URL if not set
-                if (!isset($data['url'])) {
+                if (! isset($data['url'])) {
                     if ($key === 'dashboard') {
                         $data['url'] = url($prefix ?: '');
                     } else {
@@ -54,7 +54,7 @@ class MenuRepository implements MenuContract
                     }
                 } else {
                     $data['url'] = isset($data['prefix'])
-                        ? url($data['prefix'] .'/'. ltrim($data['url'], '/'))
+                        ? url($data['prefix'].'/'.ltrim($data['url'], '/'))
                         : admin_url($data['url']);
                 }
 

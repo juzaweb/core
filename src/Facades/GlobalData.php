@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -19,14 +21,13 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed get(string $key, array $default = [])
  * @method static Collection collect(string $key, array $default = [])
  * @method static Collection all()
+ *
  * @see \Juzaweb\Modules\Core\Support\GlobalDataRepository
  */
 class GlobalData extends Facade
 {
     /**
      * Get the registered name of the component.
-     *
-     * @return string
      */
     protected static function getFacadeAccessor(): string
     {

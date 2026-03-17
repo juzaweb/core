@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -14,14 +15,13 @@ use Juzaweb\Modules\Core\Contracts\Locale as LocaleContract;
 
 /**
  * @method static string|null setLocale(string|null $locale = null)
+ *
  * @see \Juzaweb\Modules\Core\Support\LocaleRepository
  */
 class Locale extends Facade
 {
     /**
      * Get the registered name of the component.
-     *
-     * @return string
      */
     protected static function getFacadeAccessor(): string
     {

@@ -8,12 +8,13 @@ use Illuminate\Support\Arr;
 /**
  * @property bool $cacheForApi
  * @property int|null|\DateTime $cacheForApiTime // The number of seconds or the DateTime instance that specifies how long to cache the query.
+ *
  * @method static Builder|static api(array $params = [])
  * @method static Builder|static inApi(array $params = [])
  */
 trait HasAPI
 {
-    use HasResource, Filterable, Sortable, Searchable;
+    use Filterable, HasResource, Searchable, Sortable;
 
     public function apiWithDefaults(): array
     {
@@ -24,8 +25,6 @@ trait HasAPI
      * API scope, call this scope for API query
      *
      * @param  Builder|static  $builder
-     * @param  array  $params
-     * @return Builder
      */
     public function scopeApi(Builder $builder, array $params = []): Builder
     {
@@ -48,10 +47,6 @@ trait HasAPI
 
     /**
      * Scope for custom API query logic.
-     *
-     * @param Builder $builder
-     * @param array $params
-     * @return Builder
      */
     public function scopeInApi(Builder $builder, array $params = []): Builder
     {

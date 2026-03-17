@@ -53,13 +53,13 @@ class FolderController extends FileManagerController
         if (preg_match('/[^\w-]/i', $name)) {
             return response()->json([
                 'success' => false,
-                'message' => trans('core::browser.error_folder_alnum')
+                'message' => trans('core::browser.error_folder_alnum'),
             ]);
         }
 
         DB::beginTransaction();
         try {
-            $model = new Media();
+            $model = new Media;
             $model->name = $name;
             $model->type = MediaType::DIRECTORY;
             $model->parent_id = $parentId;
@@ -68,6 +68,7 @@ class FolderController extends FileManagerController
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return $e->getMessage();
         }
 

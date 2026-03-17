@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -81,6 +82,7 @@ class LanguageController extends AdminController
             $language = Language::where('code', $code)->firstOrFail();
 
             setting()->set('language', $code);
+
             return $this->success(__('core::translation.default_language_set_successfully'));
         }
 
@@ -89,7 +91,7 @@ class LanguageController extends AdminController
             ->where('code', '!=', $defaultLanguage)
             ->get();
 
-        $languages->each(fn(Language $language) => $language->delete());
+        $languages->each(fn (Language $language) => $language->delete());
 
         return $this->success(
             __('core::translation.languages_deleted_successfully')

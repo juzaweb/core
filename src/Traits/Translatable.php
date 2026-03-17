@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -32,10 +34,6 @@ trait Translatable
         return $this->morphMany(TranslateHistory::class, 'translateable');
     }
 
-    /**
-     * @param  string  $locale
-     * @return null|TranslateHistory
-     */
     public function getTranslateHistory(string $locale): ?TranslateHistory
     {
         return $this->translateHistories()->where('locale', $locale)->first();
@@ -47,7 +45,7 @@ trait Translatable
         ?array $with = null,
         bool $cache = false,
         array $cacheTags = []
-    ) : Builder {
+    ): Builder {
         $locale = $locale ?: $this->locale();
 
         return $query->with([
@@ -100,7 +98,7 @@ trait Translatable
             $options
         );
 
-        if (!$options['force'] && $this->hasTranslation($locale)) {
+        if (! $options['force'] && $this->hasTranslation($locale)) {
             throw TranslationExistException::make($locale);
         }
 
@@ -116,6 +114,7 @@ trait Translatable
             foreach ($this->translatedAttributes as $translatedAttribute) {
                 if (! isset($translation->{$translatedAttribute})) {
                     $translated[$translatedAttribute] = null;
+
                     continue;
                 }
 
@@ -123,6 +122,7 @@ trait Translatable
                     || Arr::get($this->translatedAttributeFormats, $translatedAttribute) == 'slug'
                 ) {
                     $translated[$translatedAttribute] = null;
+
                     continue;
                 }
 
@@ -159,12 +159,14 @@ trait Translatable
                 if ($newTranslation = $this->translate($locale)) {
                     $translated = array_filter($translated);
                     unset($translated['locale'], $translated['slug']);
+
                     return $newTranslation->update($translated);
                 }
 
                 $newTranslation = $translation->replicate();
                 $newTranslation->fill($translated);
                 $newTranslation->locale = $locale;
+
                 return $newTranslation->save();
             }
         );

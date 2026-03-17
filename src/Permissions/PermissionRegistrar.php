@@ -15,55 +15,39 @@ use Juzaweb\Modules\Core\Permissions\Contracts\Role;
 
 class PermissionRegistrar
 {
-    /** @var Repository */
     protected Repository $cache;
 
-    /** @var CacheManager */
     protected CacheManager $cacheManager;
 
-    /** @var string */
     protected string $permissionClass;
 
-    /** @var string */
     protected string $roleClass;
 
     /** @var Collection */
     protected $permissions;
 
-    /** @var string */
     public static string $pivotRole = 'role_id';
 
-    /** @var string */
     public static string $pivotPermission = 'permission_id';
 
-    /** @var DateInterval|int */
     public static DateInterval|int $cacheExpirationTime = 86400; // 24 hours in seconds
 
-    /** @var bool */
     public static bool $teams = false;
 
-    /** @var string */
     public static string $teamsKey = 'team_id';
 
-    /** @var int|string|null */
     protected int|string|null $teamId = null;
 
-    /** @var string */
     public static string $cacheKey = 'permissions';
 
-    /** @var array */
     private array $cachedRoles = [];
 
-    /** @var array */
     private array $alias = [];
 
-    /** @var array */
     private array $except = [];
 
     /**
      * PermissionRegistrar constructor.
-     *
-     * @param CacheManager $cacheManager
      */
     public function __construct(CacheManager $cacheManager)
     {
@@ -110,8 +94,6 @@ class PermissionRegistrar
 
     /**
      * Set the team id for teams/groups support, this id is used when querying permissions/roles
-     *
-     * @param  Model|int|string  $id
      */
     public function setPermissionsTeamId(Model|int|string $id): void
     {
@@ -121,10 +103,6 @@ class PermissionRegistrar
         $this->teamId = $id;
     }
 
-    /**
-     *
-     * @return int|string
-     */
     public function getPermissionsTeamId(): int|string|null
     {
         return $this->teamId;
@@ -133,8 +111,6 @@ class PermissionRegistrar
     /**
      * Register the permission check method on the gate.
      * We resolve the Gate fresh here, for benefit of long-running instances.
-     *
-     * @return bool
      */
     public function registerPermissions(): bool
     {
@@ -206,11 +182,6 @@ class PermissionRegistrar
 
     /**
      * Get the permissions based on the passed params.
-     *
-     * @param array $params
-     * @param bool $onlyOne
-     *
-     * @return Collection
      */
     public function getPermissions(array $params = [], bool $onlyOne = false): Collection
     {
@@ -239,8 +210,6 @@ class PermissionRegistrar
 
     /**
      * Get an instance of the permission class.
-     *
-     * @return Permission
      */
     public function getPermissionClass(): Permission
     {
@@ -258,8 +227,6 @@ class PermissionRegistrar
 
     /**
      * Get an instance of the role class.
-     *
-     * @return Role
      */
     public function getRoleClass(): Role
     {
@@ -287,9 +254,6 @@ class PermissionRegistrar
 
     /**
      * Changes array keys with alias
-     *
-     * @param $model
-     * @return array
      */
     private function aliasedArray($model): array
     {
@@ -368,7 +332,7 @@ class PermissionRegistrar
     private function getHydratedPermissionCollection()
     {
         $permissionClass = $this->getPermissionClass();
-        $permissionInstance = new $permissionClass();
+        $permissionInstance = new $permissionClass;
 
         return Collection::make(
             array_map(
@@ -394,7 +358,7 @@ class PermissionRegistrar
     private function hydrateRolesCache()
     {
         $roleClass = $this->getRoleClass();
-        $roleInstance = new $roleClass();
+        $roleInstance = new $roleClass;
 
         array_map(
             function ($item) use ($roleInstance) {

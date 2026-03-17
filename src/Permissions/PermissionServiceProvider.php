@@ -79,7 +79,7 @@ class PermissionServiceProvider extends ServiceProvider
         $bladeCompiler->directive(
             'role',
             function ($arguments) {
-                list($role, $guard) = explode(',', $arguments.',');
+                [$role, $guard] = explode(',', $arguments.',');
 
                 return "<?php if(auth({$guard})->check() && auth({$guard})->user()->hasRole({$role})): ?>";
             }
@@ -104,7 +104,7 @@ class PermissionServiceProvider extends ServiceProvider
         $bladeCompiler->directive(
             'hasrole',
             function ($arguments) {
-                list($role, $guard) = explode(',', $arguments.',');
+                [$role, $guard] = explode(',', $arguments.',');
 
                 return "<?php if(auth({$guard})->check() && auth({$guard})->user()->hasRole({$role})): ?>";
             }
@@ -135,7 +135,7 @@ class PermissionServiceProvider extends ServiceProvider
         $bladeCompiler->directive(
             'hasallroles',
             function ($arguments) {
-                list($roles, $guard) = explode(',', $arguments.',');
+                [$roles, $guard] = explode(',', $arguments.',');
 
                 return "<?php if(auth({$guard})->check() && auth({$guard})->user()->hasAllRoles({$roles})): ?>";
             }
@@ -209,7 +209,7 @@ class PermissionServiceProvider extends ServiceProvider
 
                     PermissionManager::make(
                         $permission,
-                        fn() => [
+                        fn () => [
                             'name' => $name,
                             'group' => $group,
                             'code' => $permission,

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://juzaweb.com/cms
+ *
  * @license    GNU V2
  */
 
@@ -16,16 +18,10 @@ use Illuminate\View\View;
 
 class CustomizeControl
 {
-    /**
-     * @var Customize
-     */
     protected Customize $customize;
 
     protected string $key;
 
-    /**
-     * @var Collection
-     */
     protected Collection $args;
 
     public function __construct(Customize $customize, string $key, array $args = [])

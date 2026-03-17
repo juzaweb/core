@@ -6,10 +6,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
-use Symfony\Component\Console\Output\StreamOutput;
 use Juzaweb\Modules\Core\Facades\Breadcrumb;
 use Juzaweb\Modules\Core\Facades\Module;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
+use Symfony\Component\Console\Output\StreamOutput;
 
 class ModuleController extends AdminController
 {
@@ -18,7 +18,7 @@ class ModuleController extends AdminController
         Breadcrumb::add(__('core::translation.modules'));
 
         $modules = collect(Module::all())->filter(
-            fn($module) => $module->getName() !== 'Admin'
+            fn ($module) => $module->getName() !== 'Admin'
         );
 
         return view(
@@ -33,7 +33,7 @@ class ModuleController extends AdminController
 
         $module = Module::find($request->input('module'));
 
-        if (!$module) {
+        if (! $module) {
             return $this->error(__('Module :name not found', ['name' => $request->input('module')]));
         }
 
@@ -110,7 +110,7 @@ class ModuleController extends AdminController
                 'per_page' => $limit,
             ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 return $this->error(__('core::translation.failed_to_fetch_marketplace_data'));
             }
 

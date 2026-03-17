@@ -14,6 +14,7 @@ use Juzaweb\Modules\Core\Models\Media;
 /**
  * @property array $mediaChannels
  * @property Collection $media
+ *
  * @method static Builder|static withMedia(string|array|null $channel = null)
  */
 trait HasMedia
@@ -37,8 +38,6 @@ trait HasMedia
 
     /**
      * Returns a morph to many relationship with the Media model.
-     *
-     * @return MorphToMany
      */
     public function media(): MorphToMany
     {
@@ -55,7 +54,7 @@ trait HasMedia
 
     public function scopeWithMedia(Builder $builder, string|array|null $channel = null): Builder
     {
-        if ($channel !== null && !is_array($channel)) {
+        if ($channel !== null && ! is_array($channel)) {
             $channel = [$channel];
         }
 
@@ -65,7 +64,7 @@ trait HasMedia
 
         return $builder->with(
             [
-                'media' => fn($query) => $query->wherePivotIn('channel', $channel)
+                'media' => fn ($query) => $query->wherePivotIn('channel', $channel),
             ]
         );
     }
@@ -78,17 +77,17 @@ trait HasMedia
 
         return $builder->with(
             [
-                'media' => fn($query) => $query->whereIn(
+                'media' => fn ($query) => $query->whereIn(
                     'id',
                     [$this->{$column}]
-                )
+                ),
             ]
         );
     }
 
     public function loadMedia(string|array|null $channel = null): void
     {
-        if ($channel !== null && !is_array($channel)) {
+        if ($channel !== null && ! is_array($channel)) {
             $channel = [$channel];
         }
 
@@ -99,9 +98,10 @@ trait HasMedia
      * Attaches a media object to the current instance.
      *
      * @param  Media|int|string|Collection  $media  The media object to attach. It can be an instance
-     * of the Media class, an integer representing the media ID, or a string representing the media ID.
+     *                                              of the Media class, an integer representing the media ID, or a string representing the media ID.
      * @param  string  $channel  The channel to attach the media to. Defaults to 'default'.
      * @return static The current instance with the media attached.
+     *
      * @throws ModelNotFoundException|\Throwable If the media object is not found.
      */
     public function attachMedia(Media|int|string|array|Collection $media, string $channel = 'default', bool $detach = false): static
@@ -122,20 +122,20 @@ trait HasMedia
         if ($detach) {
             $toDetach = array_diff($exists, $mediaIds);
 
-            if (!empty($toDetach)) {
+            if (! empty($toDetach)) {
                 $this->media()->detach($toDetach);
             }
         }
 
         if ($toAttach) {
             $attachParams = collect($toAttach)
-                ->mapWithKeys(fn($id) => [$id => ['channel' => $channel]])
+                ->mapWithKeys(fn ($id) => [$id => ['channel' => $channel]])
                 ->toArray();
             $this->media()->attach($attachParams);
         }
 
         if ($conversions = $this->getConversions()) {
-            if (!$media instanceof Collection) {
+            if (! $media instanceof Collection) {
                 $media = Media::findMany($mediaIds);
             }
 
@@ -156,9 +156,10 @@ trait HasMedia
      * Attach or update a media object to the current instance.
      *
      * @param  Media|int|string  $media  The media object to attach or update. It can be an instance of the Media class,
-     *                               an integer representing the media ID, or a string representing the media ID.
+     *                                   an integer representing the media ID, or a string representing the media ID.
      * @param  string  $channel  The channel to attach or update the media to. Defaults to 'default'.
      * @return static The current instance with the media attached or updated.
+     *
      * @throws \Throwable
      */
     public function attachOrUpdateMedia(Media|int|string|null $media, string $channel = 'default'): static
@@ -176,9 +177,6 @@ trait HasMedia
 
     /**
      * Determine if there is any media in the specified group.
-     *
-     * @param  string  $channel
-     * @return bool
      */
     public function hasMedia(string $channel = 'default'): bool
     {
@@ -209,9 +207,6 @@ trait HasMedia
 
     /**
      * Get the first media item in the specified channel.
-     *
-     * @param  string  $channel
-     * @return ?Media
      */
     public function getFirstMedia(string $channel = 'default'): ?Media
     {
@@ -221,13 +216,11 @@ trait HasMedia
     /**
      * Get the url of the first media item in the specified channel.
      *
-     * @param  string  $channel
      * @param  string  $conversion
-     * @return string
      */
-    public function getFirstMediaUrl(string $channel = 'default', string|null $conversion = null): ?string
+    public function getFirstMediaUrl(string $channel = 'default', ?string $conversion = null): ?string
     {
-        if (!$media = $this->getFirstMedia($channel)) {
+        if (! $media = $this->getFirstMedia($channel)) {
             return null;
         }
 
@@ -236,9 +229,6 @@ trait HasMedia
 
     /**
      * Detach the specified media.
-     *
-     * @param  int|string|Media|null  $media
-     * @return int|null
      */
     public function detachMedia(Media|int|string|null $media = null): ?int
     {
@@ -251,8 +241,6 @@ trait HasMedia
 
     /**
      * Clear all the media in the specified channel.
-     *
-     * @return int
      */
     public function clearMedia(): int
     {
@@ -262,7 +250,6 @@ trait HasMedia
     /**
      * Detach all the media in the specified channel.
      *
-     * @param  string  $channel
      * @return void
      */
     public function clearMediaChannel(string $channel = 'default'): int
@@ -306,7 +293,7 @@ trait HasMedia
     /**
      * Retrieves the conversion response for the specified media channel.
      *
-     * @param string $channel The name of the media channel. Defaults to 'default'.
+     * @param  string  $channel  The name of the media channel. Defaults to 'default'.
      * @return array|null The conversion response, or null if no media is found.
      */
     public function getConversionResponse(string $channel = 'default'): ?array
@@ -333,8 +320,7 @@ trait HasMedia
      * using the `attachOrUpdateMedia` method. After processing all the media attributes, it clears the
      * `mediaAttributes` property of the model.
      *
-     * @param mixed $model The model object to process the media attributes for.
-     * @return void
+     * @param  mixed  $model  The model object to process the media attributes for.
      */
     protected function processMediaAttributes(): void
     {
@@ -349,9 +335,6 @@ trait HasMedia
 
     /**
      * Parse the media id's from the mixed input.
-     *
-     * @param  array|Collection|Media|string  $media
-     * @return array
      */
     protected function parseMediaIds(Collection|array|Media|string $media): array
     {
@@ -373,7 +356,7 @@ trait HasMedia
 
         if (is_array($media)) {
             $media = Media::findMany(
-                collect($media)->map(fn($item) => $this->parseMediaId($item))->toArray()
+                collect($media)->map(fn ($item) => $this->parseMediaId($item))->toArray()
             )->modelKeys();
         }
 
@@ -383,8 +366,8 @@ trait HasMedia
     /**
      * Parse the media id from the mixed input.
      *
-     * @param  Media|string  $media The media object to parse, or its ID, or a path to the media file.
-     * @return string                The ID of the media object.
+     * @param  Media|string  $media  The media object to parse, or its ID, or a path to the media file.
+     * @return string The ID of the media object.
      */
     protected function parseMediaId(Media|string $media): string
     {

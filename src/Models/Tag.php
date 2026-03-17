@@ -11,7 +11,7 @@ use Juzaweb\Modules\Core\Traits\UsedInFrontend;
 
 class Tag extends Model
 {
-    use HasAPI, UsedInFrontend, HasFrontendUrl;
+    use HasAPI, HasFrontendUrl, UsedInFrontend;
 
     protected $table = 'tags';
 
@@ -35,6 +35,6 @@ class Tag extends Model
 
     public function getUrl(): string
     {
-        return home_url('search?tag=' . urlencode($this->name));
+        return home_url('search?tag='.urlencode($this->name));
     }
 }

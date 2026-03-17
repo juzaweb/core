@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -50,6 +52,7 @@ class XssBlock implements ValidationRule
         foreach ($this->patterns as $pattern) {
             if (preg_match($pattern, $value)) {
                 $fail(__('core::translation.invalid_value'));
+
                 return;
             }
         }

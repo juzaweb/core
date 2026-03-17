@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -17,7 +19,7 @@ use Juzaweb\Modules\Core\Models\Pages\Page;
 use Juzaweb\Modules\Core\Models\ThemeSidebar;
 use Juzaweb\Modules\Core\Translations\Contracts\Translatable as TranslatableContract;
 
-if (!function_exists('setting')) {
+if (! function_exists('setting')) {
     /**
      * Get or set a setting value
      *
@@ -37,7 +39,7 @@ if (!function_exists('setting')) {
     }
 }
 
-if (!function_exists('logo_url')) {
+if (! function_exists('logo_url')) {
     /**
      * Generate a URL for an asset in the current theme
      *
@@ -50,7 +52,7 @@ if (!function_exists('logo_url')) {
     }
 }
 
-if (!function_exists('widgets_sidebar')) {
+if (! function_exists('widgets_sidebar')) {
     /**
      * Retrieve widgets for a specific sidebar
      *
@@ -63,7 +65,7 @@ if (!function_exists('widgets_sidebar')) {
     }
 }
 
-if (!function_exists('active_theme')) {
+if (! function_exists('active_theme')) {
     /**
      * Get the currently active theme
      *
@@ -79,7 +81,7 @@ function nav_location(string $location): ?Menu
 {
     $locations = theme_setting('nav_location', []);
 
-    if (!isset($locations[$location])) {
+    if (! isset($locations[$location])) {
         return null;
     }
 
@@ -103,7 +105,7 @@ function loadMenuItems($items): void
 
             // Tải bản dịch thiếu (missing translations) cho các ngôn ngữ đã xác định, sử dụng cache
             $item->menuable->loadMissing([
-                'translations' => fn($q) => $q->cacheFor(3600)->whereIn('locale', $locales),
+                'translations' => fn ($q) => $q->cacheFor(3600)->whereIn('locale', $locales),
             ]);
         }
 
@@ -145,7 +147,7 @@ function page_blocks(?string $page): Collection
     }
 
     $page->loadMissing(
-        ['blocks' => fn($q) => $q->withTranslation()->cacheFor(3600)]
+        ['blocks' => fn ($q) => $q->withTranslation()->cacheFor(3600)]
     );
 
     return $page->blocks->groupBy('container') ?? collect();
@@ -187,6 +189,6 @@ function page_view_name(Page $page, string $namespace): string
 function social_login_providers(): Collection
 {
     return collect(config('core.social_login.providers', []))
-        ->map(fn($item, $key) => title_from_key($key))
+        ->map(fn ($item, $key) => title_from_key($key))
         ->filter(fn ($item, $key) => setting("{$key}_login", false));
 }

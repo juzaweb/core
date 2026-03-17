@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -25,14 +26,13 @@ use Juzaweb\Modules\Core\Contracts\Setting as SettingContract;
  * @method static Collection keys(?array $keys = null)
  * @method static Collection settings(?string $key = null)
  * @method static Collection configs()
+ *
  * @see \Juzaweb\Modules\Core\Support\SettingRepository
  */
 class Setting extends Facade
 {
     /**
      * Get the registered name of the component.
-     *
-     * @return string
      */
     protected static function getFacadeAccessor(): string
     {

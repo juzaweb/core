@@ -1,18 +1,17 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
 namespace Juzaweb\Modules\Core\Support\Dashboard;
 
-use Google\Analytics\Data\V1beta\Filter;
-use Google\Analytics\Data\V1beta\Filter\StringFilter;
-use Google\Analytics\Data\V1beta\FilterExpression;
 use Illuminate\Support\Carbon;
 use Juzaweb\Modules\Core\Support\Charts\LineChart;
 use Spatie\Analytics\Facades\Analytics;
@@ -36,7 +35,7 @@ class UsersChart extends LineChart
     {
         $guard = 'web';
         $provider = config("auth.guards.{$guard}.provider");
-        $model = config('auth.providers.' . $provider . '.model');
+        $model = config('auth.providers.'.$provider.'.model');
 
         $newUsers = $model::cacheFor(3600)
             ->whereActive()
@@ -94,7 +93,7 @@ class UsersChart extends LineChart
                     'backgroundColor' => 'rgba(153, 102, 255, 0.2)',
                     'borderColor' => 'rgba(153, 102, 255, 1)',
                     'borderWidth' => 1,
-                ]
+                ],
             ],
         ];
     }

@@ -13,9 +13,7 @@ class PerformConversions implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable;
 
-    public function __construct(protected Media|Collection $media, protected array $conversions)
-    {
-    }
+    public function __construct(protected Media|Collection $media, protected array $conversions) {}
 
     public function handle(): void
     {
@@ -47,6 +45,7 @@ class PerformConversions implements ShouldQueue
 
         $media->conversions = array_merge($media->conversions ?? [], $conversions);
         $media->save();
+
         return $media;
     }
 }

@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -27,13 +28,15 @@ class ModelTranslateCommand extends Command
         $model = $this->argument('model');
         $limit = $this->option('limit');
 
-        if (!class_exists($model)) {
+        if (! class_exists($model)) {
             $this->error("Model {$model} does not exist.");
+
             return self::FAILURE;
         }
 
-        if (!is_subclass_of($model, Translatable::class)) {
+        if (! is_subclass_of($model, Translatable::class)) {
             $this->error("Model {$model} does not implement the Translatable interface.");
+
             return self::FAILURE;
         }
 
@@ -49,7 +52,8 @@ class ModelTranslateCommand extends Command
         }
 
         if (empty($targets)) {
-            $this->info("No target languages found");
+            $this->info('No target languages found');
+
             return self::SUCCESS;
         }
 
@@ -67,6 +71,7 @@ class ModelTranslateCommand extends Command
                         foreach ($records as $record) {
                             if ($limit && $totalTranslations >= $limit) {
                                 $this->info("Translation limit of {$limit} reached. Stopping further translations.");
+
                                 return false; // Stop further processing
                             }
 

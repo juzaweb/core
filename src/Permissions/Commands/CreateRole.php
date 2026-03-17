@@ -28,7 +28,6 @@ class CreateRole extends Command
     }
 
     /**
-     * @param  array|string|null  $string
      * @return Collection|void
      */
     protected function makePermissions(null|array|string $string = null)

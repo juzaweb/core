@@ -12,7 +12,7 @@ class Guard
      * as indicated by the presence of a $guard_name property or a guardName() method on the model.
      *
      * @param  string|Model  $model  model class object or name
-     * @return Collection
+     *
      * @throws \ReflectionException
      */
     public static function getNames(Model|string $model): Collection
@@ -46,9 +46,6 @@ class Guard
      * - filter for provider models matching the model $class being checked (important for Lumen)
      * - keys() gives just the names of the matched guards
      * - return collection of guard names
-     *
-     * @param string $class
-     * @return Collection
      */
     protected static function getConfigAuthGuards(string $class): Collection
     {
@@ -71,6 +68,7 @@ class Guard
      *
      * @param  string|Model  $class  model class object or name
      * @return string guard name
+     *
      * @throws \ReflectionException
      */
     public static function getDefaultName(Model|string $class): string

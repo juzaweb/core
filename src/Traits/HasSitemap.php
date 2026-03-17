@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -34,9 +35,6 @@ trait HasSitemap
     /**
      * Scope query for sitemap items
      * Override this method to customize which items appear in sitemap
-     *
-     * @param Builder $builder
-     * @return Builder
      */
     public function scopeForSitemap(Builder $builder): Builder
     {
@@ -50,19 +48,15 @@ trait HasSitemap
     /**
      * Get the sitemap page identifier
      * Uses table name as slug by default
-     *
-     * @return string
      */
     public static function getSitemapPage(): string
     {
-        return Str::slug((new static())->getTable());
+        return Str::slug((new static)->getTable());
     }
 
     /**
      * Convert model to sitemap URL tag
      * Override this method for custom URL generation
-     *
-     * @return Url|string|array
      */
     public function toSitemapTag(): Url|string|array
     {
@@ -92,8 +86,6 @@ trait HasSitemap
     /**
      * Get the route name for this model's detail page
      * Can be overridden by setting $sitemapRoute property
-     *
-     * @return string|null
      */
     protected function getSitemapRoute(): ?string
     {
@@ -103,8 +95,6 @@ trait HasSitemap
     /**
      * Get the route parameter name (e.g., 'slug', 'id')
      * Can be overridden by setting $sitemapRouteParam property
-     *
-     * @return string
      */
     protected function getSitemapRouteParam(): string
     {

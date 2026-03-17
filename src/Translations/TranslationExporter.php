@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/laravel-translations
  * @author     Juzaweb Team <admin@juzaweb.com>
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    MIT
  */
 
@@ -18,12 +20,12 @@ use Juzaweb\Modules\Core\Translations\Models\Translation;
 class TranslationExporter
 {
     protected string $language;
+
     protected bool $force = false;
 
     public function __construct(
         protected Collection $module
-    ) {
-    }
+    ) {}
 
     public function run(): int
     {
@@ -79,23 +81,23 @@ class TranslationExporter
 
             if ($group == '*') {
                 if (! is_dir($path)) {
-                    if (!mkdir($path, 0777, true) && !is_dir($path)) {
+                    if (! mkdir($path, 0777, true) && ! is_dir($path)) {
                         throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
                     }
                 }
 
                 $this->exportFileJson($trans, $path, $language, $group);
             } else {
-                if (!is_dir("{$path}/{$language}")
-                    && !mkdir("{$path}/{$language}", 0777, true)
-                    && !is_dir("{$path}/{$language}")) {
-                        throw new \RuntimeException(sprintf('Directory "%s" was not created', "{$path}/{$language}"));
-                    }
+                if (! is_dir("{$path}/{$language}")
+                    && ! mkdir("{$path}/{$language}", 0777, true)
+                    && ! is_dir("{$path}/{$language}")) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', "{$path}/{$language}"));
+                }
 
                 $this->exportFilePHP($trans, $path, $language, $group);
             }
 
-            ++$total;
+            $total++;
         }
 
         return $total;
@@ -137,7 +139,7 @@ class TranslationExporter
             $trans = array_merge($trans, $current);
         }
 
-        $str = '<?php' . PHP_EOL.PHP_EOL . 'return ' . $this->varExport($trans) . ';' . PHP_EOL;
+        $str = '<?php'.PHP_EOL.PHP_EOL.'return '.$this->varExport($trans).';'.PHP_EOL;
         File::put("{$path}/{$language}/{$group}.php", $str);
     }
 
@@ -186,13 +188,14 @@ class TranslationExporter
     protected function varExport($expression): string
     {
         $export = var_export($expression, true);
-        $export = preg_replace("/^([ ]*)(.*)/m", '$1$1$2', $export);
+        $export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
         $array = preg_split("/\r\n|\n|\r/", $export);
         $array = preg_replace(
             ["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"],
             [null, ']$1', ' => ['],
             $array
         );
-        return join(PHP_EOL, array_filter(["["] + $array));
+
+        return implode(PHP_EOL, array_filter(['['] + $array));
     }
 }

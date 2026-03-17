@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/laravel-translations
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    MIT
  */
 
@@ -34,7 +35,7 @@ class TranslateCommand extends Command
             Translation::where('locale', $source)
                 ->whereDoesntHave(
                     'sameKeyTranslations',
-                    fn($q) => $q->where('locale', $target)
+                    fn ($q) => $q->where('locale', $target)
                 )
                 ->when($module, function ($query) use ($module) {
                     $query->where(['object_key' => $module]);
@@ -75,7 +76,6 @@ class TranslateCommand extends Command
     /**
      * Protect Laravel placeholders from being translated
      *
-     * @param string $text
      * @return array [protected text, placeholders array]
      */
     protected function protectPlaceholders(string $text): array
@@ -91,6 +91,7 @@ class TranslateCommand extends Command
                 $token = "__PLACEHOLDER_{$index}__";
                 $placeholders[$token] = $placeholder;
                 $index++;
+
                 return $token;
             },
             $text
@@ -101,10 +102,6 @@ class TranslateCommand extends Command
 
     /**
      * Restore Laravel placeholders after translation
-     *
-     * @param string $text
-     * @param array $placeholders
-     * @return string
      */
     protected function restorePlaceholders(string $text, array $placeholders): string
     {

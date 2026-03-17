@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -43,10 +44,10 @@ class PageController extends AdminController
 
         Breadcrumb::add(__('core::translation.add_new_page'));
 
-        $model = new Page();
+        $model = new Page;
         $action = action([static::class, 'store']);
         $locale = $this->getFormLanguage();
-        $templates = collect(PageTemplate::all())->map(fn($item) => $item->label);
+        $templates = collect(PageTemplate::all())->map(fn ($item) => $item->label);
 
         if ($template = $request->get('template')) {
             $template = PageTemplate::get($template);
@@ -79,7 +80,7 @@ class PageController extends AdminController
         Breadcrumb::add(__('core::translation.edit_page_name', ['name' => $model->name]));
 
         $action = action([static::class, 'update'], [$model->id]);
-        $templates = collect(PageTemplate::all())->map(fn($item) => $item->label);
+        $templates = collect(PageTemplate::all())->map(fn ($item) => $item->label);
 
         $template = null;
         if ($model->template) {
@@ -129,7 +130,7 @@ class PageController extends AdminController
                                 $locale => [
                                     'label' => $content['label'] ?? $content[$locale]['label'] ?? null,
                                     'fields' => Arr::except($content['field'] ?? [], ['label']),
-                                ]
+                                ],
                             ]
                         );
 
@@ -185,7 +186,7 @@ class PageController extends AdminController
                                 $locale => [
                                     'label' => $content['label'] ?? $content[$locale]['label'] ?? null,
                                     'fields' => Arr::except($content['field'] ?? [], ['label']),
-                                ]
+                                ],
                             ]
                         );
 
@@ -233,15 +234,18 @@ class PageController extends AdminController
         switch ($action) {
             case 'delete':
                 Page::whereIn('id', $ids)->get()->each->delete();
+
                 return $this->success(__('video-sharing::translation.selected_pages_deleted_successfully'));
             case 'draft':
                 Page::whereIn('id', $ids)->get()->each->update(['status' => PageStatus::DRAFT]);
+
                 return $this->success(__('video-sharing::translation.selected_pages_activated_successfully'));
             case 'publish':
                 Page::whereIn('id', $ids)
                     ->get()
                     ->each
                     ->update(['status' => PageStatus::PUBLISHED]);
+
                 return $this->success(__('video-sharing::translation.selected_pages_deactivated_successfully'));
             default:
                 return $this->error(__('video-sharing::translation.invalid_action'));

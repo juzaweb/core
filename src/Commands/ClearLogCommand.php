@@ -17,6 +17,7 @@ class ClearLogCommand extends Command
 
         if (! File::exists($logPath)) {
             $this->error('Log directory does not exist.');
+
             return Command::FAILURE;
         }
 

@@ -27,15 +27,11 @@ class MediaUploader
 {
     /**
      * The name of the disk to use.
-     *
-     * @var string
      */
     protected string $disk = 'public';
 
     /**
      * The source of the file to upload.
-     *
-     * @var string|UploadedFile
      */
     protected string|UploadedFile $source;
 
@@ -48,36 +44,26 @@ class MediaUploader
 
     /**
      * The name of the file to upload.
-     *
-     * @var string
      */
     protected string $newFileName;
 
     /**
      * The name of the file to upload.
-     *
-     * @var ?string
      */
     protected ?string $name = null;
 
     /**
      * The name of the file to upload.
-     *
-     * @var ?string
      */
     protected ?string $parentId = null;
 
     /**
      * User who uploaded the file.
-     *
-     * @var Authenticatable|int|null
      */
     protected null|Authenticatable|int $user = null;
 
     /**
      * Force a specific path for the uploaded file.
-     *
-     * @var ?string
      */
     protected ?string $forcedPath = null;
 
@@ -88,10 +74,9 @@ class MediaUploader
     /**
      * Creates a new instance of MediaUploader with the given arguments.
      *
-     * @param string|UploadedFile $source
-     * @param string $disk
-     * @param string $name
-     *
+     * @param  string|UploadedFile  $source
+     * @param  string  $disk
+     * @param  string  $name
      * @return static Returns the current instance of the class.
      */
     public static function make(...$args): static
@@ -100,9 +85,9 @@ class MediaUploader
     }
 
     public function __construct(
-        string|UploadedFile $source = null,
-        string              $disk = 'public',
-        string              $name = null
+        string|UploadedFile|null $source = null,
+        string $disk = 'public',
+        ?string $name = null
     ) {
         $this->source = $source;
         $this->disk = $disk;
@@ -112,7 +97,7 @@ class MediaUploader
     /**
      * Set the source of the file to upload.
      *
-     * @param string|UploadedFile $source
+     * @param  string|UploadedFile  $source
      * @return static Returns the current instance of the class.
      */
     public function source(string $source): static
@@ -125,7 +110,7 @@ class MediaUploader
     /**
      * Set the disk for the uploader.
      *
-     * @param string $disk The name of the disk.
+     * @param  string  $disk  The name of the disk.
      * @return static Returns the current instance of the class.
      */
     public function disk(string $disk): static
@@ -138,7 +123,7 @@ class MediaUploader
     /**
      * Sets the name of the object and returns the current instance.
      *
-     * @param string $name The name to set.
+     * @param  string  $name  The name to set.
      * @return static The current instance.
      */
     public function name(string $name): static
@@ -151,7 +136,7 @@ class MediaUploader
     /**
      * Sets the user who uploaded the object and returns the current instance.
      *
-     * @param Authenticatable|int $user The user to set.
+     * @param  Authenticatable|int  $user  The user to set.
      * @return static The current instance.
      */
     public function user(int|Authenticatable $user): static
@@ -164,7 +149,7 @@ class MediaUploader
     /**
      * Sets the parent id of the object and returns the current instance.
      *
-     * @param int $parent The parent id to set.
+     * @param  int  $parent  The parent id to set.
      * @return static The current instance.
      */
     public function parent(int $parent): static
@@ -177,7 +162,7 @@ class MediaUploader
     /**
      * Sets the folder id of the object and returns the current instance.
      *
-     * @param string $folder The folder id to set.
+     * @param  string  $folder  The folder id to set.
      * @return static The current instance.
      */
     public function folder(?string $folder): static
@@ -190,7 +175,7 @@ class MediaUploader
     /**
      * Force a specific path for the uploaded file (overwrite if exists).
      *
-     * @param string $path The path to force (relative to disk root).
+     * @param  string  $path  The path to force (relative to disk root).
      * @return static The current instance.
      */
     public function forcePath(string $path): static
@@ -203,7 +188,6 @@ class MediaUploader
     /**
      * Set whether to overwrite existing files.
      *
-     * @param  bool  $value
      * @return $this
      */
     public function overwrite(bool $value = true): static
@@ -216,8 +200,8 @@ class MediaUploader
     /**
      * Upload the file to the storage.
      *
-     * @param string|null $disk The name of the disk to upload to. If not provided, the
-     *  disk set in the constructor will be used.
+     * @param  string|null  $disk  The name of the disk to upload to. If not provided, the
+     *                             disk set in the constructor will be used.
      * @return Media The uploaded file.
      *
      * @throws MediaException
@@ -248,7 +232,7 @@ class MediaUploader
             }
 
             // If the source is not an instance of UploadedFile, throw an exception.
-            if (!$this->source instanceof UploadedFile) {
+            if (! $this->source instanceof UploadedFile) {
                 throw MediaException::fileNotFound($this->source);
             }
 
@@ -261,7 +245,7 @@ class MediaUploader
                     $folder = '';
                 }
 
-                if ($folder && !$this->filesystem()->directoryExists($folder)) {
+                if ($folder && ! $this->filesystem()->directoryExists($folder)) {
                     $this->filesystem()->makeDirectory($folder);
                 }
             } else {
@@ -347,18 +331,17 @@ class MediaUploader
     /**
      * Save the external URL to the database.
      *
-     * @return Media
      * @throws GuzzleException
      */
     public function saveExternalUrl(): Media
     {
         $this->uploaded = true;
 
-        if (!is_url($this->source)) {
+        if (! is_url($this->source)) {
             throw new MediaException('The source must be a valid URL.');
         }
 
-        $client = new Client();
+        $client = new Client;
         try {
             $response = $client->head($this->source, [
                 'timeout' => 10,
@@ -460,7 +443,7 @@ class MediaUploader
         if (app(MediaContract::class)->isImage($this->source)) {
             $imageSize = getimagesize($this->source->getRealPath());
 
-            return $imageSize ? $imageSize[0] . 'x' . $imageSize[1] : null;
+            return $imageSize ? $imageSize[0].'x'.$imageSize[1] : null;
         }
 
         return null;
@@ -469,8 +452,8 @@ class MediaUploader
     /**
      * Retrieves an instance of the UploadedFile class for the given file path.
      *
-     * @param string $path The path to the file.
-     * @param bool $test (optional) Whether to test the file path. Defaults to false.
+     * @param  string  $path  The path to the file.
+     * @param  bool  $test  (optional) Whether to test the file path. Defaults to false.
      * @return UploadedFile The instance of the UploadedFile class.
      */
     protected function pathToUploadedFile(string $path, bool $test = false): UploadedFile
@@ -480,10 +463,6 @@ class MediaUploader
 
     /**
      * Sanitize the file name by removing any special characters and converting to lowercase.
-     *
-     * @param string $fileName
-     * @param string|null $mimeType
-     * @return string
      */
     protected function sanitizeFileName(string $fileName, ?string $mimeType = null): string
     {
@@ -494,6 +473,7 @@ class MediaUploader
      * Downloads a file from the specified source and saves it to the temporary storage disk.
      *
      * @return string The path to the downloaded file.
+     *
      * @throws GuzzleException
      */
     protected function downloadFileUrl(): string
@@ -505,10 +485,10 @@ class MediaUploader
         ]);
         $folder = Str::random(32);
         $fileName = $this->getFileNameFromSource();
-        $filePath = $tmp->path($folder . '/' . $fileName);
+        $filePath = $tmp->path($folder.'/'.$fileName);
         $tmp->makeDirectory($folder);
 
-        (new Client())->request(
+        (new Client)->request(
             'GET',
             $this->source,
             [
@@ -516,7 +496,7 @@ class MediaUploader
                 'headers' => [
                     'timeout' => 30,
                     'connect_timeout' => 10,
-                ]
+                ],
             ]
         );
 
@@ -545,7 +525,6 @@ class MediaUploader
     /**
      * Rollback the upload by deleting the file if it exists.
      *e name of the new file.
-     * @return void
      */
     protected function rollbackUpload(): void
     {
@@ -569,14 +548,14 @@ class MediaUploader
          */
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        return time() . '-' . Str::random(32) . '.' . $extension;
+        return time().'-'.Str::random(32).'.'.$extension;
     }
 
     /**
      * Generates a unique file name by appending a number to the given file name until a
      * non-existing file name is found.
      *
-     * @param string $fileName The original file name.
+     * @param  string  $fileName  The original file name.
      * @return string The unique file name.
      */
     protected function uniqueFileName2(string $folder, string $fileName): string
@@ -597,7 +576,7 @@ class MediaUploader
 
         if (config('media.cloud_upload_enabled')) {
             while (Storage::disk('cloud_write')->exists("{$folder}/{$newFileName}.{$extension}")) {
-                $newFileName = $fileNameWithoutExtension . '-' . $i;
+                $newFileName = $fileNameWithoutExtension.'-'.$i;
                 $i++;
             }
         }
@@ -631,16 +610,16 @@ class MediaUploader
     {
         $folder = date('Y/m');
 
-        if (!$this->filesystem()->directoryExists($folder)) {
+        if (! $this->filesystem()->directoryExists($folder)) {
             $this->filesystem()->makeDirectory($folder);
         }
 
-        return $folder . '/' . ltrim($path, '/');
+        return $folder.'/'.ltrim($path, '/');
     }
 
     public function __destruct()
     {
-        if (!$this->uploaded) {
+        if (! $this->uploaded) {
             $this->upload();
         }
     }

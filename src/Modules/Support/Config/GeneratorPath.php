@@ -5,8 +5,11 @@ namespace Juzaweb\Modules\Core\Modules\Support\Config;
 class GeneratorPath
 {
     private string $path;
+
     private bool $generate;
+
     private string $namespace;
+
     protected array $options = [];
 
     public function __construct($config)
@@ -16,6 +19,7 @@ class GeneratorPath
             $this->generate = $config['generate'];
             $this->namespace = $config['namespace'] ?? $this->convertPathToNamespace($config['path']);
             $this->options = $config;
+
             return;
         }
 

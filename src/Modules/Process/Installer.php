@@ -11,60 +11,40 @@ class Installer
 {
     /**
      * The module name.
-     *
-     * @var string
      */
     protected string $name;
 
     /**
      * The version of module being installed.
-     *
-     * @var string
      */
     protected ?string $version;
 
     /**
      * The module repository instance.
-     * @var \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface
      */
     protected RepositoryInterface $repository;
 
     /**
      * The console command instance.
-     *
-     * @var \Illuminate\Console\Command
      */
     protected Command $console;
 
     /**
      * The destionation path.
-     *
-     * @var string
      */
     protected string $path;
 
     /**
      * The process timeout.
-     *
-     * @var int
      */
     protected int $timeout = 3360;
-    /**
-     * @var null|string
-     */
+
     private ?string $type;
-    /**
-     * @var bool
-     */
+
     private bool $tree;
 
     /**
      * The constructor.
-     *
-     * @param  string  $name
-     * @param  string|null  $version
-     * @param  string|null  $type
-     * @param  bool  $tree
      */
     public function __construct(string $name, ?string $version = null, ?string $type = null, bool $tree = false)
     {
@@ -77,7 +57,6 @@ class Installer
     /**
      * Set destination path.
      *
-     * @param  string  $path
      *
      * @return $this
      */
@@ -90,7 +69,7 @@ class Installer
 
     /**
      * Set the module repository instance.
-     * @param  \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface  $repository
+     *
      * @return $this
      */
     public function setRepository(RepositoryInterface $repository)
@@ -103,7 +82,6 @@ class Installer
     /**
      * Set console command instance.
      *
-     * @param  \Illuminate\Console\Command  $console
      *
      * @return $this
      */
@@ -117,7 +95,6 @@ class Installer
     /**
      * Set process timeout.
      *
-     * @param  int  $timeout
      *
      * @return $this
      */

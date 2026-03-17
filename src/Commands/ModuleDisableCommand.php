@@ -29,7 +29,7 @@ class ModuleDisableCommand extends Command
     {
         $this->components->info('Disabling module ...');
 
-        if ($name = $this->argument('module') ) {
+        if ($name = $this->argument('module')) {
             $this->disable($name);
 
             return 0;
@@ -58,14 +58,13 @@ class ModuleDisableCommand extends Command
     /**
      * disable
      *
-     * @param  string|Module  $name
      * @return void
      */
     public function disable(string|Module $name)
     {
         if ($name instanceof Module) {
             $module = $name;
-        }else {
+        } else {
             $module = $this->laravel['modules']->findOrFail($name);
         }
 

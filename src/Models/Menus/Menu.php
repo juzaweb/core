@@ -30,7 +30,7 @@ class Menu extends Model
     {
         return $builder->with(
             [
-                'items' => fn($q) => $q
+                'items' => fn ($q) => $q
                     ->whereRoot()
                     ->whereFrontend(),
             ]
@@ -41,10 +41,10 @@ class Menu extends Model
     {
         return $builder->with(
             [
-                'items' => fn($q) => $q->withTranslation($locale)
+                'items' => fn ($q) => $q->withTranslation($locale)
                     ->with(['menuable'])
                     ->whereRoot()
-                    ->withAllChildren($locale, ['menuable'])
+                    ->withAllChildren($locale, ['menuable']),
             ]
         );
     }

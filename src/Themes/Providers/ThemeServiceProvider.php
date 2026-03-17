@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -31,7 +31,7 @@ class ThemeServiceProvider extends ServiceProvider
             ThemeActivatorInterface::class,
             function ($app) {
                 $activator = $app['config']->get('themes.activator');
-                $class = $app['config']->get('themes.activators.' . $activator)['class'];
+                $class = $app['config']->get('themes.activators.'.$activator)['class'];
 
                 if ($class === null) {
                     throw new \InvalidArgumentException('Theme activator class not configured');

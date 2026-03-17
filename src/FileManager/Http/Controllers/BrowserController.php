@@ -3,8 +3,8 @@
 /**
  * LARABIZ CMS - Full SPA Laravel CMS
  *
- * @package    larabizcms/larabiz
  * @author     The Anh Dang
+ *
  * @link       https://larabiz.com
  */
 
@@ -118,6 +118,7 @@ class BrowserController extends FileManagerController
         foreach ($itemNames as $file) {
             if (is_null($file)) {
                 $errors[] = parent::error('folder-name');
+
                 continue;
             }
 

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -93,7 +95,7 @@ class MenuItem extends Model implements TranslatableContract
                 $q->withTranslation($locale);
                 $q->withAllChildren($locale);
                 $q->orderBy('display_order');
-            }
+            },
         ]);
     }
 
@@ -123,11 +125,11 @@ class MenuItem extends Model implements TranslatableContract
             return null;
         }
 
-        if (!class_exists($this->menuable_type) || !$this->menuable) {
+        if (! class_exists($this->menuable_type) || ! $this->menuable) {
             return null;
         }
 
-        if (!method_exists($this->menuable, 'getEditUrl')) {
+        if (! method_exists($this->menuable, 'getEditUrl')) {
             return null;
         }
 
@@ -173,11 +175,11 @@ class MenuItem extends Model implements TranslatableContract
             return $this->link;
         }
 
-        if (!class_exists($this->menuable_type) || !$this->menuable) {
+        if (! class_exists($this->menuable_type) || ! $this->menuable) {
             return null;
         }
 
-        if (!method_exists($this->menuable, 'getUrl')) {
+        if (! method_exists($this->menuable, 'getUrl')) {
             return null;
         }
 

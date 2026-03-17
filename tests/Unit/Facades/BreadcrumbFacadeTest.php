@@ -45,7 +45,7 @@ class BreadcrumbFacadeTest extends TestCase
             [
                 'title' => 'New 2',
                 'url' => '/new2',
-            ]
+            ],
         ];
 
         Breadcrumb::items($newItems);
@@ -61,7 +61,7 @@ class BreadcrumbFacadeTest extends TestCase
             [
                 'title' => 'Second',
                 'url' => '/second',
-            ]
+            ],
         ];
 
         Breadcrumb::addItems($moreItems);

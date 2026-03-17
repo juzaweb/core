@@ -13,6 +13,7 @@ use OpenApi\Annotations as OA;
  * @OA\Schema(
  *      schema="NotificationResource",
  *      properties={
+ *
  *          @OA\Property(property="title", type="string"),
  *          @OA\Property(property="type", type="string"),
  *          @OA\Property(property="data", type="object"),
@@ -28,7 +29,6 @@ class NotificationResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray(Request $request): array

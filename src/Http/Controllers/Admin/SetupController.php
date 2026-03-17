@@ -107,25 +107,25 @@ class SetupController extends AdminController
                         ],
                     ]);
 
-                    if (!setting('title')) {
+                    if (! setting('title')) {
                         setting()?->set('title', 'Juzaweb');
                     }
 
-                    if (!setting('description')) {
+                    if (! setting('description')) {
                         setting()?->set('description', 'Just another Juzaweb site');
                     }
-                    if (!setting('language')) {
+                    if (! setting('language')) {
                         setting()?->set('language', 'en');
                     }
 
-                    if (!setting('theme')) {
+                    if (! setting('theme')) {
                         $theme = Theme::all()->first()?->name();
                         if ($theme) {
                             setting()?->set('theme', $theme);
                         }
                     }
 
-                    if (!setting('sitename')) {
+                    if (! setting('sitename')) {
                         $host = $request->getHost();
                         $siteName = generate_site_name_from_host($host);
                         setting()?->set('sitename', $siteName);
@@ -152,6 +152,7 @@ class SetupController extends AdminController
             ]);
         } catch (\Exception $e) {
             report($e);
+
             return $this->error(__('core::translation.setup_failed_error', ['error' => $e->getMessage()]));
         }
     }

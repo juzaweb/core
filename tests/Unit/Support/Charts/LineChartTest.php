@@ -10,7 +10,8 @@ class LineChartTest extends TestCase
 {
     public function test_render_returns_view()
     {
-        $chart = new class extends LineChart {
+        $chart = new class extends LineChart
+        {
             public function getTitle(): string
             {
                 return 'Test Line Chart';
@@ -37,7 +38,8 @@ class LineChartTest extends TestCase
 
     public function test_make_returns_instance()
     {
-        $chartClass = new class extends LineChart {
+        $chartClass = new class extends LineChart
+        {
             public function getTitle(): string
             {
                 return 'Make Test Chart';

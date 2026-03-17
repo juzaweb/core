@@ -4,7 +4,6 @@ namespace Juzaweb\Modules\Core\Models;
 
 class PageViewHistory extends Model
 {
-
     protected $table = 'page_view_histories';
 
     protected $fillable = [

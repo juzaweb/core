@@ -2,16 +2,16 @@
 
 namespace Juzaweb\Modules\Core\Tests\Unit\Mail;
 
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Juzaweb\Modules\Core\Mail\Test;
 use Juzaweb\Modules\Core\Tests\TestCase;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Content;
 
 class TestTest extends TestCase
 {
     public function test_envelope_returns_correct_subject()
     {
-        $mail = new Test();
+        $mail = new Test;
         $envelope = $mail->envelope();
 
         $this->assertInstanceOf(Envelope::class, $envelope);
@@ -20,7 +20,7 @@ class TestTest extends TestCase
 
     public function test_content_returns_correct_view()
     {
-        $mail = new Test();
+        $mail = new Test;
         $content = $mail->content();
 
         $this->assertInstanceOf(Content::class, $content);

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -23,10 +25,6 @@ trait HasMeta
 
     /**
      * Get meta value
-     *
-     * @param string $key
-     * @param mixed $default
-     * @return string|array
      */
     public function getMeta(string $key, mixed $default = null): string|array|null
     {
@@ -35,21 +33,12 @@ trait HasMeta
 
     /**
      * Get all meta data
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getMetas(): Collection
     {
         return $this->metas;
     }
 
-    /**
-     * @param  Builder  $builder
-     * @param  string  $key
-     * @param  string|array|int|null  $value
-     *
-     * @return Builder
-     */
     public function scopeWhereMeta(Builder $builder, string $key, string|array|int|null $value): Builder
     {
         return $builder->whereHas(
@@ -71,9 +60,9 @@ trait HasMeta
     /**
      * A scope to filter the builder based on meta key and values.
      *
-     * @param Builder $builder The query builder instance
-     * @param string $key The meta key to filter by
-     * @param array $values The array of meta values to filter by
+     * @param  Builder  $builder  The query builder instance
+     * @param  string  $key  The meta key to filter by
+     * @param  array  $values  The array of meta values to filter by
      * @return Builder The modified query builder instance
      */
     public function scopeWhereMetaIn(Builder $builder, string $key, array $values): Builder
@@ -93,18 +82,17 @@ trait HasMeta
     /**
      * Set a meta value for the model.
      *
-     * @param string $key The meta key to set
-     * @param string|array|int|null $value The value to set
-     * @return void
+     * @param  string  $key  The meta key to set
+     * @param  string|array|int|null  $value  The value to set
      */
     public function setMeta(string $key, string|array|int|null $value): void
     {
         $this->metas()->updateOrCreate(
             [
-                'meta_key' => $key
+                'meta_key' => $key,
             ],
             [
-                'meta_value' => is_array($value) ? json_encode($value, JSON_THROW_ON_ERROR) : $value
+                'meta_value' => is_array($value) ? json_encode($value, JSON_THROW_ON_ERROR) : $value,
             ]
         );
     }
@@ -112,8 +100,7 @@ trait HasMeta
     /**
      * Delete a meta value by its key.
      *
-     * @param string $key The meta key to delete
-     * @return bool
+     * @param  string  $key  The meta key to delete
      */
     public function deleteMeta(string $key): bool
     {
@@ -125,8 +112,7 @@ trait HasMeta
     /**
      * Delete multiple meta values by their keys.
      *
-     * @param array $keys The array of meta keys to delete
-     * @return bool
+     * @param  array  $keys  The array of meta keys to delete
      */
     public function deleteMetas(array $keys): bool
     {
@@ -138,8 +124,7 @@ trait HasMeta
     /**
      * Synchronize the given meta values with the existing ones.
      *
-     * @param array $data The array of meta values to synchronize. The keys are the meta keys and the values are the meta values.
-     * @return void
+     * @param  array  $data  The array of meta values to synchronize. The keys are the meta keys and the values are the meta values.
      */
     public function syncMetas(array $data = []): void
     {
@@ -151,8 +136,7 @@ trait HasMeta
     /**
      * Synchronize the given meta values with the existing ones without detaching the removed ones.
      *
-     * @param array $data The array of meta values to synchronize. The keys are the meta keys and the values are the meta values.
-     * @return void
+     * @param  array  $data  The array of meta values to synchronize. The keys are the meta keys and the values are the meta values.
      */
     public function syncMetasWithoutDetaching(array $data = []): void
     {

@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -12,11 +12,11 @@ namespace Juzaweb\Modules\Core\Http\DataTables;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Juzaweb\Modules\Admin\Models\User;
 use Juzaweb\Modules\Core\DataTables\Action;
 use Juzaweb\Modules\Core\DataTables\BulkAction;
 use Juzaweb\Modules\Core\DataTables\Column;
 use Juzaweb\Modules\Core\DataTables\DataTable;
-use Juzaweb\Modules\Admin\Models\User;
 
 class UsersDataTable extends DataTable
 {

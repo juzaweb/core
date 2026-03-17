@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -21,7 +22,7 @@ use Juzaweb\Modules\Core\Traits\HasSlug;
 
 class PageTranslation extends Model implements Sitemapable
 {
-    use HasDescription, HasMedia, HasSlug, HasSitemap;
+    use HasDescription, HasMedia, HasSitemap, HasSlug;
 
     protected $table = 'page_translations';
 
@@ -73,6 +74,7 @@ class PageTranslation extends Model implements Sitemapable
     {
         if (is_null($value)) {
             $this->detachMedia('thumbnail');
+
             return;
         }
 

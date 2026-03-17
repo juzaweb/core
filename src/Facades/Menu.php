@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array|null get(string $key)
  * @method static Collection getByPosition(string $position)
  * @method static Collection all()
+ *
  * @see \Juzaweb\Modules\Core\Support\MenuRepository
  */
 class Menu extends Facade

@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property array $searchable
+ *
  * @method static static|Builder search(string $keyword)
  * @method static static|Builder additionSearch(string $keyword)
  */
@@ -24,8 +25,6 @@ trait Searchable
      * - 'field': the field name in the request
      *
      * @param  static|Builder  $query
-     * @param  string  $keyword
-     * @return Builder
      */
     public function scopeSearch(Builder $query, string $keyword): Builder
     {
@@ -44,6 +43,7 @@ trait Searchable
                     $col = Str::ucfirst(Str::camel($column['column']));
                     if (method_exists($this, "scope{$col}Searchable")) {
                         $query->{"scope{$col}Searchable"}($keyword);
+
                         continue;
                     }
 
@@ -88,8 +88,6 @@ trait Searchable
      * - 'table': the table name in the database
      * - 'type': the type of the filter (either 'table' or 'relation')
      * - 'field': the field name in the request
-     *
-     * @return array
      */
     public function parseSearchableFields(): array
     {
@@ -100,8 +98,8 @@ trait Searchable
                 /**
                  * Format the searchable fields for the model.
                  *
-                 * @param mixed $value
-                 * @param string $key
+                 * @param  mixed  $value
+                 * @param  string  $key
                  * @return array
                  */
                 function ($value, $key) use ($tlb) {

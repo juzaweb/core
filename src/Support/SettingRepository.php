@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com/cms
+ *
  * @license    GNU V2
  */
 
@@ -87,13 +89,13 @@ class SettingRepository implements SettingContract
         $model = Model::withoutEvents(
             function () use ($key, $value) {
                 return SettingModel::updateOrCreate(
-                        [
-                            'code' => $key,
-                        ],
-                        [
-                            'value' => $value,
-                        ]
-                    );
+                    [
+                        'code' => $key,
+                    ],
+                    [
+                        'value' => $value,
+                    ]
+                );
             }
         );
 
@@ -164,7 +166,7 @@ class SettingRepository implements SettingContract
         }
 
         if (File::missing(storage_path('app/installed'))) {
-            return new Collection();
+            return new Collection;
         }
 
         $this->configs = SettingModel::with(['translations' => fn ($q) => $q->cacheFor(3600)])

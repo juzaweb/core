@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -30,6 +31,7 @@ class Column extends BaseColumn
         $column->addClass('text-center');
         $column->width('80px');
         $column->orderable(false);
+
         return $column;
     }
 
@@ -41,7 +43,7 @@ class Column extends BaseColumn
      * title, centers the text, and sets a fixed width of 30 pixels. It also
      * disables ordering, exporting, and searching.
      *
-     * @param string $title The title of the column.
+     * @param  string  $title  The title of the column.
      * @return static Returns a configured Column instance for checkbox.
      */
     public static function checkbox($title = ''): static
@@ -63,8 +65,8 @@ class Column extends BaseColumn
      * text, and sets the initial visibility to the given value. It also sets
      * the default field name to "id".
      *
-     * @param string $id The field name to use for the record ID.
-     * @param bool $visible The initial visibility of the column.
+     * @param  string  $id  The field name to use for the record ID.
+     * @param  bool  $visible  The initial visibility of the column.
      * @return static Returns a configured Column instance for the record ID.
      */
     public static function id(?string $id = null, bool $visible = false): static
@@ -73,14 +75,13 @@ class Column extends BaseColumn
         $column->visible($visible);
         $column->title(__('core::translation.id'));
         $column->addClass('text-center');
+
         return $column;
     }
 
     /**
      * Create a column for the row index.
      * This column is not orderable or searchable.
-     *
-     * @return static
      */
     public static function rowIndex(): static
     {
@@ -89,6 +90,7 @@ class Column extends BaseColumn
         $column->addClass('text-center');
         $column->orderable(false);
         $column->searchable(false);
+
         return $column;
     }
 
@@ -102,14 +104,13 @@ class Column extends BaseColumn
         $column->offsetSet('url', $editUrl);
         $column->searchable(false);
         $column->orderable(false);
+
         return $column;
     }
 
     /**
      * Create a column for the "created_at" timestamp.
      * This column is not searchable and is displayed with a width of 150px.
-     *
-     * @return static
      */
     public static function createdAt(): static
     {
@@ -124,8 +125,6 @@ class Column extends BaseColumn
     /**
      * Create a column for the "updated_at" timestamp.
      * This column is not searchable and is displayed with a width of 150px.
-     *
-     * @return static
      */
     public static function updatedAt(): static
     {

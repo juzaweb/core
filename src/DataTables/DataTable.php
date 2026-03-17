@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -55,9 +57,6 @@ abstract class DataTable extends BaseDataTable
 
     /**
      * Create and configure an EloquentDataTable instance.
-     *
-     * @param QueryBuilder $query
-     * @return EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -138,8 +137,6 @@ abstract class DataTable extends BaseDataTable
 
     /**
      * Get bulk actions.
-     *
-     * @return array
      */
     public function bulkActions(): array
     {
@@ -154,7 +151,7 @@ abstract class DataTable extends BaseDataTable
      * as an instance of the Action class and may include properties such as
      * the action's label, URL, icon, etc.
      *
-     * @param Model $model The model instance for which actions are to be retrieved.
+     * @param  Model  $model  The model instance for which actions are to be retrieved.
      * @return array An array of Action instances representing the available actions.
      */
     public function actions(Model $model): array
@@ -183,8 +180,6 @@ abstract class DataTable extends BaseDataTable
 
     /**
      * Checks if the checkbox column is enabled.
-     *
-     * @return bool
      */
     protected function hasCheckboxColumn(): bool
     {
@@ -194,7 +189,7 @@ abstract class DataTable extends BaseDataTable
     /**
      * Checks if a column exists by given name.
      *
-     * @param string $name The name of the column to check.
+     * @param  string  $name  The name of the column to check.
      * @return bool True if the column exists, otherwise false.
      */
     protected function hasColumn(string $name): bool
@@ -205,7 +200,7 @@ abstract class DataTable extends BaseDataTable
     /**
      * Gets a column by name.
      *
-     * @param string $name The name of the column to retrieve.
+     * @param  string  $name  The name of the column to retrieve.
      * @return Column|null The column instance if found, otherwise null.
      */
     protected function getColumn(string $name): ?Column

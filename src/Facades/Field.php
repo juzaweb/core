@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -30,14 +32,13 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Juzaweb\Modules\Core\Support\Fields\Date date(string|Model $label, string $name, array $options = [])
  * @method static \Juzaweb\Modules\Core\Support\Fields\Security security(string|Model $label, string $name, array $options = [])
  * @method static \Juzaweb\Modules\Core\Support\Fields\Currency currency(string|Model $label, string $name, array $options = [])
+ *
  * @see \Juzaweb\Modules\Core\Support\FieldFactory
  */
 class Field extends Facade
 {
     /**
      * Get the registered name of the component.
-     *
-     * @return string
      */
     protected static function getFacadeAccessor(): string
     {

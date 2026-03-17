@@ -2,9 +2,9 @@
 
 namespace Juzaweb\Modules\Core\Tests\Feature;
 
-use Juzaweb\Modules\Core\Tests\TestCase;
 use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
 use Juzaweb\Modules\Core\Modules\Module;
+use Juzaweb\Modules\Core\Tests\TestCase;
 use Mockery;
 
 class ModuleUpdateCommandTest extends TestCase
@@ -31,9 +31,9 @@ class ModuleUpdateCommandTest extends TestCase
         // It also calls update($name) (string) after the task.
         // So we expect 'update' to be called at least once.
         $repository->shouldReceive('update')
-            ->with(Mockery::on(function($arg) use ($moduleName, $module) {
+            ->with(Mockery::on(function ($arg) use ($moduleName, $module) {
                 // Accepts either the Module object or the module name string
-                return $arg === $module || (string)$arg === $moduleName;
+                return $arg === $module || (string) $arg === $moduleName;
             }))
             ->atLeast()->once();
 

@@ -11,7 +11,7 @@ use Juzaweb\Modules\Core\Tests\TestCase;
 
 class AuthTest extends TestCase
 {
-    use WithoutMiddleware, DatabaseTransactions;
+    use DatabaseTransactions, WithoutMiddleware;
 
     protected function setUp(): void
     {
@@ -20,11 +20,10 @@ class AuthTest extends TestCase
         $this->defineDatabaseMigrations();
     }
 
-
     /**
      * Test login with valid credentials
      */
-    public function testLoginWithValidCredentials()
+    public function test_login_with_valid_credentials()
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
@@ -47,7 +46,7 @@ class AuthTest extends TestCase
     /**
      * Test login with invalid credentials
      */
-    public function testLoginWithInvalidCredentials()
+    public function test_login_with_invalid_credentials()
     {
         User::factory()->create([
             'email' => 'test@example.com',
@@ -70,7 +69,7 @@ class AuthTest extends TestCase
     /**
      * Test login requires email
      */
-    public function testLoginRequiresEmail()
+    public function test_login_requires_email()
     {
         $response = $this->postJson('/user/login', [
             'password' => 'password123',
@@ -83,7 +82,7 @@ class AuthTest extends TestCase
     /**
      * Test login requires password
      */
-    public function testLoginRequiresPassword()
+    public function test_login_requires_password()
     {
         $response = $this->postJson('/user/login', [
             'email' => 'test@example.com',
@@ -96,7 +95,7 @@ class AuthTest extends TestCase
     /**
      * Test register with valid data
      */
-    public function testRegisterWithValidData()
+    public function test_register_with_valid_data()
     {
         $response = $this->postJson('/user/register', [
             'name' => 'New User',
@@ -119,7 +118,7 @@ class AuthTest extends TestCase
     /**
      * Test register requires name
      */
-    public function testRegisterRequiresName()
+    public function test_register_requires_name()
     {
         $response = $this->postJson('/user/register', [
             'email' => 'newuser@example.com',
@@ -134,7 +133,7 @@ class AuthTest extends TestCase
     /**
      * Test register requires email
      */
-    public function testRegisterRequiresEmail()
+    public function test_register_requires_email()
     {
         $response = $this->postJson('/user/register', [
             'name' => 'New User',
@@ -149,7 +148,7 @@ class AuthTest extends TestCase
     /**
      * Test register requires unique email
      */
-    public function testRegisterRequiresUniqueEmail()
+    public function test_register_requires_unique_email()
     {
         User::factory()->create([
             'email' => 'existing@example.com',
@@ -169,7 +168,7 @@ class AuthTest extends TestCase
     /**
      * Test register requires password
      */
-    public function testRegisterRequiresPassword()
+    public function test_register_requires_password()
     {
         $response = $this->postJson('/user/register', [
             'name' => 'New User',
@@ -183,7 +182,7 @@ class AuthTest extends TestCase
     /**
      * Test forgot password with valid email
      */
-    public function testForgotPasswordWithValidEmail()
+    public function test_forgot_password_with_valid_email()
     {
         User::factory()->create([
             'email' => 'test@example.com',
@@ -202,7 +201,7 @@ class AuthTest extends TestCase
     /**
      * Test forgot password with invalid email
      */
-    public function testForgotPasswordWithInvalidEmail()
+    public function test_forgot_password_with_invalid_email()
     {
         $response = $this->postJson('/user/forgot-password', [
             'email' => 'nonexistent@example.com',
@@ -218,7 +217,7 @@ class AuthTest extends TestCase
     /**
      * Test reset password with valid token
      */
-    public function testResetPasswordWithValidToken()
+    public function test_reset_password_with_valid_token()
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
@@ -244,7 +243,7 @@ class AuthTest extends TestCase
     /**
      * Test reset password with invalid token
      */
-    public function testResetPasswordWithInvalidToken()
+    public function test_reset_password_with_invalid_token()
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
@@ -265,7 +264,7 @@ class AuthTest extends TestCase
     /**
      * Test email verification with valid link
      */
-    public function testEmailVerificationWithValidLink()
+    public function test_email_verification_with_valid_link()
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
@@ -287,7 +286,7 @@ class AuthTest extends TestCase
     /**
      * Test email verification with invalid hash
      */
-    public function testEmailVerificationWithInvalidHash()
+    public function test_email_verification_with_invalid_hash()
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
@@ -307,7 +306,7 @@ class AuthTest extends TestCase
     /**
      * Test logout
      */
-    public function testLogout()
+    public function test_logout()
     {
         $user = User::factory()->create();
 

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -46,6 +48,7 @@ class MakeUserCommand extends Command
 
         if ($validator->fails()) {
             $this->error($validator->errors()->all()[0]);
+
             return self::FAILURE;
         }
 

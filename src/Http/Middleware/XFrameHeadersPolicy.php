@@ -10,8 +10,6 @@ class XFrameHeadersPolicy
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -30,7 +28,6 @@ class XFrameHeadersPolicy
          *
          * For more information,
          * access: https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html
-         *
          */
         $response = $next($request);
 

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -26,6 +28,7 @@ class ThemeActiveCommand extends Command
 
         if ($theme === null) {
             $this->error("Theme {$themeName} does not exists.");
+
             return self::FAILURE;
         }
 

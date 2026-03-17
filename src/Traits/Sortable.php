@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 /**
  * @property array $sortable
  * @property array $sortDefault
+ *
  * @method static static|Builder sort(array $params)
  * @method static static|Builder additionSort(array $params)
  */
@@ -22,8 +23,6 @@ trait Sortable
      * The order can be changed by passing the 'sort_order' parameter in the $params array.
      *
      * @param  Builder|static  $query
-     * @param  array  $params
-     * @return Builder
      */
     public function scopeSort(Builder $query, array $params): Builder
     {
@@ -40,19 +39,19 @@ trait Sortable
         }
 
         // If the sort_by parameter is not an array, make it an array
-        if (!is_array($sortBys)) {
+        if (! is_array($sortBys)) {
             $sortBys = [$sortBys];
         }
 
         // If the sort_order parameter is not an array, make it an array
-        if (!is_array($sortOrders)) {
+        if (! is_array($sortOrders)) {
             $sortOrders = [$sortOrders];
         }
 
         // Loop through the columns to sort
         foreach ($sortBys as $index => $sortBy) {
             // If the column is not in the $sortable array, skip it
-            if (!in_array($sortBy, $sorts)) {
+            if (! in_array($sortBy, $sorts)) {
                 continue;
             }
 
@@ -60,7 +59,7 @@ trait Sortable
             $sortOrder = $sortOrders[$index] ?? 'DESC';
 
             // If the sort order is not valid, set it to 'DESC'
-            if (!in_array(Str::upper($sortOrder), ['ASC', 'DESC'])) {
+            if (! in_array(Str::upper($sortOrder), ['ASC', 'DESC'])) {
                 $sortOrder = 'DESC';
             }
 

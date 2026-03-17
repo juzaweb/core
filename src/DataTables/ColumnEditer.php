@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -16,11 +17,6 @@ class ColumnEditer
 {
     /**
      * Create a column of actions.
-     *
-     * @param Model $model
-     * @param array $actions
-     * @param string $endpoint
-     * @return View
      */
     public static function actions(Model $model, array $actions, string $endpoint): View
     {
@@ -46,10 +42,6 @@ class ColumnEditer
 
     /**
      * Create a column of checkboxes.
-     *
-     * @param  Model  $model
-     * @param  string  $rowId
-     * @return View
      */
     public static function checkbox(Model $model, string $rowId = 'id'): View
     {

@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -39,6 +40,7 @@ class Language extends Model
             ->map(function ($item) {
                 $item->regional = config("locales.{$item->code}.regional");
                 $item->country = explode('_', strtolower($item->regional))[1] ?? null;
+
                 return $item;
             })
             ->keyBy('code');
@@ -90,9 +92,9 @@ class Language extends Model
             // $url = url($path) . (request()->getQueryString() ? '?' . request()->getQueryString() : '');
 
             if ($code === static::default()) {
-                $url = url('/?hl=' . $code);
+                $url = url('/?hl='.$code);
             } else {
-                $url = url($code . '/?hl=' . $code);
+                $url = url($code.'/?hl='.$code);
             }
         } elseif ($multipleLanguageConfig === 'subdomain') {
             $host = request()->getHost();
@@ -103,7 +105,7 @@ class Language extends Model
                 array_unshift($hostParts, $code);
             }
             $newHost = implode('.', $hostParts);
-            $url = request()->getScheme() . '://' . $newHost; // . request()->getRequestUri();
+            $url = request()->getScheme().'://'.$newHost; // . request()->getRequestUri();
         }
 
         return $url;

@@ -28,7 +28,7 @@ return new class extends Migration
                 'name' => 'English',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
         ]);
     }
 

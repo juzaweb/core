@@ -7,16 +7,12 @@ use Juzaweb\Modules\Core\FileManager\Exceptions\InvalidConversion;
 
 class ImageConversionRepository implements ImageConversion
 {
-    /** @var array */
     protected array $conversions = [];
 
-    /** @var array */
     protected array $globalConversions = [];
 
     /**
      * Get all the registered conversions.
-     *
-     * @return array
      */
     public function all(): array
     {
@@ -25,10 +21,6 @@ class ImageConversionRepository implements ImageConversion
 
     /**
      * Register a new conversion.
-     *
-     * @param string $name
-     * @param callable $conversion
-     * @return void
      */
     public function register(string $name, callable $conversion): void
     {
@@ -38,13 +30,11 @@ class ImageConversionRepository implements ImageConversion
     /**
      * Get the conversion with the specified name.
      *
-     * @param  string  $name
-     * @return callable
      * @throws InvalidConversion
      */
     public function get(string $name): callable
     {
-        if (!$this->exists($name)) {
+        if (! $this->exists($name)) {
             throw InvalidConversion::doesNotExist($name);
         }
 
@@ -53,9 +43,6 @@ class ImageConversionRepository implements ImageConversion
 
     /**
      * Determine if a conversion with the specified name exists.
-     *
-     * @param string $name
-     * @return bool
      */
     public function exists(string $name): bool
     {
@@ -76,7 +63,6 @@ class ImageConversionRepository implements ImageConversion
      * Push the global conversions.
      *
      * @param  mixed  ...$conversions
-     * @return void
      */
     public function pushGlobalConversions(...$conversions): void
     {
@@ -85,8 +71,6 @@ class ImageConversionRepository implements ImageConversion
 
     /**
      * Get the global conversions.
-     *
-     * @return array
      */
     public function getGlobalConversions(): array
     {

@@ -9,7 +9,7 @@ use Juzaweb\Modules\Core\Tests\TestCase;
 
 class UploaderTest extends TestCase
 {
-    public function testUpload()
+    public function test_upload()
     {
         $file = UploadedFile::fake()->image('file-one.jpg');
 
@@ -20,7 +20,7 @@ class UploaderTest extends TestCase
         $this->assertDatabaseHas('media', ['id' => $upload->id]);
     }
 
-    public function testUploadWithCustomName()
+    public function test_upload_with_custom_name()
     {
         $file = UploadedFile::fake()->image('file-two.jpg');
 
@@ -31,7 +31,7 @@ class UploaderTest extends TestCase
         $this->assertDatabaseHas('media', ['id' => $upload->id]);
     }
 
-    public function testUploadByUrl()
+    public function test_upload_by_url()
     {
         $url = 'https://placehold.co/150';
 
@@ -42,7 +42,7 @@ class UploaderTest extends TestCase
         $this->assertDatabaseHas('media', ['id' => $upload->id]);
     }
 
-    public function testUploadByUrlWithCustomName()
+    public function test_upload_by_url_with_custom_name()
     {
         $url = 'https://placehold.co/150';
 
@@ -53,7 +53,7 @@ class UploaderTest extends TestCase
         $this->assertDatabaseHas('media', ['id' => $upload->id]);
     }
 
-    public function testUploadWithCustomDisk()
+    public function test_upload_with_custom_disk()
     {
         $file = UploadedFile::fake()->image('file-three.jpg');
 

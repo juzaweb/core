@@ -7,7 +7,7 @@ use Juzaweb\Modules\Core\Tests\TestCase;
 
 class ThemeSettingTest extends TestCase
 {
-    public function testSetAndGet()
+    public function test_set_and_get()
     {
         ThemeSetting::set('test_key', 'test_value');
 
@@ -18,12 +18,12 @@ class ThemeSettingTest extends TestCase
         $this->assertEquals('updated_value', ThemeSetting::get('test_key'));
     }
 
-    public function testGetDefault()
+    public function test_get_default()
     {
         $this->assertEquals('default_value', ThemeSetting::get('non_existent_key', 'default_value'));
     }
 
-    public function testTypeCasting()
+    public function test_type_casting()
     {
         ThemeSetting::set('int_key', '123');
         ThemeSetting::set('float_key', '12.34');
@@ -41,7 +41,7 @@ class ThemeSettingTest extends TestCase
         $this->assertFalse(ThemeSetting::boolean('bool_key_0'));
     }
 
-    public function testBulkOperations()
+    public function test_bulk_operations()
     {
         $data = [
             'key1' => 'value1',
@@ -57,7 +57,7 @@ class ThemeSettingTest extends TestCase
         $this->assertEquals('value2', ThemeSetting::get('key2'));
     }
 
-    public function testDatabasePersistence()
+    public function test_database_persistence()
     {
         ThemeSetting::set('db_key', 'db_value');
 

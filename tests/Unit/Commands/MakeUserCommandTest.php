@@ -2,19 +2,19 @@
 
 namespace Juzaweb\Modules\Core\Tests\Unit\Commands;
 
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\Hash;
 use Juzaweb\Modules\Core\Commands\MakeUserCommand;
-use Juzaweb\Modules\Core\Tests\TestCase;
-use Illuminate\Contracts\Console\Kernel;
 use Juzaweb\Modules\Core\Models\User;
+use Juzaweb\Modules\Core\Tests\TestCase;
 
 class MakeUserCommandTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         // Register command
-        $this->app[Kernel::class]->registerCommand(new MakeUserCommand());
+        $this->app[Kernel::class]->registerCommand(new MakeUserCommand);
     }
 
     public function test_make_user_command_with_options()
@@ -25,8 +25,8 @@ class MakeUserCommandTest extends TestCase
             '--pass' => 'password123',
             '--super-admin' => true,
         ])
-        ->assertExitCode(0)
-        ->expectsOutput('User created successfully user Test User');
+            ->assertExitCode(0)
+            ->expectsOutput('User created successfully user Test User');
 
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
@@ -60,6 +60,6 @@ class MakeUserCommandTest extends TestCase
             '--email' => 'not-an-email',
             '--pass' => '123456',
         ])
-        ->assertExitCode(1);
+            ->assertExitCode(1);
     }
 }

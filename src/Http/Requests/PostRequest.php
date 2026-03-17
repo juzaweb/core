@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -17,13 +18,13 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255'],
             'content' => ['nullable', 'string', 'max:50000'],
             'slug' => ['nullable', 'string', 'max:255'],
-            "thumbnail" => ['nullable', 'string', 'max:255'],
+            'thumbnail' => ['nullable', 'string', 'max:255'],
             'status' => ['nullable', 'string', 'in:draft,published,private'],
-            'categories' => ['nullable', 'array', AllExist::make('post_categories','id')],
+            'categories' => ['nullable', 'array', AllExist::make('post_categories', 'id')],
             'tags' => ['nullable', 'array'],
-		];
+        ];
     }
 }

@@ -31,9 +31,6 @@ trait HasResource
 
     /**
      * Make a new resource collection.
-     *
-     * @param mixed $resource
-     * @return JsonResource
      */
     public static function makeResource(mixed $resource): JsonResource
     {
@@ -50,9 +47,6 @@ trait HasResource
      * If the resource is a CollectionResource or the resource class is a
      * ModelResource, then return a new resource collection using the
      * resource class.
-     *
-     * @param  mixed  $resource
-     * @return ResourceCollection
      */
     public static function makeCollectionResource(mixed $resource): ResourceCollection
     {

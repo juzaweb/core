@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -37,7 +38,7 @@ class ChartController extends AdminController
             ], 404);
         }
 
-        $chartInstance = new $chartClass();
+        $chartInstance = new $chartClass;
 
         return response()->json($chartInstance->getData());
     }

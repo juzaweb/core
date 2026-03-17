@@ -16,6 +16,7 @@ use Juzaweb\Modules\Admin\Models\User;
  * @property string $meta_key
  * @property string|null $meta_value
  * @property-read User $user
+ *
  * @method static Builder|UserMeta newModelQuery()
  * @method static Builder|UserMeta newQuery()
  * @method static Builder|UserMeta query()
@@ -23,6 +24,7 @@ use Juzaweb\Modules\Admin\Models\User;
  * @method static Builder|UserMeta whereMetaKey($value)
  * @method static Builder|UserMeta whereMetaValue($value)
  * @method static Builder|UserMeta whereUserId($value)
+ *
  * @mixin Eloquent
  */
 class UserMeta extends Model

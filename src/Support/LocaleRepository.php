@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -16,9 +18,7 @@ use Juzaweb\Modules\Core\Translations\Models\Language;
 
 class LocaleRepository
 {
-    public function __construct(protected Application $app)
-    {
-    }
+    public function __construct(protected Application $app) {}
 
     public function setLocale($locale = null): ?string
     {
@@ -30,7 +30,7 @@ class LocaleRepository
             $locale = $this->app['request']->segment(1);
         }
 
-        if (empty($locale) || !\is_string($locale) || !Language::languages()->has($locale)) {
+        if (empty($locale) || ! \is_string($locale) || ! Language::languages()->has($locale)) {
             return null;
         }
 

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -23,7 +25,7 @@ class WidgetRepository implements Widget
         $this->widgets[$key] = $callback;
     }
 
-    public function get(string $key): null|WidgetEntity
+    public function get(string $key): ?WidgetEntity
     {
         $widget = data_get($this->widgets, $key);
 

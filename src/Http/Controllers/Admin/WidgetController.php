@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -32,7 +33,7 @@ class WidgetController extends AdminController
         $sidebarWidgets = ThemeSidebar::withTranslation($locale)
             ->orderBy('display_order')
             ->get()
-            ->each(fn($item) => $item->setDefaultLocale($locale))
+            ->each(fn ($item) => $item->setDefaultLocale($locale))
             ->groupBy('sidebar');
 
         return view(
@@ -63,7 +64,7 @@ class WidgetController extends AdminController
                             $locale => [
                                 'label' => $content['label'] ?? $content[$locale]['label'] ?? null,
                                 'fields' => Arr::except($content['field'] ?? [], ['label']),
-                            ]
+                            ],
                         ]
                     );
 

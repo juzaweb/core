@@ -2,11 +2,11 @@
 
 namespace Juzaweb\Modules\Core\Tests\Unit\Traits;
 
-use Juzaweb\Modules\Core\Tests\TestCase;
-use Juzaweb\Modules\Core\Traits\HasAPI;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Juzaweb\Modules\Core\Tests\TestCase;
+use Juzaweb\Modules\Core\Traits\HasAPI;
 
 class HasAPITest extends TestCase
 {
@@ -25,7 +25,7 @@ class HasAPITest extends TestCase
 
     public function test_api_scope_defaults()
     {
-        $model = new TestModelWithApi();
+        $model = new TestModelWithApi;
 
         $query = $model->api([]);
 
@@ -36,7 +36,7 @@ class HasAPITest extends TestCase
 
     public function test_api_scope_calls_custom_in_api()
     {
-        $model = new TestModelWithCustomApi();
+        $model = new TestModelWithCustomApi;
 
         $query = $model->api([]);
         $sql = $query->toSql();
@@ -58,14 +58,18 @@ class HasAPITest extends TestCase
 class TestModelWithApi extends Model
 {
     use HasAPI;
+
     protected $table = 'test_models';
+
     protected $guarded = [];
 }
 
 class TestModelWithCustomApi extends Model
 {
     use HasAPI;
+
     protected $table = 'test_models';
+
     protected $guarded = [];
 
     public function scopeInApi($builder, $params = [])

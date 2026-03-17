@@ -7,13 +7,13 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Juzaweb\Modules\Core\Facades\Breadcrumb;
+use Juzaweb\Modules\Core\Facades\PermissionManager;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
 use Juzaweb\Modules\Core\Http\DataTables\RolesDataTable;
-use Juzaweb\Modules\Core\Http\Requests\RoleRequest;
 use Juzaweb\Modules\Core\Http\Requests\BulkActionsRequest;
+use Juzaweb\Modules\Core\Http\Requests\RoleRequest;
 use Juzaweb\Modules\Core\Permissions\Models\Permission;
 use Juzaweb\Modules\Core\Permissions\Models\Role;
-use Juzaweb\Modules\Core\Facades\PermissionManager;
 use Juzaweb\Modules\Core\Permissions\PermissionRegistrar;
 
 class RoleController extends AdminController
@@ -30,7 +30,7 @@ class RoleController extends AdminController
         Breadcrumb::add(__('core::translation.roles'), admin_url('roles'));
         Breadcrumb::add(__('core::translation.add_role'));
 
-        $model = new Role();
+        $model = new Role;
         $permissions = collect(PermissionManager::getPermissions())->groupBy('group');
 
         return view(
@@ -65,7 +65,7 @@ class RoleController extends AdminController
         $model = Role::findOrFail($id);
 
         Breadcrumb::add(__('core::translation.roles'), admin_url('roles'));
-        Breadcrumb::add(__('core::translation.edit_role') . ': ' . $model->name);
+        Breadcrumb::add(__('core::translation.edit_role').': '.$model->name);
 
         $permissions = collect(PermissionManager::getPermissions())->groupBy('group');
 
@@ -112,6 +112,7 @@ class RoleController extends AdminController
             case 'delete':
                 Role::whereIn('id', $ids)->delete();
                 app(PermissionRegistrar::class)->forgetCachedPermissions();
+
                 return $this->success(__('core::translation.deleted_successfully'));
         }
 
@@ -120,9 +121,6 @@ class RoleController extends AdminController
 
     /**
      * Create permissions from PermissionManager if they don't exist in database
-     *
-     * @param array $permissionCodes
-     * @return void
      */
     protected function createPermissionsIfNotExists(array $permissionCodes): void
     {
@@ -139,7 +137,7 @@ class RoleController extends AdminController
         foreach ($newCodes as $code) {
             $permissionData = $allPermissions->get($code);
 
-            if (!$permissionData) {
+            if (! $permissionData) {
                 throw new \RuntimeException("Permission with code '{$code}' not found in PermissionManager");
             }
 

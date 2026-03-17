@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://github.com/juzaweb/cms
+ *
  * @license    GNU V2
  */
 
@@ -14,14 +16,14 @@ class Blade extends MinifyHtml
 {
     /** @var string */
     protected const BLOCK_TAGS_REGEX = 'area|article|aside|base(?:font)?|blockquote|body|'
-    .'canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|'
-    .'footer|form|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|'
-    .'map|menu|meta|nav|ol|opt(?:group|ion)|output|p|param|section|table|tbody|thead|'
-    .'td|th|tr|tfoot|title|ul|video';
+        .'canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|'
+        .'footer|form|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|'
+        .'map|menu|meta|nav|ol|opt(?:group|ion)|output|p|param|section|table|tbody|thead|'
+        .'td|th|tr|tfoot|title|ul|video';
 
     /** @var string */
     protected const INLINE_TAGS_REGEX = 'a|abbr|acronym|b|bdo|big|br|button|cite|dfn|em|i|'
-    .'img|input|kbd|label|map|object|q|samp|select|small|span|strong|sub|sup|time|tt|var';
+        .'img|input|kbd|label|map|object|q|samp|select|small|span|strong|sub|sup|time|tt|var';
 
     /**
      * "Minify" an Blade page
@@ -37,13 +39,11 @@ class Blade extends MinifyHtml
 
     /**
      * Minify the markeup given in the constructor
-     *
-     * @return string
      */
     public function process(): string
     {
         if ($this->_isXhtml === null) {
-            $this->_isXhtml = (false !== strpos($this->_html, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML'));
+            $this->_isXhtml = (strpos($this->_html, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML') !== false);
         }
 
         $this->_replacementHash = 'MINIFYHTML'.md5($_SERVER['REQUEST_TIME']);
@@ -178,28 +178,16 @@ class Blade extends MinifyHtml
         return $this->_html;
     }
 
-    /**
-     * @param $m
-     * @return string
-     */
     protected function removePhpCB($m): string
     {
         return $this->_reservePlace("<?php{$m[1]}");
     }
 
-    /**
-     * @param $m
-     * @return string
-     */
     protected function removeCodeCB($m): string
     {
         return $this->_reservePlace("<code{$m[1]}");
     }
 
-    /**
-     * @param $m
-     * @return string
-     */
     protected function removeNoscriptCB($m): string
     {
         return $this->_reservePlace("<noscript{$m[1]}");

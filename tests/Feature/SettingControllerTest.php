@@ -28,7 +28,7 @@ class SettingControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function testSocialLogin()
+    public function test_social_login()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -38,7 +38,7 @@ class SettingControllerTest extends TestCase
         $response->assertViewIs('core::admin.setting.social-login');
     }
 
-    public function testEmailSetting()
+    public function test_email_setting()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -48,7 +48,7 @@ class SettingControllerTest extends TestCase
         $response->assertViewIs('core::admin.setting.email');
     }
 
-    public function testSendTestEmail()
+    public function test_send_test_email()
     {
         Mail::fake();
 
@@ -69,7 +69,7 @@ class SettingControllerTest extends TestCase
         });
     }
 
-    public function testSendTestEmailValidation()
+    public function test_send_test_email_validation()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 

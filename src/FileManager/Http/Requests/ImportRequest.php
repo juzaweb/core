@@ -1,9 +1,10 @@
 <?php
+
 /**
  * LARABIZ CMS - Full SPA Laravel CMS
  *
- * @package    larabizcms/larabiz
  * @author     The Anh Dang
+ *
  * @link       https://larabiz.com
  */
 
@@ -18,7 +19,7 @@ class ImportRequest extends FormRequest
         return [
             'working_dir' => ['nullable', 'uuid'],
             'url' => ['required', 'string', 'url'],
-            'download' => ['nullable', 'boolean']
+            'download' => ['nullable', 'boolean'],
         ];
     }
 }

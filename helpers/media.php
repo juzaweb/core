@@ -1,30 +1,27 @@
 <?php
+
 /**
  * LARABIZ CMS - Full SPA Laravel CMS
  *
- * @package    larabizcms/larabiz
  * @author     The Anh Dang
+ *
  * @link       https://larabiz.com
  */
-
-if (!function_exists('media_url')) {
+if (! function_exists('media_url')) {
     function media_url(string $path, string $disk = 'public'): string
     {
         return Storage::disk($disk)->url($path);
     }
 }
 
-if (!function_exists('media')) {
-    /**
-     * @return \Juzaweb\Modules\Core\FileManager\MediaRepository
-     */
+if (! function_exists('media')) {
     function media(): \Juzaweb\Modules\Core\FileManager\MediaRepository
     {
         return app(\Juzaweb\Modules\Core\FileManager\Contracts\Media::class);
     }
 }
 
-if (!function_exists('format_size_units')) {
+if (! function_exists('format_size_units')) {
     /**
      * Convert a size in bytes to a human-readable string representation using appropriate units.
      *
@@ -58,12 +55,9 @@ if (!function_exists('format_size_units')) {
     }
 }
 
-if (!function_exists('is_url')) {
+if (! function_exists('is_url')) {
     /**
      * Return true if string is a url
-     *
-     * @param  string|null  $url
-     * @return bool
      */
     function is_url(?string $url): bool
     {
@@ -75,45 +69,45 @@ if (!function_exists('is_url')) {
     }
 }
 
-if (!function_exists('get_base_url')) {
+if (! function_exists('get_base_url')) {
     function get_base_url(string $url): string
     {
         $parse = parse_url($url);
         $scheme = isset($parse['scheme']) ? $parse['scheme'].'://' : '';
         $host = $parse['host'] ?? '';
+
         return "{$scheme}{$host}";
     }
 }
 
 /** Build a URL
  *
- * @param array $parts An array that follows the parse_url scheme
- * @return string
+ * @param  array  $parts  An array that follows the parse_url scheme
  */
 function build_url($parts): string
 {
     if (empty($parts['user'])) {
-        $url = $parts['scheme'] . '://' . $parts['host'];
+        $url = $parts['scheme'].'://'.$parts['host'];
     } elseif (empty($parts['pass'])) {
-        $url = $parts['scheme'] . '://' . $parts['user'] . '@' . $parts['host'];
+        $url = $parts['scheme'].'://'.$parts['user'].'@'.$parts['host'];
     } else {
-        $url = $parts['scheme'] . '://' . $parts['user'] . ':' . $parts['pass'] . '@' . $parts['host'];
+        $url = $parts['scheme'].'://'.$parts['user'].':'.$parts['pass'].'@'.$parts['host'];
     }
 
-    if (!empty($parts['port'])) {
-        $url .= ':' . $parts['port'];
+    if (! empty($parts['port'])) {
+        $url .= ':'.$parts['port'];
     }
 
-    if (!empty($parts['path'])) {
+    if (! empty($parts['path'])) {
         $url .= $parts['path'];
     }
 
-    if (!empty($parts['query'])) {
-        $url .= '?' . $parts['query'];
+    if (! empty($parts['query'])) {
+        $url .= '?'.$parts['query'];
     }
 
-    if (!empty($parts['fragment'])) {
-        return $url . '#' . $parts['fragment'];
+    if (! empty($parts['fragment'])) {
+        return $url.'#'.$parts['fragment'];
     }
 
     return $url;
@@ -121,32 +115,29 @@ function build_url($parts): string
 
 /** Convert a relative path in to an absolute path
  *
- * @param string $path
- * @return string
  */
 function abs_path(string $path): string
 {
     $path_array = explode('/', $path);
 
     // Solve current and parent folder navigation
-    $translated_path_array = array();
+    $translated_path_array = [];
     $i = 0;
     foreach ($path_array as $name) {
         if ($name === '..') {
             unset($translated_path_array[--$i]);
-        } elseif (!empty($name) && $name !== '.') {
+        } elseif (! empty($name) && $name !== '.') {
             $translated_path_array[$i++] = $name;
         }
     }
 
-    return '/' . implode('/', $translated_path_array);
+    return '/'.implode('/', $translated_path_array);
 }
 
 /** Convert a relative URL in to an absolute URL
  *
- * @param string $url URL or URI
- * @param string $base Absolute URL
- * @return string
+ * @param  string  $url  URL or URI
+ * @param  string  $base  Absolute URL
  */
 function abs_url(string $url, string $base): string
 {
@@ -154,13 +145,13 @@ function abs_url(string $url, string $base): string
     $base_parts = parse_url($base);
 
     // Handle the path if it is specified
-    if (!empty($url_parts['path'])) {
+    if (! empty($url_parts['path'])) {
         // Is the path relative
         if ($url_parts['path'][0] !== '/') {
             if (substr($base_parts['path'], -1) === '/') {
-                $url_parts['path'] = $base_parts['path'] . $url_parts['path'];
+                $url_parts['path'] = $base_parts['path'].$url_parts['path'];
             } else {
-                $url_parts['path'] = dirname($base_parts['path']) . '/' . $url_parts['path'];
+                $url_parts['path'] = dirname($base_parts['path']).'/'.$url_parts['path'];
             }
         }
 
@@ -170,7 +161,7 @@ function abs_url(string $url, string $base): string
 
     // Use the base URL to populate the unfilled components until a component is filled
     foreach (['scheme', 'host', 'path', 'query', 'fragment'] as $comp) {
-        if (!empty($url_parts[$comp])) {
+        if (! empty($url_parts[$comp])) {
             break;
         }
         $url_parts[$comp] = $base_parts[$comp];
@@ -179,7 +170,7 @@ function abs_url(string $url, string $base): string
     return build_url($url_parts);
 }
 
-if (!function_exists('get_full_url')) {
+if (! function_exists('get_full_url')) {
     function get_full_url(string $url, string $currentUrl, ?string $baseUrlMeta = null): string
     {
         $baseUrl = get_base_url($currentUrl);
@@ -200,12 +191,12 @@ if (!function_exists('get_full_url')) {
             return $baseUrl.$url;
         }
 
-        if (str_starts_with($url, './') && !str_ends_with($currentUrl, '/')) {
+        if (str_starts_with($url, './') && ! str_ends_with($currentUrl, '/')) {
             $split = explode('/', $currentUrl);
             $currentUrl = preg_replace("/{$split[count($split) - 1]}/", '', $currentUrl, -1);
         }
 
-        if (str_starts_with($url, '../') && !str_ends_with($currentUrl, '/')) {
+        if (str_starts_with($url, '../') && ! str_ends_with($currentUrl, '/')) {
             $split = explode('/', $currentUrl);
             $currentUrl = preg_replace("/{$split[count($split) - 2]}/", '', $currentUrl, -1);
         }

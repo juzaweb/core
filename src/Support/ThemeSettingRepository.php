@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com/cms
+ *
  * @license    GNU V2
  */
 
@@ -139,7 +141,7 @@ class ThemeSettingRepository implements SettingContract
         $configs = $this->configs();
 
         return $this->settings()->map(
-            fn($setting) => $configs[$setting['key']] ?? $setting['default'] ?? null
+            fn ($setting) => $configs[$setting['key']] ?? $setting['default'] ?? null
         );
     }
 
@@ -163,7 +165,7 @@ class ThemeSettingRepository implements SettingContract
             return $this->configs;
         }
 
-        if (!($currentTheme = $this->theme->current())) {
+        if (! ($currentTheme = $this->theme->current())) {
             return collect();
         }
 

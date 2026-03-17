@@ -21,7 +21,7 @@ use Juzaweb\Modules\Core\Modules\Support\Json;
 use Juzaweb\Modules\Core\Translations\Contracts\Translation;
 use Symfony\Component\Process\Process;
 
-class FileRepository implements RepositoryInterface, Countable
+class FileRepository implements Countable, RepositoryInterface
 {
     use Macroable;
 
@@ -34,34 +34,31 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * The module path.
-     *
-     * @var string|null
      */
     protected ?string $path;
 
     /**
      * The scanned paths.
-     *
-     * @var array
      */
     protected array $paths = [];
 
-    /**
-     * @var ?string
-     */
     protected ?string $stubPath;
+
     /**
      * @var UrlGenerator
      */
     private mixed $url;
+
     /**
      * @var ConfigRepository
      */
     private mixed $config;
+
     /**
      * @var Filesystem
      */
     private mixed $files;
+
     /**
      * @var CacheManager
      */
@@ -69,8 +66,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * The constructor.
-     * @param Container $app
-     * @param  string|null  $path
      */
     public function __construct(Container $app, ?string $path = null)
     {
@@ -85,7 +80,6 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Add other module location.
      *
-     * @param  string  $path
      *
      * @return $this
      */
@@ -98,8 +92,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get all additional paths.
-     *
-     * @return array
      */
     public function getPaths(): array
     {
@@ -108,8 +100,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get scanned modules paths.
-     *
-     * @return array
      */
     public function getScanPaths(): array
     {
@@ -130,8 +120,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get & scan all modules.
-     *
-     * @return array
      */
     public function scan(): array
     {
@@ -156,8 +144,8 @@ class FileRepository implements RepositoryInterface, Countable
                     'type' => 'module',
                     'key' => $namespace,
                     'namespace' => $namespace,
-                    'lang_path' => $module->getPath() . 'src/resources/lang',
-                    'src_path' => $module->getPath() . '/src',
+                    'lang_path' => $module->getPath().'src/resources/lang',
+                    'src_path' => $module->getPath().'/src',
                     'publish_path' => resource_path("lang/vendor/{$namespace}"),
                 ]);
             }
@@ -168,12 +156,10 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get all modules.
-     *
-     * @return array
      */
     public function all(): array
     {
-        if (!$this->config('cache.enabled')) {
+        if (! $this->config('cache.enabled')) {
             return $this->scan();
         }
 
@@ -183,7 +169,6 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Format the cached data as array of modules.
      *
-     * @param  array  $cached
      *
      * @return array
      */
@@ -208,19 +193,17 @@ class FileRepository implements RepositoryInterface, Countable
     public function getCached()
     {
         return $this->cache->store($this->config->get('modules.cache.driver'))
-        ->remember(
-            $this->config('cache.key'),
-            $this->config('cache.lifetime'),
-            function () {
-                return $this->toCollection()->toArray();
-            }
-        );
+            ->remember(
+                $this->config('cache.key'),
+                $this->config('cache.lifetime'),
+                function () {
+                    return $this->toCollection()->toArray();
+                }
+            );
     }
 
     /**
      * Get all modules as collection instance.
-     *
-     * @return Collection
      */
     public function toCollection(): Collection
     {
@@ -229,10 +212,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get modules by status.
-     *
-     * @param $status
-     *
-     * @return array
      */
     public function getByStatus($status): array
     {
@@ -250,10 +229,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Determine whether the given module exist.
-     *
-     * @param $name
-     *
-     * @return bool
      */
     public function has($name): bool
     {
@@ -262,8 +237,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get list of enabled modules.
-     *
-     * @return array
      */
     public function allEnabled(): array
     {
@@ -272,8 +245,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get list of disabled modules.
-     *
-     * @return array
      */
     public function allDisabled(): array
     {
@@ -282,8 +253,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get count from all modules.
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -293,9 +262,7 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Get all ordered modules.
      *
-     * @param string $direction
-     *
-     * @return array
+     * @param  string  $direction
      */
     public function getOrdered($direction = 'asc'): array
     {
@@ -317,7 +284,7 @@ class FileRepository implements RepositoryInterface, Countable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getPath(): string
     {
@@ -325,7 +292,7 @@ class FileRepository implements RepositoryInterface, Countable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function register(): void
     {
@@ -335,7 +302,7 @@ class FileRepository implements RepositoryInterface, Countable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function boot(): void
     {
@@ -345,7 +312,7 @@ class FileRepository implements RepositoryInterface, Countable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function find(string $name)
     {
@@ -361,7 +328,6 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Find a specific module, if there return that, otherwise throw exception.
      *
-     * @param $name
      *
      * @return Module
      *
@@ -380,10 +346,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get all modules as laravel collection instance.
-     *
-     * @param  int  $status
-     *
-     * @return Collection
      */
     public function collections(int $status = 1): Collection
     {
@@ -393,39 +355,36 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Get module path for a specific module.
      *
-     * @param string $module
-     *
+     * @param  string  $module
      * @return string
      */
     public function getModulePath($module)
     {
         try {
-            return $this->findOrFail($module)->getPath() . '/';
+            return $this->findOrFail($module)->getPath().'/';
         } catch (ModuleNotFoundException $e) {
-            return $this->getPath() . '/' . Str::snake($module, '-') . '/';
+            return $this->getPath().'/'.Str::snake($module, '-').'/';
         }
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function assetPath(string $module): string
     {
-        return $this->config('paths.assets') . '/' . $module;
+        return $this->config('paths.assets').'/'.$module;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function config(string $key, $default = null)
     {
-        return $this->config->get('modules.' . $key, $default);
+        return $this->config->get('modules.'.$key, $default);
     }
 
     /**
      * Get storage path for module used.
-     *
-     * @return string
      */
     public function getUsedStoragePath(): string
     {
@@ -435,7 +394,7 @@ class FileRepository implements RepositoryInterface, Countable
         }
 
         $path = storage_path('app/modules/modules.used');
-        if (!$this->getFiles()->exists($path)) {
+        if (! $this->getFiles()->exists($path)) {
             $this->getFiles()->put($path, '');
         }
 
@@ -445,7 +404,6 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Set module used for cli session.
      *
-     * @param $name
      *
      * @throws ModuleNotFoundException
      */
@@ -468,7 +426,7 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get module used for cli session.
-     * @return string
+     *
      * @throws ModuleNotFoundException
      */
     public function getUsedNow(): string
@@ -478,8 +436,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get laravel filesystem instance.
-     *
-     * @return Filesystem
      */
     public function getFiles(): Filesystem
     {
@@ -488,8 +444,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get module assets path.
-     *
-     * @return string
      */
     public function getAssetsPath(): string
     {
@@ -498,8 +452,7 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Get asset url from a specific module.
-     * @param  string  $asset
-     * @return string
+     *
      * @throws InvalidAssetPath
      */
     public function asset(string $asset): string
@@ -510,18 +463,15 @@ class FileRepository implements RepositoryInterface, Countable
 
         [$name, $url] = explode(':', $asset);
 
-        $baseUrl = str_replace(public_path() . DIRECTORY_SEPARATOR, '', $this->getAssetsPath());
+        $baseUrl = str_replace(public_path().DIRECTORY_SEPARATOR, '', $this->getAssetsPath());
 
-        $url = $this->url->asset($baseUrl . "/{$name}/" . $url);
+        $url = $this->url->asset($baseUrl."/{$name}/".$url);
 
         return str_replace(['http://', 'https://'], '//', $url);
     }
 
     /**
      * Determine whether the given module is enabled.
-     *
-     * @param string $name
-     * @return bool
      */
     public function isEnabled(string $name): bool
     {
@@ -530,20 +480,15 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Determine whether the given module is disabled.
-     *
-     * @param string $name
-     *
-     * @return bool
      */
     public function isDisabled(string $name): bool
     {
-        return !$this->isEnabled($name);
+        return ! $this->isEnabled($name);
     }
 
     /**
      * Enabling a specific module.
-     * @param  string  $name
-     * @return void
+     *
      * @throws ModuleNotFoundException
      */
     public function enable(string $name): void
@@ -553,8 +498,7 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Disabling a specific module.
-     * @param  string  $name
-     * @return void
+     *
      * @throws ModuleNotFoundException
      */
     public function disable(string $name): void
@@ -565,8 +509,6 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Delete the specified module.
      *
-     * @param  string  $name
-     * @return bool
      * @throws ModuleNotFoundException
      */
     public function delete(string $name): bool
@@ -576,8 +518,6 @@ class FileRepository implements RepositoryInterface, Countable
 
     /**
      * Update dependencies for the specified module.
-     *
-     * @param  string  $module
      */
     public function update(string $module)
     {
@@ -587,10 +527,6 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Install the specified module.
      *
-     * @param  string  $name
-     * @param  string  $version
-     * @param  string  $type
-     * @param  bool  $subtree
      *
      * @return Process
      */
@@ -620,7 +556,6 @@ class FileRepository implements RepositoryInterface, Countable
     /**
      * Set stub path.
      *
-     * @param  string  $stubPath
      *
      * @return $this
      */

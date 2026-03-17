@@ -5,13 +5,10 @@ namespace Juzaweb\Modules\Core\Http\Controllers\Admin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Juzaweb\Modules\Core\Facades\Breadcrumb;
 use Juzaweb\Modules\Core\Facades\Theme;
 use Juzaweb\Modules\Core\Http\Controllers\AdminController;
-use ZipArchive;
 
 class ThemeController extends AdminController
 {
@@ -35,7 +32,7 @@ class ThemeController extends AdminController
         }
 
         $currentTheme = Theme::current();
-        $themes = Theme::all()->filter(fn($theme) => $theme->name() !== $currentTheme->name());
+        $themes = Theme::all()->filter(fn ($theme) => $theme->name() !== $currentTheme->name());
 
         return $this->success(
             [
@@ -97,7 +94,7 @@ class ThemeController extends AdminController
                 'per_page' => $limit,
             ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 return $this->error(__('core::translation.failed_to_fetch_marketplace_data'));
             }
 

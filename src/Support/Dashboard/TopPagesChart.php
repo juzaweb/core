@@ -1,18 +1,17 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
 namespace Juzaweb\Modules\Core\Support\Dashboard;
 
-use Google\Analytics\Data\V1beta\Filter;
-use Google\Analytics\Data\V1beta\Filter\StringFilter;
-use Google\Analytics\Data\V1beta\FilterExpression;
 use Juzaweb\Modules\Core\Support\Charts\PieChart;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
@@ -43,7 +42,7 @@ class TopPagesChart extends PieChart
 
         return [
             'labels' => $rows->pluck('pagePath')->map(function ($path) {
-                return strlen($path) > 30 ? substr($path, 0, 30) . '...' : $path;
+                return strlen($path) > 30 ? substr($path, 0, 30).'...' : $path;
             })->values(),
             'datasets' => [
                 [
