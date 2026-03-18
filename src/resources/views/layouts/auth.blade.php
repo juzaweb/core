@@ -6,12 +6,20 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} | Juzaweb</title>
 
+    <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
+    <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
+    <link href="//fonts.googleapis.com" rel="dns-prefetch"/>
+    <link href="//pagead2.googlesyndication.com" rel="dns-prefetch"/>
+    <link href="//www.googletagmanager.com" rel="dns-prefetch"/>
+    <link href="//www.google-analytics.com" rel="dns-prefetch"/>
+
     @if($favicon = setting('favicon'))
     <link rel="shortcut icon" href="{{ upload_url(setting('favicon')) }}" />
     @endif
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
     <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'juzaweb') }}">
     <link rel="stylesheet" href="{{ mix('css/admin.min.css', 'juzaweb') }}">
 </head>
@@ -41,7 +49,7 @@
         const recaptchaSiteKey = "{{ config("network.recaptcha.site_key") }}";
     </script>
     <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaLoadCallback&render=explicit" async defer></script>
-@endguest
+@endif
 
 @yield('scripts')
 

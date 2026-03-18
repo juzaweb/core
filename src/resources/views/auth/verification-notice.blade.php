@@ -1,8 +1,8 @@
 @extends('core::layouts.auth')
 
 @section('content')
-    <div class="card">
-        <div class="card-body login-card-body">
+    <div class="card card-outline card-primary">
+        <div class="card-body">
             <p class="login-box-msg">{{ __('core::translation.please_verify_your_email_address') }}</p>
 
             @if (session('success'))
@@ -37,6 +37,5 @@
                 <a href="{{ url('user/login') }}" class="text-center">{{ __('core::translation.login_to_account') }}</a>
             </p>
         </div>
-        <!-- /.login-card-body -->
     </div>
 @endsection
