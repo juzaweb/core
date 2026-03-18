@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} | Juzaweb</title>
 
-    <link href="//dnjs.cloudflare.com" rel="dns-prefetch"/>
+    <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
     <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
     <link href="//fonts.googleapis.com" rel="dns-prefetch"/>
     <link href="//pagead2.googlesyndication.com" rel="dns-prefetch"/>

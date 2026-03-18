@@ -1,8 +1,8 @@
 @extends('core::layouts.auth')
 
 @section('content')
-    <div class="card">
-        <div class="card-body login-card-body" id="register-form">
+    <div class="card card-outline card-primary">
+        <div class="card-body" id="register-form">
             <p class="login-box-msg">{{ __('core::translation.sign_up_new_a_account') }}</p>
 
             <div id="jquery-message"></div>
@@ -105,7 +105,6 @@
                 <a href="{{ url('user/login') }}" class="text-center">{{ __('core::translation.login_to_account') }}</a>
             </p>
         </div>
-        <!-- /.login-card-body -->
     </div>
 @endsection
 
