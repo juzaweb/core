@@ -2,13 +2,13 @@
 
 namespace Juzaweb\Modules\Core\Tests\Unit\Facades;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Juzaweb\Modules\Core\Facades\Locale;
-use Juzaweb\Modules\Core\Tests\TestCase;
-use Juzaweb\Modules\Core\Support\LocaleRepository;
 use Juzaweb\Modules\Core\Facades\Setting;
+use Juzaweb\Modules\Core\Support\LocaleRepository;
+use Juzaweb\Modules\Core\Tests\TestCase;
 use Juzaweb\Modules\Core\Translations\Models\Language;
-use Illuminate\Http\Request;
 
 class LocaleFacadeTest extends TestCase
 {
@@ -18,7 +18,7 @@ class LocaleFacadeTest extends TestCase
 
         // Create installed file to enable settings
         $path = storage_path('app/installed');
-        if (!File::exists(dirname($path))) {
+        if (! File::exists(dirname($path))) {
             File::makeDirectory(dirname($path), 0755, true);
         }
         File::put($path, '1');

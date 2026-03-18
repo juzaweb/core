@@ -17,8 +17,7 @@ class Img extends Component
         public bool $crop = false,
         public array $srcset = [],
         public $rias = false
-    ) {
-    }
+    ) {}
 
     public function render(): View
     {
@@ -36,7 +35,7 @@ class Img extends Component
             return proxy_image($this->src, 50, null, false);
         }
 
-        return "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+        return 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
     }
 
     public function getSrcset(): string

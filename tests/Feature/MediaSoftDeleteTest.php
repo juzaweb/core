@@ -27,7 +27,7 @@ class MediaSoftDeleteTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function testSoftDelete()
+    public function test_soft_delete()
     {
         Storage::fake('public');
 
@@ -56,7 +56,7 @@ class MediaSoftDeleteTest extends TestCase
         Storage::disk('public')->assertExists('test.txt');
     }
 
-    public function testForceDelete()
+    public function test_force_delete()
     {
         Storage::fake('public');
 

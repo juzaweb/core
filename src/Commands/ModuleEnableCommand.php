@@ -30,7 +30,7 @@ class ModuleEnableCommand extends Command
     {
         $this->components->info('Enabling module ...');
 
-        if ($name = $this->argument('module') ) {
+        if ($name = $this->argument('module')) {
             $this->enable($name);
 
             return 0;
@@ -59,14 +59,14 @@ class ModuleEnableCommand extends Command
     /**
      * enable
      *
-     * @param string|Module $name
+     * @param  string|Module  $name
      * @return void
      */
     public function enable($name)
     {
         if ($name instanceof Module) {
             $module = $name;
-        }else {
+        } else {
             $module = ModuleFacade::findOrFail($name);
         }
 
@@ -74,7 +74,7 @@ class ModuleEnableCommand extends Command
             $module->enable();
 
             $this->components->info("Module [{$module}] enabled successful.");
-        }else {
+        } else {
             $this->components->warn("Module [{$module}] has already enabled.");
         }
 
@@ -82,8 +82,6 @@ class ModuleEnableCommand extends Command
 
     /**
      * Get the console command arguments.
-     *
-     * @return array
      */
     protected function getArguments(): array
     {

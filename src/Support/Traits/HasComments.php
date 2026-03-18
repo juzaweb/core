@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -19,8 +21,6 @@ trait HasComments
 {
     /**
      * Get the comments for the model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
@@ -29,8 +29,6 @@ trait HasComments
 
     /**
      * Get the comment count for the model.
-     *
-     * @return int
      */
     public function getTotalComments(): int
     {

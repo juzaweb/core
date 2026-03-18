@@ -40,11 +40,6 @@ class ModuleInstallCommand extends Command
 
     /**
      * Install the specified module.
-     *
-     * @param  string  $name
-     * @param  string  $version
-     * @param  string  $type
-     * @param  bool  $tree
      */
     protected function install(string $name, ?string $version = 'dev-master', ?string $type = 'composer', bool $tree = false): void
     {
@@ -78,8 +73,6 @@ class ModuleInstallCommand extends Command
 
     /**
      * Get the console command arguments.
-     *
-     * @return array
      */
     protected function getArguments(): array
     {
@@ -91,8 +84,6 @@ class ModuleInstallCommand extends Command
 
     /**
      * Get the console command options.
-     *
-     * @return array
      */
     protected function getOptions(): array
     {

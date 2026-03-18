@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -17,8 +19,7 @@ trait HasRules
     /**
      * Toggle the required rule on the model validation rules.
      *
-     * @param bool $required Whether the field is required or not. Default is true.
-     * @return static
+     * @param  bool  $required  Whether the field is required or not. Default is true.
      */
     public function required(bool $required = true): static
     {
@@ -34,8 +35,7 @@ trait HasRules
     /**
      * Set the field as nullable or not nullable.
      *
-     * @param bool $nullable Whether the field is nullable or not
-     * @return static
+     * @param  bool  $nullable  Whether the field is nullable or not
      */
     public function nullable(bool $nullable = true): static
     {
@@ -51,8 +51,7 @@ trait HasRules
     /**
      * Set the rules for the Laravel application.
      *
-     * @param array $rules The validation rules for the application
-     * @return static
+     * @param  array  $rules  The validation rules for the application
      */
     public function rules(array $rules): static
     {

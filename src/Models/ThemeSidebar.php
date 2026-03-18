@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -19,7 +20,7 @@ use Juzaweb\Modules\Core\Traits\UsedInFrontend;
 
 class ThemeSidebar extends Model
 {
-    use Translatable,  HasUuids, HasThemeField, UsedInFrontend;
+    use HasThemeField,  HasUuids, Translatable, UsedInFrontend;
 
     protected $table = 'theme_sidebars';
 
@@ -45,7 +46,7 @@ class ThemeSidebar extends Model
     {
         return $builder->when(
             $cache,
-            fn(Builder $query) => $query->cacheFor(3600),
+            fn (Builder $query) => $query->cacheFor(3600),
         )
             ->withTranslation(null, null, $cache);
     }

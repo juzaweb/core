@@ -19,7 +19,7 @@ use ReflectionException;
 
 class Role extends Model implements RoleContract
 {
-    use HasPermissions, RefreshesPermissionCache, HasAPI;
+    use HasAPI, HasPermissions, RefreshesPermissionCache;
 
     protected $table = 'roles';
 
@@ -46,8 +46,8 @@ class Role extends Model implements RoleContract
     }
 
     /**
-     * @param  array  $attributes
      * @return Role
+     *
      * @throws ReflectionException
      */
     public static function create(array $attributes = []): Model|Builder
@@ -93,10 +93,7 @@ class Role extends Model implements RoleContract
     /**
      * Find a role by its code and guard name.
      *
-     * @param  string  $code
      * @param  null  $guardName
-     *
-     * @return RoleContract
      *
      * @throws ReflectionException
      */
@@ -106,7 +103,7 @@ class Role extends Model implements RoleContract
 
         $role = static::findByParam(['code' => $code, 'guard_name' => $guardName]);
 
-        if (!$role) {
+        if (! $role) {
             throw RoleDoesNotExist::coded($code);
         }
 
@@ -116,10 +113,7 @@ class Role extends Model implements RoleContract
     /**
      * Find a role by its name and guard name.
      *
-     * @param  string  $name
      * @param  null  $guardName
-     *
-     * @return RoleContract
      *
      * @throws ReflectionException
      */
@@ -129,7 +123,7 @@ class Role extends Model implements RoleContract
 
         $role = static::findByParam(['name' => $name, 'guard_name' => $guardName]);
 
-        if (!$role) {
+        if (! $role) {
             throw RoleDoesNotExist::named($name);
         }
 
@@ -139,19 +133,17 @@ class Role extends Model implements RoleContract
     /**
      * Find a role by its id (and optionally guardName).
      *
-     * @param  int  $id
      * @param  null  $guardName
      *
-     * @return RoleContract
      * @throws ReflectionException
      */
     public static function findById(int $id, $guardName = null): RoleContract
     {
         $guardName = $guardName ?? Guard::getDefaultName(static::class);
 
-        $role = static::findByParam([(new static())->getKeyName() => $id, 'guard_name' => $guardName]);
+        $role = static::findByParam([(new static)->getKeyName() => $id, 'guard_name' => $guardName]);
 
-        if (!$role) {
+        if (! $role) {
             throw RoleDoesNotExist::withId($id);
         }
 
@@ -161,10 +153,8 @@ class Role extends Model implements RoleContract
     /**
      * Find or create role by its name (and optionally guardName).
      *
-     * @param  string  $name
      * @param  null  $guardName
      *
-     * @return RoleContract
      * @throws ReflectionException
      */
     public static function findOrCreate(string $name, $guardName = null): RoleContract
@@ -173,13 +163,13 @@ class Role extends Model implements RoleContract
 
         $role = static::findByParam(['name' => $name, 'guard_name' => $guardName]);
 
-        if (!$role) {
+        if (! $role) {
             /** @var RoleContract */
             return static::query()
                 ->create(
                     [
                         'name' => $name,
-                        'guard_name' => $guardName
+                        'guard_name' => $guardName,
                     ]
                 );
         }
@@ -203,8 +193,6 @@ class Role extends Model implements RoleContract
      *
      * @param  string|Permission  $permission
      *
-     * @return bool
-     *
      * @throws GuardDoesNotMatch
      */
     public function hasPermissionTo($permission): bool
@@ -221,11 +209,11 @@ class Role extends Model implements RoleContract
             $permission = $permissionClass->findById($permission, $this->getDefaultGuardName());
         }
 
-        if (!$permission) {
+        if (! $permission) {
             return false;
         }
 
-        if (!$this->getGuardNames()->contains($permission->guard_name)) {
+        if (! $this->getGuardNames()->contains($permission->guard_name)) {
             throw GuardDoesNotMatch::create($permission->guard_name, $this->getGuardNames());
         }
 

@@ -8,8 +8,6 @@ trait ModuleCommandTrait
 {
     /**
      * Get the module name.
-     *
-     * @return string
      */
     public function getModuleName(): string
     {
@@ -22,19 +20,14 @@ trait ModuleCommandTrait
 
     /**
      * Get class namespace.
-     *
-     * @param  Module  $module
-     * @param  string|null  $defaultNamespace
-     * @param  string|null  $extra
-     * @return string
      */
     public function getClassNamespace(Module $module, ?string $defaultNamespace = null, ?string $extra = null): string
     {
         $namespace = $this->laravel['modules']->config('namespace');
 
-        $namespace .= '\\' . $module->getStudlyName();
+        $namespace .= '\\'.$module->getStudlyName();
 
-        $namespace .= '\\' . ($defaultNamespace ?? $this->getDefaultNamespace());
+        $namespace .= '\\'.($defaultNamespace ?? $this->getDefaultNamespace());
 
         if (! $extra) {
             $extra = str_replace($this->getClass(), '', $this->argument($this->argumentName));
@@ -42,7 +35,7 @@ trait ModuleCommandTrait
             $extra = str_replace('/', '\\', $extra);
         }
 
-        $namespace .= '\\' . $extra;
+        $namespace .= '\\'.$extra;
 
         $namespace = str_replace('/', '\\', $namespace);
 

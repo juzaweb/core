@@ -11,15 +11,11 @@ class SettingActivator implements ThemeActivatorInterface
 {
     /**
      * Setting instance
-     *
-     * @var Setting
      */
     private Setting $setting;
 
     /**
      * The settings key for active theme
-     *
-     * @var string
      */
     private string $settingKey;
 
@@ -30,7 +26,7 @@ class SettingActivator implements ThemeActivatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function activate(Theme $theme): void
     {
@@ -38,7 +34,7 @@ class SettingActivator implements ThemeActivatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isActive(Theme $theme): bool
     {
@@ -46,7 +42,7 @@ class SettingActivator implements ThemeActivatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function setActive(Theme $theme): void
     {
@@ -54,7 +50,7 @@ class SettingActivator implements ThemeActivatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function setActiveByName(string $name): void
     {
@@ -62,7 +58,7 @@ class SettingActivator implements ThemeActivatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getActiveName(): ?string
     {
@@ -70,7 +66,7 @@ class SettingActivator implements ThemeActivatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function delete(Theme $theme): void
     {
@@ -80,7 +76,7 @@ class SettingActivator implements ThemeActivatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function reset(): void
     {

@@ -9,10 +9,13 @@ use OpenApi\Annotations as OA;
  * @OA\RequestBody(
  *      request="LoginRequest",
  *      required=true,
+ *
  *      @OA\MediaType(
  *          mediaType="multipart/form-data",
+ *
  *          @OA\Schema(
  *              required={"email", "password"},
+ *
  *              @OA\Property(property="email", type="string", format="email"),
  *              @OA\Property(property="password", type="string"),
  *              @OA\Property(property="captcha", type="string", description="(Optional) ReCaptcha Token"),

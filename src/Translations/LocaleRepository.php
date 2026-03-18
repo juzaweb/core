@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/laravel-translations
  * @author     Juzaweb Team <admin@juzaweb.com>
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    MIT
  */
 
@@ -17,14 +19,10 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocaleRepository
 {
-    public function __construct(protected Collection $module)
-    {
-    }
+    public function __construct(protected Collection $module) {}
 
     /**
      * Get all language publish and origin
-     *
-     * @return Collection
      */
     public function languages(): Collection
     {
@@ -36,14 +34,12 @@ class LocaleRepository
     /**
      * Get all language trans
      *
-     * @param string $locale
-     * @return Collection
      * @throws FileNotFoundException
      */
     public function translationLines(string $locale): Collection
     {
         $fallbackLocale = config('app.fallback_locale');
-        $enPath = $this->module->get('lang_path') . "/{$fallbackLocale}";
+        $enPath = $this->module->get('lang_path')."/{$fallbackLocale}";
         $result = [];
 
         if (is_dir($enPath)) {
@@ -55,17 +51,17 @@ class LocaleRepository
 
             foreach ($files as $file) {
                 $trans = [];
-                $lang = require($file->getRealPath());
+                $lang = require $file->getRealPath();
                 if ($locale != $fallbackLocale) {
-                    $localePath = $this->module->get('lang_path') . "/{$locale}/{$file->getFilename()}";
+                    $localePath = $this->module->get('lang_path')."/{$locale}/{$file->getFilename()}";
                     if (file_exists($localePath)) {
-                        $lang = array_merge($lang, require($localePath));
+                        $lang = array_merge($lang, require ($localePath));
                     }
                 }
 
-                $langPublish = $this->module->get('publish_path') . '/'. $locale.'/'.$file->getFilename();
+                $langPublish = $this->module->get('publish_path').'/'.$locale.'/'.$file->getFilename();
                 if (file_exists($langPublish)) {
-                    $langPublish = require($langPublish);
+                    $langPublish = require $langPublish;
                     foreach ($langPublish as $langKey => $langVal) {
                         $trans[$langKey] = $langVal;
                     }
@@ -79,19 +75,19 @@ class LocaleRepository
 
         $trans = [];
         $lang = [];
-        $defaultLangPath = $this->module->get('lang_path') . "/{$fallbackLocale}.json";
+        $defaultLangPath = $this->module->get('lang_path')."/{$fallbackLocale}.json";
         if (file_exists($defaultLangPath)) {
             $lang = json_decode(File::get($defaultLangPath), true, 512, JSON_THROW_ON_ERROR);
         }
 
         if ($locale != $fallbackLocale) {
-            $localePath = $this->module->get('lang_path') . "/{$locale}.json";
+            $localePath = $this->module->get('lang_path')."/{$locale}.json";
             if (file_exists($localePath)) {
                 $lang = array_merge($lang, json_decode(File::get($localePath), true, 512, JSON_THROW_ON_ERROR));
             }
         }
 
-        $langPublish = $this->module->get('publish_path') ."/{$locale}.json";
+        $langPublish = $this->module->get('publish_path')."/{$locale}.json";
         if (file_exists($langPublish)) {
             $langPublish = json_decode(File::get($langPublish), true, 512, JSON_THROW_ON_ERROR);
             foreach ($langPublish as $langKey => $langVal) {
@@ -113,13 +109,11 @@ class LocaleRepository
 
     /**
      * Get all language from data plugin/theme/core
-     *
-     * @return Collection
      */
     public function allLanguageSupport(): Collection
     {
         $folderPath = $this->module->get('lang_path');
-        if (!is_dir($folderPath)) {
+        if (! is_dir($folderPath)) {
             return new Collection([]);
         }
 
@@ -130,13 +124,11 @@ class LocaleRepository
 
     /**
      * Get all language publish from data plugin/theme/core
-     *
-     * @return Collection
      */
     public function allLanguagePublish(): Collection
     {
         $folderPath = $this->module->get('publish_path');
-        if (!is_dir($folderPath)) {
+        if (! is_dir($folderPath)) {
             return new Collection([]);
         }
 

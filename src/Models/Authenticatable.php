@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -23,15 +24,13 @@ use Illuminate\Foundation\Auth\Access\Authorizable as AccessAuthorizable;
  * @method static \Illuminate\Database\Eloquent\Builder|Authenticatable newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Authenticatable newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Authenticatable query()
+ *
  * @mixin \Eloquent
  */
-class Authenticatable extends Model implements
-    AuthenticatableContract,
-    AuthorizableContract,
-    CanResetPasswordContract
+class Authenticatable extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use IlluminateAuthenticatable,
-        AccessAuthorizable,
+    use AccessAuthorizable,
         CanResetPassword,
+        IlluminateAuthenticatable,
         MustVerifyEmail;
 }

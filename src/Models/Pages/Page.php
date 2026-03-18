@@ -22,15 +22,15 @@ use Juzaweb\Modules\Core\Translations\Contracts\Translatable as TranslatableCont
 class Page extends Model implements TranslatableContract
 {
     use HasAPI,
+        HasContent,
         HasFactory,
-        HasUuids,
-        Translatable,
-        HasSeoMeta,
-        MenuBoxable,
-        UsedInFrontend,
         HasMedia,
+        HasSeoMeta,
         HasThumbnail,
-        HasContent;
+        HasUuids,
+        MenuBoxable,
+        Translatable,
+        UsedInFrontend;
 
     protected $table = 'pages';
 
@@ -83,7 +83,7 @@ class Page extends Model implements TranslatableContract
         return $builder->orWhereHas(
             'translations',
             function (Builder $query) use ($keyword) {
-                $query->where('title', 'like', '%' . $keyword . '%');
+                $query->where('title', 'like', '%'.$keyword.'%');
             }
         );
     }
@@ -116,7 +116,7 @@ class Page extends Model implements TranslatableContract
             $this->defaultLocale => [
                 'title' => $this->title,
                 'description' => seo_string($this->content, 240),
-            ]
+            ],
         ];
     }
 

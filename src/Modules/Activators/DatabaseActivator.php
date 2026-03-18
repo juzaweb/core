@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://juzaweb.com/cms
+ *
  * @license    GNU V2
  */
 
@@ -29,7 +31,6 @@ class DatabaseActivator implements ActivatorInterface
     /**
      * Enables a plugin
      *
-     * @param Module $module
      * @throws FileNotFoundException
      */
     public function enable(Module $module): void
@@ -40,7 +41,6 @@ class DatabaseActivator implements ActivatorInterface
     /**
      * Disables a plugin
      *
-     * @param Module $module
      * @throws FileNotFoundException
      */
     public function disable(Module $module): void
@@ -51,10 +51,7 @@ class DatabaseActivator implements ActivatorInterface
     /**
      * Determine whether the given status same with a plugin status.
      *
-     * @param Module $module
-     * @param bool $status
-     *
-     * @return bool
+     * @param  bool  $status
      */
     public function hasStatus(Module $module, $status): bool
     {
@@ -69,8 +66,8 @@ class DatabaseActivator implements ActivatorInterface
     /**
      * Set active state for a plugin.
      *
-     * @param Module $module
-     * @param bool $active
+     * @param  bool  $active
+     *
      * @throws ModuleNotFoundException
      * @throws FileNotFoundException
      */
@@ -82,8 +79,8 @@ class DatabaseActivator implements ActivatorInterface
     /**
      * Sets a plugin status by its name
      *
-     * @param string $module
-     * @param bool $active
+     * @param  string  $module
+     * @param  bool  $active
      */
     public function setActiveByName($module, $active): void
     {
@@ -99,8 +96,6 @@ class DatabaseActivator implements ActivatorInterface
 
     /**
      * Deletes a plugin activation status
-     *
-     * @param  Module $module
      */
     public function delete(Module $module): void
     {
@@ -111,9 +106,6 @@ class DatabaseActivator implements ActivatorInterface
 
     /**
      * Get plugin info load
-     *
-     * @param  Module $module
-     * @return ?array
      */
     public function getAutoloadInfo(Module $module): ?array
     {
@@ -131,7 +123,6 @@ class DatabaseActivator implements ActivatorInterface
     /**
      * Get plugins statuses, either from the cache or from
      * the json statuses file if the cache is disabled.
-     * @return array
      */
     public function getModulesStatuses(): array
     {

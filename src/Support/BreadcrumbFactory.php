@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -12,11 +13,11 @@ namespace Juzaweb\Modules\Core\Support;
 use Illuminate\Contracts\Support\Arrayable;
 use Juzaweb\Modules\Core\Contracts\Breadcrumb;
 
-class BreadcrumbFactory implements Breadcrumb, Arrayable
+class BreadcrumbFactory implements Arrayable, Breadcrumb
 {
     protected array $items = [];
 
-    public function add(string $title, string $url = null): void
+    public function add(string $title, ?string $url = null): void
     {
         $this->items[] = [
             'title' => $title,

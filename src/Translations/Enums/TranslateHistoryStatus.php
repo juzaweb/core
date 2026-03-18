@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/laravel-translations
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -17,8 +18,6 @@ enum TranslateHistoryStatus: string
 
     /**
      * Get all statuses as an array.
-     *
-     * @return array
      */
     public function all(): array
     {

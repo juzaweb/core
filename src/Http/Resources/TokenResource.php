@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -17,6 +18,7 @@ use OpenApi\Annotations as OA;
  *     schema="TokenResource",
  *     required={"token_type", "expires_in", "expires_at", "access_token", "refresh_token"},
  *     properties={
+ *
  *         @OA\Property(property="token_type", type="string"),
  *         @OA\Property(property="expires_in", type="integer"),
  *         @OA\Property(property="expires_at", type="string", format="date-time"),

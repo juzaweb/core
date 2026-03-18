@@ -1,10 +1,12 @@
 <?php
+
 /**
  * LARABIZ CMS - Full SPA Laravel CMS
  *
- * @package    larabizcom/larabiz
  * @author     Juzaweb Team <admin@juzaweb.com>
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    MIT
  */
 
@@ -21,8 +23,7 @@ class TranslationFinder implements TranslationFinderContract
 {
     public function __construct(
         protected Translation $translation
-    ) {
-    }
+    ) {}
 
     public function find(string $path, string $locale = 'en', ?string $replace = null): array
     {
@@ -43,15 +44,15 @@ class TranslationFinder implements TranslationFinderContract
         ];
 
         $groupPattern =                          // See https://regex101.com/r/WEJqdL/6
-            "[^\w|>]" .                          // Must not have an alphanum or _ or > before real method
-            '(' . implode('|', $functions) . ')' .  // Must start with one of the functions
-            "\(" .                               // Match opening parenthesis
-            "[\'\"]" .                           // Match " or '
-            '(' .                                // Start a new group to match:
-            '[\/a-zA-Z0-9\_\-\:]+' .             // Must start with group
-            "([.](?! )[^\1)]+)+" .               // Be followed by one or more items/keys
-            ')' .                                // Close group
-            "[\'\"]" .                           // Closing quote
+            "[^\w|>]".                          // Must not have an alphanum or _ or > before real method
+            '('.implode('|', $functions).')'.  // Must start with one of the functions
+            "\(".                               // Match opening parenthesis
+            "[\'\"]".                           // Match " or '
+            '('.                                // Start a new group to match:
+            '[\/a-zA-Z0-9\_\-\:]+'.             // Must start with group
+            "([.](?! )[^\1)]+)+".               // Be followed by one or more items/keys
+            ')'.                                // Close group
+            "[\'\"]".                           // Closing quote
             "[\),]";                             // Close parentheses or new parameter
 
         $stringPattern = "[^\w]". // Must not have an alphanum before real method
@@ -78,8 +79,8 @@ class TranslationFinder implements TranslationFinderContract
 
             if (preg_match_all("/$stringPattern/siU", $file->getContents(), $matches)) {
                 if ($replace) {
-                    $pattern = '/(?<func>\b(?:' . implode('|', array_map('preg_quote', $functions))
-                    . '))\(\s*(["\'])(?<key>[^"\']+)\2/';
+                    $pattern = '/(?<func>\b(?:'.implode('|', array_map('preg_quote', $functions))
+                    .'))\(\s*(["\'])(?<key>[^"\']+)\2/';
 
                     $result = preg_replace_callback(
                         $pattern,
@@ -89,7 +90,7 @@ class TranslationFinder implements TranslationFinderContract
                             $key = $matches['key'];
 
                             if ((Str::contains($key, '::') && Str::contains($key, '.'))
-                                && !Str::contains($key, ' ')
+                                && ! Str::contains($key, ' ')
                             ) {
                                 return $matches[0];
                             }
@@ -131,7 +132,7 @@ class TranslationFinder implements TranslationFinderContract
                         // TODO: This can probably be done in the regex, but I couldn't do it.
                         // skip keys which contain namespacing characters, unless they also contain a
                         // space, which makes it JSON.
-                        if (!(Str::contains($key, '::') && Str::contains($key, '.'))
+                        if (! (Str::contains($key, '::') && Str::contains($key, '.'))
                             || Str::contains($key, ' ')
                         ) {
                             $stringKeys[] = $key;
@@ -200,7 +201,8 @@ class TranslationFinder implements TranslationFinderContract
 
     protected function getAllFiles(string $path): Finder
     {
-        $finder = new Finder();
+        $finder = new Finder;
+
         return $finder->in($path)
             ->exclude('storage')
             ->exclude('vendor')

@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -16,14 +17,13 @@ use Juzaweb\Modules\Core\Support\Routes\Resources\APIResource;
 /**
  * @method static APIResource api(string $name, string $controller)
  * @method static AdminResource admin(string $name, string $controller)
+ *
  * @see \Juzaweb\Modules\Core\Support\RouteResourceRepository
  */
 class RouteResource extends Facade
 {
     /**
      * Get the registered name of the component.
-     *
-     * @return string
      */
     protected static function getFacadeAccessor(): string
     {

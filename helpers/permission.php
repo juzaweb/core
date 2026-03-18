@@ -1,20 +1,16 @@
 <?php
+
 /**
  * LARABIZ CMS - Full SPA Laravel CMS
  *
- * @package    larabizcms/larabiz
  * @author     The Anh Dang
+ *
  * @link       https://larabiz.com
  */
 
 use Juzaweb\Modules\Admin\Models\User;
 
 if (! function_exists('model_of_guard')) {
-    /**
-     * @param string $guard
-     *
-     * @return string|null
-     */
     function model_of_guard(string $guard): ?string
     {
         return collect(config('auth.guards'))
@@ -28,12 +24,8 @@ if (! function_exists('model_of_guard')) {
     }
 }
 
-if (!function_exists('has_permission')) {
-    /**
-     * @param User|null $user
-     * @return bool
-     */
-    function has_permission(User|null $user = null): bool
+if (! function_exists('has_permission')) {
+    function has_permission(?User $user = null): bool
     {
         if ($user === null) {
             $user = auth()->user();
@@ -50,4 +42,3 @@ if (!function_exists('has_permission')) {
         return $user->hasPermission();
     }
 }
- 

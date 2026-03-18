@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -18,8 +18,6 @@ class AdminResource extends Resource
 
     /**
      * Register routes
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -33,7 +31,7 @@ class AdminResource extends Resource
 
             PermissionManager::make(
                 "{$this->name}.index",
-                fn() => [
+                fn () => [
                     'name' => "Index {$this->name}",
                     'group' => $this->name,
                     'code' => "{$this->name}.index",
@@ -48,7 +46,7 @@ class AdminResource extends Resource
 
             PermissionManager::make(
                 "{$this->name}.edit",
-                fn() => [
+                fn () => [
                     'name' => "Edit {$this->name}",
                     'group' => $this->name,
                     'code' => "{$this->name}.edit",
@@ -63,7 +61,7 @@ class AdminResource extends Resource
 
             PermissionManager::make(
                 "{$this->name}.create",
-                fn() => [
+                fn () => [
                     'name' => "Create {$this->name}",
                     'group' => $this->name,
                     'code' => "{$this->name}.create",
@@ -90,7 +88,7 @@ class AdminResource extends Resource
 
             PermissionManager::make(
                 "{$this->name}.delete",
-                fn() => [
+                fn () => [
                     'name' => "Delete {$this->name}",
                     'group' => $this->name,
                     'code' => "{$this->name}.delete",
@@ -107,9 +105,6 @@ class AdminResource extends Resource
 
     /**
      * Get middleware for a method
-     *
-     * @param string $method
-     * @return array
      */
     public function getMiddleware(string $method): array
     {
@@ -120,7 +115,7 @@ class AdminResource extends Resource
         $middleware = [];
 
         if ($permissions = $this->getPermissions($method)) {
-            $middleware[] = 'permission:' . implode(',', $permissions);
+            $middleware[] = 'permission:'.implode(',', $permissions);
         }
 
         return $middleware;

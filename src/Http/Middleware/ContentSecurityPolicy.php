@@ -11,8 +11,6 @@ class ContentSecurityPolicy
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -42,10 +40,10 @@ class ContentSecurityPolicy
 
         $arr = [
             // "frame-ancestors 'none'",
-            "script-src ".implode(" ", $scriptSrc)
+            'script-src '.implode(' ', $scriptSrc),
         ];
 
-        $response->headers->set('Content-Security-Policy', implode("; ", $arr));
+        $response->headers->set('Content-Security-Policy', implode('; ', $arr));
 
         return $response;
     }

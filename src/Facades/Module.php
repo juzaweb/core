@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -45,6 +46,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string getUsedNow()
  * @method static string getAssetsPath()
  * @method static string asset(string $asset)
+ *
  * @see \Juzaweb\Modules\Core\Modules\FileRepository
  */
 class Module extends Facade

@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -24,10 +25,11 @@ class TestMailCommand extends Command
 
         if (empty($email)) {
             $this->error('Email is required');
+
             return self::FAILURE;
         }
 
-        Mail::to($email)->send(new Test());
+        Mail::to($email)->send(new Test);
 
         $this->info('Mail sent successfully, check your inbox.');
 

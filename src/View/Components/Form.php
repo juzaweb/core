@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -20,8 +22,7 @@ class Form extends Component
         protected string $method = 'POST',
         protected bool $notify = false,
         protected bool $token = false,
-    ) {
-    }
+    ) {}
 
     /**
      * Get the view / contents that represent the component.
@@ -29,11 +30,11 @@ class Form extends Component
     public function render(): View|\Closure|string
     {
         return view('core::components.form', [
-                'action' => $this->action,
-                'method' => $this->method,
-                'notify' => $this->notify,
-                'token' => $this->token,
-            ]
+            'action' => $this->action,
+            'method' => $this->method,
+            'notify' => $this->notify,
+            'token' => $this->token,
+        ]
         );
     }
 }

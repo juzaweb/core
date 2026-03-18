@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -20,9 +22,8 @@ class SitemapRepository implements Sitemap
     /**
      * Register a sitemap provider class
      *
-     * @param string $key Unique identifier for the sitemap provider
-     * @param string $class Class name that implements Sitemapable
-     * @return void
+     * @param  string  $key  Unique identifier for the sitemap provider
+     * @param  string  $class  Class name that implements Sitemapable
      */
     public function register(string $key, string $class): void
     {
@@ -31,8 +32,6 @@ class SitemapRepository implements Sitemap
 
     /**
      * Get all registered sitemap providers
-     *
-     * @return Collection
      */
     public function all(): Collection
     {
@@ -41,9 +40,6 @@ class SitemapRepository implements Sitemap
 
     /**
      * Get a specific sitemap provider
-     *
-     * @param string $key
-     * @return string|null
      */
     public function get(string $key): ?string
     {

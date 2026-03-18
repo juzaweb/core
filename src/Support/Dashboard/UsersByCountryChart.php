@@ -1,18 +1,17 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
 namespace Juzaweb\Modules\Core\Support\Dashboard;
 
-use Google\Analytics\Data\V1beta\Filter;
-use Google\Analytics\Data\V1beta\Filter\StringFilter;
-use Google\Analytics\Data\V1beta\FilterExpression;
 use Juzaweb\Modules\Core\Support\Charts\PieChart;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
@@ -41,7 +40,7 @@ class UsersByCountryChart extends PieChart
 
         $total = collect($response)->sum('activeUsers');
         $rows = collect($response)
-            ->map(fn($row) => [
+            ->map(fn ($row) => [
                 'country' => $row['country'],
                 'users' => (int) ($row['activeUsers'] * 100 / ($total > 0 ? $total : 1)),
             ])

@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -33,25 +34,23 @@ require __DIR__.'/permission.php';
 require __DIR__.'/functions.php';
 require __DIR__.'/themes.php';
 
-if (!function_exists('client_ip')) {
+if (! function_exists('client_ip')) {
     /**
      * Get client ip
      *
-     * @return string
      * */
     function client_ip(): ?string
     {
         // Check Cloudflare support
-        return $_SERVER["HTTP_CF_CONNECTING_IP"] ?? request()?->ip();
+        return $_SERVER['HTTP_CF_CONNECTING_IP'] ?? request()?->ip();
     }
 }
 
-if (!function_exists('is_json')) {
+if (! function_exists('is_json')) {
     /**
      * Rerutn true if string is a json
      *
      * @param  string  $string
-     * @return bool
      */
     function is_json(mixed $string): bool
     {
@@ -65,7 +64,7 @@ if (!function_exists('is_json')) {
     }
 }
 
-if (!function_exists('setting')) {
+if (! function_exists('setting')) {
     /**
      * Get or set a setting value
      *
@@ -85,14 +84,14 @@ if (!function_exists('setting')) {
     }
 }
 
-if (!function_exists('cache_prefix')) {
+if (! function_exists('cache_prefix')) {
     function cache_prefix(string $key): string
     {
         return "juzaweb_{$key}";
     }
 }
 
-if (!function_exists('title_from_key')) {
+if (! function_exists('title_from_key')) {
     /**
      * Generate a title from the given key.
      *
@@ -113,7 +112,7 @@ if (!function_exists('title_from_key')) {
     }
 }
 
-if (!function_exists('key_from_string')) {
+if (! function_exists('key_from_string')) {
     /**
      * Convert a string into a key-friendly format by replacing slashes with spaces,
      * and then converting it into a slug with underscores as separators.
@@ -127,12 +126,11 @@ if (!function_exists('key_from_string')) {
     }
 }
 
-if (!function_exists('home_url')) {
+if (! function_exists('home_url')) {
     /**
      * Generate a home URL from the given URI.
      *
      * @param  string|null  $uri  The URI to generate a URL for.
-     *
      * @return string The generated URL.
      */
     function home_url(?string $uri = null, ?string $locale = null): string
@@ -154,12 +152,11 @@ if (!function_exists('home_url')) {
     }
 }
 
-if (!function_exists('admin_url')) {
+if (! function_exists('admin_url')) {
     /**
      * Generate an admin URL from the given URI.
      *
      * @param  string  $uri  the URI to generate a URL for
-     *
      * @return string the generated URL
      */
     function admin_url(?string $uri = null): string
@@ -172,12 +169,9 @@ if (!function_exists('admin_url')) {
     }
 }
 
-if (!function_exists('is_super_admin')) {
+if (! function_exists('is_super_admin')) {
     /**
      * Check if user is super admin
-     *
-     * @param  User|null  $user
-     * @return bool
      */
     function is_super_admin(?User $user = null): bool
     {
@@ -193,7 +187,7 @@ if (!function_exists('is_super_admin')) {
     }
 }
 
-if (!function_exists('languages')) {
+if (! function_exists('languages')) {
     /**
      * Get all languages.
      *
@@ -205,21 +199,16 @@ if (!function_exists('languages')) {
     }
 }
 
-if (!function_exists('used_recaptcha')) {
+if (! function_exists('used_recaptcha')) {
     function used_recaptcha(): bool
     {
         return config('larabiz.recaptcha.secret') !== null;
     }
 }
 
-if (!function_exists('date_range')) {
+if (! function_exists('date_range')) {
     /**
      * Returns an array of strings representing the dates in the given range.
-     *
-     * @param  Carbon  $from
-     * @param  Carbon  $to
-     * @param  string  $format
-     * @return array
      */
     function date_range(Carbon $from, Carbon $to, string $format = 'd/m/Y'): array
     {
@@ -233,7 +222,7 @@ if (!function_exists('date_range')) {
     }
 }
 
-if (!function_exists('month_range')) {
+if (! function_exists('month_range')) {
     /**
      * Returns an array of strings representing the months in the given date range.
      *
@@ -261,7 +250,7 @@ if (!function_exists('month_range')) {
     }
 }
 
-if (!function_exists('array_to_array_string')) {
+if (! function_exists('array_to_array_string')) {
     /**
      * Converts an array to a string, similar to var_export.
      * This method is useful for debugging and logging.
@@ -280,19 +269,16 @@ if (!function_exists('array_to_array_string')) {
     }
 }
 
-if (!function_exists('default_language')) {
+if (! function_exists('default_language')) {
     function default_language(): string
     {
         return config('app.locale');
     }
 }
 
-if (!function_exists('is_url')) {
+if (! function_exists('is_url')) {
     /**
      * Return true if string is a url
-     *
-     * @param  string|null  $url
-     * @return bool
      */
     function is_url(?string $url): bool
     {
@@ -304,11 +290,9 @@ if (!function_exists('is_url')) {
     }
 }
 
-if (!function_exists('is_admin_page')) {
+if (! function_exists('is_admin_page')) {
     /**
      * Determine if the current page is an admin page.
-     *
-     * @return bool
      */
     function is_admin_page(): bool
     {
@@ -318,7 +302,7 @@ if (!function_exists('is_admin_page')) {
     }
 }
 
-if (!function_exists('get_error_by_exception')) {
+if (! function_exists('get_error_by_exception')) {
     /**
      * Extracts error information from the given exception.
      *
@@ -343,7 +327,7 @@ if (!function_exists('get_error_by_exception')) {
     }
 }
 
-if (!function_exists('get_domain_by_url')) {
+if (! function_exists('get_domain_by_url')) {
     /**
      * Extracts the domain from a given URL.
      *
@@ -372,7 +356,7 @@ if (!function_exists('get_domain_by_url')) {
     }
 }
 
-if (!function_exists('number_human_format')) {
+if (! function_exists('number_human_format')) {
     /**
      * Formats a given number as a human-readable string.
      *
@@ -406,7 +390,7 @@ if (!function_exists('number_human_format')) {
     }
 }
 
-if (!function_exists('upload_url')) {
+if (! function_exists('upload_url')) {
     /**
      * Get the URL of the uploaded file.
      *
@@ -425,7 +409,7 @@ if (!function_exists('upload_url')) {
 
         $path = ltrim($path, '/');
         // If it does not exist in storage, return cloud url
-        if (config('media.cloud_upload_enabled') && !Storage::disk('public')->exists($path)) {
+        if (config('media.cloud_upload_enabled') && ! Storage::disk('public')->exists($path)) {
             // if (in_array(
             //     pathinfo($path, PATHINFO_EXTENSION),
             //     config('media.extensions.image'))
@@ -458,7 +442,7 @@ function upload_path_format(?string $path): ?string
     return ltrim(str_replace(upload_url('/'), '', $path), '/');
 }
 
-if (!function_exists('map_params')) {
+if (! function_exists('map_params')) {
     /**
      * Replace placeholders in a string with values from an associative array.
      *
@@ -476,7 +460,7 @@ if (!function_exists('map_params')) {
         return preg_replace_callback(
             '/\{(\w+)\}/',
             function ($matches) use ($params) {
-                if (!isset($params[$matches[1]])) {
+                if (! isset($params[$matches[1]])) {
                     throw new RuntimeException("Param {$matches[1]} not found");
                 }
 
@@ -488,7 +472,7 @@ if (!function_exists('map_params')) {
     }
 }
 
-if (!function_exists('theme_path')) {
+if (! function_exists('theme_path')) {
     /**
      * Get the path to the theme directory.
      *
@@ -500,7 +484,7 @@ if (!function_exists('theme_path')) {
     }
 }
 
-if (!function_exists('theme_asset')) {
+if (! function_exists('theme_asset')) {
     /**
      * Get the path to the theme directory.
      *
@@ -514,7 +498,7 @@ if (!function_exists('theme_asset')) {
     }
 }
 
-if (!function_exists('get_youtube_id')) {
+if (! function_exists('get_youtube_id')) {
     /**
      * Extracts the YouTube video ID from a given URL.
      *
@@ -540,7 +524,7 @@ if (!function_exists('get_youtube_id')) {
     }
 }
 
-if (!function_exists('get_vimeo_id')) {
+if (! function_exists('get_vimeo_id')) {
     /**
      * Extracts the Vimeo video ID from a given URL.
      *
@@ -568,7 +552,7 @@ if (!function_exists('get_vimeo_id')) {
     }
 }
 
-if (!function_exists('get_google_drive_id')) {
+if (! function_exists('get_google_drive_id')) {
     /**
      * Extracts the Google Drive file ID from a given URL.
      *
@@ -585,7 +569,7 @@ if (!function_exists('get_google_drive_id')) {
     }
 }
 
-if (!function_exists('convert_linux_path')) {
+if (! function_exists('convert_linux_path')) {
     /**
      * Convert a Windows-style path to a Linux-style path.
      *
@@ -604,21 +588,19 @@ if (!function_exists('convert_linux_path')) {
     }
 }
 
-if (!function_exists('remove_zero_width_space_string')) {
+if (! function_exists('remove_zero_width_space_string')) {
     /**
      * Remove zero width space string
-     *
-     * @param  string  $string
-     * @return string
      */
     function remove_zero_width_space_string(string $string): string
     {
         $string = preg_replace('/[\x{200B}-\x{200D}\x{FEFF}]/u', '', $string);
+
         return preg_replace('/\xc2\xa0/', '', $string);
     }
 }
 
-if (!function_exists('seo_string')) {
+if (! function_exists('seo_string')) {
     /**
      * Generate a SEO-friendly string from the given input.
      *
@@ -639,11 +621,12 @@ if (!function_exists('seo_string')) {
         $string = strip_tags($string);
         $string = str_replace(["\n", "\t"], ' ', $string);
         $string = remove_zero_width_space_string(html_entity_decode($string, ENT_HTML5));
+
         return sub_char($string, $chars);
     }
 }
 
-if (!function_exists('sub_char')) {
+if (! function_exists('sub_char')) {
     /**
      * Truncate a string to a specified length, ensuring it does not cut off in the middle of a word.
      *
@@ -668,7 +651,7 @@ if (!function_exists('sub_char')) {
     }
 }
 
-if (!function_exists('str_slug')) {
+if (! function_exists('str_slug')) {
     /**
      * Generate a URL-friendly slug from the given string.
      *
@@ -684,17 +667,18 @@ if (!function_exists('str_slug')) {
     }
 }
 
-if (!function_exists('back_form_url')) {
+if (! function_exists('back_form_url')) {
     function back_form_url(): string
     {
         $path = request()->path();
         $cleanUrl = preg_replace('/\/[a-z0-9-]+\/edit$/i', '', $path);
         $cleanUrl = str_replace('/create', '', $cleanUrl);
+
         return url($cleanUrl);
     }
 }
 
-if (!function_exists('load_data_url')) {
+if (! function_exists('load_data_url')) {
     function load_data_url(string $model, string $field = 'name', array $params = []): string
     {
         return route(
@@ -710,7 +694,7 @@ if (!function_exists('load_data_url')) {
     }
 }
 
-if (!function_exists('custom_var_export')) {
+if (! function_exists('custom_var_export')) {
     /**
      * Custom implementation of var_export for better readability.
      *
@@ -723,18 +707,19 @@ if (!function_exists('custom_var_export')) {
     function custom_var_export(mixed $expression): string
     {
         $export = var_export($expression, true);
-        $export = preg_replace("/^([ ]*)(.*)/m", '$1$1$2', $export);
+        $export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
         $array = preg_split("/\r\n|\n|\r/", $export);
         $array = preg_replace(
             ["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"],
             [null, ']$1', ' => ['],
             $array
         );
-        return implode(PHP_EOL, array_filter(["["] + $array));
+
+        return implode(PHP_EOL, array_filter(['['] + $array));
     }
 }
 
-if (!function_exists('proxy_image')) {
+if (! function_exists('proxy_image')) {
     function proxy_image(
         ?string $url,
         ?int $width = null,
@@ -752,7 +737,7 @@ if (!function_exists('proxy_image')) {
         $filename = basename($url);
 
         if ($webp) {
-            $filename = pathinfo($filename, PATHINFO_FILENAME) . '.webp';
+            $filename = pathinfo($filename, PATHINFO_FILENAME).'.webp';
         }
 
         $method = $crop ? 'crop' : 'resize';
@@ -763,6 +748,7 @@ if (!function_exists('proxy_image')) {
 
         if ($width > 0 || $height > 0) {
             $size = ($width ?? 'auto').'x'.($height ?? 'auto');
+
             return "{$baseUrl}/images/{$method}:{$size}/{$hash}/{$filename}";
         }
 
@@ -770,14 +756,14 @@ if (!function_exists('proxy_image')) {
     }
 }
 
-if (!function_exists('csp_script_nonce')) {
+if (! function_exists('csp_script_nonce')) {
     function csp_script_nonce(): ?string
     {
         return request()->attributes->get('cspNonce');
     }
 }
 
-if (!function_exists('theme')) {
+if (! function_exists('theme')) {
     function theme(): ThemeContract
     {
         return app()->make(ThemeContract::class);
@@ -800,6 +786,7 @@ function base64url_decode(string $data): string
     if ($pad !== 4) {
         $data .= str_repeat('=', $pad);
     }
+
     return base64_decode(strtr($data, '-_', '+/'));
 }
 
@@ -809,6 +796,7 @@ function encrypt_deterministic(string $plaintext, string $key): string
     $key = hash('sha256', $key, true);
     $iv = substr(hash('sha256', $plaintext.$key, true), 0, 16);
     $cipher = openssl_encrypt($plaintext, $method, $key, OPENSSL_RAW_DATA, $iv);
+
     return base64url_encode($iv.$cipher);
 }
 
@@ -823,6 +811,7 @@ function decrypt_deterministic(string $token, string $key): ?string
     $iv = substr($data, 0, 16);
     $cipher = substr($data, 16);
     $plain = openssl_decrypt($cipher, $method, $key, OPENSSL_RAW_DATA, $iv);
+
     return $plain === false ? null : $plain;
 }
 
@@ -833,6 +822,7 @@ function ip_in_range(string $ip, string $range): bool
     $subnet = ip2long($subnet);
     $mask = -1 << (32 - $bits);
     $subnet &= $mask;  // subnet mask
+
     return ($ip & $mask) === $subnet;
 }
 
@@ -897,10 +887,10 @@ function model_translate(CanBeTranslated $model, string $sourceLocale, string $t
 function cloud(bool $write = false): Filesystem
 {
     $disk = Storage::disk('cloud');
-    $config = config("filesystems.disks.cloud");
+    $config = config('filesystems.disks.cloud');
 
     if ($write && $config) {
-        if (!empty($config['write_endpoint'])) {
+        if (! empty($config['write_endpoint'])) {
             $config['endpoint'] = $config['write_endpoint'];
         }
 
@@ -947,7 +937,7 @@ function mime_type_from_extension(string $extension): string
 function get_php_binary_path(): false|string
 {
     // 1. Priority: Use the modern PHP_BINARY constant (Available since PHP 5.4)
-    if (defined('PHP_BINARY') && !empty(PHP_BINARY)) {
+    if (defined('PHP_BINARY') && ! empty(PHP_BINARY)) {
         $valid = true;
         foreach (['fpm', 'cgi', 'apache'] as $needle) {
             if (strpos(PHP_BINARY, $needle) !== false) {
@@ -962,7 +952,7 @@ function get_php_binary_path(): false|string
     }
 
     // 2. Fallback: Use PHP_BINDIR to construct the path
-    if (defined('PHP_BINDIR') && !empty(PHP_BINDIR)) {
+    if (defined('PHP_BINDIR') && ! empty(PHP_BINDIR)) {
         $suffix = (stripos(PHP_OS, 'WIN') === 0) ? '.exe' : '';
         $path = PHP_BINDIR.DIRECTORY_SEPARATOR.'php'.$suffix;
 
@@ -988,9 +978,9 @@ if (! function_exists('reformat_html')) {
     {
         libxml_use_internal_errors(true);
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $html = mb_convert_encoding($html, 'HTML-ENTITIES', "UTF-8");
+        $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
-        $wrappedHtml = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">' . "<div id='wrapper-html-jw-wrapped'>{$html}</div>";
+        $wrappedHtml = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'."<div id='wrapper-html-jw-wrapped'>{$html}</div>";
 
         // Load and auto-fix HTML
         $dom->loadHTML($wrappedHtml, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -1020,12 +1010,9 @@ if (! function_exists('fix_html')) {
     }
 }
 
-if (!function_exists('is_internal_url')) {
+if (! function_exists('is_internal_url')) {
     /**
      * Check if the URL is internal (same domain)
-     *
-     * @param string $url
-     * @return bool
      */
     function is_internal_url(string $url): bool
     {
@@ -1033,7 +1020,7 @@ if (!function_exists('is_internal_url')) {
         $targetUrl = parse_url($url);
 
         if ($targetUrl === false) {
-             return false;
+            return false;
         }
 
         // Check if URL has same host as app URL
@@ -1042,8 +1029,8 @@ if (!function_exists('is_internal_url')) {
         }
 
         // If no host, it's relative (internal), but reject invalid schemes (e.g. javascript:)
-        return !isset($targetUrl['host']) &&
-            (!isset($targetUrl['scheme']) || in_array($targetUrl['scheme'], ['http', 'https']));
+        return ! isset($targetUrl['host']) &&
+            (! isset($targetUrl['scheme']) || in_array($targetUrl['scheme'], ['http', 'https']));
     }
 }
 

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -70,23 +72,23 @@ enum VideoSource: string
             self::VIMEO => 'video/vimeo',
             self::UPLOAD => 'video/mp4',
             self::GDRIVE => 'embed/google-drive',
-            default => 'video/' . $this->value,
+            default => 'video/'.$this->value,
         };
     }
 
     protected function getVideoYoutubeUrl(string $url): string
     {
-        return 'https://www.youtube.com/embed/' . get_youtube_id($url);
+        return 'https://www.youtube.com/embed/'.get_youtube_id($url);
     }
 
     protected function getVideoVimeoUrl(string $url): string
     {
-        return 'https://player.vimeo.com/video/' . get_vimeo_id($url);
+        return 'https://player.vimeo.com/video/'.get_vimeo_id($url);
     }
 
     protected function getVideoGoogleDrive(string $url): string
     {
-        return 'https://drive.google.com/file/d/'. get_google_drive_id($url) .'/preview';
+        return 'https://drive.google.com/file/d/'.get_google_drive_id($url).'/preview';
     }
 
     protected function getVideoUpload(string $url): string
@@ -101,7 +103,7 @@ enum VideoSource: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::YOUTUBE => 'Youtube',
             self::UPLOAD => 'Upload Video',
             self::VIMEO => 'Vimeo',

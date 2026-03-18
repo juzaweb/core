@@ -15,8 +15,7 @@ class Card extends Component
         protected ?string $title = null,
         protected ?string $icon = null,
         protected ?string $description = null,
-    )
-    {
+    ) {
         //
     }
 
@@ -26,10 +25,10 @@ class Card extends Component
     public function render(): View|Closure|string
     {
         return view('core::components.card', [
-                'title' => $this->title,
-                'icon' => $this->icon,
-                'description' => $this->description,
-            ]
+            'title' => $this->title,
+            'icon' => $this->icon,
+            'description' => $this->description,
+        ]
         );
     }
 }

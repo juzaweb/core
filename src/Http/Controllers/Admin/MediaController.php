@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -56,12 +57,12 @@ class MediaController extends AdminController
                     $query->whereRoot();
                 }
             )
-            //->searchAndFilter($request->all())
+            // ->searchAndFilter($request->all())
             ->orderBy('type', 'ASC')
             ->orderBy('id', 'DESC')
             ->paginate(36);
-        $maxSize = config("media.disks.public.max_size");
-        $mimeTypes = config("media.disks.public.mime_types");
+        $maxSize = config('media.disks.public.max_size');
+        $mimeTypes = config('media.disks.public.mime_types');
 
         return view(
             'core::admin.media.index',
@@ -142,7 +143,7 @@ class MediaController extends AdminController
                         });
                 });
             })
-            //->searchAndFilter($request->all())
+            // ->searchAndFilter($request->all())
             ->orderBy('type', 'ASC')
             ->orderBy('id', 'DESC')
             ->paginate(36);

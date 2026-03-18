@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -34,7 +35,7 @@ trait HasCodeWithMonth
                 $nowOrder = str_pad($nowOrder, $minNumberOrderCode, '0', STR_PAD_LEFT);
             }
 
-            $code = $orderPrefix . $year . $month . $nowOrder;
+            $code = $orderPrefix.$year.$month.$nowOrder;
         } while (self::where('code', $code)->exists());
 
         return $code;
@@ -54,7 +55,7 @@ trait HasCodeWithMonth
          */
         static::creating(
             function ($model) {
-                if (!$model->getAttribute('code')) {
+                if (! $model->getAttribute('code')) {
                     $model->setAttribute('code', static::generateCode());
                 }
             }

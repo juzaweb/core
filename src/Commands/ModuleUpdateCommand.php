@@ -57,7 +57,7 @@ class ModuleUpdateCommand extends Command
     {
         if ($name instanceof Module) {
             $module = $name;
-        }else {
+        } else {
             $module = $this->laravel['modules']->findOrFail($name);
         }
 

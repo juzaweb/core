@@ -9,8 +9,6 @@ class Updater extends Runner
 {
     /**
      * Update the dependencies for the specified module by given the module name.
-     *
-     * @param  string  $module
      */
     public function update(string $module)
     {
@@ -34,28 +32,22 @@ class Updater extends Runner
         return ' --quiet';
     }
 
-    /**
-     * @param  Module|Theme  $module
-     */
     private function installRequires(Module|Theme $module)
     {
         $packages = $module->getComposerAttr('require', []);
 
         $concatenatedPackages = '';
         foreach ($packages as $name => $version) {
-            $concatenatedPackages .= escapeshellarg("{$name}:{$version}") . ' ';
+            $concatenatedPackages .= escapeshellarg("{$name}:{$version}").' ';
         }
 
         $phpPath = get_php_binary_path();
 
-        if (!empty($concatenatedPackages)) {
+        if (! empty($concatenatedPackages)) {
             $this->run("{$phpPath} composer.phar require {$concatenatedPackages}{$this->isComposerSilenced()}");
         }
     }
 
-    /**
-     * @param Module|Theme $module
-     */
     private function installDevRequires(Module|Theme $module)
     {
         $devPackages = $module->getComposerAttr('require-dev', []);
@@ -63,17 +55,14 @@ class Updater extends Runner
 
         $concatenatedPackages = '';
         foreach ($devPackages as $name => $version) {
-            $concatenatedPackages .= escapeshellarg("{$name}:{$version}") . ' ';
+            $concatenatedPackages .= escapeshellarg("{$name}:{$version}").' ';
         }
 
-        if (!empty($concatenatedPackages)) {
+        if (! empty($concatenatedPackages)) {
             $this->run("{$phpPath} composer.phar require --dev {$concatenatedPackages}{$this->isComposerSilenced()}");
         }
     }
 
-    /**
-     * @param Module|Theme $module
-     */
     private function copyScriptsToMainComposerJson(Module|Theme $module)
     {
         $scripts = $module->getComposerAttr('scripts', []);

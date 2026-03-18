@@ -20,7 +20,6 @@ use Juzaweb\Modules\Core\Permissions\WildcardPermission;
 
 trait HasPermissions
 {
-    /** @var Permission */
     private Permission $permissionClass;
 
     public static function bootHasPermissions(): void
@@ -61,11 +60,6 @@ trait HasPermissions
 
     /**
      * Scope the model query to certain permissions only.
-     *
-     * @param  Builder  $query
-     * @param string|int|array|Permission|Collection  $permissions
-     *
-     * @return Builder
      */
     public function scopePermission(Builder $query, Permission|int|array|string|Collection $permissions): Builder
     {
@@ -87,7 +81,7 @@ trait HasPermissions
                     'permissions',
                     function (Builder $subQuery) use ($permissions) {
                         $permissionClass = $this->getPermissionClass();
-                        $key = (new $permissionClass())->getKeyName();
+                        $key = (new $permissionClass)->getKeyName();
                         $subQuery->whereIn(
                             config('permission.table_names.permissions').".$key",
                             array_column($permissions, $key)
@@ -100,7 +94,7 @@ trait HasPermissions
                         'roles',
                         function (Builder $subQuery) use ($rolesWithPermissions) {
                             $roleClass = $this->getRoleClass();
-                            $key = (new $roleClass())->getKeyName();
+                            $key = (new $roleClass)->getKeyName();
                             $subQuery->whereIn(
                                 config('permission.table_names.roles').".$key",
                                 array_column($rolesWithPermissions, $key)
@@ -113,9 +107,6 @@ trait HasPermissions
     }
 
     /**
-     * @param  int|array|string|Collection|Permission  $permissions
-     *
-     * @return array
      * @throws PermissionDoesNotExist
      */
     protected function convertToPermissionModels(Permission|int|array|string|Collection $permissions): array
@@ -140,13 +131,11 @@ trait HasPermissions
     /**
      * Determine if the model may perform the given permission.
      *
-     * @param string|int|Permission  $permission
-     * @param  string|null  $guardName
+     * @param  string|int|Permission  $permission
      *
-     * @return bool
      * @throws PermissionDoesNotExist
      */
-    public function hasPermissionTo($permission, string $guardName = null): bool
+    public function hasPermissionTo($permission, ?string $guardName = null): bool
     {
         if ($this instanceof User && $this->isSuperAdmin()) {
             return true;
@@ -178,11 +167,6 @@ trait HasPermissions
 
     /**
      * Validates a wildcard permission against all permissions of a user.
-     *
-     * @param  int|string|Permission  $permission
-     * @param  string|null  $guardName
-     *
-     * @return bool
      */
     protected function hasWildcardPermission(Permission|int|string $permission, ?string $guardName = null): bool
     {
@@ -217,13 +201,8 @@ trait HasPermissions
 
     /**
      * An alias to hasPermissionTo(), but avoids throwing an exception.
-     *
-     * @param  int|string|Permission  $permission
-     * @param  string|null  $guardName
-     *
-     * @return bool
      */
-    public function checkPermissionTo(Permission|int|string $permission, string $guardName = null): bool
+    public function checkPermissionTo(Permission|int|string $permission, ?string $guardName = null): bool
     {
         try {
             return $this->hasPermissionTo($permission, $guardName);
@@ -235,9 +214,7 @@ trait HasPermissions
     /**
      * Determine if the model has any of the given permissions.
      *
-     * @param string|int|array|Permission|Collection  ...$permissions
-     *
-     * @return bool
+     * @param  string|int|array|Permission|Collection  ...$permissions
      */
     public function hasAnyPermission(...$permissions): bool
     {
@@ -255,9 +232,8 @@ trait HasPermissions
     /**
      * Determine if the model has all of the given permissions.
      *
-     * @param string|int|array|Permission|Collection  ...$permissions
+     * @param  string|int|array|Permission|Collection  ...$permissions
      *
-     * @return bool
      * @throws Exception
      */
     public function hasAllPermissions(...$permissions): bool
@@ -275,10 +251,6 @@ trait HasPermissions
 
     /**
      * Determine if the model has, via roles, the given permission.
-     *
-     * @param  Permission  $permission
-     *
-     * @return bool
      */
     protected function hasPermissionViaRole(Permission $permission): bool
     {
@@ -288,9 +260,7 @@ trait HasPermissions
     /**
      * Determine if the model has the given permission.
      *
-     * @param  int|string|Permission  $permission
      *
-     * @return bool
      * @throws PermissionDoesNotExist
      */
     public function hasDirectPermission(Permission|int|string $permission): bool
@@ -306,7 +276,7 @@ trait HasPermissions
         }
 
         if (! $permission instanceof Permission) {
-            throw new PermissionDoesNotExist();
+            throw new PermissionDoesNotExist;
         }
 
         return $this->permissions->contains($permission->getKeyName(), $permission->getKey());
@@ -342,8 +312,7 @@ trait HasPermissions
     /**
      * Grant the given permission(s) to a role.
      *
-     * @param string|int|array|Permission|Collection  $permissions
-     *
+     * @param  string|int|array|Permission|Collection  $permissions
      * @return $this
      */
     public function givePermissionTo(...$permissions): static
@@ -400,8 +369,7 @@ trait HasPermissions
     /**
      * Remove all current permissions and set the given ones.
      *
-     * @param string|int|array|Permission|Collection  $permissions
-     *
+     * @param  string|int|array|Permission|Collection  $permissions
      * @return $this
      */
     public function syncPermissions(...$permissions): static
@@ -415,7 +383,6 @@ trait HasPermissions
      * Revoke the given permission(s).
      *
      * @param  string|Permission|Permission[]|string[]  $permission
-     *
      * @return $this
      */
     public function revokePermissionTo(array|Permission|string $permission): static
@@ -436,11 +403,6 @@ trait HasPermissions
         return $this->permissions->pluck('name');
     }
 
-    /**
-     * @param  int|array|string|Collection|Permission  $permissions
-     *
-     * @return Permission|int|string|Collection|array
-     */
     protected function getStoredPermission(Permission|int|array|string|Collection $permissions): Permission|int|string|Collection|array
     {
         $permissionClass = $this->getPermissionClass();
@@ -471,8 +433,6 @@ trait HasPermissions
     }
 
     /**
-     * @param  Permission|Role  $roleOrPermission
-     *
      * @throws GuardDoesNotMatch
      */
     protected function ensureModelSharesGuard(Permission|Role $roleOrPermission): void
@@ -502,8 +462,8 @@ trait HasPermissions
 
     /**
      * Check if the model has All the requested Direct permissions.
-     * @param string|int|array|Permission|Collection  ...$permissions
-     * @return bool
+     *
+     * @param  string|int|array|Permission|Collection  ...$permissions
      */
     public function hasAllDirectPermissions(...$permissions): bool
     {
@@ -520,8 +480,8 @@ trait HasPermissions
 
     /**
      * Check if the model has Any of the requested Direct permissions.
-     * @param string|int|array|Permission|Collection  ...$permissions
-     * @return bool
+     *
+     * @param  string|int|array|Permission|Collection  ...$permissions
      */
     public function hasAnyDirectPermission(...$permissions): bool
     {

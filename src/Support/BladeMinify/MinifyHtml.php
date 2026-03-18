@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://github.com/juzaweb/cms
+ *
  * @license    GNU V2
  */
 
@@ -20,9 +22,8 @@ class MinifyHtml
     /**
      * "Minify" an HTML page
      *
-     * @param string $html
-     *
-     * @param array $options
+     * @param  string  $html
+     * @param  array  $options
      *
      * 'cssMinifier' : (optional) callback function to process content of STYLE
      * elements.
@@ -32,7 +33,6 @@ class MinifyHtml
      *
      * 'xhtml' : (optional boolean) should content be treated as XHTML1.0? If
      * unset, minify will sniff for an XHTML doctype.
-     *
      * @return string
      */
     public static function minify($html, $options = [])
@@ -45,9 +45,8 @@ class MinifyHtml
     /**
      * Create a minifier object
      *
-     * @param string $html
-     *
-     * @param array $options
+     * @param  string  $html
+     * @param  array  $options
      *
      * 'cssMinifier' : (optional) callback function to process content of STYLE
      * elements.
@@ -64,7 +63,7 @@ class MinifyHtml
     {
         $this->_html = str_replace("\r\n", "\n", trim($html));
         if (isset($options['xhtml'])) {
-            $this->_isXhtml = (bool)$options['xhtml'];
+            $this->_isXhtml = (bool) $options['xhtml'];
         }
         if (isset($options['cssMinifier'])) {
             $this->_cssMinifier = $options['cssMinifier'];
@@ -73,7 +72,7 @@ class MinifyHtml
             $this->_jsMinifier = $options['jsMinifier'];
         }
         if (isset($options['jsCleanComments'])) {
-            $this->_jsCleanComments = (bool)$options['jsCleanComments'];
+            $this->_jsCleanComments = (bool) $options['jsCleanComments'];
         }
     }
 
@@ -85,10 +84,10 @@ class MinifyHtml
     public function process()
     {
         if ($this->_isXhtml === null) {
-            $this->_isXhtml = (false !== strpos($this->_html, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML'));
+            $this->_isXhtml = (strpos($this->_html, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML') !== false);
         }
 
-        $this->_replacementHash = 'MINIFYHTML' . md5($_SERVER['REQUEST_TIME']);
+        $this->_replacementHash = 'MINIFYHTML'.md5($_SERVER['REQUEST_TIME']);
         $this->_placeholders = [];
 
         // replace SCRIPTs (and minify) with placeholders
@@ -161,23 +160,27 @@ class MinifyHtml
 
     protected function _commentCB($m)
     {
-        return (0 === strpos($m[1], '[') || false !== strpos($m[1], '<![') || 0 === strpos($m[1], '#'))
+        return (strpos($m[1], '[') === 0 || strpos($m[1], '<![') !== false || strpos($m[1], '#') === 0)
             ? $m[0]
             : '';
     }
 
     protected function _reservePlace($content)
     {
-        $placeholder = '%' . $this->_replacementHash . count($this->_placeholders) . '%';
+        $placeholder = '%'.$this->_replacementHash.count($this->_placeholders).'%';
         $this->_placeholders[$placeholder] = $content;
 
         return $placeholder;
     }
 
     protected $_isXhtml;
+
     protected $_replacementHash;
+
     protected $_placeholders = [];
+
     protected $_cssMinifier;
+
     protected $_jsMinifier;
 
     protected function _removePreCB($m)
@@ -245,13 +248,13 @@ class MinifyHtml
 
     protected function _removeCdata($str)
     {
-        return (false !== strpos($str, '<![CDATA['))
+        return (strpos($str, '<![CDATA[') !== false)
             ? str_replace(['<![CDATA[', ']]>'], '', $str)
             : $str;
     }
 
     protected function _needsCdata($str)
     {
-        return ($this->_isXhtml && preg_match('/(?:[<&]|\\-\\-|\\]\\]>)/u', $str));
+        return $this->_isXhtml && preg_match('/(?:[<&]|\\-\\-|\\]\\]>)/u', $str);
     }
 }

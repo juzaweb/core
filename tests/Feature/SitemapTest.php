@@ -16,6 +16,7 @@ use Spatie\Sitemap\SitemapServiceProvider;
 class SitemapTest extends TestCase
 {
     protected Page $homePage;
+
     protected Page $otherPage;
 
     protected function getPackageProviders($app): array

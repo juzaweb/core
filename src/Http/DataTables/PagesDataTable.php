@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -41,7 +41,7 @@ class PagesDataTable extends DataTable
             Column::actions(),
             Column::editLink(
                 'title',
-                admin_url("pages/{id}/edit"),
+                admin_url('pages/{id}/edit'),
                 'Title'
             ),
             Column::computed('is_home')
@@ -81,8 +81,9 @@ class PagesDataTable extends DataTable
     {
         $builder->editColumn('is_home', function (Page $page) {
             if ($page->id == theme_setting('home_page')) {
-                return '<span class="badge badge-success"><i class="fas fa-home"></i> ' . e(__('core::translation.home')) . '</span>';
+                return '<span class="badge badge-success"><i class="fas fa-home"></i> '.e(__('core::translation.home')).'</span>';
             }
+
             return '<span class="text-muted">-</span>';
         });
 

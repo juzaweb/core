@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -42,8 +42,6 @@ class Theme implements Arrayable
 
     /**
      * Get name.
-     *
-     * @return string
      */
     public function name(): string
     {
@@ -52,8 +50,6 @@ class Theme implements Arrayable
 
     /**
      * Get name in studly case.
-     *
-     * @return string
      */
     public function studlyName(): string
     {
@@ -72,8 +68,6 @@ class Theme implements Arrayable
 
     /**
      * Get screenshot URL.
-     *
-     * @return string
      */
     public function thumbnailUrl(): string
     {
@@ -92,9 +86,6 @@ class Theme implements Arrayable
 
     /**
      * Get path.
-     *
-     * @param string $path
-     * @return string
      */
     public function path(string $path = ''): string
     {
@@ -102,7 +93,7 @@ class Theme implements Arrayable
             return realpath($this->path);
         }
 
-        return realpath($this->path) . '/' . ltrim("/{$path}", '/');
+        return realpath($this->path).'/'.ltrim("/{$path}", '/');
     }
 
     public function isActive(): bool
@@ -119,8 +110,6 @@ class Theme implements Arrayable
 
     /**
      * Get required modules from theme.json
-     *
-     * @return array
      */
     public function getRequiredModules(): array
     {
@@ -130,10 +119,8 @@ class Theme implements Arrayable
     /**
      * Get a specific data from json file by given the key.
      *
-     * @param string $key
-     * @param null $default
+     * @param  null  $default
      *
-     * @return mixed
      * @throws \Exception
      */
     public function get(string $key, $default = null): mixed
@@ -149,10 +136,7 @@ class Theme implements Arrayable
     /**
      * Get a specific data from composer.json file by given the key.
      *
-     * @param string $key
-     * @param null $default
-     *
-     * @return array|string|null
+     * @param  null  $default
      */
     public function getComposerAttr(string $key, $default = null): array|string|null
     {
@@ -162,12 +146,10 @@ class Theme implements Arrayable
     /**
      * Get json contents from the cache, setting as needed.
      *
-     * @param string|null $file
      *
-     * @return Collection
      * @throws \Exception
      */
-    public function json(string|null $file = null): Collection
+    public function json(?string $file = null): Collection
     {
         if ($file === null) {
             $file = 'theme.json';

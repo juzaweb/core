@@ -4,8 +4,8 @@ namespace Juzaweb\Modules\Core\Tests\Unit\Facades;
 
 use Juzaweb\Modules\Core\Contracts\Chart as ChartContract;
 use Juzaweb\Modules\Core\Facades\Chart;
-use Juzaweb\Modules\Core\Tests\TestCase;
 use Juzaweb\Modules\Core\Support\ChartRepository;
+use Juzaweb\Modules\Core\Tests\TestCase;
 use stdClass;
 
 class ChartFacadeTest extends TestCase

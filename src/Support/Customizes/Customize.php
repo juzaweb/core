@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://juzaweb.com/cms
+ *
  * @license    GNU V2
  */
 
@@ -15,8 +17,11 @@ use Illuminate\Support\Collection;
 class Customize
 {
     protected Collection $panels;
+
     protected Collection $settings;
+
     protected Collection $sessions;
+
     protected Collection $controls;
 
     public function __construct()
@@ -34,11 +39,7 @@ class Customize
         $this->panels->put($key, new Collection($args));
     }
 
-    /**
-     * @param  string|null  $key
-     * @return Collection
-     */
-    public function getPanel(string $key = null): Collection
+    public function getPanel(?string $key = null): Collection
     {
         if (empty($key)) {
             return $this->panels;

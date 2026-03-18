@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
 use Illuminate\Database\Migrations\Migration;
@@ -7,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Juzaweb\Modules\Core\Permissions\PermissionRegistrar;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -79,7 +81,7 @@ return new class extends Migration {
                 $table->index(
                     [
                         $columnNames['model_morph_key'],
-                        'model_type'
+                        'model_type',
                     ],
                     "{$tbprefix}has_permissions_model_id_model_type_index"
                 );
@@ -111,9 +113,9 @@ return new class extends Migration {
                 $table->index(
                     [
                         $columnNames['model_morph_key'],
-                        'model_type'
+                        'model_type',
                     ],
-                    $tbprefix . 'has_roles_model_id_model_type_index'
+                    $tbprefix.'has_roles_model_id_model_type_index'
                 );
 
                 $table->foreign(PermissionRegistrar::$pivotRole)
@@ -124,9 +126,9 @@ return new class extends Migration {
                     [
                         PermissionRegistrar::$pivotRole,
                         $columnNames['model_morph_key'],
-                        'model_type'
+                        'model_type',
                     ],
-                    $tbprefix . 'has_roles_role_model_type_primary'
+                    $tbprefix.'has_roles_role_model_type_primary'
                 );
             }
         );
@@ -150,9 +152,9 @@ return new class extends Migration {
                 $table->primary(
                     [
                         PermissionRegistrar::$pivotPermission,
-                        PermissionRegistrar::$pivotRole
+                        PermissionRegistrar::$pivotRole,
                     ],
-                    $tbprefix . 'role_has_permissions_role_id_primary'
+                    $tbprefix.'role_has_permissions_role_id_primary'
                 );
             }
         );
@@ -164,8 +166,6 @@ return new class extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

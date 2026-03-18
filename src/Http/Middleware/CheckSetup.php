@@ -21,8 +21,6 @@ class CheckSetup
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -33,7 +31,7 @@ class CheckSetup
         }
 
         // Check if theme setup has been completed
-        if (Theme::current() && !theme_setting('setup')) {
+        if (Theme::current() && ! theme_setting('setup')) {
             return redirect()->route('admin.setup');
         }
 

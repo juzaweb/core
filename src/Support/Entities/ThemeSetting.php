@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -31,8 +33,7 @@ class ThemeSetting implements Arrayable
     public function __construct(
         protected GlobalData $globalData,
         protected string $key
-    ) {
-    }
+    ) {}
 
     public function type(string $type): static
     {

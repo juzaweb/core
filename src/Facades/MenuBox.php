@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -19,6 +21,7 @@ use Juzaweb\Modules\Core\Support\MenuBoxRepository;
  * @method static void make(string $key, string $class, callable $options)
  * @method static array get(string $position)
  * @method static Collection all()
+ *
  * @see MenuBoxRepository
  */
 class MenuBox extends Facade

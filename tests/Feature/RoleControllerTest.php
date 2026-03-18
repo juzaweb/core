@@ -25,21 +25,21 @@ class RoleControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function testIndexRoles()
+    public function test_index_roles()
     {
         $response = $this->get(admin_url('roles'));
 
         $response->assertStatus(200);
     }
 
-    public function testCreateRole()
+    public function test_create_role()
     {
         $response = $this->get(admin_url('roles/create'));
 
         $response->assertStatus(200);
     }
 
-    public function testStoreRole()
+    public function test_store_role()
     {
         $response = $this->postJson(admin_url('roles'), [
             'name' => 'Test Role',
@@ -58,7 +58,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    public function testStoreRoleRequiresName()
+    public function test_store_role_requires_name()
     {
         $response = $this->postJson(admin_url('roles'), [
             'code' => 'test-role',
@@ -68,7 +68,7 @@ class RoleControllerTest extends TestCase
             ->assertJsonValidationErrors(['name']);
     }
 
-    public function testStoreRoleRequiresCode()
+    public function test_store_role_requires_code()
     {
         $response = $this->postJson(admin_url('roles'), [
             'name' => 'Test Role',
@@ -78,7 +78,7 @@ class RoleControllerTest extends TestCase
             ->assertJsonValidationErrors(['code']);
     }
 
-    public function testStoreRoleRequiresUniqueCode()
+    public function test_store_role_requires_unique_code()
     {
         Role::create([
             'name' => 'Existing Role',
@@ -95,7 +95,7 @@ class RoleControllerTest extends TestCase
             ->assertJsonValidationErrors(['code']);
     }
 
-    public function testUpdateRole()
+    public function test_update_role()
     {
         $role = Role::create([
             'name' => 'Old Role',
@@ -103,7 +103,7 @@ class RoleControllerTest extends TestCase
             'guard_name' => 'web',
         ]);
 
-        $response = $this->putJson(admin_url('roles/' . $role->id), [
+        $response = $this->putJson(admin_url('roles/'.$role->id), [
             'name' => 'Updated Role',
             'code' => 'old-role',
             'guard_name' => 'web',
@@ -120,7 +120,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    public function testDeleteRole()
+    public function test_delete_role()
     {
         $role = Role::create([
             'name' => 'Delete Role',
@@ -128,7 +128,7 @@ class RoleControllerTest extends TestCase
             'guard_name' => 'web',
         ]);
 
-        $response = $this->deleteJson(admin_url('roles/' . $role->id));
+        $response = $this->deleteJson(admin_url('roles/'.$role->id));
 
         $response->assertStatus(200)
             ->assertJson([
@@ -140,7 +140,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    public function testBulkDeleteRoles()
+    public function test_bulk_delete_roles()
     {
         $role1 = Role::create([
             'name' => 'Bulk Role 1',

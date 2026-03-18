@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Juzaweb\Modules\Core\Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -33,7 +32,7 @@ class UserControllerTest extends TestCase
     /**
      * Test store user with valid data
      */
-    public function testStoreUserWithValidData()
+    public function test_store_user_with_valid_data()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -58,7 +57,7 @@ class UserControllerTest extends TestCase
     /**
      * Test store user requires name
      */
-    public function testStoreUserRequiresName()
+    public function test_store_user_requires_name()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -75,7 +74,7 @@ class UserControllerTest extends TestCase
     /**
      * Test store user requires email
      */
-    public function testStoreUserRequiresEmail()
+    public function test_store_user_requires_email()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -92,7 +91,7 @@ class UserControllerTest extends TestCase
     /**
      * Test store user requires password
      */
-    public function testStoreUserRequiresPassword()
+    public function test_store_user_requires_password()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -108,7 +107,7 @@ class UserControllerTest extends TestCase
     /**
      * Test store user requires unique email
      */
-    public function testStoreUserRequiresUniqueEmail()
+    public function test_store_user_requires_unique_email()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -130,7 +129,7 @@ class UserControllerTest extends TestCase
     /**
      * Test store user requires password confirmation
      */
-    public function testStoreUserRequiresPasswordConfirmation()
+    public function test_store_user_requires_password_confirmation()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -148,7 +147,7 @@ class UserControllerTest extends TestCase
     /**
      * Test update user with valid data
      */
-    public function testUpdateUserWithValidData()
+    public function test_update_user_with_valid_data()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -178,7 +177,7 @@ class UserControllerTest extends TestCase
     /**
      * Test update user with password
      */
-    public function testUpdateUserWithPassword()
+    public function test_update_user_with_password()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -205,7 +204,7 @@ class UserControllerTest extends TestCase
     /**
      * Test cannot update super admin user
      */
-    public function testCannotUpdateSuperAdminUser()
+    public function test_cannot_update_super_admin_user()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -224,7 +223,7 @@ class UserControllerTest extends TestCase
     /**
      * Test delete user
      */
-    public function testDeleteUser()
+    public function test_delete_user()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -247,7 +246,7 @@ class UserControllerTest extends TestCase
     /**
      * Test cannot delete super admin user
      */
-    public function testCannotDeleteSuperAdminUser()
+    public function test_cannot_delete_super_admin_user()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -267,7 +266,7 @@ class UserControllerTest extends TestCase
     /**
      * Test bulk delete users
      */
-    public function testBulkDeleteUsers()
+    public function test_bulk_delete_users()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -291,7 +290,7 @@ class UserControllerTest extends TestCase
     /**
      * Test bulk activate users
      */
-    public function testBulkActivateUsers()
+    public function test_bulk_activate_users()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -322,7 +321,7 @@ class UserControllerTest extends TestCase
     /**
      * Test bulk deactivate users
      */
-    public function testBulkDeactivateUsers()
+    public function test_bulk_deactivate_users()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -353,7 +352,7 @@ class UserControllerTest extends TestCase
     /**
      * Test bulk ban users
      */
-    public function testBulkBanUsers()
+    public function test_bulk_ban_users()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -384,7 +383,7 @@ class UserControllerTest extends TestCase
     /**
      * Test bulk cannot delete super admin users
      */
-    public function testBulkCannotDeleteSuperAdminUsers()
+    public function test_bulk_cannot_delete_super_admin_users()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -412,7 +411,7 @@ class UserControllerTest extends TestCase
     /**
      * Test bulk with invalid action returns error
      */
-    public function testBulkWithInvalidActionReturnsError()
+    public function test_bulk_with_invalid_action_returns_error()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 

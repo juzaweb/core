@@ -30,15 +30,11 @@ class Module
 
     /**
      * The module name.
-     *
-     * @var
      */
     protected string $name;
 
     /**
      * The module path.
-     *
-     * @var string
      */
     protected string $path;
 
@@ -46,18 +42,22 @@ class Module
      * @var array of cached Json objects, keyed by filename
      */
     protected array $moduleJson = [];
+
     /**
      * @var CacheManager
      */
     private mixed $cache;
+
     /**
      * @var Filesystem
      */
     private mixed $files;
+
     /**
      * @var Translator
      */
     private mixed $translator;
+
     /**
      * @var ActivatorInterface
      */
@@ -65,9 +65,8 @@ class Module
 
     /**
      * The constructor.
-     * @param Application|Container $app
-     * @param $name
-     * @param $path
+     *
+     * @param  Application|Container  $app
      */
     public function __construct(Application $app, string $name, $path)
     {
@@ -82,8 +81,6 @@ class Module
 
     /**
      * Get name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -92,8 +89,6 @@ class Module
 
     /**
      * Get name in lower case.
-     *
-     * @return string
      */
     public function getLowerName(): string
     {
@@ -107,8 +102,6 @@ class Module
 
     /**
      * Get name in studly case.
-     *
-     * @return string
      */
     public function getStudlyName(): string
     {
@@ -117,8 +110,6 @@ class Module
 
     /**
      * Get name in snake case.
-     *
-     * @return string
      */
     public function getSnakeName(): string
     {
@@ -127,8 +118,6 @@ class Module
 
     /**
      * Get name in kebab case.
-     *
-     * @return string
      */
     public function getKebabName(): string
     {
@@ -137,8 +126,6 @@ class Module
 
     /**
      * Get description.
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -147,23 +134,19 @@ class Module
 
     /**
      * Get priority.
-     *
-     * @return string
      */
     public function getPriority(): string
     {
         return $this->get('priority');
     }
 
-    public function getResourceNamespace(): string|null
+    public function getResourceNamespace(): ?string
     {
         return $this->get('alias');
     }
 
     /**
      * Get path.
-     *
-     * @return string
      */
     public function getPath(): string
     {
@@ -173,8 +156,7 @@ class Module
     /**
      * Set path.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return $this
      */
     public function setPath($path): static
@@ -187,7 +169,7 @@ class Module
     public function path(?string $path = null): string
     {
         if ($path) {
-            return $this->getPath() . '/' . $path;
+            return $this->getPath().'/'.$path;
         }
 
         return $this->getPath();
@@ -211,14 +193,12 @@ class Module
 
     /**
      * Register module's translation.
-     *
-     * @return void
      */
     protected function registerTranslation(): void
     {
         $lowerName = $this->getLowerName();
 
-        $langPath = $this->getPath() . '/Resources/lang';
+        $langPath = $this->getPath().'/Resources/lang';
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $lowerName);
@@ -227,10 +207,6 @@ class Module
 
     /**
      * Get json contents from the cache, setting as needed.
-     *
-     * @param  string|null  $file
-     *
-     * @return Json
      */
     public function json(?string $file = null): Json
     {
@@ -239,17 +215,14 @@ class Module
         }
 
         return Arr::get($this->moduleJson, $file, function () use ($file) {
-            return $this->moduleJson[$file] = new Json($this->getPath() . '/' . $file, $this->files);
+            return $this->moduleJson[$file] = new Json($this->getPath().'/'.$file, $this->files);
         });
     }
 
     /**
      * Get a specific data from json file by given the key.
      *
-     * @param string $key
-     * @param null $default
-     *
-     * @return array|string|null
+     * @param  null  $default
      */
     public function get(string $key, $default = null): array|string|null
     {
@@ -259,10 +232,7 @@ class Module
     /**
      * Get a specific data from composer.json file by given the key.
      *
-     * @param string $key
-     * @param null $default
-     *
-     * @return array|string|null
+     * @param  null  $default
      */
     public function getComposerAttr(string $key, $default = null): array|string|null
     {
@@ -292,11 +262,11 @@ class Module
     {
         // This checks if we are running on a Laravel Vapor managed instance
         // and sets the path to a writable one (services path is not on a writable storage in Vapor).
-        if (!is_null(env('VAPOR_MAINTENANCE_MODE'))) {
-            return Str::replaceLast('config.php', $this->getSnakeName() . '_module.php', $this->app->getCachedConfigPath());
+        if (! is_null(env('VAPOR_MAINTENANCE_MODE'))) {
+            return Str::replaceLast('config.php', $this->getSnakeName().'_module.php', $this->app->getCachedConfigPath());
         }
 
-        return Str::replaceLast('services.php', $this->getSnakeName() . '_module.php', $this->app->getCachedServicesPath());
+        return Str::replaceLast('services.php', $this->getSnakeName().'_module.php', $this->app->getCachedServicesPath());
     }
 
     /**
@@ -305,12 +275,12 @@ class Module
     public function registerProviders(): void
     {
         try {
-            (new ProviderRepository($this->app, new Filesystem(), $this->getCachedServicesPath()))
+            (new ProviderRepository($this->app, new Filesystem, $this->getCachedServicesPath()))
                 ->load($this->get('providers', []));
         } catch (Throwable $e) {
             report($e);
             if (! app()->runningInConsole()) {
-                admin_message("Module {$this->getName()} Provider Error: " . $e->getMessage());
+                admin_message("Module {$this->getName()} Provider Error: ".$e->getMessage());
             }
         }
     }
@@ -338,10 +308,6 @@ class Module
 
     /**
      * Determine whether the given status same with the current module status.
-     *
-     * @param bool $status
-     *
-     * @return bool
      */
     public function isStatus(bool $status): bool
     {
@@ -355,8 +321,6 @@ class Module
 
     /**
      * Determine whether the current module activated.
-     *
-     * @return bool
      */
     public function isEnabled(): bool
     {
@@ -367,20 +331,14 @@ class Module
 
     /**
      *  Determine whether the current module not disabled.
-     *
-     * @return bool
      */
     public function isDisabled(): bool
     {
-        return !$this->isEnabled();
+        return ! $this->isEnabled();
     }
 
     /**
      * Set active state for current module.
-     *
-     * @param bool $active
-     *
-     * @return void
      */
     public function setActive(bool $active): void
     {
@@ -415,8 +373,6 @@ class Module
 
     /**
      * Delete the current module.
-     *
-     * @return bool
      */
     public function delete(): bool
     {
@@ -427,20 +383,14 @@ class Module
 
     /**
      * Get extra path.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     public function getExtraPath(string $path): string
     {
-        return $this->getPath() . '/' . $path;
+        return $this->getPath().'/'.$path;
     }
 
     /**
      * Check if can load files of module on boot method.
-     *
-     * @return bool
      */
     protected function isLoadFilesOnBoot(): bool
     {
@@ -456,10 +406,6 @@ class Module
 
     /**
      * Register a translation file namespace.
-     *
-     * @param  string  $path
-     * @param  string  $namespace
-     * @return void
      */
     protected function loadTranslationsFrom(string $path, string $namespace): void
     {
@@ -472,17 +418,15 @@ class Module
     protected function registerFiles(): void
     {
         foreach ($this->get('files', []) as $file) {
-            include $this->path . '/' . $file;
+            include $this->path.'/'.$file;
         }
     }
 
     /**
      * Register the module event.
-     *
-     * @param  string  $event
      */
     protected function fireEvent(string $event): void
     {
-        $this->app['events']->dispatch(sprintf('modules.%s.' . $event, $this->getLowerName()), [$this]);
+        $this->app['events']->dispatch(sprintf('modules.%s.'.$event, $this->getLowerName()), [$this]);
     }
 }

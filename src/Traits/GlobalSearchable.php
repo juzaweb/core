@@ -17,8 +17,6 @@ trait GlobalSearchable
      *
      * This function registers an observer for the model to observe changes in the model's data.
      * The observer class used is GlobalSearchObserver.
-     *
-     * @return void
      */
     public static function bootGlobalSearchable(): void
     {
@@ -27,8 +25,6 @@ trait GlobalSearchable
 
     /**
      * Retrieve the morph many relationship for the global search.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function globalSearch(): MorphMany
     {

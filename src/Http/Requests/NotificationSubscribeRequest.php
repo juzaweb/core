@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -19,8 +20,8 @@ class NotificationSubscribeRequest extends FormRequest
         $name = $channel === 'mail' ? 'email' : 'token';
 
         $rules = [
-			"{$name}" => ['required'],
-		];
+            "{$name}" => ['required'],
+        ];
 
         if ($channel === 'mail') {
             $rules["{$name}"][] = 'email:rfc';

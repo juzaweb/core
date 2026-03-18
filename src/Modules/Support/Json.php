@@ -31,13 +31,12 @@ class Json
     /**
      * The constructor.
      *
-     * @param mixed                             $path
-     * @param \Illuminate\Filesystem\Filesystem $filesystem
+     * @param  mixed  $path
      */
-    public function __construct($path, Filesystem $filesystem = null)
+    public function __construct($path, ?Filesystem $filesystem = null)
     {
         $this->path = (string) $path;
-        $this->filesystem = $filesystem ?: new Filesystem();
+        $this->filesystem = $filesystem ?: new Filesystem;
         $this->attributes = Collection::make($this->getAttributes());
     }
 
@@ -54,7 +53,6 @@ class Json
     /**
      * Set filesystem.
      *
-     * @param Filesystem $filesystem
      *
      * @return $this
      */
@@ -78,8 +76,7 @@ class Json
     /**
      * Set path.
      *
-     * @param mixed $path
-     *
+     * @param  mixed  $path
      * @return $this
      */
     public function setPath($path)
@@ -92,12 +89,10 @@ class Json
     /**
      * Make new instance.
      *
-     * @param string                            $path
-     * @param \Illuminate\Filesystem\Filesystem $filesystem
-     *
+     * @param  string  $path
      * @return static
      */
-    public static function make($path, Filesystem $filesystem = null)
+    public static function make($path, ?Filesystem $filesystem = null)
     {
         return new static($path, $filesystem);
     }
@@ -114,7 +109,9 @@ class Json
 
     /**
      * Get file contents as array.
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function getAttributes()
@@ -123,7 +120,7 @@ class Json
 
         // any JSON parsing errors should throw an exception
         if (json_last_error() > 0) {
-            throw new InvalidJsonException('Error processing file: ' . $this->getPath() . '. Error: ' . json_last_error_msg());
+            throw new InvalidJsonException('Error processing file: '.$this->getPath().'. Error: '.json_last_error_msg());
         }
 
         if (config('modules.cache.enabled') === false) {
@@ -138,11 +135,10 @@ class Json
     /**
      * Convert the given array data to pretty json.
      *
-     * @param array $data
      *
      * @return string
      */
-    public function toJsonPretty(array $data = null)
+    public function toJsonPretty(?array $data = null)
     {
         return json_encode($data ?: $this->attributes, JSON_PRETTY_PRINT);
     }
@@ -150,7 +146,6 @@ class Json
     /**
      * Update json contents from array data.
      *
-     * @param array $data
      *
      * @return bool
      */
@@ -164,9 +159,8 @@ class Json
     /**
      * Set a specific key & value.
      *
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function set($key, $value)
@@ -189,8 +183,7 @@ class Json
     /**
      * Handle magic method __get.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function __get($key)
@@ -201,9 +194,7 @@ class Json
     /**
      * Get the specified attribute from json file.
      *
-     * @param $key
-     * @param null $default
-     *
+     * @param  null  $default
      * @return mixed
      */
     public function get($key, $default = null)
@@ -214,9 +205,8 @@ class Json
     /**
      * Handle call to __call method.
      *
-     * @param string $method
-     * @param array  $arguments
-     *
+     * @param  string  $method
+     * @param  array  $arguments
      * @return mixed
      */
     public function __call($method, $arguments = [])

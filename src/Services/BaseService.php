@@ -10,9 +10,6 @@ abstract class BaseService
 {
     /**
      * Execute a Closure within a transaction.
-     *
-     * @param callable $callback
-     * @return mixed
      */
     protected function transaction(callable $callback): mixed
     {
@@ -24,7 +21,7 @@ abstract class BaseService
         return (object) [
             'status' => $status,
             'data' => $data,
-            'message' => $message
+            'message' => $message,
         ];
     }
 }

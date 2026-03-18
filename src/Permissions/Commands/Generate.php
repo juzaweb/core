@@ -32,8 +32,6 @@ class Generate extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -117,8 +115,8 @@ class Generate extends Command
                     'updated_at' => now(),
                 ];
             })
-            ->values()
-            ->toArray()
+                ->values()
+                ->toArray()
         );
 
         Permission::insert(
@@ -133,8 +131,8 @@ class Generate extends Command
                     'updated_at' => now(),
                 ];
             })
-            ->values()
-            ->toArray()
+                ->values()
+                ->toArray()
         );
 
         foreach ($roles as $role => $options) {
@@ -184,9 +182,9 @@ class Generate extends Command
                 ];
             }
         )
-        ->unique('code')
-        ->values()
-        ->toArray();
+            ->unique('code')
+            ->values()
+            ->toArray();
 
         ApiScopeGroup::insert($groupData);
 
@@ -200,8 +198,8 @@ class Generate extends Command
                     'updated_at' => now(),
                 ];
             })
-            ->values()
-            ->toArray()
+                ->values()
+                ->toArray()
         );
     }
 
@@ -219,7 +217,7 @@ class Generate extends Command
                     $permission = explode('|', str_replace('permission:', '', $middleware));
 
                     foreach ($permission as $item) {
-                        if (!isset($permissions[$item])) {
+                        if (! isset($permissions[$item])) {
                             $permissions[$item] = [
                                 'code' => trim($item),
                                 'name' => $this->getNamePermission($item),
@@ -234,7 +232,7 @@ class Generate extends Command
                     $scope = explode(',', str_replace('scope:', '', $middleware));
 
                     foreach ($scope as $item) {
-                        if (!isset($scopes[$item])) {
+                        if (! isset($scopes[$item])) {
                             $scopes[$item] = [
                                 'code' => trim($item),
                                 'name' => $this->getNamePermission($item),
@@ -248,7 +246,7 @@ class Generate extends Command
                     $scope = explode(',', str_replace('scopes:', '', $middleware));
 
                     foreach ($scope as $item) {
-                        if (!isset($scopes[$item])) {
+                        if (! isset($scopes[$item])) {
                             $scopes[$item] = [
                                 'code' => trim($item),
                                 'name' => $this->getNamePermission($item),

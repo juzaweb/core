@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -37,18 +37,10 @@ abstract class Resource
 
     protected ?string $routeName = null;
 
-    /**
-     * @param Registrar $registrar
-     * @param string $name
-     * @param string $controller
-     */
     public function __construct(protected Registrar $registrar, protected string $name, protected string $controller) {}
 
     /**
      * Set route name
-     *
-     * @param string $name
-     * @return static
      */
     public function name(string $name): static
     {
@@ -59,9 +51,6 @@ abstract class Resource
 
     /**
      * Set permission name
-     *
-     * @param string $name
-     * @return static
      */
     public function permissionName(string $name): static
     {
@@ -72,10 +61,6 @@ abstract class Resource
 
     /**
      * Set permissions for a method
-     *
-     * @param string $method
-     * @param array $permissions
-     * @return static
      */
     public function permissions(string $method, array $permissions): static
     {
@@ -86,10 +71,6 @@ abstract class Resource
 
     /**
      * Set middleware for a method
-     *
-     * @param string $method
-     * @param array $middleware
-     * @return static
      */
     public function middleware(string $method, array $middleware): static
     {
@@ -100,9 +81,6 @@ abstract class Resource
 
     /**
      * Set methods to register
-     *
-     * @param array $methods
-     * @return static
      */
     public function methods(array $methods): static
     {
@@ -113,9 +91,6 @@ abstract class Resource
 
     /**
      * Only register specific methods
-     *
-     * @param array $methods
-     * @return static
      */
     public function only(array $methods): static
     {
@@ -126,9 +101,6 @@ abstract class Resource
 
     /**
      * Register all methods except specific ones
-     *
-     * @param array $methods
-     * @return static
      */
     public function except(array $methods): static
     {
@@ -139,8 +111,6 @@ abstract class Resource
 
     /**
      * Disable permission check
-     *
-     * @return static
      */
     public function noPermission(): static
     {
@@ -149,9 +119,6 @@ abstract class Resource
 
     /**
      * Set without permission
-     *
-     * @param bool $withoutPermission
-     * @return static
      */
     public function withoutPermission(bool $withoutPermission = true): static
     {
@@ -162,8 +129,6 @@ abstract class Resource
 
     /**
      * Get permission name
-     *
-     * @return string
      */
     public function getPermissionName(): string
     {
@@ -172,9 +137,6 @@ abstract class Resource
 
     /**
      * Get permissions for a method
-     *
-     * @param string $method
-     * @return array
      */
     public function getPermissions(string $method): array
     {
@@ -193,13 +155,11 @@ abstract class Resource
             default => $method,
         };
 
-        return [$this->getPermissionName() . ".{$permission}"];
+        return [$this->getPermissionName().".{$permission}"];
     }
 
     /**
      * Get route name
-     *
-     * @return string
      */
     public function getRouteName(): string
     {
@@ -208,8 +168,6 @@ abstract class Resource
 
     /**
      * Register routes
-     *
-     * @return void
      */
     abstract public function register(): void;
 

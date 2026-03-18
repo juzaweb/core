@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -91,7 +92,7 @@ class MenuController extends AdminController
 
                 $model->items()
                     ->where(
-                        fn($q) => $q->whereNotIn('id', $results)
+                        fn ($q) => $q->whereNotIn('id', $results)
                             ->orWhereColumn('id', 'parent_id')
                     )
                     ->delete();
@@ -106,7 +107,7 @@ class MenuController extends AdminController
                 } else {
                     $location = collect(theme_setting('nav_location'))
                         ->filter(
-                            fn($i) => $i != $model->id
+                            fn ($i) => $i != $model->id
                         )->toArray();
 
                     theme_setting()?->set('nav_location', $location);

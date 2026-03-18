@@ -29,7 +29,7 @@ class CommentsDataTable extends DataTable
         return $model->newQuery()
             ->with([
                 'commentable' => fn ($query) => $query->withTranslation()->with(['media']),
-                'commented'
+                'commented',
             ])
             ->where('commentable_type', $this->commentableType);
     }
@@ -37,15 +37,15 @@ class CommentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-			Column::checkbox(),
-			Column::id(),
-			Column::actions(),
-			Column::computed('content', __('core::translation.content')),
-			Column::computed('commentable', __('core::translation.commented_on')),
+            Column::checkbox(),
+            Column::id(),
+            Column::actions(),
+            Column::computed('content', __('core::translation.content')),
+            Column::computed('commentable', __('core::translation.commented_on')),
             Column::computed('commented', __('core::translation.commented_by')),
-			Column::make('status', __('core::translation.status')),
-			Column::createdAt(),
-		];
+            Column::make('status', __('core::translation.status')),
+            Column::createdAt(),
+        ];
     }
 
     public function actions(Model $model): array
@@ -77,7 +77,7 @@ class CommentsDataTable extends DataTable
                     $url = parse_url($commentable->getUrl(), PHP_URL_PATH);
                     $url = url($url);
 
-                    return '<a href="' . $url . '" target="_blank">' . e($title) . '</a>';
+                    return '<a href="'.$url.'" target="_blank">'.e($title).'</a>';
                 }
 
                 return __('core::translation.deleted');
@@ -86,8 +86,10 @@ class CommentsDataTable extends DataTable
                 $commented = $model->commented;
                 if ($commented) {
                     $name = $commented->name ?? $commented->email;
+
                     return e($name);
                 }
+
                 return __('core::translation.deleted');
             })
             ->rawColumns(['commentable']);

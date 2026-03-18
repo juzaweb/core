@@ -15,8 +15,11 @@ use RuntimeException;
 class ImgProxyService extends BaseService
 {
     protected string $cacheDir;
+
     protected ImageManager $imageManager;
+
     protected ?S3Client $s3Client = null;
+
     protected array $allowedMethods = ['resize', 'original', 'cover', 'crop'];
 
     public function __construct()
@@ -26,12 +29,12 @@ class ImgProxyService extends BaseService
         // Initialize ImageManager with configurable driver
         $driver = strtolower(config('image.driver', 'gd'));
         $this->imageManager = $driver === 'imagick'
-            ? new ImageManager(new ImagickDriver())
-            : new ImageManager(new GdDriver());
+            ? new ImageManager(new ImagickDriver)
+            : new ImageManager(new GdDriver);
 
         // Create cache directory if not exists
-        if (!is_dir($this->cacheDir)) {
-            if (!mkdir($concurrentDirectory = $this->cacheDir, 0777, true) && !is_dir($concurrentDirectory)) {
+        if (! is_dir($this->cacheDir)) {
+            if (! mkdir($concurrentDirectory = $this->cacheDir, 0777, true) && ! is_dir($concurrentDirectory)) {
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
         }
@@ -39,14 +42,14 @@ class ImgProxyService extends BaseService
         // Initialize S3 client if cloud storage is configured
         $cloudConfig = config('filesystems.disks.cloud');
         if (
-            !empty($cloudConfig['key']) &&
-            !empty($cloudConfig['bucket'])
+            ! empty($cloudConfig['key']) &&
+            ! empty($cloudConfig['bucket'])
         ) {
             $this->s3Client = new S3Client([
                 'version' => 'latest',
                 'region' => $cloudConfig['region'] ?? 'us-east-1',
                 'endpoint' => $cloudConfig['write_endpoint'] ?? $cloudConfig['endpoint'] ?? null,
-                'use_path_style_endpoint' => !empty($cloudConfig['endpoint']),
+                'use_path_style_endpoint' => ! empty($cloudConfig['endpoint']),
                 'credentials' => [
                     'key' => $cloudConfig['key'],
                     'secret' => $cloudConfig['secret'],
@@ -66,7 +69,7 @@ class ImgProxyService extends BaseService
     public function handle(string $method, string $hash, ?int $width, ?int $height, ?string $filename = null): array
     {
         // Validate method
-        if (!in_array($method, $this->allowedMethods, true)) {
+        if (! in_array($method, $this->allowedMethods, true)) {
             throw new InvalidArgumentException('Invalid method');
         }
 
@@ -96,7 +99,7 @@ class ImgProxyService extends BaseService
         return [
             'data' => $encodedData,
             'contentType' => $isWebpRequested ? 'image/webp' : $contentType,
-            'contentLength' => strlen((string)$encodedData),
+            'contentLength' => strlen((string) $encodedData),
         ];
     }
 
@@ -108,7 +111,7 @@ class ImgProxyService extends BaseService
         $key = sha1(config('app.key'));
         $url = decrypt_deterministic($hash, $key);
 
-        if (!$url) {
+        if (! $url) {
             throw new InvalidArgumentException('Invalid hash');
         }
 
@@ -134,23 +137,24 @@ class ImgProxyService extends BaseService
 
         if (str_contains($url, $storageUrl)) {
             $path = str_replace($storageUrl, '', $url);
-            $fullPath = $publicConfig['root'] . '/' . ltrim($path, '/');
+            $fullPath = $publicConfig['root'].'/'.ltrim($path, '/');
 
             if (is_file($fullPath)) {
                 $imageData = file_get_contents($fullPath);
                 $contentType = mime_content_type($fullPath);
                 $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
+
                 return [$imageData, $contentType, $extension];
             }
         }
 
         // Try to get from cache or fetch remote
-        $cachePath = $this->cacheDir . '/' . sha1($url);
+        $cachePath = $this->cacheDir.'/'.sha1($url);
 
         // Clean up cache periodically
         $this->cleanupCache();
 
-        if (is_file($cachePath) && !$this->isExpired($cachePath)) {
+        if (is_file($cachePath) && ! $this->isExpired($cachePath)) {
             $imageData = file_get_contents($cachePath);
             $contentType = mime_content_type($cachePath);
         } else {
@@ -159,6 +163,7 @@ class ImgProxyService extends BaseService
         }
 
         $extension = strtolower(pathinfo($url, PATHINFO_EXTENSION));
+
         return [$imageData, $contentType, $extension];
     }
 
@@ -167,7 +172,7 @@ class ImgProxyService extends BaseService
      */
     protected function getImageFromS3(string $url): array
     {
-        if (!$this->s3Client) {
+        if (! $this->s3Client) {
             throw new RuntimeException('S3 client not initialized');
         }
 
@@ -179,10 +184,10 @@ class ImgProxyService extends BaseService
         $key = ltrim($path, '/');
 
         // Generate cache path for S3 image
-        $cachePath = $this->cacheDir . '/s3_' . sha1($path);
+        $cachePath = $this->cacheDir.'/s3_'.sha1($path);
 
         // Check if cached version exists and is not expired
-        if (is_file($cachePath) && !$this->isExpired($cachePath)) {
+        if (is_file($cachePath) && ! $this->isExpired($cachePath)) {
             $imageData = file_get_contents($cachePath);
             $contentType = mime_content_type($cachePath);
             $extension = strtolower(pathinfo($key, PATHINFO_EXTENSION));
@@ -209,7 +214,7 @@ class ImgProxyService extends BaseService
 
             return [$imageData, $contentType, $extension];
         } catch (\Throwable $e) {
-            throw new RuntimeException('S3 Fetch Error: ' . $e->getMessage());
+            throw new RuntimeException('S3 Fetch Error: '.$e->getMessage());
         }
     }
 
@@ -228,6 +233,7 @@ class ImgProxyService extends BaseService
         }
 
         $contentType = $this->getHeaderContentType($http_response_header ?? []);
+
         return [$data, $contentType];
     }
 
@@ -241,6 +247,7 @@ class ImgProxyService extends BaseService
                 return trim(substr($header, 13));
             }
         }
+
         return 'image/jpeg';
     }
 
@@ -251,6 +258,7 @@ class ImgProxyService extends BaseService
     {
         $days = config('cache.imgproxy_expiry_days', 30);
         $expiry = time() - ($days * 86400);
+
         return filemtime($file) < $expiry;
     }
 
@@ -268,8 +276,8 @@ class ImgProxyService extends BaseService
         $maxMB = config('cache.imgproxy_max_size_mb', 1024);
         $expiryDays = config('cache.imgproxy_expiry_days', 30);
 
-        $files = glob($this->cacheDir . '/*');
-        if (!$files) {
+        $files = glob($this->cacheDir.'/*');
+        if (! $files) {
             return;
         }
 
@@ -277,7 +285,7 @@ class ImgProxyService extends BaseService
         $fileData = [];
 
         foreach ($files as $file) {
-            if (!is_file($file)) {
+            if (! is_file($file)) {
                 continue;
             }
 
@@ -300,7 +308,7 @@ class ImgProxyService extends BaseService
             $maxBytes = $maxMB * 1024 * 1024;
             if ($totalSize > $maxBytes) {
                 // Sort by oldest first
-                uasort($fileData, fn($a, $b) => $a['mtime'] <=> $b['mtime']);
+                uasort($fileData, fn ($a, $b) => $a['mtime'] <=> $b['mtime']);
 
                 foreach ($fileData as $file => $info) {
                     if ($totalSize <= $maxBytes) {
@@ -333,7 +341,7 @@ class ImgProxyService extends BaseService
         $host = $_SERVER['HTTP_HOST'] ?? '';
         $watermarkHosts = config('image.watermark_hosts', []);
 
-        if (!in_array($host, $watermarkHosts, true)) {
+        if (! in_array($host, $watermarkHosts, true)) {
             return $image;
         }
 

@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -44,8 +45,6 @@ class Comment extends Model
      *
      * This method returns the model that the comment is associated with,
      * such as a Video, Post, etc.
-     *
-     * @return MorphTo
      */
     public function commentable(): MorphTo
     {
@@ -67,9 +66,6 @@ class Comment extends Model
 
     /**
      * Scope a query to only include approved comments.
-     *
-     * @param  Builder  $builder
-     * @return Builder
      */
     public function scopeWhereFrontend(Builder $builder): Builder
     {
@@ -89,8 +85,6 @@ class Comment extends Model
 
     /**
      * Get the status label.
-     *
-     * @return string
      */
     public function getStatusLabel(): string
     {

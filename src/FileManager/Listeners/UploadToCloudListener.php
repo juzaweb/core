@@ -1,9 +1,10 @@
 <?php
+
 /**
  * LARABIZ CMS - Full SPA Laravel CMS
  *
- * @package    larabizcms/larabiz
  * @author     The Anh Dang
+ *
  * @link       https://larabiz.com
  */
 
@@ -16,14 +17,11 @@ class UploadToCloudListener
 {
     /**
      * Handle the event.
-     *
-     * @param UploadFileSuccess $event
-     * @return void
      */
     public function handle(UploadFileSuccess $event): void
     {
         // Check if cloud upload is enabled
-        if (!config('media.cloud_upload_enabled', false)) {
+        if (! config('media.cloud_upload_enabled', false)) {
             return;
         }
 

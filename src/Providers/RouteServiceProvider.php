@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -34,15 +35,15 @@ class RouteServiceProvider extends ServiceProvider
 
             $adminPrefix = $this->app['config']->get('core.admin_prefix');
             Route::group([], function () {
-                require __DIR__ . '/../routes/statics.php';
+                require __DIR__.'/../routes/statics.php';
             });
 
             Route::middleware(['admin'])
                 ->prefix($adminPrefix)
-                ->group(__DIR__ . '/../routes/admin.php');
+                ->group(__DIR__.'/../routes/admin.php');
 
             Route::middleware(['theme'])
-                ->group(__DIR__ . '/../routes/web.php');
+                ->group(__DIR__.'/../routes/web.php');
         });
     }
 

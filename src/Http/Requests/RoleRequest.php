@@ -19,7 +19,7 @@ class RoleRequest extends FormRequest
                 'string',
                 'max:50',
                 'alpha_dash',
-                Rule::unique((new Role())->getTable(), 'code')->ignore($id)
+                Rule::unique((new Role)->getTable(), 'code')->ignore($id),
             ],
             'permissions' => ['nullable', 'array'],
         ];

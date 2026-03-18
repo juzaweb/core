@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -74,9 +74,7 @@ class ThemeRepository implements ThemeContract
     /**
      * Find a specific module, if there return that, otherwise throw exception.
      *
-     * @param string $name
      *
-     * @return Theme
      *
      * @throws ThemeNotFoundException
      */
@@ -99,7 +97,7 @@ class ThemeRepository implements ThemeContract
 
         $theme = $this->activator->getActiveName();
 
-        if ($theme === null || !($currentTheme = $this->find($theme))) {
+        if ($theme === null || ! ($currentTheme = $this->find($theme))) {
             /** @var Theme */
             return $this->all()->first();
         }
@@ -120,7 +118,7 @@ class ThemeRepository implements ThemeContract
 
     public function init(): void
     {
-        if (!($theme = $this->current())) {
+        if (! ($theme = $this->current())) {
             return;
         }
 
@@ -133,7 +131,7 @@ class ThemeRepository implements ThemeContract
             }
 
             foreach ($theme->get('files', []) as $file) {
-                require($theme->path($file));
+                require $theme->path($file);
             }
         } catch (\Throwable $e) {
             report($e);
@@ -142,9 +140,6 @@ class ThemeRepository implements ThemeContract
 
     /**
      * Boot required modules for the theme
-     *
-     * @param Theme $theme
-     * @return void
      */
     protected function bootRequiredModules(Theme $theme): void
     {
@@ -161,6 +156,7 @@ class ThemeRepository implements ThemeContract
 
             if ($module === null) {
                 admin_message("Required module '{$moduleName}' for theme '{$theme->name()}' not found.");
+
                 continue;
             }
 
@@ -180,8 +176,8 @@ class ThemeRepository implements ThemeContract
             return $this->themes;
         }
 
-        if (!File::isDirectory($this->path)) {
-            return ($this->themes = new Collection());
+        if (! File::isDirectory($this->path)) {
+            return $this->themes = new Collection;
         }
 
         $themeDirectories = File::directories($this->path);
@@ -204,7 +200,7 @@ class ThemeRepository implements ThemeContract
             ]);
         }
 
-        return ($this->themes = new Collection($themes));
+        return $this->themes = new Collection($themes);
     }
 
     protected function makeThemeEntity(string $path): Theme

@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -20,14 +21,13 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool has(string $name)
  * @method static bool activate(string $theme)
  * @method static void init()
+ *
  * @see \Juzaweb\Modules\Core\Themes\ThemeRepository
  */
 class Theme extends Facade
 {
     /**
      * Get the registered name of the component.
-     *
-     * @return string
      */
     protected static function getFacadeAccessor(): string
     {

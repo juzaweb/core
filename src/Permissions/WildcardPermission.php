@@ -16,15 +16,10 @@ class WildcardPermission
     /** @var string */
     public const SUBPART_DELIMITER = ',';
 
-    /** @var string */
     protected string $permission;
 
-    /** @var Collection */
     protected Collection $parts;
 
-    /**
-     * @param string $permission
-     */
     public function __construct(string $permission)
     {
         $this->permission = $permission;
@@ -33,11 +28,6 @@ class WildcardPermission
         $this->setParts();
     }
 
-    /**
-     * @param  string|WildcardPermission  $permission
-     *
-     * @return bool
-     */
     public function implies(string|WildcardPermission $permission): bool
     {
         if (is_string($permission)) {
@@ -69,12 +59,6 @@ class WildcardPermission
         return true;
     }
 
-    /**
-     * @param Collection $part
-     * @param Collection $otherPart
-     *
-     * @return bool
-     */
     protected function containsAll(Collection $part, Collection $otherPart): bool
     {
         foreach ($otherPart->toArray() as $item) {
@@ -86,9 +70,6 @@ class WildcardPermission
         return true;
     }
 
-    /**
-     * @return Collection
-     */
     public function getParts(): Collection
     {
         return $this->parts;
@@ -96,8 +77,6 @@ class WildcardPermission
 
     /**
      * Sets the different parts and subparts from permission string.
-     *
-     * @return void
      */
     protected function setParts(): void
     {

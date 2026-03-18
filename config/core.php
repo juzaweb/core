@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -49,7 +51,7 @@ return [
             'github' => \Laravel\Socialite\Two\GithubProvider::class,
             'gitlab' => \Laravel\Socialite\Two\GitlabProvider::class,
             'bitbucket' => \Laravel\Socialite\Two\BitbucketProvider::class,
-        ]
+        ],
     ],
 
     'optimize' => [
@@ -71,7 +73,7 @@ return [
         'https://www.googletagmanager.com',
         'https://www.google-analytics.com',
         'https://cdn.juzaweb.com',
-        ...(env('CSP_SCRIPT_SRC') ? explode(',', env('CSP_SCRIPT_SRC')) : [])
+        ...(env('CSP_SCRIPT_SRC') ? explode(',', env('CSP_SCRIPT_SRC')) : []),
     ],
 
     /*

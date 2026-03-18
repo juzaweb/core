@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com/cms
+ *
  * @license    GNU V2
  */
 
@@ -15,14 +17,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ModelUnique implements Rule
 {
-    /**
-     * @var string
-     */
     private string $modelClass;
 
-    /**
-     * @var string
-     */
     private string $modelAttribute;
 
     /**
@@ -40,7 +36,7 @@ class ModelUnique implements Rule
      */
     private $value;
 
-    public function __construct(string $modelClass, string $modelAttribute = 'id', callable $closure = null)
+    public function __construct(string $modelClass, string $modelAttribute = 'id', ?callable $closure = null)
     {
         $this->modelClass = $modelClass;
         $this->modelAttribute = $modelAttribute;
@@ -52,7 +48,7 @@ class ModelUnique implements Rule
         $this->attribute = $attribute;
         $this->value = $value;
 
-        return !$this->modelClass::query()
+        return ! $this->modelClass::query()
             ->when(
                 is_array($value),
                 function (Builder $query) {

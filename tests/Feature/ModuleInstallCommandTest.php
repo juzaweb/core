@@ -4,7 +4,6 @@ namespace Juzaweb\Modules\Core\Tests\Feature;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Support\Facades\Artisan;
 use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
 use Juzaweb\Modules\Core\Tests\TestCase;
 use Mockery;
@@ -22,13 +21,18 @@ class ModuleInstallCommandTest extends TestCase
 
         // Create a mock composer.phar in the base path
         $composerPath = base_path('composer.phar');
-        file_put_contents($composerPath, '#!/usr/bin/env php' . PHP_EOL . '<?php echo "Mock Composer Run"; exit(0);');
+        file_put_contents($composerPath, '#!/usr/bin/env php'.PHP_EOL.'<?php echo "Mock Composer Run"; exit(0);');
         chmod($composerPath, 0755);
 
         // Register a dummy module:publish command as it seems to be missing in the environment
-        $publishCommand = new class extends Command {
+        $publishCommand = new class extends Command
+        {
             protected $signature = 'module:publish {module}';
-            public function handle() { return 0; }
+
+            public function handle()
+            {
+                return 0;
+            }
         };
         $this->app[Kernel::class]->registerCommand($publishCommand);
     }
@@ -68,7 +72,7 @@ class ModuleInstallCommandTest extends TestCase
         // Setup expectation: getModulePath should be called with 'Blog'
         $repository->shouldReceive('getModulePath')
             ->with($shortName)
-            ->andReturn('/tmp/modules/' . $shortName);
+            ->andReturn('/tmp/modules/'.$shortName);
 
         // ModuleUpdateCommand calls findOrFail('Blog')
         // Also Updater calls findOrFail inside update()
@@ -78,8 +82,8 @@ class ModuleInstallCommandTest extends TestCase
 
         // ModuleUpdateCommand calls update.
         $repository->shouldReceive('update')
-            ->with(Mockery::on(function($arg) use ($shortName) {
-                return (string)$arg === $shortName;
+            ->with(Mockery::on(function ($arg) use ($shortName) {
+                return (string) $arg === $shortName;
             }));
 
         // Bind the mock to the container

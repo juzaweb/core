@@ -10,8 +10,6 @@ trait HasSlug
      * Boot the HasSlug trait for a model.
      *
      * When saving the model, if the slug is null, generate a slug using the generateSlug method.
-     *
-     * @return void
      */
     public static function bootHasSlug(): void
     {
@@ -27,8 +25,6 @@ trait HasSlug
     /**
      * Find a model by slug.
      *
-     * @param  string  $slug
-     * @param  array  $column
      * @return static|null
      */
     public static function findBySlug(string $slug, array $column = ['*']): ?self
@@ -41,7 +37,6 @@ trait HasSlug
     /**
      * Find a model by slug or throw an exception.
      *
-     * @param  string  $slug
      * @return static
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
@@ -76,7 +71,7 @@ trait HasSlug
      * If $string is empty, use the display name of the model, or the current value of the slug field.
      * Otherwise, use the given string.
      *
-     * @param  string|null  $string The string to generate a slug from.
+     * @param  string|null  $string  The string to generate a slug from.
      * @return string The unique slug.
      */
     public function generateSlug(?string $string = null): string
@@ -97,7 +92,7 @@ trait HasSlug
                 ->first(['slug']);
 
             if ($row) {
-                $slug = $baseSlug . '-' . $i;
+                $slug = $baseSlug.'-'.$i;
             }
 
             $i++;

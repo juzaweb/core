@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -22,8 +24,7 @@ class Repeater extends Component
         protected string $view,
         protected array|Arrayable|null $items = null,
         protected array $params = [],
-    ) {
-    }
+    ) {}
 
     /**
      * Get the view / contents that represent the component.
@@ -31,12 +32,12 @@ class Repeater extends Component
     public function render(): View|\Closure|string
     {
         return view('core::components.repeater', [
-                'name' => $this->name,
-                'view' => $this->view,
-                'items' => $this->items ?? collect([]),
-                'params' => $this->params ?? [],
-                'label' => Str::title(Str::replace(['_', '-'], ' ', $this->name))
-            ]
+            'name' => $this->name,
+            'view' => $this->view,
+            'items' => $this->items ?? collect([]),
+            'params' => $this->params ?? [],
+            'label' => Str::title(Str::replace(['_', '-'], ' ', $this->name)),
+        ]
         );
     }
 }

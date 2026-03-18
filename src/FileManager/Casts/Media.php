@@ -10,7 +10,7 @@ class Media implements CastsAttributes
 {
     protected ?string $channel = null;
 
-    public function __construct(string $channel = null)
+    public function __construct(?string $channel = null)
     {
         $this->channel = $channel;
     }

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -24,12 +26,13 @@ class TranslateViewTextCommand extends Command
     {
         $path = base_path($this->argument('path'));
 
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             $this->error("Path does not exist: {$path}");
+
             return;
         }
 
-        $finder = new Finder();
+        $finder = new Finder;
         $finder->files()->in($path)->name('*.blade.php');
 
         foreach ($finder as $file) {
@@ -43,17 +46,19 @@ class TranslateViewTextCommand extends Command
             $hasWrapper = stripos($escapedContent, '<html') !== false || stripos($escapedContent, '<body') !== false;
             $wrappedHtml = $hasWrapper
                 ? $escapedContent
-                : '<meta charset="UTF-8"><body>' . $escapedContent . '</body>';
+                : '<meta charset="UTF-8"><body>'.$escapedContent.'</body>';
 
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = new \DOMDocument;
             $dom->preserveWhiteSpace = false;
             $dom->formatOutput = true;
 
             $dom->loadHTML(mb_convert_encoding($wrappedHtml, 'HTML-ENTITIES', 'UTF-8'));
             $targetNode = $hasWrapper ? $dom->documentElement : $dom->getElementsByTagName('body')->item(0);
 
-            if (!$targetNode) return;
+            if (! $targetNode) {
+                return;
+            }
 
             $changed = false;
             $this->processNodes($targetNode, $dom, $changed);
@@ -62,7 +67,7 @@ class TranslateViewTextCommand extends Command
                 $newContent = $hasWrapper
                     ? $dom->saveHTML()
                     : collect(iterator_to_array($targetNode->childNodes))
-                        ->map(fn($n) => $dom->saveHTML($n))->implode('');
+                        ->map(fn ($n) => $dom->saveHTML($n))->implode('');
 
                 // Restore Blade
                 $newContent = $this->restoreBlade($newContent);
@@ -72,13 +77,13 @@ class TranslateViewTextCommand extends Command
             }
         }
 
-        $this->info("Done.");
+        $this->info('Done.');
     }
 
     protected function escapeBlade($content): array|string|null
     {
         return preg_replace_callback('/(@[a-zA-Z]+\s*\(.*?\)|\{\{.*?\}\})/s', function ($match) {
-            return '<!--BLADE:' . base64_encode($match[0]) . '-->';
+            return '<!--BLADE:'.base64_encode($match[0]).'-->';
         }, $content);
     }
 
@@ -96,8 +101,8 @@ class TranslateViewTextCommand extends Command
                 $text = trim($child->textContent);
 
                 // Skip if empty or already a blade directive
-                if ($text !== '' && !str_starts_with($text, '{{') && !str_starts_with($text, '@')) {
-                    $newText = "{{ __('" . addslashes($text) . "') }}";
+                if ($text !== '' && ! str_starts_with($text, '{{') && ! str_starts_with($text, '@')) {
+                    $newText = "{{ __('".addslashes($text)."') }}";
                     $newNode = $dom->createTextNode($newText);
                     $node->replaceChild($newNode, $child);
                     $changed = true;

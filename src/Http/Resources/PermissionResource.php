@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -20,6 +21,7 @@ use OpenApi\Annotations as OA;
  *      schema="PermissionResource",
  *      required={"code", "name", "created_at", "updated_at"},
  *      properties={
+ *
  *          @OA\Property(property="code", type="string"),
  *          @OA\Property(property="name", type="string"),
  *          @OA\Property(property="description", type="string"),

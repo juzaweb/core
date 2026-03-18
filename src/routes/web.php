@@ -6,14 +6,13 @@ use Juzaweb\Modules\Core\FileManager\Http\Controllers\UploadController;
 use Juzaweb\Modules\Core\Http\Controllers\AddonController;
 use Juzaweb\Modules\Core\Http\Controllers\Frontend\SitemapController;
 
-if (!Theme::current()) {
+if (! Theme::current()) {
     Route::get('/', [AddonController::class, 'redirect']);
 }
 
 Route::group(['prefix' => Locale::setLocale()], function () {
-    require __DIR__ . '/components/auth.php';
+    require __DIR__.'/components/auth.php';
 });
-
 
 Route::get('sitemap.xml', [SitemapController::class, 'index'])
     ->name('sitemap.xml');
@@ -37,8 +36,8 @@ Route::group([
     'middleware' => [
         'auth',
         'verified',
-    ]
-], function() {
+    ],
+], function () {
     Route::post('temp/upload', [UploadController::class, 'uploadTemp'])
         ->name('upload.temp');
 });

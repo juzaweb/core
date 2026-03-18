@@ -17,8 +17,7 @@ class ThemeRepositoryAdapter implements RepositoryInterface
     public function __construct(
         protected ThemeContract $themeRepository,
         protected Filesystem $files
-    ) {
-    }
+    ) {}
 
     /**
      * Get all themes.
@@ -95,8 +94,6 @@ class ThemeRepositoryAdapter implements RepositoryInterface
 
     /**
      * Get count from all themes.
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -106,7 +103,7 @@ class ThemeRepositoryAdapter implements RepositoryInterface
     /**
      * Get all ordered themes.
      *
-     * @param string $direction
+     * @param  string  $direction
      * @return array
      */
     public function getOrdered($direction = 'asc')
@@ -117,8 +114,7 @@ class ThemeRepositoryAdapter implements RepositoryInterface
     /**
      * Get themes by the given status.
      *
-     * @param int $status
-     *
+     * @param  int  $status
      * @return mixed
      */
     public function getByStatus($status)
@@ -133,7 +129,6 @@ class ThemeRepositoryAdapter implements RepositoryInterface
     /**
      * Find a specific theme.
      *
-     * @param string $name
      * @return \Juzaweb\Modules\Core\Themes\Theme|null
      */
     public function find(string $name)
@@ -144,9 +139,9 @@ class ThemeRepositoryAdapter implements RepositoryInterface
     /**
      * Find a specific theme. If there return that, otherwise throw exception.
      *
-     * @param string $name
      *
      * @return \Juzaweb\Modules\Core\Themes\Theme
+     *
      * @throws ThemeNotFoundException
      */
     public function findOrFail(string $name)
@@ -158,7 +153,7 @@ class ThemeRepositoryAdapter implements RepositoryInterface
      * Get theme path for a specific theme.
      * This implements the module interface method name but returns theme path
      *
-     * @param string $themeName
+     * @param  string  $themeName
      * @return string
      */
     public function getModulePath($themeName)
@@ -166,17 +161,15 @@ class ThemeRepositoryAdapter implements RepositoryInterface
         $theme = $this->find($themeName);
 
         if ($theme) {
-            return $theme->path() . '/';
+            return $theme->path().'/';
         }
 
         // If theme doesn't exist, return default path
-        return $this->getPath() . '/' . strtolower($themeName) . '/';
+        return $this->getPath().'/'.strtolower($themeName).'/';
     }
 
     /**
      * Get laravel filesystem instance.
-     *
-     * @return Filesystem
      */
     public function getFiles(): Filesystem
     {
@@ -186,19 +179,16 @@ class ThemeRepositoryAdapter implements RepositoryInterface
     /**
      * Get a specific config data from a configuration file.
      *
-     * @param string $key
-     * @param string|null $default
+     * @param  string|null  $default
      * @return mixed
      */
     public function config(string $key, $default = null)
     {
-        return config('themes.' . $key, $default);
+        return config('themes.'.$key, $default);
     }
 
     /**
      * Get themes path.
-     *
-     * @return string
      */
     public function getPath(): string
     {
@@ -224,20 +214,15 @@ class ThemeRepositoryAdapter implements RepositoryInterface
 
     /**
      * Get asset path for a specific theme.
-     *
-     * @param string $theme
-     * @return string
      */
     public function assetPath(string $theme): string
     {
-        return public_path('themes/' . $theme);
+        return public_path('themes/'.$theme);
     }
 
     /**
      * Delete a specific theme.
      *
-     * @param string $theme
-     * @return bool
      * @throws ThemeNotFoundException
      */
     public function delete(string $theme): bool
@@ -250,8 +235,6 @@ class ThemeRepositoryAdapter implements RepositoryInterface
     /**
      * Determine whether the given theme is activated.
      *
-     * @param string $name
-     * @return bool
      * @throws ThemeNotFoundException
      */
     public function isEnabled(string $name): bool
@@ -262,12 +245,10 @@ class ThemeRepositoryAdapter implements RepositoryInterface
     /**
      * Determine whether the given theme is not activated.
      *
-     * @param string $name
-     * @return bool
      * @throws ThemeNotFoundException
      */
     public function isDisabled(string $name): bool
     {
-        return !$this->isEnabled($name);
+        return ! $this->isEnabled($name);
     }
 }

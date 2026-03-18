@@ -2,12 +2,12 @@
 
 namespace Juzaweb\Modules\Core\Tests\Unit\Performance;
 
+use Illuminate\Support\Facades\File;
 use Juzaweb\Modules\Core\Facades\Setting;
 use Juzaweb\Modules\Core\Facades\ThemeSetting;
-use Juzaweb\Modules\Core\Tests\TestCase;
-use Illuminate\Support\Facades\File;
 use Juzaweb\Modules\Core\Models\Setting as SettingModel;
 use Juzaweb\Modules\Core\Models\ThemeSetting as ThemeSettingModel;
+use Juzaweb\Modules\Core\Tests\TestCase;
 
 class SettingOptimizationTest extends TestCase
 {

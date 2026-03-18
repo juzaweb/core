@@ -13,7 +13,7 @@ class NavMenuRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->navMenuRepository = new NavMenuRepository();
+        $this->navMenuRepository = new NavMenuRepository;
     }
 
     public function test_all_returns_empty_collection_when_no_menus_registered()

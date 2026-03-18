@@ -2,20 +2,20 @@
 
 namespace Juzaweb\Modules\Core\Tests\Unit;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use Juzaweb\Modules\Core\Tests\TestCase;
-use Juzaweb\Modules\Core\Translations\Contracts\CanBeTranslated;
-use Juzaweb\Modules\Core\Traits\LocaleModel;
-use Juzaweb\Modules\Core\Translations\Contracts\Translator;
-use Juzaweb\Modules\Core\Translations\Jobs\ModelTranslateJob;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Queue;
-use Juzaweb\Modules\Core\Translations\Models\TranslateHistory;
-use Juzaweb\Modules\Core\Translations\Enums\TranslateHistoryStatus;
-use Juzaweb\Modules\Core\Models\Media;
-use Juzaweb\Modules\Core\FileManager\Traits\HasMedia;
+use Illuminate\Support\Facades\Schema;
 use Juzaweb\Modules\Core\FileManager\Enums\MediaType;
+use Juzaweb\Modules\Core\FileManager\Traits\HasMedia;
+use Juzaweb\Modules\Core\Models\Media;
+use Juzaweb\Modules\Core\Tests\TestCase;
+use Juzaweb\Modules\Core\Traits\LocaleModel;
+use Juzaweb\Modules\Core\Translations\Contracts\CanBeTranslated;
+use Juzaweb\Modules\Core\Translations\Contracts\Translator;
+use Juzaweb\Modules\Core\Translations\Enums\TranslateHistoryStatus;
+use Juzaweb\Modules\Core\Translations\Jobs\ModelTranslateJob;
+use Juzaweb\Modules\Core\Translations\Models\TranslateHistory;
 
 class LocaleModelTest extends TestCase
 {
@@ -34,7 +34,7 @@ class LocaleModelTest extends TestCase
         });
 
         // Ensure translate_histories table exists (might be created by migrations in TestCase, but to be safe)
-        if (!Schema::hasTable('translate_histories')) {
+        if (! Schema::hasTable('translate_histories')) {
             Schema::create('translate_histories', function (Blueprint $table) {
                 $table->id();
                 $table->string('translateable_type');
@@ -49,7 +49,7 @@ class LocaleModelTest extends TestCase
         }
 
         // Media tables
-        if (!Schema::hasTable('media')) {
+        if (! Schema::hasTable('media')) {
             Schema::create('media', function (Blueprint $table) {
                 $table->uuid('id')->primary();
                 $table->string('disk', 20)->index()->default('public');
@@ -69,7 +69,7 @@ class LocaleModelTest extends TestCase
             });
         }
 
-        if (!Schema::hasTable('mediable')) {
+        if (! Schema::hasTable('mediable')) {
             Schema::create('mediable', function (Blueprint $table) {
                 $table->primary(['media_id', 'mediable_id', 'mediable_type', 'channel']);
                 $table->uuid('media_id')->index();
@@ -106,7 +106,7 @@ class LocaleModelTest extends TestCase
 
         $post = TestPost::create(['title' => 'Hello', 'locale' => 'en']);
 
-        $translateHistory = new TranslateHistory();
+        $translateHistory = new TranslateHistory;
         $translateHistory->fill([
             'translateable_type' => $post->getMorphClass(),
             'translateable_id' => $post->getKey(),
@@ -188,6 +188,7 @@ class LocaleModelTest extends TestCase
         Queue::assertPushed(ModelTranslateJob::class, function ($job) use ($options) {
             $reflection = new \ReflectionClass($job);
             $jobOptions = $reflection->getProperty('options')->getValue($job);
+
             return $jobOptions === $options;
         });
     }
@@ -206,7 +207,7 @@ class LocaleModelTest extends TestCase
         $result = $post->translateTo('vi', 'en', [
             'overwrites' => [
                 'content' => 'Overwritten Content',
-            ]
+            ],
         ]);
 
         $this->assertTrue($result);
@@ -230,6 +231,7 @@ class TestPost extends Model implements CanBeTranslated
     use LocaleModel;
 
     protected $table = 'test_posts';
+
     protected $fillable = ['title', 'content', 'slug', 'locale'];
 
     protected $translatedAttributes = ['title'];
@@ -237,9 +239,10 @@ class TestPost extends Model implements CanBeTranslated
 
 class TestPostWithMedia extends Model implements CanBeTranslated
 {
-    use LocaleModel, HasMedia;
+    use HasMedia, LocaleModel;
 
     protected $table = 'test_posts';
+
     protected $fillable = ['title', 'content', 'slug', 'locale'];
 
     protected $translatedAttributes = ['title'];

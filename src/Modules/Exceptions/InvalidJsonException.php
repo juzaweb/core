@@ -2,6 +2,4 @@
 
 namespace Juzaweb\Modules\Core\Modules\Exceptions;
 
-class InvalidJsonException extends \Exception
-{
-}
+class InvalidJsonException extends \Exception {}

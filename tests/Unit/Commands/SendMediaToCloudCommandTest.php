@@ -3,8 +3,8 @@
 namespace Juzaweb\Modules\Core\Tests\Unit\Commands;
 
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Juzaweb\Modules\Core\Models\Media;
 use Juzaweb\Modules\Core\Tests\TestCase;
 
@@ -26,7 +26,7 @@ class SendMediaToCloudCommandTest extends TestCase
         // We cannot use Storage::fake('cloud') because the helper cloud(true)
         // uses Storage::build() which creates a new disk instance from config,
         // bypassing the fake. We must ensure the config points to a path we can verify.
-        $cloudRoot = storage_path('framework/testing/disks/cloud_test_' . uniqid());
+        $cloudRoot = storage_path('framework/testing/disks/cloud_test_'.uniqid());
 
         // Ensure clean state
         if (File::exists($cloudRoot)) {
@@ -42,7 +42,7 @@ class SendMediaToCloudCommandTest extends TestCase
 
         try {
             // Create a media record
-            $media = new Media();
+            $media = new Media;
             $media->forceFill([
                 'name' => 'test.jpg',
                 'path' => 'test.jpg',
@@ -62,7 +62,7 @@ class SendMediaToCloudCommandTest extends TestCase
                 ->assertExitCode(0);
 
             // Verify file exists in the real cloud directory
-            $this->assertFileExists($cloudRoot . '/test.jpg');
+            $this->assertFileExists($cloudRoot.'/test.jpg');
 
             // Verify DB update
             $media->refresh();

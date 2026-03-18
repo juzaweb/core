@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -21,6 +22,7 @@ use OpenApi\Annotations as OA;
  *     schema="UserResource",
  *     required={"id", "name", "email", "created_at", "updated_at"},
  *     properties={
+ *
  *         @OA\Property(property="id", type="integer"),
  *         @OA\Property(property="name", type="string"),
  *         @OA\Property(property="email", type="string"),

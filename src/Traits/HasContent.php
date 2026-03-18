@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -32,10 +34,10 @@ trait HasContent
                 continue;
             }
 
-            if (!str_starts_with($item->src, 'http')) {
+            if (! str_starts_with($item->src, 'http')) {
                 $item->src = upload_url($item->src);
             } else {
-                if (!str_starts_with($item->src, url('images/'))) {
+                if (! str_starts_with($item->src, url('images/'))) {
                     $item->src = proxy_image($item->src);
                 }
             }

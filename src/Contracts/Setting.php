@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -15,7 +17,7 @@ use Juzaweb\Modules\Core\Models\Setting as SettingModel;
 
 /**
  * Interface Setting
- * @package App\Contracts
+ *
  * @see \Juzaweb\Modules\Core\Support\SettingRepository
  */
 interface Setting
@@ -24,7 +26,6 @@ interface Setting
      * Creates a new setting instance with the given key and optional label.
      *
      * @param  string  $key  The key for the setting.
-     * @return \Juzaweb\Modules\Core\Support\Entities\Setting
      */
     public function make(string $key): \Juzaweb\Modules\Core\Support\Entities\Setting;
 
@@ -59,7 +60,7 @@ interface Setting
      *
      * @param  array  $keys  The keys for which the configuration values are to be retrieved.
      * @param  mixed  $default  The default value to be used if a configuration value is not found for a key.
-     * Defaults to null.
+     *                          Defaults to null.
      * @return array The configuration values for the given keys in an array.
      */
     public function gets(array $keys, mixed $default = null): array;
@@ -74,8 +75,7 @@ interface Setting
     /**
      * Generate a new collection with the keys of the original collection.
      *
-     * @param array|null $keys The keys to include in the new collection
-     * @return Collection
+     * @param  array|null  $keys  The keys to include in the new collection
      */
     public function keys(?array $keys = null): Collection;
 

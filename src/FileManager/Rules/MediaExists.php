@@ -9,20 +9,17 @@ use Juzaweb\Modules\Core\Models\Media;
 class MediaExists implements Rule
 {
     /**
-     * @var string|null $disk The name of the disk
+     * @var string|null The name of the disk
      */
     protected ?string $disk = null;
 
     /**
-     * @var array $notFound Medias not found
+     * @var array Medias not found
      */
     protected array $notFound = [];
 
     /**
      * Specify the disk to use for the validation.
-     *
-     * @param  string  $disk
-     * @return static
      */
     public function onDisk(string $disk): static
     {
@@ -51,13 +48,11 @@ class MediaExists implements Rule
 
         $this->notFound = array_diff($value, $medias->pluck('id')->toArray());
 
-        return !empty($this->notFound);
+        return ! empty($this->notFound);
     }
 
     /**
      * Get the validation error message.
-     *
-     * @return string
      */
     public function message(): string
     {

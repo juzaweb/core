@@ -23,7 +23,7 @@ class PageBlockFacadeTest extends TestCase
         $options = [
             'label' => 'Test Block',
             'form' => 'test::form',
-            'view' => 'test::view'
+            'view' => 'test::view',
         ];
 
         PageBlock::make($key, function () use ($options) {
@@ -55,8 +55,8 @@ class PageBlockFacadeTest extends TestCase
         $key2 = 'block2';
         $options2 = ['label' => 'Block 2', 'form' => 'f2', 'view' => 'v2'];
 
-        PageBlock::make($key1, fn() => $options1);
-        PageBlock::make($key2, fn() => $options2);
+        PageBlock::make($key1, fn () => $options1);
+        PageBlock::make($key2, fn () => $options2);
 
         $all = PageBlock::all();
 

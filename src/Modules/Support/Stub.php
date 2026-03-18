@@ -6,30 +6,21 @@ class Stub
 {
     /**
      * The stub path.
-     *
-     * @var string
      */
     protected string $path;
 
     /**
      * The base path of stub file.
-     *
-     * @var null|string
      */
     protected static ?string $basePath = null;
 
     /**
      * The replacements array.
-     *
-     * @var array
      */
     protected array $replaces = [];
 
     /**
      * The contructor.
-     *
-     * @param  string  $path
-     * @param array  $replaces
      */
     public function __construct(string $path, array $replaces = [])
     {
@@ -40,8 +31,6 @@ class Stub
     /**
      * Create new self instance.
      *
-     * @param  string  $path
-     * @param array  $replaces
      *
      * @return self
      */
@@ -53,7 +42,6 @@ class Stub
     /**
      * Set stub path.
      *
-     * @param  string  $path
      *
      * @return self
      */
@@ -71,15 +59,13 @@ class Stub
      */
     public function getPath()
     {
-        $path = static::getBasePath() . ltrim($this->path, '/');
+        $path = static::getBasePath().ltrim($this->path, '/');
 
-        return file_exists($path) ? $path : dirname(__DIR__, 2) . '/stubs/' . ltrim($this->path, '/');
+        return file_exists($path) ? $path : dirname(__DIR__, 2).'/stubs/'.ltrim($this->path, '/');
     }
 
     /**
      * Set base path.
-     *
-     * @param  string  $path
      */
     public static function setBasePath(string $path)
     {
@@ -106,7 +92,7 @@ class Stub
         $contents = file_get_contents($this->getPath());
 
         foreach ($this->replaces as $search => $replace) {
-            $contents = str_replace('$' . strtoupper($search) . '$', $replace, $contents);
+            $contents = str_replace('$'.strtoupper($search).'$', $replace, $contents);
         }
 
         return $contents;
@@ -125,20 +111,17 @@ class Stub
     /**
      * Save stub to specific path.
      *
-     * @param  string  $path
-     * @param  string  $filename
      *
      * @return bool
      */
     public function saveTo(string $path, string $filename)
     {
-        return file_put_contents($path . '/' . $filename, $this->getContents());
+        return file_put_contents($path.'/'.$filename, $this->getContents());
     }
 
     /**
      * Set replacements array.
      *
-     * @param array $replaces
      *
      * @return $this
      */

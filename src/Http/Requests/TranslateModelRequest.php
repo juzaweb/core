@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -17,7 +18,7 @@ class TranslateModelRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'model' => [
+            'model' => [
                 'required',
                 'string',
             ],
@@ -29,6 +30,6 @@ class TranslateModelRequest extends FormRequest
                 'string',
                 Rule::in(array_keys(config('locales', []))),
             ],
-		];
+        ];
     }
 }

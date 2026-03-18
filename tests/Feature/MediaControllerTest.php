@@ -31,7 +31,7 @@ class MediaControllerTest extends TestCase
         $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
     }
 
-    public function testIndex()
+    public function test_index()
     {
         $response = $this->get(route('admin.media.index'));
 
@@ -39,7 +39,7 @@ class MediaControllerTest extends TestCase
         $response->assertViewIs('core::admin.media.index');
     }
 
-    public function testAddFolder()
+    public function test_add_folder()
     {
         $response = $this->postJson(route('admin.media.folders.store'), [
             'name' => 'Test Folder',
@@ -54,7 +54,7 @@ class MediaControllerTest extends TestCase
         ]);
     }
 
-    public function testUpload()
+    public function test_upload()
     {
         Storage::fake('public');
 
@@ -80,7 +80,7 @@ class MediaControllerTest extends TestCase
         ]);
     }
 
-    public function testDelete()
+    public function test_delete()
     {
         $media = Media::create([
             'name' => 'File to delete',

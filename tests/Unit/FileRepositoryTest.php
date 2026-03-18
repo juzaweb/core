@@ -9,13 +9,14 @@ use Juzaweb\Modules\Core\Tests\TestCase;
 class FileRepositoryTest extends TestCase
 {
     protected string $testModulePath;
+
     protected FileRepository $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->testModulePath = sys_get_temp_dir() . '/juzaweb_modules_test';
+        $this->testModulePath = sys_get_temp_dir().'/juzaweb_modules_test';
 
         if (File::exists($this->testModulePath)) {
             File::deleteDirectory($this->testModulePath);
@@ -30,11 +31,12 @@ class FileRepositoryTest extends TestCase
 
         // Configure activator to use temp path
         $this->app['config']->set('modules.activator', 'file');
-        $this->app['config']->set('modules.activators.file.statuses-file', $this->testModulePath . '/statuses.json');
+        $this->app['config']->set('modules.activators.file.statuses-file', $this->testModulePath.'/statuses.json');
 
         // Re-bind activator since we changed config
         $this->app->singleton(\Juzaweb\Modules\Core\Modules\Contracts\ActivatorInterface::class, function ($app) {
             $class = $app['config']->get('modules.activators.file.class');
+
             return new $class($app);
         });
 
@@ -52,7 +54,7 @@ class FileRepositoryTest extends TestCase
 
     protected function createDummyModule(string $name, int $priority = 0): void
     {
-        $modulePath = $this->testModulePath . '/' . $name;
+        $modulePath = $this->testModulePath.'/'.$name;
         File::makeDirectory($modulePath);
 
         $content = json_encode([
@@ -62,27 +64,27 @@ class FileRepositoryTest extends TestCase
             'priority' => $priority,
         ]);
 
-        File::put($modulePath . '/module.json', $content);
+        File::put($modulePath.'/module.json', $content);
     }
 
-    public function testAddLocationAndGetPaths()
+    public function test_add_location_and_get_paths()
     {
-        $extraPath = $this->testModulePath . '/extra';
+        $extraPath = $this->testModulePath.'/extra';
         $this->repository->addLocation($extraPath);
 
         $paths = $this->repository->getPaths();
         $this->assertContains($extraPath, $paths);
     }
 
-    public function testGetScanPaths()
+    public function test_get_scan_paths()
     {
         $scanPaths = $this->repository->getScanPaths();
         // The default path should be included and end with /*
-        $expected = $this->testModulePath . '/*';
+        $expected = $this->testModulePath.'/*';
         $this->assertContains($expected, $scanPaths);
     }
 
-    public function testScanAndAll()
+    public function test_scan_and_all()
     {
         $this->createDummyModule('Blog');
         $this->createDummyModule('Shop');
@@ -98,7 +100,7 @@ class FileRepositoryTest extends TestCase
         $this->assertCount(2, $allModules);
     }
 
-    public function testToCollection()
+    public function test_to_collection()
     {
         $this->createDummyModule('Blog');
         $this->createDummyModule('Shop');
@@ -108,7 +110,7 @@ class FileRepositoryTest extends TestCase
         $this->assertCount(2, $collection);
     }
 
-    public function testCollections()
+    public function test_collections()
     {
         $this->createDummyModule('Blog'); // Enabled by default/stub
         $this->createDummyModule('Shop');
@@ -126,7 +128,7 @@ class FileRepositoryTest extends TestCase
         $this->assertEquals('Blog', $collectionEnabled->first()->getName());
     }
 
-    public function testCount()
+    public function test_count()
     {
         $this->createDummyModule('Blog');
         $this->assertEquals(1, $this->repository->count());
@@ -135,7 +137,7 @@ class FileRepositoryTest extends TestCase
         $this->assertEquals(2, $this->repository->count());
     }
 
-    public function testFind()
+    public function test_find()
     {
         $this->createDummyModule('Blog');
 
@@ -150,7 +152,7 @@ class FileRepositoryTest extends TestCase
         $this->assertNull($this->repository->find('NonExistent'));
     }
 
-    public function testFindOrFail()
+    public function test_find_or_fail()
     {
         $this->createDummyModule('Blog');
 
@@ -161,14 +163,14 @@ class FileRepositoryTest extends TestCase
         $this->repository->findOrFail('NonExistent');
     }
 
-    public function testHas()
+    public function test_has()
     {
         $this->createDummyModule('Blog');
         $this->assertTrue($this->repository->has('Blog'));
         $this->assertFalse($this->repository->has('Shop'));
     }
 
-    public function testEnableDisableAndStatus()
+    public function test_enable_disable_and_status()
     {
         $this->createDummyModule('Blog');
 
@@ -186,7 +188,7 @@ class FileRepositoryTest extends TestCase
         $this->assertTrue($this->repository->isDisabled('Blog'));
     }
 
-    public function testGetByStatus()
+    public function test_get_by_status()
     {
         $this->createDummyModule('EnabledMod');
         $this->createDummyModule('DisabledMod');
@@ -203,7 +205,7 @@ class FileRepositoryTest extends TestCase
         $this->assertArrayNotHasKey('EnabledMod', $disabled);
     }
 
-    public function testGetOrdered()
+    public function test_get_ordered()
     {
         $this->createDummyModule('LowPriority', 1);
         $this->createDummyModule('HighPriority', 10);
@@ -240,7 +242,7 @@ class FileRepositoryTest extends TestCase
         $this->assertEquals('LowPriority', $keysDesc[1]);
     }
 
-    public function testDelete()
+    public function test_delete()
     {
         $this->createDummyModule('ToDelete');
         $this->assertTrue($this->repository->has('ToDelete'));
@@ -249,22 +251,22 @@ class FileRepositoryTest extends TestCase
 
         // After delete, scan again
         $this->assertFalse($this->repository->has('ToDelete'));
-        $this->assertFalse(File::exists($this->testModulePath . '/ToDelete'));
+        $this->assertFalse(File::exists($this->testModulePath.'/ToDelete'));
     }
 
-    public function testConfig()
+    public function test_config()
     {
         $this->app['config']->set('modules.some.key', 'value');
         $this->assertEquals('value', $this->repository->config('some.key'));
     }
 
-    public function testGetModulePath()
+    public function test_get_module_path()
     {
         $this->createDummyModule('Blog');
         $path = $this->repository->getModulePath('Blog');
 
         $this->assertEquals(
-            str_replace('\\', '/', $this->testModulePath . '/Blog/'),
+            str_replace('\\', '/', $this->testModulePath.'/Blog/'),
             str_replace('\\', '/', $path)
         );
 
@@ -273,16 +275,16 @@ class FileRepositoryTest extends TestCase
         $this->assertStringContainsString('new-mod', $pathNew);
     }
 
-    public function testAssetPath()
+    public function test_asset_path()
     {
         $path = $this->repository->assetPath('Blog');
         // config('modules.paths.assets') defaults to public_path('modules')
         // In testbench, public_path is usually mocked or points to testbench/public
-        $expected = $this->repository->config('paths.assets') . '/Blog';
+        $expected = $this->repository->config('paths.assets').'/Blog';
         $this->assertEquals($expected, $path);
     }
 
-    public function testAsset()
+    public function test_asset()
     {
         // Setup config so we know what public_path and assets path are
         // In this test env, public_path is typically workbench/public or similar.
@@ -303,7 +305,7 @@ class FileRepositoryTest extends TestCase
         $this->repository->asset('invalid-asset-string');
     }
 
-    public function testUsedModules()
+    public function test_used_modules()
     {
         $this->createDummyModule('Blog');
 

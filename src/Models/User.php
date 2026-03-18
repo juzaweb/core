@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -37,14 +39,14 @@ class User extends Authenticatable implements MustVerifyEmail
     use CausesActivity,
         HasAPI,
         HasFactory,
+        HasMedia,
+        HasMeta,
         HasPermissions,
         HasRoles,
         HasSocialConnection,
         HasUuids,
         Notifiable,
-        QueryCacheable,
-        HasMedia,
-        HasMeta;
+        QueryCacheable;
 
     protected $table = 'users';
 
@@ -135,7 +137,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return proxy_image($url, $size, $size);
         }
 
-        return "https://1.gravatar.com/avatar/". md5($this->email) ."?s={$size}&d=mm&r=g";
+        return 'https://1.gravatar.com/avatar/'.md5($this->email)."?s={$size}&d=mm&r=g";
     }
 
     public function hasPasswordReset(): bool

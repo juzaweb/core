@@ -19,7 +19,7 @@ use ReflectionException;
 
 class Permission extends Model implements PermissionContract
 {
-    use HasRoles, RefreshesPermissionCache, HasAPI;
+    use HasAPI, HasRoles, RefreshesPermissionCache;
 
     protected $table = 'permissions';
 
@@ -87,18 +87,15 @@ class Permission extends Model implements PermissionContract
     /**
      * Find a permission by its name (and optionally guardName).
      *
-     * @param  string  $name
      * @param  string|null  $guardName
      *
-     * @return PermissionContract
      * @throws PermissionDoesNotExist|ReflectionException
-     *
      */
     public static function findByName(string $name, $guardName = null): ?PermissionContract
     {
         $guardName = $guardName ?? Guard::getDefaultName(static::class);
         $permission = static::getPermission(['name' => $name, 'guard_name' => $guardName]);
-        if (!$permission) {
+        if (! $permission) {
             return null;
         }
 
@@ -108,19 +105,15 @@ class Permission extends Model implements PermissionContract
     /**
      * Find a permission by its code (and optionally guardName).
      *
-     * @param  string  $name
-     * @param  string|null  $guardName
      *
-     * @return PermissionContract
      * @throws PermissionDoesNotExist|ReflectionException
-     *
      */
     public static function findByCode(string $name, ?string $guardName = null): ?PermissionContract
     {
         $guardName = $guardName ?? Guard::getDefaultName(static::class);
         $permission = static::getPermission(['code' => $name, 'guard_name' => $guardName]);
 
-        if (!$permission) {
+        if (! $permission) {
             return null;
         }
 
@@ -130,19 +123,16 @@ class Permission extends Model implements PermissionContract
     /**
      * Find a permission by its id (and optionally guardName).
      *
-     * @param  int  $id
      * @param  string|null  $guardName
      *
-     * @return PermissionContract
      * @throws PermissionDoesNotExist|ReflectionException
-     *
      */
     public static function findById(int $id, $guardName = null): ?PermissionContract
     {
         $guardName = $guardName ?? Guard::getDefaultName(static::class);
-        $permission = static::getPermission([(new static())->getKeyName() => $id, 'guard_name' => $guardName]);
+        $permission = static::getPermission([(new static)->getKeyName() => $id, 'guard_name' => $guardName]);
 
-        if (!$permission) {
+        if (! $permission) {
             return null;
         }
 
@@ -152,10 +142,9 @@ class Permission extends Model implements PermissionContract
     /**
      * Find or create permission by its name (and optionally guardName).
      *
-     * @param  string  $name
      * @param  string|null  $guardName
-     *
      * @return Builder|Model|PermissionContract
+     *
      * @throws ReflectionException
      */
     public static function findOrCreate(string $name, $guardName = null): PermissionContract
@@ -163,7 +152,7 @@ class Permission extends Model implements PermissionContract
         $guardName = $guardName ?? Guard::getDefaultName(static::class);
         $permission = static::getPermission(['name' => $name, 'guard_name' => $guardName]);
 
-        if (!$permission) {
+        if (! $permission) {
             return static::query()->create(['name' => $name, 'guard_name' => $guardName]);
         }
 
@@ -172,11 +161,6 @@ class Permission extends Model implements PermissionContract
 
     /**
      * Get the current cached permissions.
-     *
-     * @param  array  $params
-     * @param  bool  $onlyOne
-     *
-     * @return Collection
      */
     protected static function getPermissions(array $params = [], bool $onlyOne = false): Collection
     {
@@ -187,10 +171,6 @@ class Permission extends Model implements PermissionContract
 
     /**
      * Get the current cached first permission.
-     *
-     * @param  array  $params
-     *
-     * @return PermissionContract
      */
     protected static function getPermission(array $params = []): ?PermissionContract
     {

@@ -1,15 +1,15 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
 use Juzaweb\Modules\Core\Http\Controllers\Auth\AuthController;
 use Juzaweb\Modules\Core\Http\Controllers\Auth\SocialLoginController;
-use Juzaweb\Modules\Core\Http\Middleware\VerifyToken;
 
 Route::get('user/login', [AuthController::class, 'login'])
     ->name('login')

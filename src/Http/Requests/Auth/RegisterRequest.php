@@ -1,4 +1,5 @@
 <?php
+
 namespace Juzaweb\Modules\Core\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Registered;
@@ -12,8 +13,10 @@ use OpenApi\Annotations as OA;
  * @OA\RequestBody(
  *      request="RegisterRequest",
  *      required=true,
+ *
  *      @OA\JsonContent(
  *          required={"email", "password", "name", "password_confirmation"},
+ *
  *          @OA\Property(property="name", type="string"),
  *          @OA\Property(property="email", type="string", format="email"),
  *          @OA\Property(property="password", type="string"),
@@ -26,8 +29,6 @@ class RegisterRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -50,7 +51,7 @@ class RegisterRequest extends FormRequest
         /** @var User $user */
         $user = DB::transaction(
             function () use ($data, $verifyEmail) {
-                $user = new User();
+                $user = new User;
                 $user->fill($data);
 
                 if (! $verifyEmail) {

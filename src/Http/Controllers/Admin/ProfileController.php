@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -62,7 +63,7 @@ class ProfileController extends AdminController
                 $user->logActivity()
                     ->performedOn($user)
                     ->event('change_profile')
-                    ->log('Updated profile information' . ($user->wasChanged('password') ? ' and password' : ''));
+                    ->log('Updated profile information'.($user->wasChanged('password') ? ' and password' : ''));
 
                 return $user;
             }
@@ -79,7 +80,7 @@ class ProfileController extends AdminController
 
         $user = $request->user();
 
-        DB::transaction(fn() => $user->changeAvatar($request->file('avatar')));
+        DB::transaction(fn () => $user->changeAvatar($request->file('avatar')));
 
         $user->loadMedia('avatar');
 

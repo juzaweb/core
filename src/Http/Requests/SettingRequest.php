@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -28,7 +30,7 @@ class SettingRequest extends FormRequest
             ->only($settings->keys())
             ->mapWithKeys(
                 fn ($value, $key) => [
-                    $key => $settings[$key]['rules'] ?: ['nullable', 'string']
+                    $key => $settings[$key]['rules'] ?: ['nullable', 'string'],
                 ]
             )
             ->filter()

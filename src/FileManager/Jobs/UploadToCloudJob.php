@@ -18,30 +18,24 @@ class UploadToCloudJob implements ShouldQueue
 
     /**
      * The number of times the job may be attempted.
-     *
-     * @var int
      */
     public int $tries = 3;
 
     /**
      * The number of seconds to wait before retrying the job.
-     *
-     * @var array
      */
     public array $backoff = [60, 300, 900]; // 1min, 5min, 15min
 
     /**
      * The number of seconds the job can run before timing out.
-     *
-     * @var int
      */
     public int $timeout = 300; // 5 minutes
 
     /**
      * Create a new job instance.
      *
-     * @param Media $media The media file to upload to cloud
-     * @param string $sourceDisk The source disk where the file is stored
+     * @param  Media  $media  The media file to upload to cloud
+     * @param  string  $sourceDisk  The source disk where the file is stored
      */
     public function __construct(
         protected Media $media,
@@ -53,7 +47,6 @@ class UploadToCloudJob implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
      * @throws Exception
      */
     public function handle(): void
@@ -61,20 +54,21 @@ class UploadToCloudJob implements ShouldQueue
         $path = $this->media->path;
 
         // Check if source file exists
-        if (!Storage::disk($this->sourceDisk)->exists($path)) {
-            Log::warning("Cloud upload failed: Source file not found", [
+        if (! Storage::disk($this->sourceDisk)->exists($path)) {
+            Log::warning('Cloud upload failed: Source file not found', [
                 'media_id' => $this->media->id,
                 'path' => $path,
                 'source_disk' => $this->sourceDisk,
             ]);
+
             return;
         }
 
         $disk = cloud(true);
 
         // Check if file already exists on cloud or already marked as uploaded
-        if (!$this->overwrite && ($this->media->in_cloud || $disk->exists($path))) {
-            Log::warning("Cloud upload skipped: File already exists on cloud", [
+        if (! $this->overwrite && ($this->media->in_cloud || $disk->exists($path))) {
+            Log::warning('Cloud upload skipped: File already exists on cloud', [
                 'media_id' => $this->media->id,
                 'path' => $path,
                 'in_cloud' => $this->media->in_cloud,
@@ -97,7 +91,7 @@ class UploadToCloudJob implements ShouldQueue
             $this->media->update(['in_cloud' => true]);
 
             if ($this->trash) {
-                if (!Storage::disk('trash')->exists(dirname($path))) {
+                if (! Storage::disk('trash')->exists(dirname($path))) {
                     Storage::disk('trash')->makeDirectory(dirname($path));
                 }
 
@@ -109,7 +103,7 @@ class UploadToCloudJob implements ShouldQueue
                 Storage::disk($this->sourceDisk)->delete($path);
             }
         } else {
-            throw new \RuntimeException("Failed to upload file to cloud storage");
+            throw new \RuntimeException('Failed to upload file to cloud storage');
         }
     }
 }

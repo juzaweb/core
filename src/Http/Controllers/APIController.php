@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -18,72 +19,96 @@ use OpenApi\Annotations as OA;
  *      title="L5 OpenApi",
  *      description="Open Api",
  * ),
+ *
  * @OA\Parameter(
  *      parameter="id_in_path",
  *      name="id",
  *      in="path",
  *      required=true,
+ *
  *      @OA\Schema(type="string")
  *  ),
+ *
  * @OA\Parameter(
  *      parameter="slug_in_path",
  *      name="slug",
  *      in="path",
  *      required=true,
+ *
  *      @OA\Schema(type="string")
  *  ),
+ *
  *  @OA\Parameter(
  *      parameter="path_code",
  *      name="code",
  *      in="path",
  *      required=true,
+ *
  *      @OA\Schema(type="string")
  *  ),
+ *
  *  @OA\Parameter(
  *      parameter="query_limit",
  *      name="limit",
  *      in="query",
+ *
  *      @OA\Schema(type="integer")
  *  ),
+ *
  *  @OA\Parameter(
  *      parameter="query_page",
  *      name="page",
  *      in="query",
+ *
  *      @OA\Schema(type="integer")
  *  ),
+ *
  *  @OA\Parameter(
  *      parameter="query_keyword",
  *      name="keyword",
  *      in="query",
+ *
  *      @OA\Schema(type="string")
  *  ),
+ *
  *  @OA\Response(
  *      response="success_detail",
  *      description="Get Data Success",
+ *
  *      @OA\JsonContent(
+ *
  *          @OA\Property(property="data", type="object"),
  *      )
  *  ),
+ *
  *  @OA\Response(
  *      response="success_list",
  *      description="Get List Success",
+ *
  *      @OA\JsonContent(
+ *
  *          @OA\Property(
  *              property="data",
  *              type="array",
+ *
  *              @OA\Items(type="object")
  *          ),
  *      )
  *  ),
+ *
  *  @OA\Response(
  *      response="success_paging",
  *      description="Get Paging Success",
+ *
  *      @OA\JsonContent(
+ *
  *          @OA\Property(
  *              property="data",
  *              type="array",
+ *
  *              @OA\Items(type="object")
  *          ),
+ *
  *          @OA\Property(
  *              property="links",
  *              type="object",
@@ -103,14 +128,19 @@ use OpenApi\Annotations as OA;
  *          ),
  *      )
  *  ),
+ *
  *  @OA\Response(
  *      response="error_401",
  *      description="Token Error",
+ *
  *      @OA\JsonContent(
+ *
  *          @OA\Property(
  *              property="errors",
  *              type="array",
+ *
  *              @OA\Items(
+ *
  *                  @OA\Property(property="code", type="string", example=""),
  *                  @OA\Property(property="title", type="string", example="")
  *              )
@@ -118,14 +148,19 @@ use OpenApi\Annotations as OA;
  *          @OA\Property(property="message", type="string", example=""),
  *      )
  *  ),
+ *
  *  @OA\Response(
  *      response="error_403",
  *      description="Permission denied",
+ *
  *      @OA\JsonContent(
+ *
  *          @OA\Property(
  *              property="errors",
  *              type="array",
+ *
  *              @OA\Items(
+ *
  *                  @OA\Property(property="code", type="string", example=""),
  *                  @OA\Property(property="title", type="string", example="")
  *              )
@@ -133,14 +168,19 @@ use OpenApi\Annotations as OA;
  *          @OA\Property(property="message", type="string", example=""),
  *      )
  *  ),
+ *
  *  @OA\Response(
  *      response="error_404",
  *      description="Page not found",
+ *
  *      @OA\JsonContent(
+ *
  *          @OA\Property(
  *              property="errors",
  *              type="array",
+ *
  *              @OA\Items(
+ *
  *                  @OA\Property(property="code", type="string", example=""),
  *                  @OA\Property(property="title", type="string", example="")
  *              )
@@ -148,14 +188,19 @@ use OpenApi\Annotations as OA;
  *          @OA\Property(property="message", type="string", example=""),
  *      )
  *  ),
+ *
  *  @OA\Response(
  *      response="error_422",
  *      description="Validate Error",
+ *
  *      @OA\JsonContent(
+ *
  *          @OA\Property(
  *              property="errors",
  *              type="array",
+ *
  *              @OA\Items(
+ *
  *                  @OA\Property(property="field", type="string", example=""),
  *                  @OA\Property(property="message", type="string", example="")
  *              )
@@ -163,14 +208,19 @@ use OpenApi\Annotations as OA;
  *          @OA\Property(property="message", type="string", example=""),
  *      )
  *  ),
+ *
  *  @OA\Response(
  *      response="error_500",
  *      description="Server Error",
+ *
  *      @OA\JsonContent(
+ *
  *          @OA\Property(
  *              property="errors",
  *              type="array",
+ *
  *              @OA\Items(
+ *
  *                  @OA\Property(property="code", type="string", example=""),
  *                  @OA\Property(property="title", type="string", example="")
  *              )
@@ -187,7 +237,7 @@ abstract class APIController extends Controller
     {
         $limit = request()->get('limit', 10);
 
-        if (!is_numeric($limit) || $limit <= 0 || $limit > 100) {
+        if (! is_numeric($limit) || $limit <= 0 || $limit > 100) {
             $limit = 10;
         }
 

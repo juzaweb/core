@@ -62,7 +62,7 @@ class QueryCacheableTest extends TestCase
 
     public function test_cache_works_with_redis_driver()
     {
-        if (!extension_loaded('redis')) {
+        if (! extension_loaded('redis')) {
             $this->markTestSkipped('Redis extension not loaded.');
         }
 
@@ -76,7 +76,7 @@ class QueryCacheableTest extends TestCase
             // But let's assume the user wants us to try.
             Cache::store('redis')->flush();
         } catch (\Exception $e) {
-            $this->markTestSkipped('Could not connect to Redis: ' . $e->getMessage());
+            $this->markTestSkipped('Could not connect to Redis: '.$e->getMessage());
         }
 
         $model = QueryCacheableTestModel::create(['name' => 'RedisOriginal']);
@@ -104,7 +104,7 @@ class QueryCacheableTest extends TestCase
 
     public function test_scope_one_query_with_cache_uses_tags()
     {
-        if (!extension_loaded('redis')) {
+        if (! extension_loaded('redis')) {
             $this->markTestSkipped('Redis extension not loaded.');
         }
 
@@ -112,7 +112,7 @@ class QueryCacheableTest extends TestCase
             Config::set('cache.default', 'redis');
             Cache::store('redis')->flush();
         } catch (\Exception $e) {
-            $this->markTestSkipped('Could not connect to Redis: ' . $e->getMessage());
+            $this->markTestSkipped('Could not connect to Redis: '.$e->getMessage());
         }
 
         $model = QueryCacheableTestModel::create(['name' => 'Tagged']);
@@ -143,7 +143,7 @@ class QueryCacheableTest extends TestCase
 
     public function test_get_cache_tags_to_invalidate_on_update()
     {
-        $model = new QueryCacheableTestModel();
+        $model = new QueryCacheableTestModel;
         $model->id = 1;
 
         $tags = $model->getCacheTagsToInvalidateOnUpdate();
@@ -160,5 +160,6 @@ class QueryCacheableTestModel extends Model
     use QueryCacheable;
 
     protected $table = 'query_cacheable_test_models';
+
     protected $guarded = [];
 }

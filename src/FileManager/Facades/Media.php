@@ -15,6 +15,7 @@ use Juzaweb\Modules\Core\Models\Media as MediaModel;
  * @method static string pathToUploadedFile(string $path, bool $test = false)
  * @method static Image convert(MediaModel $media, string $conversion, string $toPath)
  * @method static string getImageSize(string $path)
+ *
  * @see \Juzaweb\Modules\Core\FileManager\Contracts\Media
  */
 class Media extends Facade

@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -63,13 +63,13 @@ use Juzaweb\Modules\Core\Themes\Providers\ThemeServiceProvider;
 use Juzaweb\Modules\Core\View\Components\Card;
 use Juzaweb\Modules\Core\View\Components\CookieConsent;
 use Juzaweb\Modules\Core\View\Components\Form;
+use Juzaweb\Modules\Core\View\Components\Img;
 use Juzaweb\Modules\Core\View\Components\JsVar;
 use Juzaweb\Modules\Core\View\Components\LanguageCard;
 use Juzaweb\Modules\Core\View\Components\Repeater;
 use Juzaweb\Modules\Core\View\Components\SeoMeta;
 use Juzaweb\Modules\Core\View\Components\ThemeInit;
 use Juzaweb\Modules\Core\View\Components\ThemeJsVar;
-use Juzaweb\Modules\Core\View\Components\Img;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -80,7 +80,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->app->bind(
             'datatables.html',
-            fn() => $this->app->make(HtmlBuilder::class)
+            fn () => $this->app->make(HtmlBuilder::class)
         );
 
         // Before check user permission
@@ -113,7 +113,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->registerConfigs();
 
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         $this->registerTranslations();
         $this->registerViews();
@@ -121,53 +121,53 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             Locale::class,
-            fn($app) => new LocaleRepository($app)
+            fn ($app) => new LocaleRepository($app)
         );
     }
 
     protected function registerConfigs(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/core.php',
+            __DIR__.'/../../config/core.php',
             'core'
         );
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/media.php',
+            __DIR__.'/../../config/media.php',
             'media'
         );
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/modules.php',
+            __DIR__.'/../../config/modules.php',
             'modules'
         );
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/themes.php',
+            __DIR__.'/../../config/themes.php',
             'themes'
         );
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/translator.php',
+            __DIR__.'/../../config/translator.php',
             'translator'
         );
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/locales.php',
+            __DIR__.'/../../config/locales.php',
             'locales'
         );
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/countries.php',
+            __DIR__.'/../../config/countries.php',
             'countries'
         );
 
         $this->publishes([
-            __DIR__ . '/../../config/core.php' => config_path('core.php'),
-            __DIR__ . '/../../config/media.php' => config_path('media.php'),
-            __DIR__ . '/../../config/modules.php' => config_path('modules.php'),
-            __DIR__ . '/../../config/themes.php' => config_path('themes.php'),
-            __DIR__ . '/../../config/translator.php' => config_path('translator.php'),
+            __DIR__.'/../../config/core.php' => config_path('core.php'),
+            __DIR__.'/../../config/media.php' => config_path('media.php'),
+            __DIR__.'/../../config/modules.php' => config_path('modules.php'),
+            __DIR__.'/../../config/themes.php' => config_path('themes.php'),
+            __DIR__.'/../../config/translator.php' => config_path('translator.php'),
         ], 'core-config');
     }
 
@@ -187,7 +187,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerServices(): void
     {
         $this->app->singleton(GlobalData::class, function () {
-            return new GlobalDataRepository();
+            return new GlobalDataRepository;
         });
 
         $this->app->singleton(Setting::class, function ($app) {
@@ -206,21 +206,21 @@ class CoreServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(Breadcrumb::class, function () {
-            return new BreadcrumbFactory();
+            return new BreadcrumbFactory;
         });
 
         $this->app->singleton(Field::class, function ($app) {
-            return new FieldFactory();
+            return new FieldFactory;
         });
 
         $this->app->singleton(
             RouteResource::class,
-            fn($app) => new RouteResourceRepository($app->make('router'))
+            fn ($app) => new RouteResourceRepository($app->make('router'))
         );
 
         $this->app->singleton(
             Menu::class,
-            fn($app) => new MenuRepository(
+            fn ($app) => new MenuRepository(
                 $app[GlobalData::class],
                 $app[Hook::class]
             )
@@ -228,54 +228,54 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             Chart::class,
-            fn($app) => new ChartRepository()
+            fn ($app) => new ChartRepository
         );
 
         $this->app->singleton(
             Widget::class,
-            fn($app) => new WidgetRepository()
+            fn ($app) => new WidgetRepository
         );
 
         $this->app->singleton(
             Sidebar::class,
-            fn($app) => new SidebarRepository()
+            fn ($app) => new SidebarRepository
         );
 
         $this->app->singleton(
             PageTemplate::class,
-            fn($app) => new PageTemplateRepository()
+            fn ($app) => new PageTemplateRepository
         );
 
         $this->app->singleton(
             PageBlock::class,
-            fn($app) => new PageBlockRepository()
+            fn ($app) => new PageBlockRepository
         );
 
         $this->app->singleton(
             MenuBox::class,
-            fn($app) => new MenuBoxRepository($app[GlobalData::class])
+            fn ($app) => new MenuBoxRepository($app[GlobalData::class])
         );
 
         $this->app->singleton(
             NavMenu::class,
-            fn($app) => new NavMenuRepository()
+            fn ($app) => new NavMenuRepository
         );
 
         $this->app->singleton(
             Thumbnail::class,
             function ($app) {
-                return new ThumbnailRepository();
+                return new ThumbnailRepository;
             }
         );
 
         $this->app->singleton(
             Sitemap::class,
-            fn($app) => new SitemapRepository()
+            fn ($app) => new SitemapRepository
         );
 
         $this->app->singleton(
             PermissionManager::class,
-            fn($app) => new PermissionManagerSupport()
+            fn ($app) => new PermissionManagerSupport
         );
     }
 
@@ -377,23 +377,21 @@ class CoreServiceProvider extends ServiceProvider
 
     protected function registerTranslations(): void
     {
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'core');
-        $this->loadJsonTranslationsFrom(__DIR__ . '/../resources/lang');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'core');
+        $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang');
     }
 
     /**
      * Register views.
-     *
-     * @return void
      */
     protected function registerViews(): void
     {
         $viewPath = resource_path('views/vendor/core');
 
-        $sourcePath = __DIR__ . '/../resources/views';
+        $sourcePath = __DIR__.'/../resources/views';
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ], ['views', 'core-views']);
 
         $this->loadViewsFrom($sourcePath, 'core');
@@ -402,7 +400,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function publishAssets(): void
     {
         $this->publishes([
-            __DIR__ . '/../../assets/public' => public_path('juzaweb'),
+            __DIR__.'/../../assets/public' => public_path('juzaweb'),
         ], 'core-assets');
     }
 }

@@ -3,9 +3,10 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -29,7 +30,7 @@ class AddonController extends Controller
 
     public function statuses(Request $request): JsonResponse
     {
-        $key = "site:users_online";
+        $key = 'site:users_online';
         $ip = client_ip();
 
         try {
@@ -71,7 +72,7 @@ class AddonController extends Controller
         $char = $length > 0 ? strtoupper(mb_substr($text, 0, $length)) : $text;
         $bgColor = $request->query('bg', '#3490dc');
 
-        $manager = new ImageManager(new Driver());
+        $manager = new ImageManager(new Driver);
 
         $img = $manager->create($width, $height)->fill($bgColor);
 
@@ -79,7 +80,7 @@ class AddonController extends Controller
         $fontSize = (int) ($shorterSide * (mb_strlen($char) > 1 ? 0.38 : 0.5));
 
         $img->text($char, $width / 2, $height / 2, function ($font) use ($fontSize) {
-            $font->filename(__DIR__ . '/../../resources/fonts/arial.ttf');
+            $font->filename(__DIR__.'/../../resources/fonts/arial.ttf');
             $font->size($fontSize);
             $font->color('#ffffff');
             $font->align('center');
@@ -95,7 +96,7 @@ class AddonController extends Controller
     {
         $disk = cloud(true);
 
-        if (!$disk->exists($path)) {
+        if (! $disk->exists($path)) {
             abort(404);
         }
 
@@ -106,7 +107,7 @@ class AddonController extends Controller
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $mimeType = mime_type_from_extension($extension);
 
-        $etag = md5($path . $lastModified);
+        $etag = md5($path.$lastModified);
 
         // 1. Xử lý Cache - Tiết kiệm băng thông
         if ($request->header('If-None-Match') === $etag) {
@@ -122,7 +123,7 @@ class AddonController extends Controller
         if ($rangeHeader = $request->header('Range')) {
             if (preg_match('/bytes=(\d+)-(\d*)/', $rangeHeader, $matches)) {
                 $start = (int) $matches[1];
-                if (!empty($matches[2])) {
+                if (! empty($matches[2])) {
                     $end = (int) $matches[2];
                 }
 
@@ -145,7 +146,7 @@ class AddonController extends Controller
             'Accept-Ranges' => 'bytes',
             'Cache-Control' => 'public, max-age=31536000',
             'ETag' => $etag,
-            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified) . ' GMT',
+            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified).' GMT',
         ];
 
         if ($statusCode === 206) {
@@ -160,7 +161,7 @@ class AddonController extends Controller
                 }
 
                 $stream = $disk->readStream($path);
-                if (!is_resource($stream)) {
+                if (! is_resource($stream)) {
                     return;
                 }
 
@@ -174,7 +175,7 @@ class AddonController extends Controller
                 $bufferSize = 8192; // 8KB mỗi lần đọc
                 $remaining = $contentLength;
 
-                while (!feof($stream) && $remaining > 0) {
+                while (! feof($stream) && $remaining > 0) {
                     $toRead = min($bufferSize, $remaining);
                     $chunk = fread($stream, $toRead);
 
@@ -209,8 +210,8 @@ class AddonController extends Controller
             if (str_contains($methodParam, ':')) {
                 [$method, $size] = explode(':', $methodParam, 2);
                 [$width, $height] = array_pad(explode('x', $size), 2, null);
-                $width = $width === 'auto' ? null : (int)$width;
-                $height = $height === 'auto' ? null : (int)$height;
+                $width = $width === 'auto' ? null : (int) $width;
+                $height = $height === 'auto' ? null : (int) $height;
             }
 
             // Handle image via service
@@ -230,11 +231,13 @@ class AddonController extends Controller
                 ->header('Cache-Control', 'public, max-age=31536000');
         } catch (\InvalidArgumentException $e) {
             report($e);
-            return response('Error: ' . $e->getMessage(), 400)
+
+            return response('Error: '.$e->getMessage(), 400)
                 ->header('Content-Type', 'text/plain');
         } catch (\Throwable $e) {
             report($e);
-            return response('Error: ' . $e->getMessage(), 500)
+
+            return response('Error: '.$e->getMessage(), 500)
                 ->header('Content-Type', 'text/plain');
         }
     }
@@ -247,7 +250,7 @@ class AddonController extends Controller
         $baseDir = storage_path('app/public');
         $filePath = $this->resolveSafePath($baseDir, $path);
 
-        if (!$filePath || !is_file($filePath)) {
+        if (! $filePath || ! is_file($filePath)) {
             abort(404);
         }
 
@@ -258,7 +261,7 @@ class AddonController extends Controller
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
         $mimeType = mime_type_from_extension($extension);
 
-        $etag = md5($path . $lastModified);
+        $etag = md5($path.$lastModified);
 
         // Handle cache
         if ($request->header('If-None-Match') === $etag) {
@@ -273,7 +276,7 @@ class AddonController extends Controller
         if ($rangeHeader = $request->header('Range')) {
             if (preg_match('/bytes=(\d+)-(\d*)/', $rangeHeader, $matches)) {
                 $start = (int) $matches[1];
-                if (!empty($matches[2])) {
+                if (! empty($matches[2])) {
                     $end = (int) $matches[2];
                 }
 
@@ -294,7 +297,7 @@ class AddonController extends Controller
             'Accept-Ranges' => 'bytes',
             'Cache-Control' => 'public, max-age=31536000',
             'ETag' => $etag,
-            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified) . ' GMT',
+            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified).' GMT',
         ];
 
         if ($statusCode === 206) {
@@ -309,7 +312,7 @@ class AddonController extends Controller
                 }
 
                 $stream = fopen($filePath, 'rb');
-                if (!is_resource($stream)) {
+                if (! is_resource($stream)) {
                     return;
                 }
 
@@ -320,7 +323,7 @@ class AddonController extends Controller
                 $bufferSize = 8192; // 8KB chunks
                 $remaining = $contentLength;
 
-                while (!feof($stream) && $remaining > 0) {
+                while (! feof($stream) && $remaining > 0) {
                     $toRead = min($bufferSize, $remaining);
                     $chunk = fread($stream, $toRead);
 
@@ -346,14 +349,14 @@ class AddonController extends Controller
      */
     public function themesProxy(Request $request, string $theme, string $path)
     {
-        if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $theme)) {
+        if (! preg_match('/^[a-zA-Z0-9_\-]+$/', $theme)) {
             abort(404);
         }
 
         $baseDir = base_path("themes/{$theme}/assets/public");
         $filePath = $this->resolveSafePath($baseDir, $path);
 
-        if (!$filePath) {
+        if (! $filePath) {
             abort(404);
         }
 
@@ -365,14 +368,14 @@ class AddonController extends Controller
      */
     public function modulesProxy(Request $request, string $module, string $path)
     {
-        if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $module)) {
+        if (! preg_match('/^[a-zA-Z0-9_\-]+$/', $module)) {
             abort(404);
         }
 
         $baseDir = base_path("modules/{$module}/assets/public");
         $filePath = $this->resolveSafePath($baseDir, $path);
 
-        if (!$filePath) {
+        if (! $filePath) {
             abort(404);
         }
 
@@ -381,10 +384,10 @@ class AddonController extends Controller
 
     public function juzawebProxy(Request $request, string $path)
     {
-        $baseDir = public_path("juzaweb");
+        $baseDir = public_path('juzaweb');
         $filePath = $this->resolveSafePath($baseDir, $path);
 
-        if (!$filePath) {
+        if (! $filePath) {
             abort(404);
         }
 
@@ -393,10 +396,10 @@ class AddonController extends Controller
 
     public function vendorProxy(Request $request, string $path)
     {
-        $baseDir = public_path("vendor");
+        $baseDir = public_path('vendor');
         $filePath = $this->resolveSafePath($baseDir, $path);
 
-        if (!$filePath) {
+        if (! $filePath) {
             abort(404);
         }
 
@@ -415,16 +418,16 @@ class AddonController extends Controller
      */
     private function resolveSafePath(string $baseDir, string $path): ?string
     {
-        $resolvedPath = realpath($baseDir . '/' . ltrim($path, '/'));
+        $resolvedPath = realpath($baseDir.'/'.ltrim($path, '/'));
 
         if ($resolvedPath === false) {
             return null;
         }
 
-        $realBaseDir = rtrim(realpath($baseDir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $realBaseDir = rtrim(realpath($baseDir), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
 
         // Check if the resolved path starts exactly with the intended base directory
-        if (!str_starts_with($resolvedPath, $realBaseDir)) {
+        if (! str_starts_with($resolvedPath, $realBaseDir)) {
             return null;
         }
 
@@ -436,7 +439,7 @@ class AddonController extends Controller
      */
     private function serveStaticFile(Request $request, string $filePath, string $path)
     {
-        if (!file_exists($filePath) || !is_file($filePath)) {
+        if (! file_exists($filePath) || ! is_file($filePath)) {
             abort(404);
         }
 
@@ -447,7 +450,7 @@ class AddonController extends Controller
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
         $mimeType = mime_type_from_extension($extension);
 
-        $etag = md5($path . $lastModified);
+        $etag = md5($path.$lastModified);
 
         // Handle cache
         if ($request->header('If-None-Match') === $etag) {
@@ -458,7 +461,7 @@ class AddonController extends Controller
             'Content-Type' => $mimeType,
             'Cache-Control' => 'public, max-age=31536000',
             'ETag' => $etag,
-            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified) . ' GMT',
+            'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified).' GMT',
         ];
 
         // For small files (CSS/JS/fonts), serve directly without streaming
@@ -482,7 +485,7 @@ class AddonController extends Controller
         if ($rangeHeader = $request->header('Range')) {
             if (preg_match('/bytes=(\d+)-(\d*)/', $rangeHeader, $matches)) {
                 $start = (int) $matches[1];
-                if (!empty($matches[2])) {
+                if (! empty($matches[2])) {
                     $end = (int) $matches[2];
                 }
 
@@ -512,7 +515,7 @@ class AddonController extends Controller
                 }
 
                 $stream = fopen($filePath, 'rb');
-                if (!is_resource($stream)) {
+                if (! is_resource($stream)) {
                     return;
                 }
 
@@ -523,7 +526,7 @@ class AddonController extends Controller
                 $bufferSize = 8192; // 8KB chunks
                 $remaining = $contentLength;
 
-                while (!feof($stream) && $remaining > 0) {
+                while (! feof($stream) && $remaining > 0) {
                     $toRead = min($bufferSize, $remaining);
                     $chunk = fread($stream, $toRead);
 

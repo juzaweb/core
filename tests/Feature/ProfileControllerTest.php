@@ -35,7 +35,7 @@ class ProfileControllerTest extends TestCase
     /**
      * Test admin profile index page
      */
-    public function testProfileIndex()
+    public function test_profile_index()
     {
         $response = $this->get(route('admin.profile'));
 
@@ -47,7 +47,7 @@ class ProfileControllerTest extends TestCase
     /**
      * Test update profile with valid data
      */
-    public function testUpdateProfileWithValidData()
+    public function test_update_profile_with_valid_data()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -69,7 +69,7 @@ class ProfileControllerTest extends TestCase
     /**
      * Test update profile with password
      */
-    public function testUpdateProfileWithPassword()
+    public function test_update_profile_with_password()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -93,7 +93,7 @@ class ProfileControllerTest extends TestCase
     /**
      * Test update profile requires name
      */
-    public function testUpdateProfileRequiresName()
+    public function test_update_profile_requires_name()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -108,7 +108,7 @@ class ProfileControllerTest extends TestCase
     /**
      * Test update profile password confirmation must match
      */
-    public function testUpdateProfilePasswordConfirmationMustMatch()
+    public function test_update_profile_password_confirmation_must_match()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -125,7 +125,7 @@ class ProfileControllerTest extends TestCase
     /**
      * Test update profile password minimum length
      */
-    public function testUpdateProfilePasswordMinimumLength()
+    public function test_update_profile_password_minimum_length()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -142,7 +142,7 @@ class ProfileControllerTest extends TestCase
     /**
      * Test unauthenticated user cannot access profile
      */
-    public function testUnauthenticatedUserCannotAccessProfile()
+    public function test_unauthenticated_user_cannot_access_profile()
     {
         Auth::logout();
 
@@ -154,7 +154,7 @@ class ProfileControllerTest extends TestCase
     /**
      * Test unauthenticated user cannot update profile
      */
-    public function testUnauthenticatedUserCannotUpdateProfile()
+    public function test_unauthenticated_user_cannot_update_profile()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 

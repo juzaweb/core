@@ -47,7 +47,7 @@ class PageControllerTest extends TestCase
     /**
      * Test store page with valid data
      */
-    public function testStorePageWithValidData()
+    public function test_store_page_with_valid_data()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -72,7 +72,7 @@ class PageControllerTest extends TestCase
     /**
      * Test store page requires title
      */
-    public function testStorePageRequiresTitle()
+    public function test_store_page_requires_title()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -89,7 +89,7 @@ class PageControllerTest extends TestCase
     /**
      * Test store page requires locale
      */
-    public function testStorePageRequiresLocale()
+    public function test_store_page_requires_locale()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -105,7 +105,7 @@ class PageControllerTest extends TestCase
     /**
      * Test store page requires status
      */
-    public function testStorePageRequiresStatus()
+    public function test_store_page_requires_status()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -121,7 +121,7 @@ class PageControllerTest extends TestCase
     /**
      * Test update page with valid data
      */
-    public function testUpdatePageWithValidData()
+    public function test_update_page_with_valid_data()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -162,7 +162,7 @@ class PageControllerTest extends TestCase
     /**
      * Test delete page
      */
-    public function testDeletePage()
+    public function test_delete_page()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -183,7 +183,7 @@ class PageControllerTest extends TestCase
     /**
      * Test delete non-existent page returns 404
      */
-    public function testDeleteNonExistentPageReturns404()
+    public function test_delete_non_existent_page_returns404()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -195,7 +195,7 @@ class PageControllerTest extends TestCase
     /**
      * Test bulk delete pages
      */
-    public function testBulkDeletePages()
+    public function test_bulk_delete_pages()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -219,7 +219,7 @@ class PageControllerTest extends TestCase
     /**
      * Test bulk publish pages
      */
-    public function testBulkPublishPages()
+    public function test_bulk_publish_pages()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -250,7 +250,7 @@ class PageControllerTest extends TestCase
     /**
      * Test bulk draft pages
      */
-    public function testBulkDraftPages()
+    public function test_bulk_draft_pages()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -281,7 +281,7 @@ class PageControllerTest extends TestCase
     /**
      * Test bulk with invalid action returns error
      */
-    public function testBulkWithInvalidActionReturnsError()
+    public function test_bulk_with_invalid_action_returns_error()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 

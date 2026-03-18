@@ -3,8 +3,8 @@
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -21,10 +21,9 @@ trait HasRestResponses
     /**
      * Generate a JSON response for errors REST API call.
      *
-     * @param string $message description
-     * @param int $status description
-     * @param array $with description
-     * @return JsonResponse
+     * @param  string  $message  description
+     * @param  int  $status  description
+     * @param  array  $with  description
      */
     public function restFail(string $message, int $status = 422, array $additional = []): JsonResponse
     {

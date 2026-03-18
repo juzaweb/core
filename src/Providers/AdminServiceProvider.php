@@ -1,16 +1,17 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
 namespace Juzaweb\Modules\Core\Providers;
 
-use Juzaweb\Modules\Blog\Models\Category;
 use Juzaweb\Modules\Core\Contracts\Sitemap;
 use Juzaweb\Modules\Core\Facades\Chart;
 use Juzaweb\Modules\Core\Facades\Menu;
@@ -20,12 +21,12 @@ use Juzaweb\Modules\Core\Facades\Setting;
 use Juzaweb\Modules\Core\Facades\Widget;
 use Juzaweb\Modules\Core\Models\Pages\Page;
 use Juzaweb\Modules\Core\Models\Pages\PageTranslation;
-use Juzaweb\Modules\Core\Support\Dashboard\UsersChart;
 use Juzaweb\Modules\Core\Support\Dashboard\SessionDurationChart;
 use Juzaweb\Modules\Core\Support\Dashboard\SessionsByDeviceChart;
 use Juzaweb\Modules\Core\Support\Dashboard\TopPagesChart;
 use Juzaweb\Modules\Core\Support\Dashboard\TrafficSourcesChart;
 use Juzaweb\Modules\Core\Support\Dashboard\UsersByCountryChart;
+use Juzaweb\Modules\Core\Support\Dashboard\UsersChart;
 
 abstract class AdminServiceProvider extends ServiceProvider
 {
@@ -213,7 +214,7 @@ abstract class AdminServiceProvider extends ServiceProvider
         });
 
         Menu::make('log-viewer', function () {
-            if (!is_super_admin()) {
+            if (! is_super_admin()) {
                 return [];
             }
 

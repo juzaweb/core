@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/laravel-translations
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -42,7 +43,7 @@ class TranslationsServiceProvider extends ServiceProvider
         );
 
         $this->app[Translation::class]->register(
-            "laravel",
+            'laravel',
             [
                 'type' => 'laravel',
                 'key' => 'laravel',
@@ -62,7 +63,7 @@ class TranslationsServiceProvider extends ServiceProvider
         $this->app->singleton(
             Translation::class,
             function ($app) {
-                return new TranslationRepository();
+                return new TranslationRepository;
             }
         );
 
@@ -88,6 +89,7 @@ class TranslationsServiceProvider extends ServiceProvider
             IP2Location::class,
             function ($app) {
                 $dataPath = base_path('database/iplocation/IPV6-COUNTRY.BIN');
+
                 return new IP2LocationFactory($dataPath);
             }
         );

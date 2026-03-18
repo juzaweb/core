@@ -33,7 +33,7 @@ class TranslationControllerTest extends TestCase
         Language::updateOrCreate(['code' => 'vi'], ['name' => 'Vietnamese']);
     }
 
-    public function testIndex()
+    public function test_index()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -45,7 +45,7 @@ class TranslationControllerTest extends TestCase
         $response->assertViewHas('locale', 'en');
     }
 
-    public function testGetData()
+    public function test_get_data()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 
@@ -59,7 +59,7 @@ class TranslationControllerTest extends TestCase
         ]);
     }
 
-    public function testUpdate()
+    public function test_update()
     {
         $adminPrefix = config('core.admin_prefix', 'admin');
 

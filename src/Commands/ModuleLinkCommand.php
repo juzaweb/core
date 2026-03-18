@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -25,13 +27,13 @@ class ModuleLinkCommand extends Command
     {
         $module = Module::findOrFail($this->getModuleName());
         $target = $module->path('assets/public');
-        $link = public_path('modules/' . $module->getLowerName());
+        $link = public_path('modules/'.$module->getLowerName());
 
-        if (!file_exists($link)) {
+        if (! file_exists($link)) {
             symlink($target, $link);
             $this->info("Symlink created: {$link} → {$target}");
         } else {
-            $this->warn("Symlink already exists.");
+            $this->warn('Symlink already exists.');
         }
 
         return self::SUCCESS;
@@ -39,8 +41,6 @@ class ModuleLinkCommand extends Command
 
     /**
      * Get the console command arguments.
-     *
-     * @return array
      */
     protected function getArguments(): array
     {

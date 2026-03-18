@@ -31,7 +31,7 @@ class SettingTest extends TestCase
         config()->set('translatable.fallback_locale', 'en');
     }
 
-    public function testIndexPageLoads()
+    public function test_index_page_loads()
     {
         $this->actingAs($this->user);
 
@@ -41,14 +41,14 @@ class SettingTest extends TestCase
         $response->assertViewIs('core::admin.setting.index');
     }
 
-    public function testIndexRedirectsGuests()
+    public function test_index_redirects_guests()
     {
         Auth::logout();
         $response = $this->get(route('admin.settings.general'));
         $response->assertStatus(302);
     }
 
-    public function testUpdateSettings()
+    public function test_update_settings()
     {
         $this->actingAs($this->user);
 
@@ -61,11 +61,11 @@ class SettingTest extends TestCase
 
         $this->assertDatabaseHas('settings', [
             'code' => 'title',
-            'value' => 'New Site Title'
+            'value' => 'New Site Title',
         ]);
     }
 
-    public function testUpdateSettingsUnauthenticated()
+    public function test_update_settings_unauthenticated()
     {
         Auth::logout();
 

@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -21,10 +22,6 @@ trait HasPassportPasswordGrant
     /**
      * Generate Password Grant Token
      *
-     * @param  string  $username
-     * @param  string  $password
-     * @param  array  $scopes
-     * @return \stdClass
      *
      * @throws \JsonException
      * @throws \League\OAuth2\Server\Exception\OAuthServerException
@@ -45,7 +42,7 @@ trait HasPassportPasswordGrant
         $serverRequest = app(ServerRequestInterface::class)->withParsedBody($requestData);
 
         $response = (new static)->convertResponse(
-            app(AuthorizationServer::class)->respondToAccessTokenRequest($serverRequest, new Psr7Response())
+            app(AuthorizationServer::class)->respondToAccessTokenRequest($serverRequest, new Psr7Response)
         );
 
         return json_decode($response->content(), false, 512, JSON_THROW_ON_ERROR);

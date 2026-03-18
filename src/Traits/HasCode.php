@@ -1,10 +1,12 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
+ *
  * @license    GNU V2
  */
 
@@ -20,9 +22,6 @@ trait HasCode
 {
     /**
      * Generate a unique code
-     *
-     * @param  int  $length
-     * @return string
      */
     public static function generateCode(int $length = 16): string
     {
@@ -42,7 +41,7 @@ trait HasCode
          */
         static::creating(
             function ($model) {
-                if (!$model->getAttribute('code')) {
+                if (! $model->getAttribute('code')) {
                     $model->setAttribute('code', static::generateCode($model->getCodeLength()));
                 }
             }

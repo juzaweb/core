@@ -1,9 +1,10 @@
 <?php
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
- * @package    juzaweb/cms
  * @author     The Anh Dang
+ *
  * @link       https://cms.juzaweb.com
  */
 
@@ -17,7 +18,7 @@ use Juzaweb\Modules\Core\Support\Traits\HasRules;
 use Juzaweb\Modules\Core\Traits\Whenable;
 use Stringable;
 
-abstract class Field implements Renderable, Stringable, Htmlable
+abstract class Field implements Htmlable, Renderable, Stringable
 {
     use HasRules, Whenable;
 
@@ -25,8 +26,7 @@ abstract class Field implements Renderable, Stringable, Htmlable
         protected string|Model $label,
         protected string $name,
         protected array $options = []
-    ) {
-    }
+    ) {}
 
     public function id(string $id): static
     {

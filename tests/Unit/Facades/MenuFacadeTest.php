@@ -116,8 +116,12 @@ class MenuFacadeTest extends TestCase
 
     public function test_all()
     {
-        Menu::make('item-1', function () { return ['title' => 'Item 1']; });
-        Menu::make('item-2', function () { return ['title' => 'Item 2']; });
+        Menu::make('item-1', function () {
+            return ['title' => 'Item 1'];
+        });
+        Menu::make('item-2', function () {
+            return ['title' => 'Item 2'];
+        });
 
         $all = Menu::all();
 
