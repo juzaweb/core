@@ -215,8 +215,6 @@ trait HasMedia
 
     /**
      * Get the url of the first media item in the specified channel.
-     *
-     * @param  string  $conversion
      */
     public function getFirstMediaUrl(string $channel = 'default', ?string $conversion = null): ?string
     {

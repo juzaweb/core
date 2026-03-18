@@ -60,7 +60,7 @@ class TranslationImporter
                 }
 
                 if ($model->wasRecentlyCreated) {
-                     $total++;
+                    $total++;
                 }
             }
         }
