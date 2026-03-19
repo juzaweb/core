@@ -19,6 +19,35 @@ use Juzaweb\Modules\Core\Translations\Models\Language;
 
 class PageRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $merge = [];
+
+        if ($this->has('title')) {
+            $title = $this->input('title');
+            if (is_string($title)) {
+                $title = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $title);
+                $merge['title'] = strip_tags($title);
+            }
+        }
+
+        if ($this->has('content')) {
+            $content = $this->input('content');
+            if (is_string($content)) {
+                $purifierConfig = \HTMLPurifier_Config::createDefault();
+                $purifierConfig->set('HTML.ForbiddenElements', 'script');
+                $purifierConfig->set('Cache.DefinitionImpl', null);
+                $purifier = new \HTMLPurifier($purifierConfig);
+
+                $merge['content'] = $purifier->purify($content);
+            }
+        }
+
+        if (! empty($merge)) {
+            $this->merge($merge);
+        }
+    }
+
     public function rules(): array
     {
         $templates = collect(\Juzaweb\Modules\Core\Facades\PageTemplate::all())
