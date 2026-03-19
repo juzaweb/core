@@ -1038,3 +1038,15 @@ function is_home_page(): bool
 {
     return request()->routeIs('home');
 }
+
+if (! function_exists('clean_html')) {
+    function clean_html(string $html): string
+    {
+        $purifierConfig = \HTMLPurifier_Config::createDefault();
+        $purifierConfig->set('HTML.ForbiddenElements', 'script');
+        $purifierConfig->set('Cache.DefinitionImpl', null);
+        $purifier = new \HTMLPurifier($purifierConfig);
+
+        return $purifier->purify($html);
+    }
+}

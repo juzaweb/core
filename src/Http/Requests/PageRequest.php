@@ -34,12 +34,7 @@ class PageRequest extends FormRequest
         if ($this->has('content')) {
             $content = $this->input('content');
             if (is_string($content)) {
-                $purifierConfig = \HTMLPurifier_Config::createDefault();
-                $purifierConfig->set('HTML.ForbiddenElements', 'script');
-                $purifierConfig->set('Cache.DefinitionImpl', null);
-                $purifier = new \HTMLPurifier($purifierConfig);
-
-                $merge['content'] = $purifier->purify($content);
+                $merge['content'] = clean_html($content);
             }
         }
 
