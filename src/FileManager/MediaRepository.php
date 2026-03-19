@@ -159,5 +159,22 @@ class MediaRepository implements Media
         if (($maxSize = config("media.disks.{$disk}.max_size", [])) && $file->getSize() > $maxSize) {
             throw MediaException::maxFileSizeExceeded($maxSize);
         }
+
+        if ($this->isSvg($file)) {
+            $this->sanitizeSvg($file);
+        }
+    }
+
+    protected function isSvg(UploadedFile $file): bool
+    {
+        return in_array($file->getMimeType(), ['image/svg+xml', 'image/svg']) ||
+            $file->getClientOriginalExtension() === 'svg';
+    }
+
+    protected function sanitizeSvg(UploadedFile $file): void
+    {
+        $sanitizer = new \enshrined\svgSanitize\Sanitizer;
+        $cleanSvg = $sanitizer->sanitize(file_get_contents($file->getRealPath()));
+        file_put_contents($file->getRealPath(), $cleanSvg);
     }
 }

@@ -8,6 +8,8 @@
         "php": "^8.2",
         "astrotomic/laravel-translatable": "^11.13",
         "doctrine/dbal": "^4.2",
+        "enshrined/svg-sanitize": "^0.16",
+        "ezyang/htmlpurifier": "^4.16",
         "hassankhan/config": "^2.2",
         "intervention/image": "^3.11",
         "ip2location/ip2location-php": "^9.7",
@@ -83,6 +85,10 @@
         "test-coverage": "vendor/bin/phpunit --coverage"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "abandoned": "ignore",
+            "block-insecure": false
+        }
     }
 }
