@@ -285,7 +285,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         Validator::extend(
             'recaptcha',
-            '\Juzaweb\Modules\Admin\Rules\ReCaptchaValidator@validate'
+            '\Juzaweb\Modules\Core\Rules\ReCaptchaValidator@validate'
         );
 
         Validator::extend(
