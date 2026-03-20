@@ -39,6 +39,7 @@ use Juzaweb\Modules\Core\Contracts\Widget;
 use Juzaweb\Modules\Core\DataTables\HtmlBuilder;
 use Juzaweb\Modules\Core\FileManager\Providers\FileManagerServiceProvider;
 use Juzaweb\Modules\Core\Modules\Providers\ModulesServiceProvider;
+use Juzaweb\Modules\Core\Permissions\PermissionServiceProvider;
 use Juzaweb\Modules\Core\Rules\ModelExists;
 use Juzaweb\Modules\Core\Rules\ModelUnique;
 use Juzaweb\Modules\Core\Support\BreadcrumbFactory;
@@ -60,6 +61,7 @@ use Juzaweb\Modules\Core\Support\ThemeSettingRepository;
 use Juzaweb\Modules\Core\Support\ThumbnailRepository;
 use Juzaweb\Modules\Core\Support\WidgetRepository;
 use Juzaweb\Modules\Core\Themes\Providers\ThemeServiceProvider;
+use Juzaweb\Modules\Core\Translations\TranslationsServiceProvider;
 use Juzaweb\Modules\Core\View\Components\Card;
 use Juzaweb\Modules\Core\View\Components\CookieConsent;
 use Juzaweb\Modules\Core\View\Components\Form;
@@ -173,8 +175,8 @@ class CoreServiceProvider extends ServiceProvider
 
     protected function registerProviders(): void
     {
-        $this->app->register(\Juzaweb\Modules\Core\Translations\TranslationsServiceProvider::class);
-        $this->app->register(\Juzaweb\Modules\Core\Permissions\PermissionServiceProvider::class);
+        $this->app->register(TranslationsServiceProvider::class);
+        $this->app->register(PermissionServiceProvider::class);
         $this->app->register(ConsoleServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(PerformanceServiceProvider::class);
@@ -283,7 +285,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         Validator::extend(
             'recaptcha',
-            '\Juzaweb\Modules\Admin\Rules\ReCaptchaValidator@validate'
+            '\Juzaweb\Modules\Core\Rules\ReCaptchaValidator@validate'
         );
 
         Validator::extend(
