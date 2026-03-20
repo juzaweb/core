@@ -3,7 +3,9 @@
 namespace Juzaweb\Modules\Core\Tests\Feature;
 
 use Illuminate\Support\Facades\Redis;
+use Juzaweb\Modules\Core\Contracts\Setting;
 use Juzaweb\Modules\Core\Tests\TestCase;
+use Juzaweb\Modules\Core\Translations\Models\Language;
 
 class AddonControllerTest extends TestCase
 {
@@ -11,7 +13,7 @@ class AddonControllerTest extends TestCase
     {
         parent::setUp();
 
-        \Juzaweb\Modules\Core\Translations\Models\Language::updateOrCreate(
+        Language::updateOrCreate(
             ['code' => 'en'],
             [
                 'name' => 'English',
@@ -20,7 +22,7 @@ class AddonControllerTest extends TestCase
         );
 
         $this->app['config']->set('translatable.fallback_locale', 'en');
-        $this->app[\Juzaweb\Modules\Core\Contracts\Setting::class]->set('language', 'en');
+        $this->app[Setting::class]->set('language', 'en');
         app()->setLocale('en');
     }
 

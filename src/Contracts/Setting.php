@@ -14,11 +14,12 @@ namespace Juzaweb\Modules\Core\Contracts;
 
 use Illuminate\Support\Collection;
 use Juzaweb\Modules\Core\Models\Setting as SettingModel;
+use Juzaweb\Modules\Core\Support\SettingRepository;
 
 /**
  * Interface Setting
  *
- * @see \Juzaweb\Modules\Core\Support\SettingRepository
+ * @see SettingRepository
  */
 interface Setting
 {

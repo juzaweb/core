@@ -3,6 +3,7 @@
 namespace Juzaweb\Modules\Core\Tests\Feature;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Juzaweb\Modules\Core\Models\User;
@@ -10,6 +11,7 @@ use Juzaweb\Modules\Core\Tests\TestCase;
 use Juzaweb\Modules\Core\Traits\LocaleModel;
 use Juzaweb\Modules\Core\Translations\Contracts\CanBeTranslated;
 use Juzaweb\Modules\Core\Translations\Contracts\Translator;
+use Juzaweb\Modules\Core\Translations\Models\TranslateHistory;
 
 class TranslationControllerLocaleModelTest extends TestCase
 {
@@ -172,12 +174,12 @@ class TestTranslatable extends Model implements CanBeTranslated
         return true;
     }
 
-    public function translateHistories(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    public function translateHistories(): MorphMany
     {
-        return $this->morphMany(\Juzaweb\Modules\Core\Translations\Models\TranslateHistory::class, 'translateable');
+        return $this->morphMany(TranslateHistory::class, 'translateable');
     }
 
-    public function getTranslateHistory(string $locale): ?\Juzaweb\Modules\Core\Translations\Models\TranslateHistory
+    public function getTranslateHistory(string $locale): ?TranslateHistory
     {
         return $this->translateHistories()->where('locale', $locale)->first();
     }

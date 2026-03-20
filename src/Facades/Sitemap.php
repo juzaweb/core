@@ -15,13 +15,14 @@ namespace Juzaweb\Modules\Core\Facades;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 use Juzaweb\Modules\Core\Contracts\Sitemap as SitemapContract;
+use Juzaweb\Modules\Core\Support\SitemapRepository;
 
 /**
  * @method static void register(string $key, string $class)
  * @method static Collection all()
  * @method static string|null get(string $key)
  *
- * @see \Juzaweb\Modules\Core\Support\SitemapRepository
+ * @see SitemapRepository
  */
 class Sitemap extends Facade
 {

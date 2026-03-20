@@ -28,7 +28,7 @@ class SidebarRepository implements Sidebar
     {
         return collect($this->sidebars)->map(
             function ($callback, $key) {
-                return new \Juzaweb\Modules\Core\Support\Entities\Sidebar($key, $callback($key));
+                return new Entities\Sidebar($key, $callback($key));
             }
         );
     }

@@ -8,6 +8,10 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
 use Juzaweb\Modules\Core\Facades\PermissionManager;
+use Juzaweb\Modules\Core\Permissions\Commands\CacheReset;
+use Juzaweb\Modules\Core\Permissions\Commands\CreatePermission;
+use Juzaweb\Modules\Core\Permissions\Commands\CreateRole;
+use Juzaweb\Modules\Core\Permissions\Commands\Show;
 use Juzaweb\Modules\Core\Permissions\Contracts\Permission as PermissionContract;
 use Juzaweb\Modules\Core\Permissions\Contracts\Role as RoleContract;
 use Juzaweb\Modules\Core\Permissions\Middleware\PermissionMiddleware;
@@ -60,10 +64,10 @@ class PermissionServiceProvider extends ServiceProvider
     {
         $this->commands(
             [
-                \Juzaweb\Modules\Core\Permissions\Commands\CacheReset::class,
-                \Juzaweb\Modules\Core\Permissions\Commands\CreateRole::class,
-                \Juzaweb\Modules\Core\Permissions\Commands\CreatePermission::class,
-                \Juzaweb\Modules\Core\Permissions\Commands\Show::class,
+                CacheReset::class,
+                CreateRole::class,
+                CreatePermission::class,
+                Show::class,
             ]
         );
     }

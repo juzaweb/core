@@ -24,10 +24,10 @@ class PageBlockRepository implements PageBlock
         $this->blocks[$key] = $callback;
     }
 
-    public function get(string $key): ?\Juzaweb\Modules\Core\Support\Entities\PageBlock
+    public function get(string $key): ?Entities\PageBlock
     {
         if ($template = data_get($this->blocks, $key)) {
-            return new \Juzaweb\Modules\Core\Support\Entities\PageBlock($key, $template());
+            return new Entities\PageBlock($key, $template());
         }
 
         return null;
@@ -37,7 +37,7 @@ class PageBlockRepository implements PageBlock
     {
         return collect($this->blocks)->map(
             function ($callback, $key) {
-                return new \Juzaweb\Modules\Core\Support\Entities\PageBlock($key, $callback());
+                return new Entities\PageBlock($key, $callback());
             }
         );
     }

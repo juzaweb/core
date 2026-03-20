@@ -2,6 +2,7 @@
 
 namespace Juzaweb\Modules\Core\Tests\Unit\Facades;
 
+use Illuminate\Support\Collection;
 use Juzaweb\Modules\Core\Contracts\PageTemplate as PageTemplateContract;
 use Juzaweb\Modules\Core\Facades\PageTemplate;
 use Juzaweb\Modules\Core\Support\Entities\PageTemplate as PageTemplateEntity;
@@ -54,7 +55,7 @@ class PageTemplateFacadeTest extends TestCase
 
         $allTemplates = PageTemplate::all();
 
-        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $allTemplates);
+        $this->assertInstanceOf(Collection::class, $allTemplates);
         // Note: other templates might be registered by the system/tests, so we check if ours are present
         $this->assertTrue($allTemplates->has('tpl1'));
         $this->assertTrue($allTemplates->has('tpl2'));

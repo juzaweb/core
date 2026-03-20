@@ -2,6 +2,7 @@
 
 namespace Juzaweb\Modules\Core\Tests\Feature;
 
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
 use Juzaweb\Modules\Admin\Enums\UserStatus;
@@ -26,7 +27,7 @@ class UserControllerTest extends TestCase
         ]);
 
         $this->actingAs($this->user);
-        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+        $this->withoutMiddleware(VerifyCsrfToken::class);
     }
 
     /**

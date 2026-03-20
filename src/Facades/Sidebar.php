@@ -13,12 +13,13 @@
 namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\SidebarRepository;
 
 /**
  * @method static void make(string $key, callable $callback)
  * @method static \Illuminate\Support\Collection all()
  *
- * @see \Juzaweb\Modules\Core\Support\SidebarRepository
+ * @see SidebarRepository
  */
 class Sidebar extends Facade
 {

@@ -12,11 +12,13 @@
 
 namespace Juzaweb\Modules\Core\Contracts;
 
+use Illuminate\Support\Collection;
+
 interface PageTemplate
 {
     public function make(string $key, callable $callback): void;
 
     public function get(string $key): ?\Juzaweb\Modules\Core\Support\Entities\PageTemplate;
 
-    public function all(): \Illuminate\Support\Collection;
+    public function all(): Collection;
 }

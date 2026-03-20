@@ -2,12 +2,14 @@
 
 namespace Juzaweb\Modules\Core\FileManager;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Juzaweb\Modules\Core\FileManager\Exceptions\MediaException;
 use Juzaweb\Modules\Core\Models\Media;
 
 /**
- * @mixin \Illuminate\Http\Request
+ * @mixin Request
  */
 class RequestMethodsForMedia
 {
@@ -34,7 +36,7 @@ class RequestMethodsForMedia
      *
      * @param  string  $key
      * @param  mixed  $default
-     * @return \Illuminate\Support\Collection|null
+     * @return Collection|null
      */
     public function medias(): \Closure
     {

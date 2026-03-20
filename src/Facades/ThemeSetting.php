@@ -14,6 +14,7 @@ namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\ThemeSettingRepository;
 
 /**
  * @method static \Juzaweb\Modules\Core\Support\Entities\ThemeSetting make(string $key)
@@ -29,7 +30,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Collection settings(?string $key = null)
  * @method static Collection configs()
  *
- * @see \Juzaweb\Modules\Core\Support\ThemeSettingRepository
+ * @see ThemeSettingRepository
  */
 class ThemeSetting extends Facade
 {

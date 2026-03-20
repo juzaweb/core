@@ -3,7 +3,11 @@
 namespace Juzaweb\Modules\Core\Tests\Unit;
 
 use Illuminate\Support\Facades\File;
+use Juzaweb\Modules\Core\Modules\Contracts\ActivatorInterface;
+use Juzaweb\Modules\Core\Modules\Exceptions\InvalidAssetPath;
+use Juzaweb\Modules\Core\Modules\Exceptions\ModuleNotFoundException;
 use Juzaweb\Modules\Core\Modules\FileRepository;
+use Juzaweb\Modules\Core\Modules\Support\Collection;
 use Juzaweb\Modules\Core\Tests\TestCase;
 
 class FileRepositoryTest extends TestCase
@@ -34,7 +38,7 @@ class FileRepositoryTest extends TestCase
         $this->app['config']->set('modules.activators.file.statuses-file', $this->testModulePath.'/statuses.json');
 
         // Re-bind activator since we changed config
-        $this->app->singleton(\Juzaweb\Modules\Core\Modules\Contracts\ActivatorInterface::class, function ($app) {
+        $this->app->singleton(ActivatorInterface::class, function ($app) {
             $class = $app['config']->get('modules.activators.file.class');
 
             return new $class($app);
@@ -106,7 +110,7 @@ class FileRepositoryTest extends TestCase
         $this->createDummyModule('Shop');
 
         $collection = $this->repository->toCollection();
-        $this->assertInstanceOf(\Juzaweb\Modules\Core\Modules\Support\Collection::class, $collection);
+        $this->assertInstanceOf(Collection::class, $collection);
         $this->assertCount(2, $collection);
     }
 
@@ -159,7 +163,7 @@ class FileRepositoryTest extends TestCase
         $module = $this->repository->findOrFail('Blog');
         $this->assertEquals('Blog', $module->getName());
 
-        $this->expectException(\Juzaweb\Modules\Core\Modules\Exceptions\ModuleNotFoundException::class);
+        $this->expectException(ModuleNotFoundException::class);
         $this->repository->findOrFail('NonExistent');
     }
 
@@ -301,7 +305,7 @@ class FileRepositoryTest extends TestCase
         $this->assertStringContainsString('//', $assetUrl);
         $this->assertStringContainsString('modules/Blog/css/style.css', $assetUrl);
 
-        $this->expectException(\Juzaweb\Modules\Core\Modules\Exceptions\InvalidAssetPath::class);
+        $this->expectException(InvalidAssetPath::class);
         $this->repository->asset('invalid-asset-string');
     }
 
@@ -314,7 +318,7 @@ class FileRepositoryTest extends TestCase
 
         $this->repository->forgetUsed();
 
-        $this->expectException(\Juzaweb\Modules\Core\Modules\Exceptions\ModuleNotFoundException::class);
+        $this->expectException(ModuleNotFoundException::class);
         $this->repository->getUsedNow();
     }
 }

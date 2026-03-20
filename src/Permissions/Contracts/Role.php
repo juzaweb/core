@@ -2,10 +2,12 @@
 
 namespace Juzaweb\Modules\Core\Permissions\Contracts;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Juzaweb\Modules\Core\Permissions\Exceptions\RoleDoesNotExist;
 
 /**
- * @mixin \Illuminate\Database\Eloquent\Model
+ * @mixin Model
  */
 interface Role
 {
@@ -20,7 +22,7 @@ interface Role
      * @param  string|null  $guardName
      * @return \Spatie\Permission\Contracts\Role
      *
-     * @throws \Juzaweb\Modules\Core\Permissions\Exceptions\RoleDoesNotExist
+     * @throws RoleDoesNotExist
      */
     public static function findByName(string $name, $guardName): self;
 
@@ -30,7 +32,7 @@ interface Role
      * @param  string|null  $guardName
      * @return \Spatie\Permission\Contracts\Role
      *
-     * @throws \Juzaweb\Modules\Core\Permissions\Exceptions\RoleDoesNotExist
+     * @throws RoleDoesNotExist
      */
     public static function findById(int $id, $guardName): self;
 
@@ -45,7 +47,7 @@ interface Role
     /**
      * Determine if the user may perform the given permission.
      *
-     * @param  string|\Juzaweb\Modules\Core\Permissions\Contracts\Permission  $permission
+     * @param  string|Permission  $permission
      */
     public function hasPermissionTo($permission): bool;
 }

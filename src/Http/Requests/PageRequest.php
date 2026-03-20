@@ -15,6 +15,7 @@ namespace Juzaweb\Modules\Core\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Juzaweb\Modules\Core\Enums\PageStatus;
+use Juzaweb\Modules\Core\Facades\PageTemplate;
 use Juzaweb\Modules\Core\Translations\Models\Language;
 
 class PageRequest extends FormRequest
@@ -45,7 +46,7 @@ class PageRequest extends FormRequest
 
     public function rules(): array
     {
-        $templates = collect(\Juzaweb\Modules\Core\Facades\PageTemplate::all())
+        $templates = collect(PageTemplate::all())
             ->map(fn ($item) => $item->key)
             ->values()
             ->toArray();

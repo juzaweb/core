@@ -24,6 +24,7 @@ use Juzaweb\Modules\Core\Http\Requests\TranslationRequest;
 use Juzaweb\Modules\Core\Translations\Contracts\Translation;
 use Juzaweb\Modules\Core\Translations\Models\Language;
 use Juzaweb\Modules\Core\Translations\Models\LanguageLine;
+use Juzaweb\Modules\Core\Translations\Models\TranslateHistory;
 use Yajra\DataTables\Facades\DataTables;
 
 class TranslationController extends AdminController
@@ -178,7 +179,7 @@ class TranslationController extends AdminController
             return response()->json(['error' => 'No history IDs provided'], 400);
         }
 
-        $histories = \Juzaweb\Modules\Core\Translations\Models\TranslateHistory::whereIn('id', $historyIds)
+        $histories = TranslateHistory::whereIn('id', $historyIds)
             ->get(['id', 'status', 'error']);
 
         $pending = $histories->filter(fn ($h) => $h->status->isPending())->count();

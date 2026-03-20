@@ -24,10 +24,10 @@ class PageTemplateRepository implements PageTemplate
         $this->templates[$key] = $callback;
     }
 
-    public function get(string $key): ?\Juzaweb\Modules\Core\Support\Entities\PageTemplate
+    public function get(string $key): ?Entities\PageTemplate
     {
         if ($template = data_get($this->templates, $key)) {
-            return new \Juzaweb\Modules\Core\Support\Entities\PageTemplate($key, $template());
+            return new Entities\PageTemplate($key, $template());
         }
 
         return null;
@@ -37,7 +37,7 @@ class PageTemplateRepository implements PageTemplate
     {
         return collect($this->templates)->map(
             function ($callback, $key) {
-                return new \Juzaweb\Modules\Core\Support\Entities\PageTemplate($key, $callback());
+                return new Entities\PageTemplate($key, $callback());
             }
         );
     }

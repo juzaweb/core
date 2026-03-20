@@ -14,6 +14,7 @@ namespace Juzaweb\Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Juzaweb\Modules\Core\Enums\CommentStatus;
 use Juzaweb\Modules\Core\Traits\HasAPI;
@@ -59,7 +60,7 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function children(): HasMany
     {
         return $this->hasMany(__CLASS__, 'parent_id', 'id');
     }

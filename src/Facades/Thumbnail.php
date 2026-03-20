@@ -13,12 +13,13 @@
 namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\ThumbnailRepository;
 
 /**
  * @method static void defaults(callable $callback)
  * @method static array getDefaults()
  *
- * @see \Juzaweb\Modules\Core\Support\ThumbnailRepository
+ * @see ThumbnailRepository
  */
 class Thumbnail extends Facade
 {

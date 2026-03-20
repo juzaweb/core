@@ -14,6 +14,9 @@ namespace Juzaweb\Modules\Core\Http\Middleware;
 
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified as BaseEnsureEmailIsVerified;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Juzaweb\Modules\Admin\Models\User;
@@ -32,9 +35,9 @@ class EnsureEmailIsVerified extends BaseEnsureEmailIsVerified
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  string|null  $redirectToRoute
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse|null
+     * @return Response|RedirectResponse|null
      */
     public function handleEnsureEmailVerified($request, \Closure $next, $redirectToRoute = null)
     {

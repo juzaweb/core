@@ -11,6 +11,7 @@
 namespace Juzaweb\Modules\Core\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
+use Juzaweb\Modules\Core\Support\FieldFactory;
 use Juzaweb\Modules\Core\Support\Fields\Checkbox;
 use Juzaweb\Modules\Core\Support\Fields\Currency;
 use Juzaweb\Modules\Core\Support\Fields\Date;
@@ -26,7 +27,7 @@ use Juzaweb\Modules\Core\Support\Fields\Textarea;
 use Juzaweb\Modules\Core\Support\Fields\UploadUrl;
 
 /**
- * @see \Juzaweb\Modules\Core\Support\FieldFactory
+ * @see FieldFactory
  */
 interface Field
 {

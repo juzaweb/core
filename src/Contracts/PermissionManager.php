@@ -10,6 +10,8 @@
 
 namespace Juzaweb\Modules\Core\Contracts;
 
+use Illuminate\Support\Collection;
+
 interface PermissionManager
 {
     /**
@@ -25,5 +27,5 @@ interface PermissionManager
     /**
      * Get all registered permissions as a Collection.
      */
-    public function collection(): \Illuminate\Support\Collection;
+    public function collection(): Collection;
 }

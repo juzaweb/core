@@ -14,6 +14,7 @@ namespace Juzaweb\Modules\Core\Contracts;
 
 use Illuminate\Support\Collection;
 use Juzaweb\Modules\Core\Models\ThemeSetting as SettingModel;
+use Juzaweb\Modules\Core\Support\Entities\Setting;
 
 interface ThemeSetting
 {
@@ -21,7 +22,7 @@ interface ThemeSetting
      * Creates a new setting instance with the given key and optional label.
      *
      * @param  string  $key  The key for the setting.
-     * @return \Juzaweb\Modules\Core\Support\Entities\Setting
+     * @return Setting
      */
     public function make(string $key): \Juzaweb\Modules\Core\Support\Entities\ThemeSetting;
 

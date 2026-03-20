@@ -3,6 +3,7 @@
 namespace Juzaweb\Modules\Core\Permissions\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Juzaweb\Modules\Core\Permissions\Exceptions\PermissionDoesNotExist;
 
 interface Permission
 {
@@ -16,7 +17,7 @@ interface Permission
      *
      * @param  string|null  $guardName
      *
-     * @throws \Juzaweb\Modules\Core\Permissions\Exceptions\PermissionDoesNotExist
+     * @throws PermissionDoesNotExist
      */
     public static function findByName(string $name, $guardName): ?self;
 
@@ -24,7 +25,7 @@ interface Permission
      * Find a permission by its code.
      *
      *
-     * @throws \Juzaweb\Modules\Core\Permissions\Exceptions\PermissionDoesNotExist
+     * @throws PermissionDoesNotExist
      */
     public static function findByCode(string $code, ?string $guardName): ?self;
 
@@ -33,7 +34,7 @@ interface Permission
      *
      * @param  string|null  $guardName
      *
-     * @throws \Juzaweb\Modules\Core\Permissions\Exceptions\PermissionDoesNotExist
+     * @throws PermissionDoesNotExist
      */
     public static function findById(int $id, $guardName): ?self;
 

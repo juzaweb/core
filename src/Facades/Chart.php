@@ -13,6 +13,7 @@
 namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\ChartRepository;
 
 /**
  * @method static void chart(string $key, string $class)
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed make(string $key)
  * @method static array charts()
  *
- * @see \Juzaweb\Modules\Core\Support\ChartRepository
+ * @see ChartRepository
  */
 class Chart extends Facade
 {

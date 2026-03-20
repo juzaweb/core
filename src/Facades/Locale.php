@@ -12,11 +12,12 @@ namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use Juzaweb\Modules\Core\Contracts\Locale as LocaleContract;
+use Juzaweb\Modules\Core\Support\LocaleRepository;
 
 /**
  * @method static string|null setLocale(string|null $locale = null)
  *
- * @see \Juzaweb\Modules\Core\Support\LocaleRepository
+ * @see LocaleRepository
  */
 class Locale extends Facade
 {

@@ -13,13 +13,14 @@
 namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\PageTemplateRepository;
 
 /**
  * @method static void make(string $key, callable $callback)
  * @method static \Juzaweb\Modules\Core\Support\Entities\PageTemplate|null get(string $key)
  * @method static \Illuminate\Support\Collection all()
  *
- * @see \Juzaweb\Modules\Core\Support\PageTemplateRepository
+ * @see PageTemplateRepository
  */
 class PageTemplate extends Facade
 {

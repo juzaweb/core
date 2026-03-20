@@ -15,6 +15,14 @@ namespace Juzaweb\Modules\Core\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Juzaweb\Modules\Core\Facades\RouteResource;
+use Juzaweb\Modules\Core\Http\Middleware\Admin;
+use Juzaweb\Modules\Core\Http\Middleware\CheckSetup;
+use Juzaweb\Modules\Core\Http\Middleware\ContentSecurityPolicy;
+use Juzaweb\Modules\Core\Http\Middleware\ForceLocale;
+use Juzaweb\Modules\Core\Http\Middleware\MultipleLanguage;
+use Juzaweb\Modules\Core\Http\Middleware\RedirectLanguage;
+use Juzaweb\Modules\Core\Http\Middleware\Theme;
+use Juzaweb\Modules\Core\Http\Middleware\XFrameHeadersPolicy;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -55,13 +63,13 @@ class RouteServiceProvider extends ServiceProvider
             'admin',
             [
                 'web',
-                \Juzaweb\Modules\Core\Http\Middleware\XFrameHeadersPolicy::class,
-                \Juzaweb\Modules\Core\Http\Middleware\ContentSecurityPolicy::class,
+                XFrameHeadersPolicy::class,
+                ContentSecurityPolicy::class,
                 'auth',
                 'verified',
-                \Juzaweb\Modules\Core\Http\Middleware\Admin::class,
-                \Juzaweb\Modules\Core\Http\Middleware\CheckSetup::class,
-                \Juzaweb\Modules\Core\Http\Middleware\ForceLocale::class,
+                Admin::class,
+                CheckSetup::class,
+                ForceLocale::class,
             ]
         );
 
@@ -69,10 +77,10 @@ class RouteServiceProvider extends ServiceProvider
             'theme',
             [
                 'web',
-                \Juzaweb\Modules\Core\Http\Middleware\XFrameHeadersPolicy::class,
-                \Juzaweb\Modules\Core\Http\Middleware\RedirectLanguage::class,
-                \Juzaweb\Modules\Core\Http\Middleware\MultipleLanguage::class,
-                \Juzaweb\Modules\Core\Http\Middleware\Theme::class,
+                XFrameHeadersPolicy::class,
+                RedirectLanguage::class,
+                MultipleLanguage::class,
+                Theme::class,
             ]
         );
     }

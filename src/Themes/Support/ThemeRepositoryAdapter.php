@@ -7,6 +7,7 @@ use Juzaweb\Modules\Core\Contracts\Theme as ThemeContract;
 use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
 use Juzaweb\Modules\Core\Modules\Support\Collection;
 use Juzaweb\Modules\Core\Themes\Exceptions\ThemeNotFoundException;
+use Juzaweb\Modules\Core\Themes\Theme;
 
 /**
  * Adapter class to make ThemeRepository compatible with RepositoryInterface
@@ -129,7 +130,7 @@ class ThemeRepositoryAdapter implements RepositoryInterface
     /**
      * Find a specific theme.
      *
-     * @return \Juzaweb\Modules\Core\Themes\Theme|null
+     * @return Theme|null
      */
     public function find(string $name)
     {
@@ -140,7 +141,7 @@ class ThemeRepositoryAdapter implements RepositoryInterface
      * Find a specific theme. If there return that, otherwise throw exception.
      *
      *
-     * @return \Juzaweb\Modules\Core\Themes\Theme
+     * @return Theme
      *
      * @throws ThemeNotFoundException
      */

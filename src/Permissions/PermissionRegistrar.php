@@ -51,8 +51,8 @@ class PermissionRegistrar
      */
     public function __construct(CacheManager $cacheManager)
     {
-        $this->permissionClass = \Juzaweb\Modules\Core\Permissions\Models\Permission::class;
-        $this->roleClass = \Juzaweb\Modules\Core\Permissions\Models\Role::class;
+        $this->permissionClass = Models\Permission::class;
+        $this->roleClass = Models\Role::class;
 
         $this->cacheManager = $cacheManager;
         $this->initializeCache();

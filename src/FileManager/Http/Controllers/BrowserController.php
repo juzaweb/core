@@ -142,6 +142,8 @@ class BrowserController extends FileManagerController
 
     public function showFile($path)
     {
+        $path = $this->cleanPath($path);
+
         $storage = Storage::disk(config('juzaweb.filemanager.disk'));
 
         if (! $storage->exists($path)) {

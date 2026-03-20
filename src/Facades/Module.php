@@ -11,6 +11,8 @@
 namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\FileRepository;
 
 /**
  * @method static \Juzaweb\Modules\Core\Modules\Module[] all()
@@ -47,12 +49,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static string getAssetsPath()
  * @method static string asset(string $asset)
  *
- * @see \Juzaweb\Modules\Core\Modules\FileRepository
+ * @see FileRepository
  */
 class Module extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface::class;
+        return RepositoryInterface::class;
     }
 }

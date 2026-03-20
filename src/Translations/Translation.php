@@ -10,9 +10,11 @@
 
 namespace Juzaweb\Modules\Core\Translations;
 
+use Juzaweb\Modules\Core\Translations\Models\LanguageLine;
+
 class Translation
 {
-    protected static string $languageLineModel = \Juzaweb\Modules\Core\Translations\Models\LanguageLine::class;
+    protected static string $languageLineModel = LanguageLine::class;
 
     public static function languageLineModel(): string
     {

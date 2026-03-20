@@ -1,5 +1,7 @@
 <?php
 
+use Juzaweb\Modules\Core\Translations\Translators\GoogleTranslator;
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -26,7 +28,7 @@ return [
      */
     'drivers' => [
         'google' => [
-            'class' => \Juzaweb\Modules\Core\Translations\Translators\GoogleTranslator::class,
+            'class' => GoogleTranslator::class,
         ],
     ],
 ];
