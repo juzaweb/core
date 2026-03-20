@@ -35,7 +35,7 @@ class ImgProxyService extends BaseService
         // Create cache directory if not exists
         if (! is_dir($this->cacheDir)) {
             if (! mkdir($concurrentDirectory = $this->cacheDir, 0777, true) && ! is_dir($concurrentDirectory)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+                throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
         }
 

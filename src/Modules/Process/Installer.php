@@ -108,7 +108,7 @@ class Installer
     /**
      * Run the installation process.
      *
-     * @return \Symfony\Component\Process\Process
+     * @return Process
      */
     public function run()
     {
@@ -126,7 +126,7 @@ class Installer
     /**
      * Get process instance.
      *
-     * @return \Symfony\Component\Process\Process
+     * @return Process
      */
     public function getProcess()
     {
@@ -229,7 +229,7 @@ class Installer
     /**
      * Install the module via git.
      *
-     * @return \Symfony\Component\Process\Process
+     * @return Process
      */
     public function installViaGit()
     {
@@ -246,7 +246,7 @@ class Installer
     /**
      * Install the module via git subtree.
      *
-     * @return \Symfony\Component\Process\Process
+     * @return Process
      */
     public function installViaSubtree()
     {
@@ -264,7 +264,7 @@ class Installer
     /**
      * Install the module via composer.
      *
-     * @return \Symfony\Component\Process\Process
+     * @return Process
      */
     public function installViaComposer()
     {

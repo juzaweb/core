@@ -3,6 +3,7 @@
 namespace Juzaweb\Modules\Core\Permissions\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Routing\RouteCollection;
 use Illuminate\Support\Collection;
 use Juzaweb\Modules\Admin\Permissions\Commands\ApiScope;
 use Juzaweb\Modules\Admin\Permissions\Commands\ApiScopeGroup;
@@ -205,7 +206,7 @@ class Generate extends Command
 
     protected function collectInRoutes(): array
     {
-        /** @var \Illuminate\Routing\RouteCollection $routers */
+        /** @var RouteCollection $routers */
         $routers = app('router')->getRoutes();
 
         $permissions = [];

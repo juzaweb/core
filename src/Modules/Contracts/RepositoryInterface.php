@@ -2,15 +2,17 @@
 
 namespace Juzaweb\Modules\Core\Modules\Contracts;
 
+use Illuminate\Filesystem\Filesystem;
 use Juzaweb\Modules\Core\Modules\Exceptions\ModuleNotFoundException;
 use Juzaweb\Modules\Core\Modules\Module;
+use Juzaweb\Modules\Core\Modules\Support\Collection;
 
 interface RepositoryInterface
 {
     /**
      * Get all modules.
      *
-     * @return \Juzaweb\Modules\Core\Modules\Module[]
+     * @return Module[]
      */
     public function all();
 
@@ -31,7 +33,7 @@ interface RepositoryInterface
     /**
      * Get modules as modules collection instance.
      *
-     * @return \Juzaweb\Modules\Core\Modules\Support\Collection
+     * @return Collection
      */
     public function toCollection();
 
@@ -97,7 +99,7 @@ interface RepositoryInterface
     public function getModulePath($moduleName);
 
     /**
-     * @return \Illuminate\Filesystem\Filesystem
+     * @return Filesystem
      */
     public function getFiles();
 
@@ -132,7 +134,7 @@ interface RepositoryInterface
     /**
      * Delete a specific module.
      *
-     * @throws \Juzaweb\Modules\Core\Modules\Exceptions\ModuleNotFoundException
+     * @throws ModuleNotFoundException
      */
     public function delete(string $module): bool;
 

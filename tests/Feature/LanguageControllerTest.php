@@ -2,6 +2,7 @@
 
 namespace Juzaweb\Modules\Core\Tests\Feature;
 
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Juzaweb\Modules\Core\Models\User;
 use Juzaweb\Modules\Core\Tests\TestCase;
@@ -25,7 +26,7 @@ class LanguageControllerTest extends TestCase
         ]);
 
         $this->actingAs($this->user);
-        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+        $this->withoutMiddleware(VerifyCsrfToken::class);
 
         // Create or update test languages
         Language::updateOrCreate(['code' => 'en'], ['name' => 'English']);

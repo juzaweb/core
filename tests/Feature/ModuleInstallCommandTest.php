@@ -5,6 +5,7 @@ namespace Juzaweb\Modules\Core\Tests\Feature;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\Kernel;
 use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
+use Juzaweb\Modules\Core\Modules\Module;
 use Juzaweb\Modules\Core\Tests\TestCase;
 use Mockery;
 
@@ -58,7 +59,7 @@ class ModuleInstallCommandTest extends TestCase
         $shortName = 'Blog';
 
         // Mock the Module class
-        $module = Mockery::mock(\Juzaweb\Modules\Core\Modules\Module::class);
+        $module = Mockery::mock(Module::class);
         $module->shouldReceive('getName')->andReturn($shortName);
         $module->shouldReceive('__toString')->andReturn($shortName);
         // The Updater process will try to read composer requirements from the module

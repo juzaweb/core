@@ -1,5 +1,13 @@
 <?php
 
+use Laravel\Socialite\Two\BitbucketProvider;
+use Laravel\Socialite\Two\FacebookProvider;
+use Laravel\Socialite\Two\GithubProvider;
+use Laravel\Socialite\Two\GitlabProvider;
+use Laravel\Socialite\Two\GoogleProvider;
+use Laravel\Socialite\Two\LinkedInProvider;
+use Laravel\Socialite\Two\TwitterProvider;
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -44,13 +52,13 @@ return [
      */
     'social_login' => [
         'providers' => [
-            'google' => \Laravel\Socialite\Two\GoogleProvider::class,
-            'facebook' => \Laravel\Socialite\Two\FacebookProvider::class,
-            'linkedin' => \Laravel\Socialite\Two\LinkedInProvider::class,
-            'twitter' => \Laravel\Socialite\Two\TwitterProvider::class,
-            'github' => \Laravel\Socialite\Two\GithubProvider::class,
-            'gitlab' => \Laravel\Socialite\Two\GitlabProvider::class,
-            'bitbucket' => \Laravel\Socialite\Two\BitbucketProvider::class,
+            'google' => GoogleProvider::class,
+            'facebook' => FacebookProvider::class,
+            'linkedin' => LinkedInProvider::class,
+            'twitter' => TwitterProvider::class,
+            'github' => GithubProvider::class,
+            'gitlab' => GitlabProvider::class,
+            'bitbucket' => BitbucketProvider::class,
         ],
     ],
 

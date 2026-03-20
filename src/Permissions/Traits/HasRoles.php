@@ -78,7 +78,7 @@ trait HasRoles
     /**
      * Assign the given role to the model.
      *
-     * @param  array|string|int|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection  ...$roles
+     * @param  array|string|int|Role|Collection  ...$roles
      * @return $this
      */
     public function assignRole(...$roles): static
@@ -132,7 +132,7 @@ trait HasRoles
     /**
      * Revoke the given role from the model.
      *
-     * @param  string|int|\Juzaweb\Modules\Core\Permissions\Contracts\Role  $role
+     * @param  string|int|Role  $role
      */
     public function removeRole($role): static
     {
@@ -150,7 +150,7 @@ trait HasRoles
     /**
      * Remove all current roles and set the given ones.
      *
-     * @param  array|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection|string|int  ...$roles
+     * @param  array|Role|Collection|string|int  ...$roles
      * @return $this
      */
     public function syncRoles(...$roles): static
@@ -206,7 +206,7 @@ trait HasRoles
      *
      * Alias to hasRole() but without Guard controls
      *
-     * @param  string|int|array|\Juzaweb\Modules\Core\Permissions\Contracts\Role|\Illuminate\Support\Collection  $roles
+     * @param  string|int|array|Role|Collection  $roles
      */
     public function hasAnyRole(...$roles): bool
     {

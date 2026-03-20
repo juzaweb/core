@@ -14,13 +14,14 @@ namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\NavMenuRepository;
 
 /**
  * @method static void make(string $key, callable $callback)
  * @method static ?array get(string $key)
  * @method static Collection all()
  *
- * @see \Juzaweb\Modules\Core\Support\NavMenuRepository
+ * @see NavMenuRepository
  */
 class NavMenu extends Facade
 {

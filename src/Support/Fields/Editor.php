@@ -10,9 +10,11 @@
 
 namespace Juzaweb\Modules\Core\Support\Fields;
 
+use Illuminate\Contracts\View\View;
+
 class Editor extends Field
 {
-    public function render(): \Illuminate\Contracts\View\View|string
+    public function render(): View|string
     {
         return view(
             'core::fields.editor',

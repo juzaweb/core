@@ -12,17 +12,19 @@
 
 namespace Juzaweb\Modules\Core\Support\Traits;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Juzaweb\Modules\Core\Models\Comment;
 
 /**
- * @mixin \Illuminate\Database\Eloquent\Model
+ * @mixin Model
  */
 trait HasComments
 {
     /**
      * Get the comments for the model.
      */
-    public function comments(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
     }

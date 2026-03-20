@@ -39,4 +39,13 @@ abstract class FileManagerController extends Controller
 
         return false;
     }
+
+    protected function cleanPath(string $path): string
+    {
+        if (str_contains($path, '..')) {
+            abort(404);
+        }
+
+        return ltrim($path, '/\\');
+    }
 }

@@ -10,6 +10,7 @@
 
 namespace Juzaweb\Modules\Core\Support;
 
+use Illuminate\Support\Collection;
 use Juzaweb\Modules\Core\Contracts\PermissionManager as PermissionManagerContract;
 
 class PermissionManager implements PermissionManagerContract
@@ -32,7 +33,7 @@ class PermissionManager implements PermissionManagerContract
         return $results;
     }
 
-    public function collection(): \Illuminate\Support\Collection
+    public function collection(): Collection
     {
         return collect($this->getPermissions());
     }

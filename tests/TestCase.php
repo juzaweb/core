@@ -2,8 +2,29 @@
 
 namespace Juzaweb\Modules\Core\Tests;
 
+use Illuminate\Foundation\Application;
+use Juzaweb\Hooks\HooksServiceProvider;
+use Juzaweb\Modules\Core\Contracts\ThemeSetting;
+use Juzaweb\Modules\Core\Facades\Chart;
+use Juzaweb\Modules\Core\Facades\Field;
+use Juzaweb\Modules\Core\Facades\Menu;
+use Juzaweb\Modules\Core\Facades\Module;
+use Juzaweb\Modules\Core\Facades\PageBlock;
+use Juzaweb\Modules\Core\Facades\PageTemplate;
+use Juzaweb\Modules\Core\Facades\Sidebar;
+use Juzaweb\Modules\Core\Facades\Theme;
+use Juzaweb\Modules\Core\Facades\Widget;
+use Juzaweb\Modules\Core\Models\User;
+use Juzaweb\Modules\Core\Permissions\PermissionServiceProvider;
 use Juzaweb\Modules\Core\Providers\CoreServiceProvider;
+use Juzaweb\Modules\Core\Translations\TranslationsServiceProvider;
+use Juzaweb\QueryCache\QueryCacheServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Pion\Laravel\ChunkUpload\Providers\ChunkUploadServiceProvider;
+use Spatie\Activitylog\ActivitylogServiceProvider;
+use Yajra\DataTables\DataTablesServiceProvider;
+use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\HtmlServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -47,7 +68,7 @@ abstract class TestCase extends Orchestra
             }
         }
 
-        $this->app[\Juzaweb\Modules\Core\Contracts\ThemeSetting::class]->set('setup', 1);
+        $this->app[ThemeSetting::class]->set('setup', 1);
     }
 
     protected function createMixManifest(): void
@@ -80,49 +101,49 @@ abstract class TestCase extends Orchestra
     /**
      * Get package providers.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return array<int, class-string>
      */
     protected function getPackageProviders($app): array
     {
         return [
             CoreServiceProvider::class,
-            \Juzaweb\QueryCache\QueryCacheServiceProvider::class,
-            \Spatie\Activitylog\ActivitylogServiceProvider::class,
-            \Juzaweb\Hooks\HooksServiceProvider::class,
-            \Juzaweb\Modules\Core\Translations\TranslationsServiceProvider::class,
-            \Juzaweb\Modules\Core\Permissions\PermissionServiceProvider::class,
-            \Pion\Laravel\ChunkUpload\Providers\ChunkUploadServiceProvider::class,
-            \Yajra\DataTables\DataTablesServiceProvider::class,
-            \Yajra\DataTables\HtmlServiceProvider::class,
+            QueryCacheServiceProvider::class,
+            ActivitylogServiceProvider::class,
+            HooksServiceProvider::class,
+            TranslationsServiceProvider::class,
+            PermissionServiceProvider::class,
+            ChunkUploadServiceProvider::class,
+            DataTablesServiceProvider::class,
+            HtmlServiceProvider::class,
         ];
     }
 
     /**
      * Get package aliases.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      */
     protected function getPackageAliases($app): array
     {
         return [
-            'Field' => \Juzaweb\Modules\Core\Facades\Field::class,
-            'Module' => \Juzaweb\Modules\Core\Facades\Module::class,
-            'Theme' => \Juzaweb\Modules\Core\Facades\Theme::class,
-            'Widget' => \Juzaweb\Modules\Core\Facades\Widget::class,
-            'Sidebar' => \Juzaweb\Modules\Core\Facades\Sidebar::class,
-            'PageTemplate' => \Juzaweb\Modules\Core\Facades\PageTemplate::class,
-            'PageBlock' => \Juzaweb\Modules\Core\Facades\PageBlock::class,
-            'Chart' => \Juzaweb\Modules\Core\Facades\Chart::class,
-            'DataTables' => \Yajra\DataTables\Facades\DataTables::class,
-            'Menu' => \Juzaweb\Modules\Core\Facades\Menu::class,
+            'Field' => Field::class,
+            'Module' => Module::class,
+            'Theme' => Theme::class,
+            'Widget' => Widget::class,
+            'Sidebar' => Sidebar::class,
+            'PageTemplate' => PageTemplate::class,
+            'PageBlock' => PageBlock::class,
+            'Chart' => Chart::class,
+            'DataTables' => DataTables::class,
+            'Menu' => Menu::class,
         ];
     }
 
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      */
     protected function getEnvironmentSetUp($app): void
     {
@@ -166,7 +187,7 @@ abstract class TestCase extends Orchestra
             'root' => storage_path('app/private'),
         ]);
 
-        $app['config']->set('auth.providers.users.model', \Juzaweb\Modules\Core\Models\User::class);
+        $app['config']->set('auth.providers.users.model', User::class);
     }
 
     /**

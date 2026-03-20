@@ -12,6 +12,8 @@ namespace Juzaweb\Modules\Core\Traits;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Juzaweb\Modules\Core\Support\Resources\ModelCollectionResource;
 use Juzaweb\Modules\Core\Support\Resources\ModelResource;
@@ -72,7 +74,7 @@ trait HasRestResponses
         }
 
         // Handle case where $data is a Collection
-        if ($data instanceof \Illuminate\Database\Eloquent\Collection) {
+        if ($data instanceof Collection) {
             $model = $data->first();
 
             if ($model && method_exists(get_class($model), 'makeCollectionResource')) {
@@ -89,7 +91,7 @@ trait HasRestResponses
         }
 
         // Handle case where $data is a Model
-        if ($data instanceof \Illuminate\Database\Eloquent\Model) {
+        if ($data instanceof Model) {
             if (method_exists(get_class($data), 'makeResource')) {
                 return get_class($data)::makeResource($data)
                     ->additional(array_merge(['message' => $message, 'success' => true], $additional))

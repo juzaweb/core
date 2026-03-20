@@ -2,6 +2,7 @@
 
 namespace Juzaweb\Modules\Core\FileManager;
 
+use enshrined\svgSanitize\Sanitizer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -173,7 +174,7 @@ class MediaRepository implements Media
 
     protected function sanitizeSvg(UploadedFile $file): void
     {
-        $sanitizer = new \enshrined\svgSanitize\Sanitizer;
+        $sanitizer = new Sanitizer;
         $cleanSvg = $sanitizer->sanitize(file_get_contents($file->getRealPath()));
         file_put_contents($file->getRealPath(), $cleanSvg);
     }

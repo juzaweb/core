@@ -17,7 +17,7 @@ class Json
     /**
      * The laravel filesystem instance.
      *
-     * @var \Illuminate\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $filesystem;
 

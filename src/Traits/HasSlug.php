@@ -2,6 +2,7 @@
 
 namespace Juzaweb\Modules\Core\Traits;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
 trait HasSlug
@@ -39,7 +40,7 @@ trait HasSlug
      *
      * @return static
      *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws ModelNotFoundException
      */
     public static function findBySlugOrFail(string $slug): self
     {

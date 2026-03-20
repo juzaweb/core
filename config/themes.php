@@ -1,5 +1,7 @@
 <?php
 
+use Juzaweb\Modules\Core\Themes\Activators\SettingActivator;
+
 /**
  * JUZAWEB CMS - Laravel CMS for Your Project
  *
@@ -26,7 +28,7 @@ return [
     */
     'activators' => [
         'setting' => [
-            'class' => \Juzaweb\Modules\Core\Themes\Activators\SettingActivator::class,
+            'class' => SettingActivator::class,
             'key' => 'theme',
         ],
     ],

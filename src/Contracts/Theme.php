@@ -11,9 +11,10 @@
 namespace Juzaweb\Modules\Core\Contracts;
 
 use Illuminate\Support\Collection;
+use Juzaweb\Modules\Core\Themes\ThemeRepository;
 
 /**
- * @see \Juzaweb\Modules\Core\Themes\ThemeRepository
+ * @see ThemeRepository
  */
 interface Theme
 {

@@ -13,6 +13,7 @@
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use Juzaweb\Modules\Core\Contracts\ThemeSetting;
 use Juzaweb\Modules\Core\Models\Menus\Menu;
 use Juzaweb\Modules\Core\Models\Pages\Page;
@@ -153,7 +154,7 @@ function page_blocks(?string $page): Collection
     return $page->blocks->groupBy('container') ?? collect();
 }
 
-function dynamic_block(Page|string|null $page, string $container): Factory|\Illuminate\View\View|null
+function dynamic_block(Page|string|null $page, string $container): Factory|View|null
 {
     if ($page === null) {
         return null;
@@ -167,7 +168,7 @@ function dynamic_block(Page|string|null $page, string $container): Factory|\Illu
     );
 }
 
-function dynamic_sidebar(string $name): Factory|\Illuminate\Contracts\View\View
+function dynamic_sidebar(string $name): Factory|Illuminate\Contracts\View\View
 {
     $sidebars = sidebars($name);
 

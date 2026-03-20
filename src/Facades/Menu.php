@@ -12,6 +12,7 @@ namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\MenuRepository;
 
 /**
  * @method static void make(string $key, callable $callback)
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Collection getByPosition(string $position)
  * @method static Collection all()
  *
- * @see \Juzaweb\Modules\Core\Support\MenuRepository
+ * @see MenuRepository
  */
 class Menu extends Facade
 {

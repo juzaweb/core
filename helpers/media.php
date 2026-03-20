@@ -1,5 +1,8 @@
 <?php
 
+use Juzaweb\Modules\Core\FileManager\Contracts\Media;
+use Juzaweb\Modules\Core\FileManager\MediaRepository;
+
 /**
  * LARABIZ CMS - Full SPA Laravel CMS
  *
@@ -15,9 +18,9 @@ if (! function_exists('media_url')) {
 }
 
 if (! function_exists('media')) {
-    function media(): \Juzaweb\Modules\Core\FileManager\MediaRepository
+    function media(): MediaRepository
     {
-        return app(\Juzaweb\Modules\Core\FileManager\Contracts\Media::class);
+        return app(Media::class);
     }
 }
 

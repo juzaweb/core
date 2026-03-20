@@ -12,6 +12,7 @@ namespace Juzaweb\Modules\Core\Traits;
 
 use Laravel\Passport\Http\Controllers\ConvertsPsrResponses;
 use League\OAuth2\Server\AuthorizationServer;
+use League\OAuth2\Server\Exception\OAuthServerException;
 use Nyholm\Psr7\Response as Psr7Response;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -24,7 +25,7 @@ trait HasPassportPasswordGrant
      *
      *
      * @throws \JsonException
-     * @throws \League\OAuth2\Server\Exception\OAuthServerException
+     * @throws OAuthServerException
      */
     public static function generatePasswordGrantToken(string $username, string $password, array $scopes = ['*']): \stdClass
     {

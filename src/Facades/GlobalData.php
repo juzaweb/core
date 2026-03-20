@@ -14,6 +14,7 @@ namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\GlobalDataRepository;
 
 /**
  * @method static void set(string $key, array $value)
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Collection collect(string $key, array $default = [])
  * @method static Collection all()
  *
- * @see \Juzaweb\Modules\Core\Support\GlobalDataRepository
+ * @see GlobalDataRepository
  */
 class GlobalData extends Facade
 {

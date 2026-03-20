@@ -12,6 +12,7 @@
 
 namespace Juzaweb\Modules\Core\Http\Controllers\Admin;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Juzaweb\Modules\Core\Facades\Breadcrumb;
@@ -74,7 +75,7 @@ class ProfileController extends AdminController
         );
     }
 
-    public function changeAvatar(Request $request): \Illuminate\Http\JsonResponse
+    public function changeAvatar(Request $request): JsonResponse
     {
         $request->validate(['avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
 

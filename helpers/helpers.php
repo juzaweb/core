@@ -191,7 +191,7 @@ if (! function_exists('languages')) {
     /**
      * Get all languages.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Illuminate\Support\Collection
      */
     function languages(): Collection
     {
@@ -1042,10 +1042,10 @@ function is_home_page(): bool
 if (! function_exists('clean_html')) {
     function clean_html(string $html): string
     {
-        $purifierConfig = \HTMLPurifier_Config::createDefault();
+        $purifierConfig = HTMLPurifier_Config::createDefault();
         $purifierConfig->set('HTML.ForbiddenElements', 'script');
         $purifierConfig->set('Cache.DefinitionImpl', null);
-        $purifier = new \HTMLPurifier($purifierConfig);
+        $purifier = new HTMLPurifier($purifierConfig);
 
         return $purifier->purify($html);
     }

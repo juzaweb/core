@@ -14,6 +14,7 @@ namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Support\FieldFactory;
 
 /**
  * @method static \Juzaweb\Modules\Core\Support\Fields\Text text(string|Model $label, string $name, array $options = [])
@@ -33,7 +34,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Juzaweb\Modules\Core\Support\Fields\Security security(string|Model $label, string $name, array $options = [])
  * @method static \Juzaweb\Modules\Core\Support\Fields\Currency currency(string|Model $label, string $name, array $options = [])
  *
- * @see \Juzaweb\Modules\Core\Support\FieldFactory
+ * @see FieldFactory
  */
 class Field extends Facade
 {

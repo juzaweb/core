@@ -13,6 +13,7 @@ namespace Juzaweb\Modules\Core\Facades;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 use Juzaweb\Modules\Core\Contracts\Setting as SettingContract;
+use Juzaweb\Modules\Core\Support\SettingRepository;
 
 /**
  * @method static mixed get(string $key, mixed $default = null)
@@ -27,7 +28,7 @@ use Juzaweb\Modules\Core\Contracts\Setting as SettingContract;
  * @method static Collection settings(?string $key = null)
  * @method static Collection configs()
  *
- * @see \Juzaweb\Modules\Core\Support\SettingRepository
+ * @see SettingRepository
  */
 class Setting extends Facade
 {

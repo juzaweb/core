@@ -4,6 +4,7 @@ namespace Juzaweb\Modules\Core\Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Auth;
+use Juzaweb\Modules\Core\Contracts\GlobalData;
 use Juzaweb\Modules\Core\Models\User;
 use Juzaweb\Modules\Core\Tests\TestCase;
 
@@ -22,7 +23,7 @@ class SettingTest extends TestCase
         ]);
 
         // Register 'title' setting to allow validation to pass
-        $this->app[\Juzaweb\Modules\Core\Contracts\GlobalData::class]->set('settings.title', [
+        $this->app[GlobalData::class]->set('settings.title', [
             'label' => 'Site Title',
             'rules' => ['nullable', 'string', 'max:250'],
             'default' => 'Juzaweb CMS',

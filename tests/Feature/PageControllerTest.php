@@ -2,6 +2,7 @@
 
 namespace Juzaweb\Modules\Core\Tests\Feature;
 
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Juzaweb\Modules\Core\Enums\PageStatus;
 use Juzaweb\Modules\Core\Models\Pages\Page;
@@ -27,7 +28,7 @@ class PageControllerTest extends TestCase
         ]);
 
         $this->actingAs($this->user);
-        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+        $this->withoutMiddleware(VerifyCsrfToken::class);
 
         // Create test language
         Language::updateOrCreate(['code' => 'en'], ['name' => 'English']);

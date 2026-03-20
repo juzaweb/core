@@ -11,9 +11,10 @@
 namespace Juzaweb\Modules\Core\Contracts;
 
 use Illuminate\Support\Collection;
+use Juzaweb\Modules\Core\Support\MenuRepository;
 
 /**
- * @see \Juzaweb\Modules\Core\Support\MenuRepository
+ * @see MenuRepository
  */
 interface Menu
 {

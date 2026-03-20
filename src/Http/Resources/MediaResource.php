@@ -14,9 +14,10 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
+use Juzaweb\Modules\Core\Models\Media;
 
 /**
- * @property-read \Juzaweb\Modules\Core\Models\Media $resource
+ * @property-read Media $resource
  */
 class MediaResource extends JsonResource
 {

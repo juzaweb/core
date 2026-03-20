@@ -3,6 +3,7 @@
 namespace Juzaweb\Modules\Core\Modules\Publishing;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use Juzaweb\Modules\Core\Modules\Contracts\PublisherInterface;
 use Juzaweb\Modules\Core\Modules\Contracts\RepositoryInterface;
 use Juzaweb\Modules\Core\Modules\Module;
@@ -26,7 +27,7 @@ abstract class Publisher implements PublisherInterface
     /**
      * The laravel console instance.
      *
-     * @var \Illuminate\Console\Command
+     * @var Command
      */
     protected $console;
 
@@ -86,7 +87,7 @@ abstract class Publisher implements PublisherInterface
     /**
      * Get module instance.
      *
-     * @return \Juzaweb\Modules\Core\Modules\Module
+     * @return Module
      */
     public function getModule()
     {
@@ -131,7 +132,7 @@ abstract class Publisher implements PublisherInterface
     /**
      * Get console instance.
      *
-     * @return \Illuminate\Console\Command
+     * @return Command
      */
     public function getConsole()
     {
@@ -141,7 +142,7 @@ abstract class Publisher implements PublisherInterface
     /**
      * Get laravel filesystem instance.
      *
-     * @return \Illuminate\Filesystem\Filesystem
+     * @return Filesystem
      */
     public function getFilesystem()
     {

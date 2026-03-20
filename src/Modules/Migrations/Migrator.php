@@ -3,6 +3,7 @@
 namespace Juzaweb\Modules\Core\Modules\Migrations;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Juzaweb\Modules\Core\Modules\Module;
@@ -220,7 +221,7 @@ class Migrator
     /**
      * Get table instance.
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return Builder
      */
     public function table()
     {

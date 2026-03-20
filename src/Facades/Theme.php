@@ -12,6 +12,7 @@ namespace Juzaweb\Modules\Core\Facades;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use Juzaweb\Modules\Core\Themes\ThemeRepository;
 
 /**
  * @method static \Juzaweb\Modules\Core\Themes\Theme|null current()
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool activate(string $theme)
  * @method static void init()
  *
- * @see \Juzaweb\Modules\Core\Themes\ThemeRepository
+ * @see ThemeRepository
  */
 class Theme extends Facade
 {
