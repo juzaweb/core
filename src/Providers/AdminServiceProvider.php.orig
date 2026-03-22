@@ -293,10 +293,6 @@ abstract class AdminServiceProvider extends ServiceProvider
                 // Cookie Consent Settings
                 Setting::make('cookie_consent_enabled')->default(false);
                 Setting::make('cookie_consent_message')->rules(['nullable', 'string']);
-
-                Setting::make('captcha')->rules(['nullable', 'string']);
-                Setting::make('captcha_site_key')->rules(['nullable', 'string']);
-                Setting::make('captcha_site_secret')->rules(['nullable', 'string']);
             }
         );
     }

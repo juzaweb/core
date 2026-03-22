@@ -20,13 +20,21 @@ class Captcha
 
     public function handle($request, Closure $next)
     {
-        if (config('network.recaptcha.site_key')) {
+        $captcha = setting('captcha');
+        $siteKey = setting('captcha_site_key') ?: config('network.recaptcha.site_key');
+        $secretKey = setting('captcha_site_secret') ?: config('network.recaptcha.secret_key');
+
+        if (is_null($captcha) && $siteKey) {
+            $captcha = 'recaptcha';
+        }
+
+        if ($captcha == 'recaptcha' && $siteKey) {
             $client = new Client(['connect_timeout' => 10, 'timeout' => 10]);
             $response = $client->post(
                 'https://www.google.com/recaptcha/api/siteverify',
                 [
                     'form_params' => [
-                        'secret' => config('network.recaptcha.secret_key'),
+                        'secret' => $secretKey,
                         'response' => $request->input('g-recaptcha-response'),
                     ],
                 ]

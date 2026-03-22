@@ -131,7 +131,7 @@
                                 '0' => __('core::translation.none'),
                                 'recaptcha' => __('reCAPTCHA v2 Invisible'),
                             ],
-                            'value' => [setting('captcha', '0')],
+                            'value' => setting('captcha', '0'),
                         ]) }}
 
                         {{ Field::text(__('Captcha Site Key'), 'captcha_site_key', [
