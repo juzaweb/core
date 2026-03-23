@@ -15,8 +15,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ModelCollectionResource extends ResourceCollection
 {
-    public $with = ['success' => true];
-
     /**
      * Transform the resource into an array.
      */
