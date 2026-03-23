@@ -48,10 +48,10 @@
     $captcha = setting('captcha');
     $captchaSiteKey = setting('captcha_site_key') ?: config('network.recaptcha.site_key');
     if (is_null($captcha) && $captchaSiteKey) {
-        $captcha = 'recaptcha';
+        $captcha = 'recaptcha-v2-invisible';
     }
 @endphp
-@if($captcha == 'recaptcha' && $captchaSiteKey)
+@if($captcha == 'recaptcha-v2-invisible' && $captchaSiteKey)
     <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
         const recaptchaSiteKey = "{{ $captchaSiteKey }}";
     </script>

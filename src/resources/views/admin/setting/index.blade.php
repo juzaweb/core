@@ -129,7 +129,7 @@
                         {{ Field::select(__('Captcha'), 'captcha', [
                             'options' => [
                                 '0' => __('core::translation.none'),
-                                'recaptcha' => __('reCAPTCHA v2 Invisible'),
+                                'recaptcha-v2-invisible' => __('reCAPTCHA v2 Invisible'),
                             ],
                             'value' => [setting('captcha', '0')],
                         ]) }}

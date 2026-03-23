@@ -25,10 +25,10 @@ class Captcha
         $secretKey = setting('captcha_site_secret') ?: config('network.recaptcha.secret_key');
 
         if (is_null($captcha) && $siteKey) {
-            $captcha = 'recaptcha-v2-invisible';
+            $captcha = 'recaptcha';
         }
 
-        if ($captcha == 'recaptcha-v2-invisible' && $siteKey) {
+        if ($captcha == 'recaptcha' && $siteKey) {
             $client = new Client(['connect_timeout' => 10, 'timeout' => 10]);
             $response = $client->post(
                 'https://www.google.com/recaptcha/api/siteverify',
