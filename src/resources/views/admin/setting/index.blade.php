@@ -120,6 +120,29 @@
                         ]) }}
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ __('Captcha') }}</h3>
+                    </div>
+                    <div class="card-body">
+                        {{ Field::select(__('Captcha'), 'captcha', [
+                            'options' => [
+                                '0' => __('core::translation.none'),
+                                'recaptcha-v2-invisible' => __('reCAPTCHA v2 Invisible'),
+                            ],
+                            'value' => [setting('captcha', '0')],
+                        ]) }}
+
+                        {{ Field::text(__('Captcha Site Key'), 'captcha_site_key', [
+                            'value' => setting('captcha_site_key'),
+                        ]) }}
+
+                        {{ Field::text(__('Captcha Site Secret'), 'captcha_site_secret', [
+                            'value' => setting('captcha_site_secret'),
+                        ]) }}
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-3">

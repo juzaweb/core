@@ -44,9 +44,16 @@
 <script src="{{ mix('js/vendor.min.js', 'juzaweb') }}"></script>
 <script src="{{ mix('js/admin.min.js', 'juzaweb') }}"></script>
 
-@if(config("network.recaptcha.site_key"))
+@php
+    $captcha = setting('captcha');
+    $captchaSiteKey = setting('captcha_site_key') ?: config('network.recaptcha.site_key');
+    if (is_null($captcha) && $captchaSiteKey) {
+        $captcha = 'recaptcha-v2-invisible';
+    }
+@endphp
+@if($captcha == 'recaptcha-v2-invisible' && $captchaSiteKey)
     <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
-        const recaptchaSiteKey = "{{ config("network.recaptcha.site_key") }}";
+        const recaptchaSiteKey = "{{ $captchaSiteKey }}";
     </script>
     <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaLoadCallback&render=explicit" async defer></script>
 @endif
