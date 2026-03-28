@@ -128,5 +128,5 @@ return [
         ],
     ],
 
-    'activator' => 'database',
+    'activator' => 'file',
 ];
