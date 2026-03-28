@@ -32,7 +32,7 @@ class ThemeController extends AdminController
         }
 
         $currentTheme = Theme::current();
-        $themes = Theme::all()->filter(fn ($theme) => $theme->name() !== $currentTheme->name());
+        $themes = Theme::all()->filter(fn ($theme) => $theme->name() !== $currentTheme?->name());
 
         return $this->success(
             [

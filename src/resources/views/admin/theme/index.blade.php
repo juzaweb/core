@@ -42,11 +42,13 @@
     </div>
 
     <div class="row" id="theme-list">
-        <div class="col-md-4 p-2 theme-list-item">
-            @component('core::admin.theme.components.theme-item', ['theme' => $currentTheme, 'active' => true])
+        @if ($currentTheme)
+            <div class="col-md-4 p-2 theme-list-item">
+                @component('core::admin.theme.components.theme-item', ['theme' => $currentTheme, 'active' => true])
 
-            @endcomponent
-        </div>
+                @endcomponent
+            </div>
+        @endif
     </div>
 @endsection
 
