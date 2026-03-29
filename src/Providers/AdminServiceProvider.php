@@ -83,13 +83,13 @@ abstract class AdminServiceProvider extends ServiceProvider
             ];
         });
 
-        Menu::make('themes', function () {
+        /*Menu::make('themes', function () {
             return [
                 'title' => __('core::translation.themes'),
                 'parent' => 'appearance',
                 'permission' => ['themes.index'],
             ];
-        });
+        });*/
 
         Menu::make('widgets', function () {
             return [
@@ -107,14 +107,14 @@ abstract class AdminServiceProvider extends ServiceProvider
             ];
         });
 
-        Menu::make('modules', function () {
+        /*Menu::make('modules', function () {
             return [
                 'title' => __('core::translation.modules'),
                 'icon' => 'fas fa-cubes',
                 'priority' => 90,
                 'permission' => ['modules.index'],
             ];
-        });
+        });*/
 
         Menu::make('settings', function () {
             return [
