@@ -16,7 +16,7 @@ use Juzaweb\Modules\Core\Http\Controllers\Admin\MenuController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\ThemeController;
 use Juzaweb\Modules\Core\Http\Controllers\Admin\WidgetController;
 
-Route::get('themes', [ThemeController::class, 'index'])
+/*Route::get('themes', [ThemeController::class, 'index'])
     ->name('admin.themes.index')
     ->middleware(['permission:themes.index']);
 Route::get('themes/get-data', [ThemeController::class, 'loadData'])
@@ -37,7 +37,7 @@ Route::get('themes/marketplace', [ThemeController::class, 'marketplace'])
 
 Route::get('themes/marketplace/get-data', [ThemeController::class, 'loadMarketplaceData'])
     ->name('admin.themes.marketplace.get-data')
-    ->middleware(['permission:themes.index']);
+    ->middleware(['permission:themes.index']);*/
 
 Route::group(
     ['prefix' => 'widgets'],

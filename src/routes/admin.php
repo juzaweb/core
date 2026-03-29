@@ -56,7 +56,7 @@ Route::admin('pages', PageController::class);
 Route::admin('users', UserController::class);
 Route::admin('roles', RoleController::class);
 
-Route::get('modules', [ModuleController::class, 'index'])
+/*Route::get('modules', [ModuleController::class, 'index'])
     ->name('admin.modules.index')
     ->permission('modules.index');
 Route::post('modules/toggle', [ModuleController::class, 'toggle'])
@@ -71,7 +71,7 @@ Route::get('modules/marketplace', [ModuleController::class, 'marketplace'])
     ->permission('modules.edit');
 Route::get('modules/marketplace/get-data', [ModuleController::class, 'loadMarketplaceData'])
     ->name('admin.modules.marketplace.get-data')
-    ->permission('modules.edit');
+    ->permission('modules.edit');*/
 
 Route::get('/languages/{language}/translations', [TranslationController::class, 'index'])
     ->name('admin.languages.translations')
