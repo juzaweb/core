@@ -1,9 +1,9 @@
 @extends('core::layouts.auth')
 
 @section('content')
-    <div class="card card-outline card-primary">
+    <div class="card">
         <div class="card-body" id="register-form">
-            <p class="login-box-msg">{{ __('core::translation.sign_up_new_a_account') }}</p>
+            <p class="login-box-msg font-weight-bold">{{ __('core::translation.sign_up_new_a_account') }}</p>
 
             <div id="jquery-message"></div>
 

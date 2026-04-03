@@ -1,9 +1,9 @@
 @extends('core::layouts.auth')
 
 @section('content')
-    <div class="card card-outline card-primary">
+    <div class="card">
         <div class="card-body">
-            <p class="login-box-msg">{{ __('core::translation.sign_in_to_start_your_session') }}</p>
+            <p class="login-box-msg font-weight-bold">{{ __('core::translation.sign_in_to_start_your_session') }}</p>
 
             @if (session('success'))
                 <div class="alert alert-success">
