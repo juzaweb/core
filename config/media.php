@@ -39,6 +39,22 @@ return [
              * Max size of file in bytes
              */
             'max_size' => 1024 * 1024 * 15, // 15 MB
+
+            'extensions' => [
+                'png',
+                'jpg',
+                'jpeg',
+                'gif',
+                'svg',
+                'mp4',
+                'ogg',
+                'webm',
+                'mp3',
+                'mpeg',
+                'pdf',
+                'txt',
+                'zip',
+            ],
         ],
     ],
 
